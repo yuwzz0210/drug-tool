@@ -1,671 +1,401 @@
 <!DOCTYPE html>
-<!-- saved from url=(0060)https://6f1a927b684241a988f89da0f6efe505.app.codebuddy.work/ -->
 <html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>药品数据分析工具 · 按疾病领域收集与对比药品迭代数据</title>
-<meta name="description" content="药品数据分析工具：按疾病领域（肿瘤、自免疫、代谢、罕见病等）收集、查询与对比药品的迭代数据，分析同病种不同药品的迭代趋势、医院青睐度、进医保难易、价格与利润空间，辅助判断品种的市场空间与引进价值，支撑市场判断与厂家谈判准备。">
-<meta name="keywords" content="药品数据分析,药品数据库,同病种迭代趋势,医院青睐度,进医保分析,品种简报,厂家谈判,市场空间,引进价值,肿瘤药,自免疫,罕见病">
+<title>药品数据分析工具 · 品种引进评估与临床沟通</title>
+<meta name="description" content="药品数据分析工具：品种引进评估、竞争格局分析、临床沟通简报。辅助判断品种市场空间与引进价值，支撑厂家谈判准备。">
+<meta name="keywords" content="药品数据分析,品种引进评估,竞争格局,临床简报,厂家谈判,医院青睐度,医保准入">
 <meta name="author" content="WorkBuddy">
-<meta name="robots" content="index,follow">
-<meta property="og:type" content="website">
-<meta property="og:title" content="药品数据分析工具 · 按疾病领域收集与对比药品迭代数据">
-<meta property="og:description" content="按疾病领域收集、查询与对比药品迭代数据，分析医院青睐度、进医保难易、价格利润，辅助判断市场空间与引进价值，支撑厂家谈判准备。">
-<meta property="og:locale" content="zh_CN">
-<meta name="application-name" content="药品数据分析工具">
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "药品数据分析工具",
-  "description": "按疾病领域（肿瘤、自免疫、代谢、罕见病等）收集、查询与对比药品的迭代数据，辅助判断品种的市场空间与引进价值，支撑市场判断与厂家谈判准备。",
-  "applicationCategory": "BusinessApplication",
-  "operatingSystem": "任何现代浏览器",
-  "inLanguage": "zh-CN",
-  "about": ["药品市场分析", "医保准入", "医院青睐度", "品种迭代趋势", "厂家谈判准备"],
-  "featureList": ["药品查询与自动补全", "同病种迭代趋势对比", "医院青睐度模型", "进医保概率分析", "价格批量核算", "品种简报生成", "文档导入自动录入", "Word/CSV/TXT数据导入"]
-}
+{"@context":"https://schema.org","@type":"WebApplication","name":"药品数据分析工具","description":"品种引进评估与临床沟通工具","applicationCategory":"BusinessApplication","operatingSystem":"任何现代浏览器","inLanguage":"zh-CN"}
 </script>
-<script src="./药品数据分析工具 · 按疾病领域收集与对比药品迭代数据_files/echarts.min.js.下载"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 <style>
-  :root{
-  --bg: #f8fafc;
-  --panel: #ffffff;
-  --ink: #0f172a;
-  --sub: #475569;
-  --line: #e2e8f0;
-  
-  --brand: #1e293b;     /* 深板岩蓝（头部/导航） */
-  --brand2: #334155;    /* 次级深石板 */
-  --accent: #4f46e5;    /* 靛蓝（按钮/强调） */
-  --soft: #f1f5f9;      /* 浅灰底纹 */
-  
-  --red: #b91c1c;
-  --green: #166534;
-  --amber: #b45309;
+:root{
+--bg:#f8fafc;--panel:#fff;--ink:#0f172a;--sub:#475569;--line:#e2e8f0;
+--brand:#1e293b;--brand2:#334155;--accent:#4f46e5;--soft:#f1f5f9;
+--red:#b91c1c;--green:#166534;--amber:#b45309;
 }
-  header{
-  background: linear-gradient(90deg, #0f172a, #334155) !important;
-}
-nav button.active{
-  background: var(--brand) !important;
-  color: #fff !important;
-  border-color: var(--brand) !important;
-}
-.searchbar button, .btn:not(.alt):not(.gray){
-  background: var(--accent) !important;
-  color: #fff !important;
-}
-.btn.alt{
-  background: #fff !important;
-  color: var(--accent) !important;
-  border: 1px solid var(--accent) !important;
-}
-.tag.red{
-  background: #fee2e2 !important;
-  color: var(--red) !important;
-}
-.tag.green{
-  background: #dcfce7 !important;
-  color: var(--green) !important;
-}
-.tag.blue{
-  background: #e0e7ff !important;
-  color: #4338ca !important;
-}
-.tag.amber{
-  background: #fef3c7 !important;
-  color: var(--amber) !important;
-}
-.tag.gray{
-  background: #f1f5f9 !important;
-  color: var(--sub) !important;
-}
-.area-card:hover{
-  border-color: var(--brand2) !important;
-}
-  *{box-sizing:border-box}
-  body{margin:0;font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;background:var(--bg);color:var(--ink)}
-  header{padding:16px 22px;background:linear-gradient(90deg,#0f172a,#334155);color:#fff}
-  header h1{margin:0;font-size:20px}
-  header p{margin:4px 0 0;font-size:12.5px;opacity:.9}
-  nav{display:flex;flex-wrap:wrap;gap:6px;background:#fff;border-bottom:1px solid var(--line);padding:8px 16px}
-  nav button{border:1px solid var(--line);background:#fff;color:var(--sub);padding:7px 14px;border-radius:8px;cursor:pointer;font-size:13.5px}
-  nav button.active{background:var(--brand);color:#fff;border-color:var(--brand)}
-  .wrap{padding:18px 22px;max-width:1280px;margin:0 auto}
-  .tab{display:none} .tab.on{display:block}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:16px;box-shadow:0 1px 3px rgba(20,40,80,.04)}
-  .card h2{margin:0 0 12px;font-size:16px}
-  .card h3{margin:14px 0 8px;font-size:14px;color:var(--brand)}
-  .row{display:flex;gap:12px;flex-wrap:wrap}
-  .field{flex:1 1 240px;background:var(--soft);border-radius:8px;padding:8px 11px}
-  .field .k{font-size:11.5px;color:var(--sub)}
-  .field .v{font-size:14px;font-weight:600;margin-top:2px}
-  input,select,textarea{font-family:inherit}
-  .searchbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
-  .searchbar input[type=text]{flex:1 1 320px;padding:11px 13px;border:1px solid var(--line);border-radius:10px;font-size:15px}
-  .searchbar button,.btn{padding:11px 18px;border:none;border-radius:10px;background:var(--brand);color:#fff;font-size:14px;cursor:pointer}
-  .btn.alt{background:#fff;color:var(--brand);border:1px solid var(--brand)}
-  .btn.gray{background:#eef1f6;color:var(--sub)}
-  .tag{display:inline-block;padding:2px 9px;border-radius:20px;font-size:12px;margin:0 4px 4px 0}
-  .tag.red{background:#fde8e8;color:var(--red)}
-  .tag.green{background:#e4f6ec;color:var(--green)}
-  .tag.blue{background:#e6effd;color:var(--brand)}
-  .tag.amber{background:#fdf1de;color:#b9791c}
-  .tag.gray{background:#eef1f6;color:var(--sub)}
-  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
-  th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
-  th{background:var(--soft);color:var(--sub)}
-  .chart{width:100%;height:360px}
-  .chart.tall{height:430px}
-  .muted{color:var(--sub);font-size:12.5px}
-  .note{background:#fff8ec;border:1px solid #f3dca6;border-radius:8px;padding:10px 12px;font-size:12.5px;color:#7a5a12;margin:10px 0}
-  .pill{font-size:12px;padding:3px 10px;border-radius:20px;background:#eef3fb;color:var(--brand);display:inline-block;margin:2px}
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  @media(max-width:880px){.grid2{grid-template-columns:1fr}}
-  .scorebar{height:9px;border-radius:6px;background:#eef1f6;overflow:hidden;margin-top:3px}
-  .scorebar i{display:block;height:100%;background:linear-gradient(90deg,#334155,#4f46e5)}
-  .area-card{border:1px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer;background:#fff}
-  .area-card:hover{border-color:var(--brand)}
-  .injected{color:#888;font-size:11px}
-  .modal-bg{position:fixed;inset:0;background:rgba(20,30,50,.45);display:none;align-items:center;justify-content:center;z-index:50}
-  .modal-bg.on{display:flex}
-  .modal{background:#fff;border-radius:12px;padding:20px;width:min(760px,92vw);max-height:86vh;overflow:auto}
-  .modal label{display:block;font-size:12.5px;color:var(--sub);margin:9px 0 3px}
-  .modal input,.modal select,.modal textarea{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:13.5px}
-  .modal .grid2 label{margin-top:0}
-  .seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
-  .seg button{border:none;background:#fff;padding:8px 14px;cursor:pointer;font-size:13px;color:var(--sub)}
-  .seg button.on{background:var(--brand);color:#fff}
-  .hidden{display:none}
-  a{color:var(--brand)}
-  /* —— 年份筛选条 —— */
-  .yearbar{display:flex;align-items:center;gap:14px;background:#fff;border-bottom:1px solid var(--line);padding:10px 18px;flex-wrap:wrap}
-  .yearbar .ybar-label{font-size:13.5px;color:var(--sub);font-weight:600}
-  .yearbar input[type=range]{flex:1;min-width:220px;max-width:520px;accent-color:var(--accent)}
-  .yearbar .ybar-val{font-size:13.5px;font-weight:700;color:var(--accent);min-width:96px}
-  /* —— 自动补全 —— */
-  .ac-box{position:relative;flex:1 1 320px}
-  .ac-box input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;font-size:15px}
-  #qAC{display:none}
-  .ac-list{position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:40;background:#fff;border:1px solid var(--line);border-radius:0 0 10px 10px;box-shadow:0 8px 22px rgba(20,40,80,.14);max-height:260px;overflow:auto}
-  .ac-item{padding:9px 13px;cursor:pointer;font-size:14px;border-bottom:1px solid var(--line)}
-  .ac-item:last-child{border-bottom:none}
-  .ac-item:hover{background:var(--soft)}
-  .ac-item .sub{color:var(--sub);font-size:12px;margin-left:8px}
-  /* —— 对比表 —— */
-  .cmp-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:4px}
-  .cmp-table th,.cmp-table td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
-  .cmp-table th{background:var(--soft);color:var(--sub)}
-  .cmp-table .cmp-k{background:var(--soft);font-weight:600;white-space:nowrap;width:96px}
-  /* —— 业务员速查 —— */
-  .sales-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:16px;box-shadow:0 2px 6px rgba(20,40,80,.06)}
-  .sales-card h2{margin:0 0 4px;font-size:19px;color:var(--brand)}
-  .sales-card .sub-title{font-size:13px;color:var(--sub);margin-bottom:14px}
-  .sales-section{margin-top:16px;padding:14px 16px;border-radius:10px}
-  .sales-section.plain{background:#f0f7ff;border-left:4px solid #3b82f6}
-  .sales-section.points{background:#fffbeb;border-left:4px solid #f59e0b}
-  .sales-section.info{background:#f0fdf4;border-left:4px solid #22c55e}
-  .sales-section .sec-title{font-size:14px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
-  .sales-section .sec-body{font-size:14.5px;line-height:1.8;color:var(--ink)}
-  .sales-tag{display:inline-block;padding:3px 12px;border-radius:8px;font-size:13px;font-weight:600;margin:2px}
-  .sales-tag.price{background:#fef2f2;color:#dc2626}
-  .sales-tag.ins{background:#f0fdf4;color:#16a34a}
-  .sales-tag.cold{background:#eff6ff;color:#2563eb}
-  .sales-tag.route{background:#faf5ff;color:#9333ea}
-  .info-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:8px}
-  .info-grid .item{background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 12px}
-  .info-grid .item .k{font-size:12px;color:var(--sub)}
-  .info-grid .item .v{font-size:15px;font-weight:600;margin-top:2px}
-  .copy-btn{position:sticky;top:10px;float:right}
-  /* —— 冷链计算器 —— */
-  .cc-stat{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:14px 16px;text-align:center}
-  .cc-stat .k{font-size:12px;color:var(--sub)}
-  .cc-stat .v{font-size:24px;font-weight:700;color:#166534;margin-top:4px}
-  .cc-stat .u{font-size:12px;color:var(--sub)}
-  .cc-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:8px}
-  /* —— 价格追踪 —— */
-  .pt-timeline{position:relative;padding-left:24px;margin-top:10px}
-  .pt-timeline:before{content:"";position:absolute;left:8px;top:0;bottom:0;width:2px;background:var(--line)}
-  .pt-event{position:relative;margin-bottom:14px;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:10px;margin-left:12px}
-  .pt-event:before{content:"";position:absolute;left:-20px;top:14px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid #fff;box-shadow:0 0 0 2px var(--accent)}
-  .pt-event .date{font-size:12px;color:var(--sub)}
-  .pt-event .price{font-size:16px;font-weight:700;margin:4px 0}
-  .pt-event .src{font-size:12px;color:var(--sub)}
-  .pt-check-ok{background:#dcfce7!important;color:#166534!important}
-  .pt-check-warn{background:#fef3c7!important;color:#b45309!important}
-  .pt-check-overdue{background:#fee2e2!important;color:#b91c1c!important}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+header{padding:16px 22px;background:linear-gradient(90deg,#0f172a,#334155);color:#fff}
+header h1{margin:0;font-size:20px}
+header p{margin:4px 0 0;font-size:12.5px;opacity:.9}
+.wrap{padding:18px 22px;max-width:1280px;margin:0 auto}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:16px;box-shadow:0 1px 3px rgba(20,40,80,.04)}
+.card h2{margin:0 0 12px;font-size:16px}
+.card h3{margin:14px 0 8px;font-size:14px;color:var(--brand)}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.field{flex:1 1 240px;background:var(--soft);border-radius:8px;padding:8px 11px}
+.field .k{font-size:11.5px;color:var(--sub)}
+.field .v{font-size:14px;font-weight:600;margin-top:2px}
+input,select,textarea{font-family:inherit}
+.searchbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.searchbar input[type=text]{flex:1 1 320px;padding:11px 13px;border:1px solid var(--line);border-radius:10px;font-size:15px}
+.btn{padding:11px 18px;border:none;border-radius:10px;background:var(--brand);color:#fff;font-size:14px;cursor:pointer}
+.btn.alt{background:#fff;color:var(--brand);border:1px solid var(--brand)}
+.btn.gray{background:#eef1f6;color:var(--sub)}
+.tag{display:inline-block;padding:2px 9px;border-radius:20px;font-size:12px;margin:0 4px 4px 0}
+.tag.red{background:#fee2e2;color:var(--red)}
+.tag.green{background:#dcfce7;color:var(--green)}
+.tag.blue{background:#e0e7ff;color:#4338ca}
+.tag.amber{background:#fef3c7;color:var(--amber)}
+.tag.gray{background:#f1f5f9;color:var(--sub)}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--soft);color:var(--sub)}
+.chart{width:100%;height:360px}
+.muted{color:var(--sub);font-size:12.5px}
+.note{background:#fff8ec;border:1px solid #f3dca6;border-radius:8px;padding:10px 12px;font-size:12.5px;color:#7a5a12;margin:10px 0}
+.pill{font-size:12px;padding:3px 10px;border-radius:20px;background:#eef3fb;color:var(--brand);display:inline-block;margin:2px;cursor:pointer}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:880px){.grid2{grid-template-columns:1fr}}
+.scorebar{height:9px;border-radius:6px;background:#eef1f6;overflow:hidden;margin-top:3px}
+.scorebar i{display:block;height:100%;background:linear-gradient(90deg,#334155,#4f46e5)}
+.area-card{border:1px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer;background:#fff}
+.area-card:hover{border-color:var(--brand2)}
+.modal-bg{position:fixed;inset:0;background:rgba(20,30,50,.45);display:none;align-items:center;justify-content:center;z-index:50}
+.modal-bg.on{display:flex}
+.modal{background:#fff;border-radius:12px;padding:20px;width:min(760px,92vw);max-height:86vh;overflow:auto}
+.modal label{display:block;font-size:12.5px;color:var(--sub);margin:9px 0 3px}
+.modal input,.modal select,.modal textarea{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:13.5px}
+.modal .grid2 label{margin-top:0}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{border:none;background:#fff;padding:8px 14px;cursor:pointer;font-size:13px;color:var(--sub)}
+.seg button.on{background:var(--brand);color:#fff}
+.hidden{display:none}
+a{color:var(--brand)}
+.ac-box{position:relative;flex:1 1 320px}
+.ac-box input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;font-size:15px}
+.ac-list{position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:40;background:#fff;border:1px solid var(--line);border-radius:0 0 10px 10px;box-shadow:0 8px 22px rgba(20,40,80,.14);max-height:260px;overflow:auto}
+.ac-item{padding:9px 13px;cursor:pointer;font-size:14px;border-bottom:1px solid var(--line)}
+.ac-item:last-child{border-bottom:none}
+.ac-item:hover{background:var(--soft)}
+.ac-item .sub{color:var(--sub);font-size:12px;margin-left:8px}
+.cmp-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:4px}
+.cmp-table th,.cmp-table td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+.cmp-table th{background:var(--soft);color:var(--sub)}
+.cmp-table .cmp-k{background:var(--soft);font-weight:600;white-space:nowrap;width:96px}
+.sales-section{margin-top:16px;padding:14px 16px;border-radius:10px}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:8px}
+.info-grid .item{background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 12px}
+.info-grid .item .k{font-size:12px;color:var(--sub)}
+.info-grid .item .v{font-size:15px;font-weight:600;margin-top:2px}
+.copy-btn{position:sticky;top:10px;float:right}
+.cc-stat{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:14px 16px;text-align:center}
+.cc-stat .k{font-size:12px;color:var(--sub)}
+.cc-stat .v{font-size:24px;font-weight:700;color:#166534;margin-top:4px}
+.cc-stat .u{font-size:12px;color:var(--sub)}
+.cc-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:8px}
+.pt-timeline{position:relative;padding-left:24px;margin-top:10px}
+.pt-timeline:before{content:"";position:absolute;left:8px;top:0;bottom:0;width:2px;background:var(--line)}
+.pt-event{position:relative;margin-bottom:14px;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:10px;margin-left:12px}
+.pt-event:before{content:"";position:absolute;left:-20px;top:14px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid #fff;box-shadow:0 0 0 2px var(--accent)}
+.pt-event .date{font-size:12px;color:var(--sub)}
+.pt-event .price{font-size:16px;font-weight:700;margin:4px 0}
+.pt-event .src{font-size:12px;color:var(--sub)}
+.pt-check-ok{background:#dcfce7!important;color:#166534!important}
+.pt-check-warn{background:#fef3c7!important;color:#b45309!important}
+.pt-check-overdue{background:#fee2e2!important;color:#b91c1c!important}
+/* === NEW: Entry cards === */
+.entry-cards{display:flex;gap:16px;flex-wrap:wrap;margin:20px 0}
+.entry-card{flex:1 1 300px;background:var(--panel);border:2px solid var(--line);border-radius:16px;padding:28px 24px;cursor:pointer;text-align:center;transition:all .2s}
+.entry-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 20px rgba(79,70,229,.12)}
+.entry-card .icon{font-size:36px;margin-bottom:12px}
+.entry-card h3{margin:0 0 8px;font-size:18px;color:var(--brand)}
+.entry-card p{margin:0;font-size:13px;color:var(--sub)}
+/* === NEW: Section & sub-nav === */
+.section{display:none}
+.section.on{display:block}
+.sub-nav{display:flex;gap:6px;background:#fff;border-bottom:1px solid var(--line);padding:8px 0;margin-bottom:16px}
+.sub-tab{border:1px solid var(--line);background:#fff;color:var(--sub);padding:7px 14px;border-radius:8px;cursor:pointer;font-size:13.5px}
+.sub-tab.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+.sub-content{display:none}
+.sub-content.on{display:block}
+.back-btn{margin-bottom:10px}
+/* === NEW: Weight bar === */
+.weight-bar{display:flex;height:32px;border-radius:8px;overflow:hidden;margin:10px 0}
+.weight-seg{display:flex;align-items:center;justify-content:center;transition:width .3s}
+/* === NEW: Drug detail === */
+.drug-detail{padding:12px;background:var(--soft);border-radius:8px}
+.copy-name-btn{background:none;border:none;cursor:pointer;font-size:14px;padding:0 4px;opacity:.5}
+.copy-name-btn:hover{opacity:1}
+/* === NEW: Data warning === */
+.data-warning{background:#fffbeb;border:1px solid #f3dca6;border-radius:8px;padding:10px 12px;font-size:12.5px;color:#7a5a12;margin:10px 0}
+/* === NEW: Global search === */
+.global-search-bar{background:#fff;border-bottom:1px solid var(--line);padding:10px 18px}
+/* === NEW: Weight editor === */
+.weight-input-row{display:flex;align-items:center;gap:10px;margin:8px 0}
+.weight-input-row label{width:120px;font-size:13px}
+.weight-input-row input{width:80px;padding:6px 10px;border:1px solid var(--line);border-radius:6px}
+.weight-input-row .pct{color:var(--sub);font-size:13px}
 </style>
-<script src="./药品数据分析工具 · 按疾病领域收集与对比药品迭代数据_files/beacon_web.min.js.下载"></script>
-<script>
-(function(){
-  try{
-    var beacon=new BeaconAction({
-      appkey:'0WEB06U85YBSLJNL',
-      versionCode:'1.0.0',
-      channelID:'share',
-      delay:1000,
-      sessionDuration:30*60*1000,
-      isOversea:false,
-      needReportRqdEvent:false
-    });
-    beacon.onDirectUserAction('preview_page_view',{
-      'url':location.href,
-      'referrer':document.referrer,
-      'title':document.title,
-      'sandbox_id':'70f1197d4052486f8aaa62e4c6f92ab4'
-    });
-  }catch(e){}
-})();
-</script></head>
+</head>
 <body>
 <header>
-  <h1>药品数据收集与分析工具</h1>
-  <p>按「疾病领域 → 病种 → 迭代世代 → 时间(2015–2026)」组织，支持药品查询、同病种迭代趋势、医院青睐度与进医保分析 · 依据《关于数据收集的意义》与品种分析简报结构</p>
+  <h1>药品数据分析工具</h1>
+  <p>品种引进评估 · 竞争格局分析 · 临床沟通简报</p>
 </header>
 
-<nav id="nav">
-  <button data-t="lookup" class="active">① 药品查询</button>
-  <button data-t="evo">② 同病种迭代趋势</button>
-  <button data-t="hosp">③ 医院青睐度分析</button>
-  <button data-t="ins">④ 进医保分析</button>
-  <button data-t="brief">⑤ 品种简报生成</button>
-  <button data-t="sales">⑥ 业务员速查</button>
-  <button data-t="manager">⑦ 数据管理</button>
-  <button data-t="source">⑧ 数据来源指引</button>
-  <button data-t="price">⑨ 价格批量核算</button>
-  <button data-t="coldchain">⑩ 冷链成本估算</button>
-  <button data-t="pricetrack">⑪ 价格追踪与核查</button>
-</nav>
-
-<div class="yearbar">
-  <span class="ybar-label">时间范围：</span>
-  <input type="range" min="2015" max="2026" value="2026" id="yearSlider" oninput="onYearChange()">
-  <span class="ybar-val" id="yearLabel">截至 2026 年</span>
+<!-- Global Search -->
+<div class="global-search-bar">
+  <div class="ac-box" style="max-width:600px;margin:0 auto">
+    <input type="text" id="globalQ" placeholder="全局搜索药品名…" oninput="globalAC()" onblur="setTimeout(()=>document.getElementById('globalAC').style.display='none',150)">
+    <div id="globalAC" style="display:none"></div>
+  </div>
 </div>
 
-<div class="wrap">
+<!-- Entry View -->
+<div id="entryView" class="wrap">
+  <div class="entry-cards">
+    <div class="entry-card" onclick="showSection('assessSection')">
+      <div class="icon">📊</div><h3>引进评估</h3><p>数据浏览 · 决策分析 · 数据管理</p>
+    </div>
+    <div class="entry-card" onclick="showSection('competeSection')">
+      <div class="icon">⚔️</div><h3>竞争格局</h3><p>同病种横向对比 · 迭代趋势</p>
+    </div>
+    <div class="entry-card" onclick="showSection('clinicalSection')">
+      <div class="icon">📋</div><h3>临床简报</h3><p>一键生成品种沟通简报</p>
+    </div>
+  </div>
+</div>
 
-  <!-- ① 药品查询 -->
-  <section class="tab on" id="lookup">
+<!-- 引进评估 -->
+<div id="assessSection" class="section wrap">
+  <button class="btn gray back-btn" onclick="backToEntry()">← 返回首页</button>
+  <div class="sub-nav">
+    <button class="sub-tab on" onclick="switchSub('assessSection','assessBrowse',this)">数据浏览</button>
+    <button class="sub-tab" onclick="switchSub('assessSection','assessDecision',this)">决策分析</button>
+    <button class="sub-tab" onclick="switchSub('assessSection','assessManage',this)">数据管理</button>
+  </div>
+  <div id="assessBrowse" class="sub-content on">
+    <div id="assessAreaPick" class="row"></div>
+    <div id="assessBrowseContent"></div>
+  </div>
+  <div id="assessDecision" class="sub-content">
     <div class="card">
-      <h2>输入药品 → 输出该药完整信息</h2>
-      <div class="searchbar">
-        <div class="ac-box">
-          <input type="text" id="q" placeholder="输入通用名 / 商品名，如：瑞拉芙普α、奥希替尼、司美格鲁肽…" oninput="autoComplete()" onblur="setTimeout(()=&gt;document.getElementById(&#39;qAC&#39;).style.display=&#39;none&#39;,150)">
-          <div id="qAC"></div>
-        </div>
-        <button onclick="doSearch()">查询</button>
-        <button class="btn alt" onclick="clearSearch()">清空</button>
+      <h2>决策分析 · 准入便利度评分</h2>
+      <div class="note">模型：指南推荐35% | 医保/双通道25% | 给药便利15% | 集采风险10% | 冷链门槛10% | DRG控费5%。权重可调整。</div>
+      <div id="weightBar"></div>
+      <button class="btn alt" onclick="openWeightEditor()">调整权重</button>
+    </div>
+    <div class="card">
+      <div class="row" style="align-items:center;margin-bottom:10px">
+        <select id="decArea" onchange="decAreaChange()" style="padding:8px 12px;border:1px solid var(--line);border-radius:8px"><option value="">选择领域</option></select>
+        <select id="decDisease" onchange="renderDecision()" style="padding:8px 12px;border:1px solid var(--line);border-radius:8px"><option value="">全部病种</option></select>
       </div>
-      <div id="qSuggestions" class="muted">试试：<span class="pill">吉非替尼</span><span class="pill">埃克替尼</span><span class="pill">阿法替尼</span><span class="pill">奥希替尼</span><span class="pill">阿美替尼</span><span class="pill">伏美替尼</span><span class="pill">贝福替尼</span><span class="pill">克唑替尼</span><span class="pill">阿来替尼</span><span class="pill">恩沙替尼</span></div>
+      <div id="decTable"></div>
     </div>
-    <div id="result"></div>
-  </section>
-
-  <!-- ② 同病种迭代趋势 -->
-  <section class="tab" id="evo">
+  </div>
+  <div id="assessManage" class="sub-content">
+    <div class="data-warning">⚠️ 数据存储于浏览器本地(localStorage)，清除浏览器数据会导致丢失。请定期使用「导出JSON」备份。</div>
     <div class="card">
-      <h2>同病种不同药品的「迭代更替」趋势</h2>
-      <div class="row" id="areaPick"><div class="area-card" style="flex: 1 1 200px;"><b>肿瘤</b><div class="muted" style="margin-top:4px"><span class="pill">肺癌</span><span class="pill">乳腺癌</span><span class="pill">胃癌</span><span class="pill">结直肠癌</span><span class="pill">肝癌</span><span class="pill">肾细胞癌</span></div></div><div class="area-card" style="flex: 1 1 200px;"><b>代谢</b><div class="muted" style="margin-top:4px"><span class="pill">2型糖尿病</span></div></div><div class="area-card" style="flex: 1 1 200px;"><b>自免疫</b><div class="muted" style="margin-top:4px"><span class="pill">类风湿关节炎</span><span class="pill">银屑病</span></div></div><div class="area-card" style="flex: 1 1 200px;"><b>罕见病</b><div class="muted" style="margin-top:4px"><span class="pill">脊髓性肌萎缩症(SMA)</span><span class="pill">血友病A</span><span class="pill">阵发性睡眠性血红蛋白尿症(PNH)</span><span class="pill">Wilson病(肝豆状核变性)</span></div></div></div>
-    </div>
-    <div class="card">
-      <h3 id="evoTitle">请选择疾病领域</h3>
-      <div id="evoCharts"></div>
-    </div>
-  </section>
-
-  <!-- ③ 医院青睐度 -->
-  <section class="tab" id="hosp">
-    <div class="card">
-      <h2>哪些药医院更青睐？（准入便利度模型）</h2>
-      <div class="note">模型说明：医院「青睐度」由准入便利度近似。综合 临床指南推荐等级、医保/双通道可及性、是否集采(集采=院内放量快)、给药便利(口服&gt;注射)、冷链门槛、DRG控费友好度 6 项加权。分数越高=越易进院放量。<b>此为内置示例权重，可在「数据管理」中调整或替换为真实药事会数据。</b></div>
-      <div class="row" id="hospAreaPick"><div class="area-card" style="flex: 1 1 200px;"><b>肿瘤</b><div class="muted" style="margin-top:4px"><span class="pill">肺癌</span><span class="pill">乳腺癌</span><span class="pill">胃癌</span><span class="pill">结直肠癌</span><span class="pill">肝癌</span><span class="pill">肾细胞癌</span></div></div><div class="area-card" style="flex: 1 1 200px;"><b>代谢</b><div class="muted" style="margin-top:4px"><span class="pill">2型糖尿病</span></div></div><div class="area-card" style="flex: 1 1 200px;"><b>自免疫</b><div class="muted" style="margin-top:4px"><span class="pill">类风湿关节炎</span><span class="pill">银屑病</span></div></div><div class="area-card" style="flex: 1 1 200px;"><b>罕见病</b><div class="muted" style="margin-top:4px"><span class="pill">脊髓性肌萎缩症(SMA)</span><span class="pill">血友病A</span><span class="pill">阵发性睡眠性血红蛋白尿症(PNH)</span><span class="pill">Wilson病(肝豆状核变性)</span></div></div></div>
-      <div id="hospCharts"></div>
-    </div>
-  </section>
-
-  <!-- ④ 进医保分析 -->
-  <section class="tab" id="ins">
-    <div class="card">
-      <h2>哪些药更容易进医保？（准入时间 &amp; 概率）</h2>
-      <div class="note">说明：以「国谈/集采进入年份」与「进医保概率」展示迭代世代的医保可及性差异。国产1类创新药、独家、临床空白填补品种进医保概率高；仿制/集采成熟品种概率极高但利润空间被压缩。</div>
-      <div class="row" id="insAreaPick"><div class="area-card" style="flex: 1 1 200px;"><b>肿瘤</b><div class="muted" style="margin-top:4px"><span class="pill">肺癌</span><span class="pill">乳腺癌</span><span class="pill">胃癌</span><span class="pill">结直肠癌</span><span class="pill">肝癌</span><span class="pill">肾细胞癌</span></div></div><div class="area-card" style="flex: 1 1 200px;"><b>代谢</b><div class="muted" style="margin-top:4px"><span class="pill">2型糖尿病</span></div></div><div class="area-card" style="flex: 1 1 200px;"><b>自免疫</b><div class="muted" style="margin-top:4px"><span class="pill">类风湿关节炎</span><span class="pill">银屑病</span></div></div><div class="area-card" style="flex: 1 1 200px;"><b>罕见病</b><div class="muted" style="margin-top:4px"><span class="pill">脊髓性肌萎缩症(SMA)</span><span class="pill">血友病A</span><span class="pill">阵发性睡眠性血红蛋白尿症(PNH)</span><span class="pill">Wilson病(肝豆状核变性)</span></div></div></div>
-      <div id="insCharts"></div>
-    </div>
-  </section>
-
-  <!-- ⑤ 品种简报 -->
-  <section class="tab" id="brief">
-    <div class="card">
-      <h2>按简报模板生成单品种分析</h2>
-      <div class="searchbar">
-        <select id="briefSel" style="flex:1 1 320px;padding:11px 13px;border:1px solid var(--line);border-radius:10px;font-size:14px"><option value="0">吉非替尼（肺癌）</option><option value="1">埃克替尼（肺癌）</option><option value="2">阿法替尼（肺癌）</option><option value="3">奥希替尼（肺癌）</option><option value="4">阿美替尼（肺癌）</option><option value="5">伏美替尼（肺癌）</option><option value="6">贝福替尼（肺癌）</option><option value="7">克唑替尼（肺癌）</option><option value="8">阿来替尼（肺癌）</option><option value="9">恩沙替尼（肺癌）</option><option value="10">曲妥珠单抗（乳腺癌）</option><option value="11">帕妥珠单抗（乳腺癌）</option><option value="12">吡咯替尼（乳腺癌）</option><option value="13">芦康沙妥珠单抗（乳腺癌）</option><option value="14">信迪利单抗（胃癌）</option><option value="15">替雷利珠单抗（胃癌）</option><option value="16">卡度尼利单抗（胃癌）</option><option value="17">瑞拉芙普α（胃癌）</option><option value="18">二甲双胍（2型糖尿病）</option><option value="19">西格列汀（2型糖尿病）</option><option value="20">达格列净（2型糖尿病）</option><option value="21">利拉鲁肽（2型糖尿病）</option><option value="22">司美格鲁肽(注射)（2型糖尿病）</option><option value="23">司美格鲁肽(口服)（2型糖尿病）</option><option value="24">替尔泊肽（2型糖尿病）</option><option value="25">甲氨蝶呤（类风湿关节炎）</option><option value="26">托珠单抗（类风湿关节炎）</option><option value="27">托法替布（类风湿关节炎）</option><option value="28">巴瑞替尼（类风湿关节炎）</option><option value="29">乌帕替尼（类风湿关节炎）</option><option value="30">司库奇尤单抗（银屑病）</option><option value="31">依奇珠单抗（银屑病）</option><option value="32">古塞奇尤单抗（银屑病）</option><option value="33">诺西那生（脊髓性肌萎缩症(SMA)）</option><option value="34">利司扑兰（脊髓性肌萎缩症(SMA)）</option><option value="35">重组人凝血因子Ⅷ（血友病A）</option><option value="36">艾美赛珠单抗（血友病A）</option><option value="37">依库珠单抗（阵发性睡眠性血红蛋白尿症(PNH)）</option><option value="38">可伐利单抗（阵发性睡眠性血红蛋白尿症(PNH)）</option><option value="39">盐酸曲恩汀片（Wilson病(肝豆状核变性)）</option><option value="40">德曲妥珠单抗（乳腺癌）</option><option value="41">恩美曲妥珠单抗（乳腺癌）</option><option value="42">拉帕替尼（乳腺癌）</option><option value="43">奈拉替尼（乳腺癌）</option><option value="44">图卡替尼（乳腺癌）</option><option value="45">伊尼妥单抗（乳腺癌）</option><option value="46">维迪西妥单抗（胃癌）</option><option value="47">哌柏西利（乳腺癌）</option><option value="48">瑞波西利（乳腺癌）</option><option value="49">阿贝西利（乳腺癌）</option><option value="50">达尔西利（乳腺癌）</option><option value="51">西妥昔单抗（结直肠癌）</option><option value="52">贝伐珠单抗（结直肠癌）</option><option value="53">瑞戈非尼（结直肠癌）</option><option value="54">呋喹替尼（结直肠癌）</option><option value="55">曲氟尿苷替匹嘧啶（结直肠癌）</option><option value="56">仑伐替尼（肝癌）</option><option value="57">索拉非尼（肝癌）</option><option value="58">多纳非尼（肝癌）</option><option value="59">舒尼替尼（肾细胞癌）</option><option value="60">培唑帕尼（肾细胞癌）</option><option value="61">阿昔替尼（肾细胞癌）</option></select>
-        <button onclick="genBrief()">生成简报</button>
-        <button class="btn gray" onclick="window.print()">打印/另存PDF</button>
-      </div>
-      <div id="briefOut"></div>
-    </div>
-  </section>
-
-  <!-- ⑥ 业务员速查 -->
-  <section class="tab" id="sales">
-    <div class="card">
-      <h2>业务员速查 · 输入品名一键出简报</h2>
-      <p class="muted">专为非药学背景业务员设计：输入药品名 → 自动生成通俗易懂的品种简报，包含大白话作用机制、沟通要点、价格医保信息。支持一键复制到微信。</p>
-      <div class="searchbar">
-        <div class="ac-box">
-          <input type="text" id="salesQ" placeholder="输入通用名 / 商品名，如：奥希替尼、司美格鲁肽…" oninput="salesAutoComplete()" onblur="setTimeout(()=>{document.getElementById('salesAC').style.display='none'},150)">
-          <div id="salesAC" class="ac-list" style="display:none"></div>
-        </div>
-        <button onclick="genSalesBrief()">生成简报</button>
-        <button class="btn gray" onclick="window.print()">打印/另存PDF</button>
-      </div>
-      <div class="muted">试试：<span class="pill" onclick="document.getElementById('salesQ').value='奥希替尼';genSalesBrief()">奥希替尼</span><span class="pill" onclick="document.getElementById('salesQ').value='司美格鲁肽(注射)';genSalesBrief()">司美格鲁肽(注射)</span><span class="pill" onclick="document.getElementById('salesQ').value='德曲妥珠单抗';genSalesBrief()">德曲妥珠单抗</span></div>
-    </div>
-    <div id="salesOut"></div>
-  </section>
-
-  <!-- ⑦ 数据管理 -->
-  <section class="tab" id="manager">
-    <div class="card">
-      <h2>数据录入 / 导入 / 导出</h2>
+      <h2>数据管理</h2>
       <div class="row" style="align-items:center">
-        <button class="btn" onclick="openEditor()">+ 新增 / 编辑药品</button>
-        <button class="btn alt" onclick="exportJSON()">导出 JSON</button>
-        <button class="btn alt" onclick="document.getElementById(&#39;fileIn&#39;).click()">导入 JSON</button>
+        <button class="btn" onclick="openEditor()">+ 新增药品</button>
+        <button class="btn alt" onclick="exportJSON()">导出JSON</button>
+        <button class="btn alt" onclick="document.getElementById('fileIn').click()">导入JSON</button>
         <input type="file" id="fileIn" accept=".json" class="hidden" onchange="importJSON(event)">
         <button class="btn gray" onclick="resetData()">恢复示例数据</button>
-        <span class="muted">数据存储于浏览器本地(localStorage)，不上传。可导出备份或人工维护。</span>
       </div>
-      <div id="managerTable"><table><tbody><tr><th>通用名</th><th>病种</th><th>世代</th><th>年份</th><th>医保</th><th>操作</th></tr><tr><td>吉非替尼</td><td>肺癌</td><td>第1代EGFR-TKI</td><td>2005</td><td><span class="tag green">集采</span></td><td><button class="btn gray" onclick="openEditor(0)">编辑</button> <button class="btn gray" onclick="delDrug(0)">删除</button></td></tr><tr><td>埃克替尼</td><td>肺癌</td><td>第1代EGFR-TKI(国产)</td><td>2011</td><td><span class="tag green">集采</span></td><td><button class="btn gray" onclick="openEditor(1)">编辑</button> <button class="btn gray" onclick="delDrug(1)">删除</button></td></tr><tr><td>阿法替尼</td><td>肺癌</td><td>第2代EGFR-TKI</td><td>2017</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(2)">编辑</button> <button class="btn gray" onclick="delDrug(2)">删除</button></td></tr><tr><td>奥希替尼</td><td>肺癌</td><td>第3代EGFR-TKI</td><td>2017</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(3)">编辑</button> <button class="btn gray" onclick="delDrug(3)">删除</button></td></tr><tr><td>阿美替尼</td><td>肺癌</td><td>第3代EGFR-TKI(国产)</td><td>2020</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(4)">编辑</button> <button class="btn gray" onclick="delDrug(4)">删除</button></td></tr><tr><td>伏美替尼</td><td>肺癌</td><td>第3代EGFR-TKI(国产)</td><td>2021</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(5)">编辑</button> <button class="btn gray" onclick="delDrug(5)">删除</button></td></tr><tr><td>贝福替尼</td><td>肺癌</td><td>第3代EGFR-TKI(国产)</td><td>2023</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(6)">编辑</button> <button class="btn gray" onclick="delDrug(6)">删除</button></td></tr><tr><td>克唑替尼</td><td>肺癌</td><td>第1代ALK/ROS1抑制剂</td><td>2013</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(7)">编辑</button> <button class="btn gray" onclick="delDrug(7)">删除</button></td></tr><tr><td>阿来替尼</td><td>肺癌</td><td>第2代ALK抑制剂</td><td>2018</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(8)">编辑</button> <button class="btn gray" onclick="delDrug(8)">删除</button></td></tr><tr><td>恩沙替尼</td><td>肺癌</td><td>第2代ALK抑制剂(国产)</td><td>2020</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(9)">编辑</button> <button class="btn gray" onclick="delDrug(9)">删除</button></td></tr><tr><td>曲妥珠单抗</td><td>乳腺癌</td><td>第1代抗HER2单抗</td><td>2002</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(10)">编辑</button> <button class="btn gray" onclick="delDrug(10)">删除</button></td></tr><tr><td>帕妥珠单抗</td><td>乳腺癌</td><td>第2代抗HER2单抗</td><td>2018</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(11)">编辑</button> <button class="btn gray" onclick="delDrug(11)">删除</button></td></tr><tr><td>吡咯替尼</td><td>乳腺癌</td><td>第1代TKI(国产)</td><td>2018</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(12)">编辑</button> <button class="btn gray" onclick="delDrug(12)">删除</button></td></tr><tr><td>芦康沙妥珠单抗</td><td>乳腺癌</td><td>第1代ADC(国产)</td><td>2025</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(13)">编辑</button> <button class="btn gray" onclick="delDrug(13)">删除</button></td></tr><tr><td>信迪利单抗</td><td>胃癌</td><td>第1代免疫(PD-1单抗)</td><td>2018</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(14)">编辑</button> <button class="btn gray" onclick="delDrug(14)">删除</button></td></tr><tr><td>替雷利珠单抗</td><td>胃癌</td><td>第1代免疫(PD-1单抗)</td><td>2019</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(15)">编辑</button> <button class="btn gray" onclick="delDrug(15)">删除</button></td></tr><tr><td>卡度尼利单抗</td><td>胃癌</td><td>双抗(PD-1/CTLA-4)</td><td>2024</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(16)">编辑</button> <button class="btn gray" onclick="delDrug(16)">删除</button></td></tr><tr><td>瑞拉芙普α</td><td>胃癌</td><td>第2代免疫(双靶PD-L1/TGF-β)</td><td>2026</td><td><span class="tag amber">国谈进行中</span></td><td><button class="btn gray" onclick="openEditor(17)">编辑</button> <button class="btn gray" onclick="delDrug(17)">删除</button></td></tr><tr><td>二甲双胍</td><td>2型糖尿病</td><td>基础用药(双胍)</td><td>1999</td><td><span class="tag green">集采</span></td><td><button class="btn gray" onclick="openEditor(18)">编辑</button> <button class="btn gray" onclick="delDrug(18)">删除</button></td></tr><tr><td>西格列汀</td><td>2型糖尿病</td><td>第1代DPP-4</td><td>2009</td><td><span class="tag green">集采</span></td><td><button class="btn gray" onclick="openEditor(19)">编辑</button> <button class="btn gray" onclick="delDrug(19)">删除</button></td></tr><tr><td>达格列净</td><td>2型糖尿病</td><td>SGLT-2抑制剂</td><td>2017</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(20)">编辑</button> <button class="btn gray" onclick="delDrug(20)">删除</button></td></tr><tr><td>利拉鲁肽</td><td>2型糖尿病</td><td>第1代GLP-1(日针)</td><td>2011</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(21)">编辑</button> <button class="btn gray" onclick="delDrug(21)">删除</button></td></tr><tr><td>司美格鲁肽(注射)</td><td>2型糖尿病</td><td>第2代GLP-1(周针)</td><td>2021</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(22)">编辑</button> <button class="btn gray" onclick="delDrug(22)">删除</button></td></tr><tr><td>司美格鲁肽(口服)</td><td>2型糖尿病</td><td>第2代GLP-1(口服)</td><td>2024</td><td><span class="tag amber">国谈进行中</span></td><td><button class="btn gray" onclick="openEditor(23)">编辑</button> <button class="btn gray" onclick="delDrug(23)">删除</button></td></tr><tr><td>替尔泊肽</td><td>2型糖尿病</td><td>第3代GIP/GLP-1双靶</td><td>2024</td><td><span class="tag red">未进医保</span></td><td><button class="btn gray" onclick="openEditor(24)">编辑</button> <button class="btn gray" onclick="delDrug(24)">删除</button></td></tr><tr><td>甲氨蝶呤</td><td>类风湿关节炎</td><td>基础用药(DMARD)</td><td>1999</td><td><span class="tag green">集采</span></td><td><button class="btn gray" onclick="openEditor(25)">编辑</button> <button class="btn gray" onclick="delDrug(25)">删除</button></td></tr><tr><td>托珠单抗</td><td>类风湿关节炎</td><td>第1代生物制剂(IL-6R)</td><td>2013</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(26)">编辑</button> <button class="btn gray" onclick="delDrug(26)">删除</button></td></tr><tr><td>托法替布</td><td>类风湿关节炎</td><td>第1代JAK抑制剂</td><td>2017</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(27)">编辑</button> <button class="btn gray" onclick="delDrug(27)">删除</button></td></tr><tr><td>巴瑞替尼</td><td>类风湿关节炎</td><td>第2代JAK抑制剂</td><td>2019</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(28)">编辑</button> <button class="btn gray" onclick="delDrug(28)">删除</button></td></tr><tr><td>乌帕替尼</td><td>类风湿关节炎</td><td>第3代JAK抑制剂(高选择性)</td><td>2022</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(29)">编辑</button> <button class="btn gray" onclick="delDrug(29)">删除</button></td></tr><tr><td>司库奇尤单抗</td><td>银屑病</td><td>第1代IL-17A单抗</td><td>2019</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(30)">编辑</button> <button class="btn gray" onclick="delDrug(30)">删除</button></td></tr><tr><td>依奇珠单抗</td><td>银屑病</td><td>第1代IL-17A单抗</td><td>2019</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(31)">编辑</button> <button class="btn gray" onclick="delDrug(31)">删除</button></td></tr><tr><td>古塞奇尤单抗</td><td>银屑病</td><td>第1代IL-23单抗</td><td>2019</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(32)">编辑</button> <button class="btn gray" onclick="delDrug(32)">删除</button></td></tr><tr><td>诺西那生</td><td>脊髓性肌萎缩症(SMA)</td><td>反义寡核苷酸(ASO)</td><td>2016</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(33)">编辑</button> <button class="btn gray" onclick="delDrug(33)">删除</button></td></tr><tr><td>利司扑兰</td><td>脊髓性肌萎缩症(SMA)</td><td>小分子SMN2剪接修饰</td><td>2020</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(34)">编辑</button> <button class="btn gray" onclick="delDrug(34)">删除</button></td></tr><tr><td>重组人凝血因子Ⅷ</td><td>血友病A</td><td>第1代重组FⅧ</td><td>2009</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(35)">编辑</button> <button class="btn gray" onclick="delDrug(35)">删除</button></td></tr><tr><td>艾美赛珠单抗</td><td>血友病A</td><td>第2代双特异性抗体(模拟FⅧ)</td><td>2018</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(36)">编辑</button> <button class="btn gray" onclick="delDrug(36)">删除</button></td></tr><tr><td>依库珠单抗</td><td>阵发性睡眠性血红蛋白尿症(PNH)</td><td>第1代C5单抗</td><td>2011</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(37)">编辑</button> <button class="btn gray" onclick="delDrug(37)">删除</button></td></tr><tr><td>可伐利单抗</td><td>阵发性睡眠性血红蛋白尿症(PNH)</td><td>第2代C5单抗(新型)</td><td>2024</td><td><span class="tag red">未进医保</span></td><td><button class="btn gray" onclick="openEditor(38)">编辑</button> <button class="btn gray" onclick="delDrug(38)">删除</button></td></tr><tr><td>盐酸曲恩汀片</td><td>Wilson病(肝豆状核变性)</td><td>铜离子络合剂</td><td>2024</td><td><span class="tag red">未进医保</span></td><td><button class="btn gray" onclick="openEditor(39)">编辑</button> <button class="btn gray" onclick="delDrug(39)">删除</button></td></tr><tr><td>德曲妥珠单抗</td><td>乳腺癌</td><td>ADC(第3代HER2)</td><td>2023</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(40)">编辑</button> <button class="btn gray" onclick="delDrug(40)">删除</button></td></tr><tr><td>恩美曲妥珠单抗</td><td>乳腺癌</td><td>ADC(T-DM1,第2代)</td><td>2020</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(41)">编辑</button> <button class="btn gray" onclick="delDrug(41)">删除</button></td></tr><tr><td>拉帕替尼</td><td>乳腺癌</td><td>小分子TKI(HER2/EGFR)</td><td>2010</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(42)">编辑</button> <button class="btn gray" onclick="delDrug(42)">删除</button></td></tr><tr><td>奈拉替尼</td><td>乳腺癌</td><td>小分子TKI(泛HER)</td><td>2020</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(43)">编辑</button> <button class="btn gray" onclick="delDrug(43)">删除</button></td></tr><tr><td>图卡替尼</td><td>乳腺癌</td><td>小分子TKI(HER2,脑转移)</td><td>2023</td><td><span class="tag red">未进医保</span></td><td><button class="btn gray" onclick="openEditor(44)">编辑</button> <button class="btn gray" onclick="delDrug(44)">删除</button></td></tr><tr><td>伊尼妥单抗</td><td>乳腺癌</td><td>HER2单抗(生物类似药)</td><td>2020</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(45)">编辑</button> <button class="btn gray" onclick="delDrug(45)">删除</button></td></tr><tr><td>维迪西妥单抗</td><td>胃癌</td><td>ADC(HER2,国产)</td><td>2021</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(46)">编辑</button> <button class="btn gray" onclick="delDrug(46)">删除</button></td></tr><tr><td>哌柏西利</td><td>乳腺癌</td><td>CDK4/6抑制剂(第1代)</td><td>2018</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(47)">编辑</button> <button class="btn gray" onclick="delDrug(47)">删除</button></td></tr><tr><td>瑞波西利</td><td>乳腺癌</td><td>CDK4/6抑制剂</td><td>2023</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(48)">编辑</button> <button class="btn gray" onclick="delDrug(48)">删除</button></td></tr><tr><td>阿贝西利</td><td>乳腺癌</td><td>CDK4/6抑制剂</td><td>2020</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(49)">编辑</button> <button class="btn gray" onclick="delDrug(49)">删除</button></td></tr><tr><td>达尔西利</td><td>乳腺癌</td><td>CDK4/6抑制剂(国产)</td><td>2021</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(50)">编辑</button> <button class="btn gray" onclick="delDrug(50)">删除</button></td></tr><tr><td>西妥昔单抗</td><td>结直肠癌</td><td>EGFR单抗(第1代)</td><td>2006</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(51)">编辑</button> <button class="btn gray" onclick="delDrug(51)">删除</button></td></tr><tr><td>贝伐珠单抗</td><td>结直肠癌</td><td>VEGF-A单抗</td><td>2010</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(52)">编辑</button> <button class="btn gray" onclick="delDrug(52)">删除</button></td></tr><tr><td>瑞戈非尼</td><td>结直肠癌</td><td>多靶TKI(VEGFR等)</td><td>2017</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(53)">编辑</button> <button class="btn gray" onclick="delDrug(53)">删除</button></td></tr><tr><td>呋喹替尼</td><td>结直肠癌</td><td>VEGFR TKI(国产)</td><td>2018</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(54)">编辑</button> <button class="btn gray" onclick="delDrug(54)">删除</button></td></tr><tr><td>曲氟尿苷替匹嘧啶</td><td>结直肠癌</td><td>化疗复方</td><td>2019</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(55)">编辑</button> <button class="btn gray" onclick="delDrug(55)">删除</button></td></tr><tr><td>仑伐替尼</td><td>肝癌</td><td>多靶TKI(VEGFR/FGFR等)</td><td>2018</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(56)">编辑</button> <button class="btn gray" onclick="delDrug(56)">删除</button></td></tr><tr><td>索拉非尼</td><td>肝癌</td><td>多靶TKI(第1代)</td><td>2006</td><td><span class="tag green">集采</span></td><td><button class="btn gray" onclick="openEditor(57)">编辑</button> <button class="btn gray" onclick="delDrug(57)">删除</button></td></tr><tr><td>多纳非尼</td><td>肝癌</td><td>多靶TKI(国产)</td><td>2021</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(58)">编辑</button> <button class="btn gray" onclick="delDrug(58)">删除</button></td></tr><tr><td>舒尼替尼</td><td>肾细胞癌</td><td>多靶TKI(VEGFR/PDGFR)</td><td>2007</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(59)">编辑</button> <button class="btn gray" onclick="delDrug(59)">删除</button></td></tr><tr><td>培唑帕尼</td><td>肾细胞癌</td><td>多靶TKI(VEGFR等)</td><td>2016</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(60)">编辑</button> <button class="btn gray" onclick="delDrug(60)">删除</button></td></tr><tr><td>阿昔替尼</td><td>肾细胞癌</td><td>VEGFR TKI(高选择)</td><td>2015</td><td><span class="tag green">已进医保</span></td><td><button class="btn gray" onclick="openEditor(61)">编辑</button> <button class="btn gray" onclick="delDrug(61)">删除</button></td></tr></tbody></table></div>
+      <div id="managerTable" style="margin-top:12px"></div>
     </div>
-
-    <div class="card" style="margin-top:14px">
-      <h2>📄 文档 / 文本批量导入（智能识别字段）</h2>
-      <p class="muted">支持两种模式：<b>① 结构化</b>——按「字段: 值」格式书写，每个药品之间空一行；<b>② 智能模式</b>——直接粘贴非结构化文本（新闻稿、NMPA查询结果、说明书摘要等），系统自动识别药品名、厂家、批准文号、价格、医保状态、病种等字段。也支持上传 <b>.csv / .docx</b>。</p>
-      <textarea id="docText" rows="9" style="width:100%;font-family:consolas;font-size:12px;padding:8px;border:1px solid var(--line);border-radius:8px" placeholder="支持两种输入方式：
-
-【结构化】每行一个字段，药品间空行分隔：
-通用名: 德曲妥珠单抗
-商品名: 优赫得
-领域: 肿瘤
-病种: 乳腺癌
-迭代世代: ADC(第3代)
-上市年: 2023
-
-【智能模式】直接粘贴任意文本：
-国药准字SJ20230045
-德曲妥珠单抗，阿斯利康/第一三共联合开发
-2023年获批上市，适应症为乳腺癌
-医保已进，双通道
-价格约5500元/支，2-8℃冷藏
-ADC药物，注射途径
-
-系统会自动识别字段并用标签标注来源。">
-来源: 进口
-医保状态: 已进医保
-进医保年: 2023
-剂型: 注射液
-规格: 100mg
-生产厂家: 第一三共/阿斯利康
-作用机制: HER2 ADC
-专利到期日: 2038-01-01
-仿制药围攻数: 0
-
-通用名: 西妥昔单抗
-商品名: 爱必妥
-领域: 肿瘤
-病种: 结直肠癌
-..."></textarea>
-      <div class="row" style="margin-top:8px;align-items:center;flex-wrap:wrap;gap:8px">
+    <div class="card">
+      <h2>📄 文档/文本批量导入（智能识别）</h2>
+      <p class="muted">支持结构化（字段:值）和智能模式（直接粘贴文本）。也支持.csv/.docx。</p>
+      <textarea id="docText" rows="7" style="width:100%;font-family:consolas;font-size:12px;padding:8px;border:1px solid var(--line);border-radius:8px" placeholder="粘贴药品信息文本…"></textarea>
+      <div class="row" style="margin-top:8px;align-items:center">
         <button class="btn" onclick="parseDoc()">解析预览</button>
-        <button class="btn alt" onclick="document.getElementById(&#39;docFile&#39;).click()">上传文件(.txt/.md/.csv/.docx)</button>
+        <button class="btn alt" onclick="document.getElementById('docFile').click()">上传文件</button>
         <input type="file" id="docFile" accept=".txt,.md,.csv,.docx" class="hidden" onchange="loadDocFile(event)">
         <span class="muted" id="docMsg"></span>
       </div>
       <div id="docPreview"></div>
-      <details style="margin-top:10px">
-        <summary class="muted">📋 查看字段模板与填写说明</summary>
-        <pre style="background:var(--soft);padding:10px;border-radius:8px;font-size:12px;white-space:pre-wrap;margin-top:6px">【结构化模式】每行一个字段，药品之间空一行；字段名后用英文「:」或中文「：」均可。
-也支持英文字段名（如 generic name, manufacturer, price 等）。
-
-通用名: 必填
-商品名:
-领域: 肿瘤 / 代谢 / 自免疫 / 罕见病（四选一，留空可自动反查）
-病种: 如 乳腺癌、结直肠癌
-迭代世代: 如 第3代EGFR-TKI、ADC
-上市年: 如 2023
-来源: 国产 / 进口
-是否未引进: 是 / 否
-药品类别:
-作用机制:
-生产厂家:
-批准文号:
-剂型:
-规格:
-批准日期:
-贮藏:
-单价:
-年化费用:
-医保状态: 集采 / 已进医保 / 国谈进行中 / 未进医保
-进医保年: 如 2023
-双通道: 是 / 否
-集采风险:
-指南推荐:
-给药途径: 口服 / 注射
-销售额:
-进医保概率: 0-1 小数，如 0.9
-省内患者:
-专利到期日:
-仿制药围攻数: 数字，如 3
-适应症:
-拓展适应症:
-临床试验:
-备注:
-药品类型: 创新药 / 集采药 / 其他
-采购周期: 如 第9批国采（集采药填写）
-
-【智能模式】直接粘贴非结构化文本即可，系统自动识别以下字段：
-- 批准文号（国药准字H/S/Z…）
-- 厂家（XX药业/制药/医药…）
-- 日期/上市年（YYYY年MM月 / YYYY-MM-DD）
-- 价格（XX元/盒）
-- 医保状态（已进医保/集采/国谈/未进医保）
-- 病种+领域（匹配病种库自动反查）
-- 给药途径（口服/注射）
-- 冷链（2-8℃冷藏/常温）
-- 规格（XXmg/XXml）
-- 作用机制（TKI/ADC/单抗/GLP-1/PD-1/JAK…）
-- 来源（国产/进口）
-- 通用名（匹配已有数据库）
-
-识别结果用彩色标签标注来源：结构化 / 智能识别 / 自动反查 / 数据库匹配
-
-备注:
-通俗作用机制: (可选，大白话解释作用机制)
-适应症通俗: (可选，大白话描述适应症)
-沟通要点: (可选，卖点/对比/常见疑问)
-药品类型: (创新药/集采药/其他)
-采购周期: (集采药填写，如：第10批集采)
-采购价: (内部，采购员录入)
-价格核查日期: (如：2025-07-01)
-价格核查来源: (如：省招采网/厂家通知)
-
-CSV 格式：第一行为表头（字段名同上），之后每行一个药品，逗号分隔。</pre>
-      </details>
     </div>
-  </section>
-
-  <!-- ⑦ 数据来源 -->
-  <section class="tab" id="source">
     <div class="card">
-      <h2>官方数据来源 &amp; 采集方式</h2>
-      <p class="muted">下列来源均为国家药监局(NMPA)、国家药监局药审中心(CDE)、国家医保局等<b>官方公开渠道</b>。按「入口 / 进入路径」查找对应数据后，复制回「⑥ 数据管理」录入或导入即可。</p>
-      <table>
-        <tbody><tr><th>需采集的字段</th><th>权威来源</th><th>入口 / 进入路径</th></tr>
-        <tr><td>批准文号/厂家/剂型/规格/批准日期</td><td>NMPA 数据查询系统（国产/进口药品）</td><td>手动查询录入；或使用NMPA政务服务门户法人空间查看电子证照</td></tr>
-        <tr><td>适应症/说明书</td><td>CDE“上市药品信息”板块</td><td>https://www.cde.org.cn → 信息公开 → 上市药品信息</td></tr>
-        <tr><td>医保目录查询</td><td>国家医保局微信公众号</td><td>微信搜索“国家医保局”→微服务→国家医保药品目录查询</td></tr>
-        <tr><td>医保目录下载</td><td>国家医保服务平台</td><td>https://fuwu.nhsa.gov.cn</td></tr>
-        <tr><td>国谈药配备机构</td><td>国家医保局国谈药查询</td><td>https://wx.nhsa.gov.cn/#/pages/negotiatingDrugs/negotiatingDrugs</td></tr>
-        <tr><td>中国上市药品目录集</td><td>医药技术信息服务平台</td><td>https://help.yaozh.com</td></tr>
-        <tr><td>罕见病目录</td><td>国家卫健委《第一批/第二批罕见病目录》</td><td>收录121种+86种罕见病</td></tr>
-        <tr><td>快速检索与整理</td><td>国家药监局「E药云搜」App、开源原研药数据库(GitHub)</td><td>辅助核对</td></tr>
-        <tr><td>患者池/流行病学</td><td>各省肿瘤登记年报、流行病学文献</td><td>按简报公式估算（见「品种简报」）</td></tr>
-      </tbody></table>
-      <div class="note">⚠️ 合规声明：本工具所有数据来源于NMPA、CDE、国家医保局等官方公开渠道。NMPA、医保局官网设有反爬机制，无法完全自动抓取。本工具采用“人工录入为主、官方核对为辅”的方式，用户可通过上述官方链接自行查询验证。禁止使用任何违规爬虫手段批量获取数据。</div>
-    </div>
-  </section>
-
-  <!-- ⑧ 价格批量核算 -->
-  <section class="tab" id="price">
-    <div class="card">
-      <h2>⑧ 价格批量核算（年化费用 / 日均费用 / 单位归一比价）</h2>
-      <div class="note">用途：对缺失<b>年化费用</b>的品种，按「单价 × 年用药量」批量估算；计算<b>日均费用</b>与<b>单位规格归一价</b>（单价÷规格数值），用于横向比价、市场空间测算与药企谈判基准。核算结果可一键<b>写回</b>数据库「年化费用」字段。</div>
+      <h2>价格批量核算</h2>
       <div class="row" style="align-items:center">
-        <div class="field" style="flex:1 1 220px">
-          <div class="k">年用药量假设（盒 / 支 / 年）</div>
-          <input id="calcDef" type="number" value="12" style="width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:13.5px">
-        </div>
-        <div class="field" style="flex:1 1 220px">
-          <div class="k">仅显示</div>
-          <select id="calcFilter" style="width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:13.5px">
-            <option value="all">全部品种</option>
-            <option value="missing">仅缺失年化费用</option>
-            <option value="have">已有年化费用</option>
-          </select>
-        </div>
-        <button class="btn" onclick="runPriceCalc()">开始核算</button>
-        <button class="btn alt" onclick="writePriceCalc()">写回年化费用</button>
+        <div class="field" style="flex:1 1 220px"><div class="k">年用药量假设</div><input id="calcDef" type="number" value="12" style="width:100%;padding:8px;border:1px solid var(--line);border-radius:8px"></div>
+        <div class="field" style="flex:1 1 220px"><div class="k">仅显示</div><select id="calcFilter" style="width:100%;padding:8px;border:1px solid var(--line);border-radius:8px"><option value="all">全部</option><option value="missing">缺年化费用</option><option value="have">有年化费用</option></select></div>
+        <button class="btn" onclick="runPriceCalc()">核算</button>
+        <button class="btn alt" onclick="writePriceCalc()">写回</button>
         <span class="muted" id="priceMsg"></span>
       </div>
       <div id="priceTable"></div>
       <div id="priceSummary" class="muted" style="margin-top:10px"></div>
     </div>
-  </section>
-
-  <!-- ⑩ 冷链成本估算 -->
-  <section class="tab" id="coldchain">
     <div class="card">
-      <h2>⑩ 冷链成本估算器（R04）</h2>
-      <div class="note">用途：输入公司冷库运营参数，自动计算年化冷链成本，并按药品分摊估算单位储运成本。参数已预填<b>行业参考默认值</b>（基于医药流通企业100㎡级冷库调研），请根据实际情况修改。后续去冷库实地了解后校准。</div>
+      <h2>冷链成本估算器</h2>
+      <div class="note">参数已预填行业参考默认值，请根据实际情况修改。</div>
       <div class="grid2" style="margin-top:14px">
         <div class="card" style="margin:0;border-color:#bfdbfe">
-          <h3 style="color:#1e40af">公司级参数（可编辑）</h3>
+          <h3 style="color:#1e40af">公司级参数</h3>
           <div class="grid2">
-            <div><label style="font-size:12.5px;color:var(--sub)">冷库面积(㎡)</label><input id="cc_area" type="number" value="100" style="width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:7px;font-size:13.5px"></div>
-            <div><label style="font-size:12.5px;color:var(--sub)">日耗电量(kWh)</label><input id="cc_kwh" type="number" value="15" style="width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:7px;font-size:13.5px"></div>
-            <div><label style="font-size:12.5px;color:var(--sub)">电费单价(元/kWh)</label><input id="cc_rate" type="number" value="0.8" step="0.05" style="width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:7px;font-size:13.5px"></div>
-            <div><label style="font-size:12.5px;color:var(--sub)">运输单次成本(元)</label><input id="cc_trans" type="number" value="250" style="width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:7px;font-size:13.5px"></div>
-            <div><label style="font-size:12.5px;color:var(--sub)">月均运输次数</label><input id="cc_times" type="number" value="30" style="width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:7px;font-size:13.5px"></div>
-            <div><label style="font-size:12.5px;color:var(--sub)">年折旧/租金(元)</label><input id="cc_depr" type="number" value="25000" style="width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:7px;font-size:13.5px"></div>
-            <div><label style="font-size:12.5px;color:var(--sub)">其他固定成本(元/年)</label><input id="cc_other" type="number" value="8000" style="width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:7px;font-size:13.5px"></div>
+            <div><label style="font-size:12.5px;color:var(--sub)">冷库面积(㎡)</label><input id="cc_area" type="number" value="100" style="width:100%;padding:7px;border:1px solid var(--line);border-radius:7px"></div>
+            <div><label style="font-size:12.5px;color:var(--sub)">日耗电(kWh)</label><input id="cc_kwh" type="number" value="15" style="width:100%;padding:7px;border:1px solid var(--line);border-radius:7px"></div>
+            <div><label style="font-size:12.5px;color:var(--sub)">电费(元/kWh)</label><input id="cc_rate" type="number" value="0.8" step="0.05" style="width:100%;padding:7px;border:1px solid var(--line);border-radius:7px"></div>
+            <div><label style="font-size:12.5px;color:var(--sub)">运输单次(元)</label><input id="cc_trans" type="number" value="250" style="width:100%;padding:7px;border:1px solid var(--line);border-radius:7px"></div>
+            <div><label style="font-size:12.5px;color:var(--sub)">月均次数</label><input id="cc_times" type="number" value="30" style="width:100%;padding:7px;border:1px solid var(--line);border-radius:7px"></div>
+            <div><label style="font-size:12.5px;color:var(--sub)">年折旧(元)</label><input id="cc_depr" type="number" value="25000" style="width:100%;padding:7px;border:1px solid var(--line);border-radius:7px"></div>
+            <div><label style="font-size:12.5px;color:var(--sub)">其他(元/年)</label><input id="cc_other" type="number" value="8000" style="width:100%;padding:7px;border:1px solid var(--line);border-radius:7px"></div>
           </div>
-          <button class="btn" style="margin-top:10px" onclick="calcColdChain()">重新计算</button>
-          <button class="btn alt" onclick="saveCCParams()">保存参数到本地</button>
+          <button class="btn" style="margin-top:10px" onclick="calcColdChain()">计算</button>
+          <button class="btn alt" onclick="saveCCParams()">保存参数</button>
         </div>
-        <div class="card" style="margin:0;border-color:#bbf7d0">
-          <h3 style="color:#166534">成本汇总</h3>
-          <div id="ccSummary"></div>
-        </div>
+        <div class="card" style="margin:0;border-color:#bbf7d0"><h3 style="color:#166534">成本汇总</h3><div id="ccSummary"></div></div>
       </div>
-      <div class="card" style="margin-top:14px">
-        <h3>冷链药品储运成本分摊</h3>
-        <p class="muted">仅显示需冷链储运的品种（2-8℃冷藏）。分摊方式：按冷链品种数均摊固定成本（折旧+其他），可变成本（电费+运输）按总费用均摊。</p>
-        <div id="ccDrugTable"></div>
-      </div>
+      <div class="card" style="margin-top:14px"><h3>冷链药品分摊</h3><div id="ccDrugTable"></div></div>
     </div>
-  </section>
-
-  <!-- ⑪ 价格追踪与核查 -->
-  <section class="tab" id="pricetrack">
     <div class="card">
-      <h2>⑪ 价格追踪与核查（R05+R06+R10）</h2>
-      <div class="note">用途：R05 价格历史时间线（记录每次价格变更）、R06 横向归一比价（按规格归一化后同病种对比）、R10 价格核查提醒（创新药每月/集采药周期结束重点核查）。</div>
-
+      <h2>价格追踪与核查</h2>
       <div class="seg" style="margin:12px 0">
-        <button class="on" onclick="ptTab('history',this)">R05 价格历史</button>
-        <button onclick="ptTab('compare',this)">R06 归一比价</button>
-        <button onclick="ptTab('check',this)">R10 核查提醒</button>
+        <button class="on" onclick="ptTab('history',this)">价格历史</button>
+        <button onclick="ptTab('compare',this)">归一比价</button>
+        <button onclick="ptTab('check',this)">核查提醒</button>
       </div>
-
-      <!-- R05 价格历史 -->
       <div id="ptHistory">
         <div class="searchbar">
-          <div class="ac-box">
-            <input type="text" id="ptSearch" placeholder="输入药品名查价格历史…" oninput="ptAutoComplete()" onblur="setTimeout(()=>document.getElementById('ptAC').style.display='none',150)">
-            <div id="ptAC" class="ac-list" style="display:none"></div>
-          </div>
-          <button class="btn" onclick="ptShowHistory()">查看时间线</button>
+          <div class="ac-box"><input type="text" id="ptSearch" placeholder="输入药品名查价格历史…" oninput="ptAutoComplete()" onblur="setTimeout(()=>document.getElementById('ptAC').style.display='none',150)"><div id="ptAC" class="ac-list" style="display:none"></div></div>
+          <button class="btn" onclick="ptShowHistory()">查看</button>
         </div>
         <div id="ptTimeline"></div>
       </div>
-
-      <!-- R06 归一比价 -->
       <div id="ptCompare" style="display:none">
         <div class="searchbar">
-          <select id="ptCmpArea" onchange="ptCmpDisease()" style="padding:9px 12px;border:1px solid var(--line);border-radius:9px;font-size:14px"></select>
-          <select id="ptCmpDisease" style="padding:9px 12px;border:1px solid var(--line);border-radius:9px;font-size:14px"></select>
-          <button class="btn" onclick="ptRenderCompare()">生成比价表</button>
+          <select id="ptCmpArea" onchange="ptCmpDisease()" style="padding:9px 12px;border:1px solid var(--line);border-radius:9px"></select>
+          <select id="ptCmpDisease" style="padding:9px 12px;border:1px solid var(--line);border-radius:9px"></select>
+          <button class="btn" onclick="ptRenderCompare()">比价</button>
         </div>
         <div id="ptCmpTable"></div>
       </div>
-
-      <!-- R10 核查提醒 -->
       <div id="ptCheck" style="display:none">
-        <div class="row" style="align-items:center;margin-bottom:10px">
-          <div class="field"><div class="k">创新药核查周期</div><div class="v">每月一次</div></div>
-          <div class="field"><div class="k">集采药核查节点</div><div class="v">采购周期结束</div></div>
-          <div class="field"><div class="k">今日日期</div><div class="v" id="ptToday"></div></div>
-        </div>
+        <div class="field" style="flex:1 1 200px;margin-bottom:10px"><div class="k">今日日期</div><div class="v" id="ptToday"></div></div>
         <div id="ptCheckTable"></div>
       </div>
     </div>
-  </section>
-
+    <div class="card">
+      <h2>官方数据来源指引</h2>
+      <table><tr><th>字段</th><th>来源</th><th>入口</th></tr>
+      <tr><td>批准文号/厂家</td><td>NMPA</td><td>nmpa.gov.cn</td></tr>
+      <tr><td>适应症/说明书</td><td>CDE</td><td>cde.org.cn</td></tr>
+      <tr><td>医保目录</td><td>国家医保局</td><td>fuwu.nhsa.gov.cn</td></tr>
+      <tr><td>罕见病目录</td><td>国家卫健委</td><td>121+86种</td></tr>
+      </table>
+      <div class="note">⚠️ 合规声明：数据来源于NMPA、CDE、医保局等官方公开渠道，采用"人工录入为主、官方核对为辅"方式。</div>
+    </div>
+  </div>
 </div>
-<div class="modal-bg" id="editorBg">
-  <div class="modal">
-    <h2 style="margin-top:0">药品录入（对应文档收集标准）</h2>
+
+<!-- 竞争格局 -->
+<div id="competeSection" class="section wrap">
+  <button class="btn gray back-btn" onclick="backToEntry()">← 返回首页</button>
+  <div class="card"><h2>竞争格局 · 同病种横向对比</h2><div id="competeAreaPick" class="row"></div></div>
+  <div id="competeContent"></div>
+</div>
+
+<!-- 临床简报 -->
+<div id="clinicalSection" class="section wrap">
+  <button class="btn gray back-btn" onclick="backToEntry()">← 返回首页</button>
+  <div class="card">
+    <h2>临床简报 · 输入品名一键生成</h2>
+    <p class="muted">5部分：结论 → 沟通要点 → 适用人群 → 价格医保 → 同类对比</p>
+    <div class="searchbar">
+      <div class="ac-box"><input type="text" id="clinicalQ" placeholder="输入药品名…" oninput="clinicalAC()" onblur="setTimeout(()=>document.getElementById('clinicalAC').style.display='none',150)"><div id="clinicalAC" style="display:none"></div></div>
+      <button class="btn" onclick="genClinicalBrief()">生成</button>
+    </div>
+  </div>
+  <div id="clinicalOut"></div>
+</div>
+
+<!-- Editor Modal -->
+<div class="modal-bg" id="editorBg"><div class="modal">
+  <h2 style="margin-top:0">药品录入</h2>
+  <div class="grid2">
+    <div><label>通用名 *</label><input id="f_gn"></div>
+    <div><label>商品名</label><input id="f_bn"></div>
+    <div><label>厂家</label><input id="f_mfr"></div>
+    <div><label>疾病领域</label><select id="f_area" onchange="cascadeDisease()"></select></div>
+    <div><label>病种</label><select id="f_disease"></select></div>
+    <div><label>适应症/靶点</label><input id="f_ind" placeholder="如：EGFR突变NSCLC"></div>
+    <div><label>获批年份</label><input id="f_year" type="number"></div>
+    <div><label>代次</label><input id="f_gen" placeholder="如：第3代EGFR-TKI"></div>
+    <div><label>医保状态</label><select id="f_ins"><option>国谈</option><option>常规医保</option><option>自费</option><option>已进医保</option><option>集采</option><option>国谈进行中</option><option>未进医保</option></select></div>
+    <div><label>支付标准</label><input id="f_paystd" placeholder="医保支付标准"></div>
+    <div><label>挂网价(元)</label><input id="f_price" type="number"></div>
+    <div><label>是否冷链</label><select id="f_cold"><option>常温</option><option>2-8℃冷藏</option></select></div>
+    <div><label>指南推荐等级</label><input id="f_gl" placeholder="如：CSCO I级推荐"></div>
+    <div><label>给药途径</label><select id="f_route"><option>口服</option><option>注射</option></select></div>
+    <div><label>国产/进口</label><select id="f_origin"><option>国产</option><option>进口</option></select></div>
+    <div><label>是否独家</label><select id="f_excl"><option>是</option><option>否</option></select></div>
+    <div><label>批准文号</label><input id="f_appr"></div>
+    <div><label>剂型</label><input id="f_form"></div>
+    <div><label>规格</label><input id="f_spec"></div>
+    <div><label>批准日期</label><input id="f_adate"></div>
+    <div><label>年化费用(元)</label><input id="f_annual" type="number"></div>
+    <div><label>集采风险</label><input id="f_vbp"></div>
+    <div><label>双通道</label><select id="f_dual"><option>是</option><option>否</option></select></div>
+    <div><label>进医保年份</label><input id="f_insyear" type="number"></div>
+    <div><label>年销售额(亿)</label><input id="f_sales" type="number"></div>
+    <div><label>进医保概率(0-1)</label><input id="f_prob" type="number" step="0.05"></div>
+    <div><label>省份</label><input id="f_prov" value="湖南"></div>
+    <div><label>省内患者/年</label><input id="f_pt"></div>
+    <div><label>专利到期日</label><input id="f_patent"></div>
+    <div><label>仿制药数</label><input id="f_followers" type="number"></div>
+    <div><label>注册分类</label><input id="f_cls"></div>
+  </div>
+  <div><label>备注</label><textarea id="f_note" rows="2"></textarea></div>
+  <div><label>拓展适应症</label><textarea id="f_ind2" rows="2"></textarea></div>
+  <div><label>临床试验</label><textarea id="f_nt" rows="2"></textarea></div>
+  <div style="margin-top:10px;padding:10px;background:#fef3f7;border-radius:8px;border:1px dashed #f9a8d4">
+    <div style="font-size:13px;font-weight:600;color:#9d174d;margin-bottom:6px">内部字段</div>
     <div class="grid2">
-      <div><label>通用名</label><input id="f_gn"></div>
-      <div><label>商品名</label><input id="f_bn"></div>
-      <div><label>疾病领域</label><select id="f_area" onchange="cascadeDisease()"></select></div>
-      <div><label>病种</label><select id="f_disease"></select></div>
-      <div><label>迭代世代</label><input id="f_gen" placeholder="如：第3代/双靶免疫/胰岛素类似物"></div>
-      <div><label>上市年份</label><input id="f_year" type="number"></div>
-      <div><label>国产/进口</label>
-        <select id="f_origin"><option>国产</option><option>进口</option></select></div>
-      <div><label>是否独家</label>
-        <select id="f_excl"><option>是</option><option>否</option></select></div>
-      <div><label>注册分类</label><input id="f_class" placeholder="如：治疗用生物制品1类"></div>
-      <div><label>作用机制</label><input id="f_mech"></div>
-      <div><label>厂家</label><input id="f_mfr"></div>
-      <div><label>批准文号</label><input id="f_appr"></div>
-      <div><label>剂型</label><input id="f_form"></div>
-      <div><label>规格</label><input id="f_spec"></div>
-      <div><label>批准日期</label><input id="f_adate"></div>
-      <div><label>冷链</label><input id="f_cold" placeholder="如：2–8℃冷藏"></div>
-      <div><label>单价(元)</label><input id="f_price" type="number"></div>
-      <div><label>年化费用(元)</label><input id="f_annual" type="number"></div>
-      <div><label>医保状态</label>
-        <select id="f_ins"><option>已进医保</option><option>国谈进行中</option><option>未进医保</option><option>集采</option></select></div>
-      <div><label>国谈/集采年份</label><input id="f_insyear" type="number" placeholder="如2023"></div>
-      <div><label>双通道</label>
-        <select id="f_dual"><option>是</option><option>否</option></select></div>
-      <div><label>集采风险</label><input id="f_vbp" placeholder="如：低/无"></div>
-      <div><label>指南推荐</label><input id="f_gl" placeholder="如：CSCO I级推荐"></div>
-      <div><label>给药途径</label><select id="f_route"><option>注射</option><option>口服</option></select></div>
-      <div><label>年销售额(亿元,示例)</label><input id="f_sales" type="number" placeholder="公开估算"></div>
-      <div><label>进医保概率(0-1)</label><input id="f_prob" type="number" step="0.05"></div>
-      <div><label>省份(如湖南)</label><input id="f_prov" placeholder="湖南"></div>
-      <div><label>省内目标患者/年</label><input id="f_pt" placeholder="如6900"></div>
-    </div>
-    <div style="margin-top:10px"><label>适应症</label><textarea id="f_ind" rows="2"></textarea></div>
-    <div><label>在研/拓展适应症</label><textarea id="f_ind2" rows="2"></textarea></div>
-    <div><label>临床试验项目</label><textarea id="f_nt" rows="2" placeholder="登记号/阶段/数据"></textarea></div>
-    <div><label>专利到期日</label><input id="f_patent" placeholder="如 2032-07-03 或 已过期"></div>
-    <div><label>在研仿制药/竞品申请数</label><input id="f_followers" type="number" placeholder="单位：家"></div>
-    <div><label>备注/风险</label><textarea id="f_note" rows="2"></textarea></div>
-    <div style="margin-top:10px;padding:10px;background:#fef3f7;border-radius:8px;border:1px dashed #f9a8d4">
-      <div style="font-size:13px;font-weight:600;color:#9d174d;margin-bottom:6px">内部字段（R09 采购价 + R10 价格核查）</div>
-      <div class="grid2">
-        <div><label>药品类型</label>
-          <select id="f_dtype"><option value="">请选择</option><option>创新药</option><option>集采药</option><option>其他</option></select></div>
-        <div><label>采购周期（集采药填）</label><input id="f_pcycle" placeholder="如：第10批集采(2024-2025)"></div>
-        <div><label>实际采购价(元)</label><input id="f_pprice" type="number" placeholder="采购员录入"></div>
-        <div><label>采购价录入日期</label><input id="f_pprice_date" type="date"></div>
-        <div><label>最近价格核查日期</label><input id="f_price_check" type="date"></div>
-        <div><label>价格核查来源</label><input id="f_price_src" placeholder="如：各省招采网/厂家通知"></div>
-      </div>
-    </div>
-    <div style="margin-top:10px;padding:10px;background:#f0f7ff;border-radius:8px;border:1px dashed #93c5fd">
-      <div style="font-size:13px;font-weight:600;color:#1e40af;margin-bottom:6px">通俗易懂化字段（R03 · 供业务员速查使用）</div>
-      <div><label>作用机制（大白话）</label><textarea id="f_mech_plain" rows="2" placeholder="如：这个药像精准制导导弹，只杀带某种标记的癌细胞，不误伤正常细胞"></textarea></div>
-      <div><label>适应症（大白话）</label><textarea id="f_ind_plain" rows="2" placeholder="如：用于晚期肺癌患者，特别是基因检测发现EGFR突变的人群"></textarea></div>
-      <div><label>沟通要点（卖点/对比/常见疑问）</label><textarea id="f_talking_points" rows="3" placeholder="如：① 比上一代副作用更小 ② 每天口服一次很方便 ③ 已进医保报销 ④ 与XX药相比优势：..."></textarea></div>
-    </div>
-    <div class="row" style="margin-top:14px;justify-content:flex-end">
-      <button class="btn gray" onclick="closeEditor()">取消</button>
-      <button class="btn" onclick="saveDrug()">保存</button>
+      <div><label>药品类型</label><select id="f_dtype"><option value="">请选择</option><option>创新药</option><option>集采药</option><option>其他</option></select></div>
+      <div><label>采购周期</label><input id="f_pcycle"></div>
+      <div><label>采购价(元)</label><input id="f_pprice" type="number"></div>
+      <div><label>采购价日期</label><input id="f_pprice_date" type="date"></div>
+      <div><label>核查日期</label><input id="f_price_check" type="date"></div>
+      <div><label>核查来源</label><input id="f_price_src"></div>
     </div>
   </div>
-</div>
+  <div style="margin-top:10px;padding:10px;background:#f0f7ff;border-radius:8px;border:1px dashed #93c5fd">
+    <div style="font-size:13px;font-weight:600;color:#1e40af;margin-bottom:6px">通俗化字段</div>
+    <div><label>作用机制（大白话）</label><textarea id="f_mech_plain" rows="2"></textarea></div>
+    <div><label>适应症（大白话）</label><textarea id="f_ind_plain" rows="2"></textarea></div>
+    <div><label>沟通要点</label><textarea id="f_talking_points" rows="3"></textarea></div>
+  </div>
+  <div class="row" style="margin-top:14px;justify-content:flex-end">
+    <button class="btn gray" onclick="closeEditor()">取消</button>
+    <button class="btn" onclick="saveDrug()">保存</button>
+  </div>
+</div></div>
 
-<!-- 对比弹窗 -->
-<div class="modal-bg" id="compareBg">
-  <div class="modal" style="width:min(960px,94vw)">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <h2 style="margin:0">品种横向对比（跨模块通用）</h2>
-      <button class="btn gray" onclick="document.getElementById(&#39;compareBg&#39;).classList.remove(&#39;on&#39;)">关闭</button>
-    </div>
-    <div id="compareBody" style="margin-top:12px"></div>
+<!-- Compare Modal -->
+<div class="modal-bg" id="compareBg"><div class="modal" style="width:min(960px,94vw)">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <h2 style="margin:0">品种横向对比</h2>
+    <button class="btn gray" onclick="document.getElementById('compareBg').classList.remove('on')">关闭</button>
   </div>
-</div>
+  <div id="compareBody" style="margin-top:12px"></div>
+</div></div>
+
+<!-- Weight Editor Modal -->
+<div class="modal-bg" id="weightBg"><div class="modal" style="width:min(480px,92vw)">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <h2 style="margin:0">调整评分权重</h2>
+    <button class="btn gray" onclick="document.getElementById('weightBg').classList.remove('on')">关闭</button>
+  </div>
+  <div style="margin-top:12px">
+    <div class="weight-input-row"><label>指南推荐</label><input id="w_gl" type="number" value="35" oninput="updateWeightTotal()"><span class="pct">%</span></div>
+    <div class="weight-input-row"><label>医保/双通道</label><input id="w_ins" type="number" value="25" oninput="updateWeightTotal()"><span class="pct">%</span></div>
+    <div class="weight-input-row"><label>给药便利</label><input id="w_route" type="number" value="15" oninput="updateWeightTotal()"><span class="pct">%</span></div>
+    <div class="weight-input-row"><label>集采风险</label><input id="w_vbp" type="number" value="10" oninput="updateWeightTotal()"><span class="pct">%</span></div>
+    <div class="weight-input-row"><label>冷链门槛</label><input id="w_cold" type="number" value="10" oninput="updateWeightTotal()"><span class="pct">%</span></div>
+    <div class="weight-input-row"><label>DRG控费</label><input id="w_drg" type="number" value="5" oninput="updateWeightTotal()"><span class="pct">%</span></div>
+    <div style="margin-top:10px;font-size:14px">总计：<span id="weightTotal" style="font-weight:700">100%</span>（建议=100%）</div>
+    <div class="row" style="margin-top:14px"><button class="btn" onclick="saveWeights()">保存</button><button class="btn alt" onclick="resetWeights()">恢复默认</button></div>
+  </div>
+</div></div>
 
 <script>
-/* ============ 示例数据（按文档标准，部分数值为公开估算，需人工补全） ============ */
 const SEED = [
   // ===== 肿瘤 / 肺癌（EGFR-TKI 迭代线）=====
   {gn:"吉非替尼",bn:"易瑞沙",area:"肿瘤",disease:"肺癌",gen:"第1代EGFR-TKI",year:2005,origin:"进口",excl:"否",cls:"化学药",mech:"EGFR酪氨酸激酶抑制剂",mfr:"阿斯利康",appr:"国药准字H20070070",form:"片剂",spec:"250mg",adate:"2005-02",cold:"常温",price:228,annual:27360,ins:"集采",insyear:2019,dual:"否",vbp:"高(已集采)",gl:"NCCN推荐",route:"口服",sales:null,prob:0.99,prov:"湖南",pt:"",patent:"2016-04-23",followers:12,ind:"EGFR突变阳性晚期NSCLC一线",ind2:"—",nt:"—",note:"首个EGFR-TKI，已过专利期，仿制药大量上市"},
@@ -749,8 +479,6 @@ const SEED = [
   {gn:"培唑帕尼",bn:"维全特",area:"肿瘤",disease:"肾细胞癌",gen:"多靶TKI(VEGFR等)",year:2016,origin:"进口",excl:"否",cls:"化学药",mech:"多靶TKI(VEGFR/PDGFR)",mfr:"诺华",appr:"国药准字H20160018",form:"片剂",spec:"400mg",adate:"2016-02",cold:"常温",price:null,annual:null,ins:"已进医保",insyear:2017,dual:"否",vbp:"中",gl:"NCCN推荐",route:"口服",sales:null,prob:0.92,prov:"湖南",pt:"",patent:"2025-09-15",followers:6,ind:"肾细胞癌",ind2:"—",nt:"—",note:"多靶TKI"},
   {gn:"阿昔替尼",bn:"英立达",area:"肿瘤",disease:"肾细胞癌",gen:"VEGFR TKI(高选择)",year:2015,origin:"进口",excl:"否",cls:"化学药",mech:"VEGFR1-3抑制剂",mfr:"辉瑞",appr:"国药准字H20150085",form:"片剂",spec:"5mg",adate:"2015-04",cold:"常温",price:null,annual:null,ins:"已进医保",insyear:2017,dual:"否",vbp:"中",gl:"NCCN推荐",route:"口服",sales:null,prob:0.92,prov:"湖南",pt:"",patent:"已过期",followers:5,ind:"肾细胞癌二线",ind2:"—",nt:"AXIS研究",note:"高选择性VEGFR TKI"}
 ];
-
-/* ============ 疾病领域-病种层级结构（数据录入框架） ============ */
 const DISEASE_TREE = [
   // === 肿瘤 ===
   {area:"肿瘤",disease:"肺癌",priority:1,sub_disease:["EGFR突变","ALK融合","ROS1融合","KRAS突变","鳞癌","腺癌","小细胞肺癌"]},
@@ -797,498 +525,373 @@ function treeDiseasesOf(a){return DISEASE_TREE.filter(d=>d.area===a).sort((x,y)=
 function treePriorityOf(a,d){const e=DISEASE_TREE.find(x=>x.area===a&&x.disease===d);return e?e.priority:9;}
 function treeSubDiseaseOf(a,d){const e=DISEASE_TREE.find(x=>x.area===a&&x.disease===d);return e?e.sub_disease:[];}
 
+
 /* ============ 状态 ============ */
-const LS_KEY="drug_db_v1";
-let DB = loadDB();
+const LS_KEY="drug_db_v2";
+let DB=loadDB();
 function loadDB(){try{const s=localStorage.getItem(LS_KEY);if(s)return JSON.parse(s);}catch(e){}return JSON.parse(JSON.stringify(SEED));}
 function saveDB(){localStorage.setItem(LS_KEY,JSON.stringify(DB));}
 
+/* 年份筛选已移除 — 兼容函数 */
+function getYear(){return 2026;}
+function filterByYear(list){return list;}
+function refreshYear(){}
+
+/* ============ 权重系统 ============ */
+const DEFAULT_WEIGHTS={gl:35,ins:25,route:15,vbp:10,cold:10,drg:5};
+let WEIGHTS=JSON.parse(localStorage.getItem('drug_weights')||'null')||{...DEFAULT_WEIGHTS};
+const WEIGHT_LABELS={gl:'指南推荐',ins:'医保/双通道',route:'给药便利',vbp:'集采风险',cold:'冷链门槛',drg:'DRG控费'};
+const WEIGHT_COLORS={gl:'#4f46e5',ins:'#166534',route:'#b45309',vbp:'#7c3aed',cold:'#0891b2',drg:'#be185d'};
+
 /* ============ 导航 ============ */
-document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>{
-  document.querySelectorAll('#nav button').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
-  b.classList.add('active');document.getElementById(b.dataset.t).classList.add('on');
-  if(b.dataset.t==='price') runPriceCalc();
-  refreshYear();
-});
-
-/* ============ 全局年份筛选 ============ */
-function getYear(){return +document.getElementById('yearSlider').value;}
-function onYearChange(){const y=getYear();document.getElementById('yearLabel').textContent='截至 '+y+' 年';refreshYear();}
-function filterByYear(list){const y=getYear();return list.filter(d=>(+d.year)<=y);}
-function refreshYear(){
-  const t=document.querySelector('#nav button.active');if(!t)return;
-  const tab=t.dataset.t;
-  if(tab==='evo'&&curArea&&curDisease){renderEvo(curArea,curDisease);return;}
-  if(tab==='hosp'&&curArea&&curDisease){renderHosp(curArea,curDisease);return;}
-  if(tab==='ins'&&curArea&&curDisease){renderIns(curArea,curDisease);return;}
+function showSection(name){
+  document.getElementById('entryView').style.display='none';
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('on'));
+  const el=document.getElementById(name);
+  if(el)el.classList.add('on');
+}
+function backToEntry(){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('on'));
+  document.getElementById('entryView').style.display='block';
+}
+function switchSub(parent,name,btn){
+  document.querySelectorAll('#'+parent+' .sub-content').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('#'+parent+' .sub-tab').forEach(b=>b.classList.remove('on'));
+  document.getElementById(name).classList.add('on');
+  if(btn)btn.classList.add('on');
 }
 
-/* ============ ① 药品查询 ============ */
-function norm(s){return (s||"").toLowerCase().replace(/\s/g,"");}
-function doSearch(){
-  const q=norm(document.getElementById('q').value);
-  const box=document.getElementById('result');
-  if(!q){box.innerHTML='<div class="card muted">请输入药品名。</div>';return;}
-  const hit=DB.find(d=>norm(d.gn).includes(q)||norm(d.bn).includes(q));
-  if(!hit){box.innerHTML='<div class="card">未找到「'+document.getElementById('q').value+'」。可在「数据管理」中新增，或在建议中试：'+suggestText()+'</div>';return;}
-  box.innerHTML=renderDrug(hit);
-  setTimeout(()=>drawMini(hit),50);
-}
-function clearSearch(){document.getElementById('q').value="";document.getElementById('result').innerHTML="";}
-function suggestText(){return DB.slice(0,8).map(d=>'<span class="pill">'+d.gn+'</span>').join("");}
-function insTag(s){if(s==="已进医保"||s==="集采")return '<span class="tag green">'+s+'</span>';if(s==="国谈进行中")return '<span class="tag amber">'+s+'</span>';return '<span class="tag red">'+s+'</span>';}
-function renderDrug(d){
-  const idv = (d.ind||"") ? d.ind : "—";
-  return `
-  <div class="card">
-    <h2>${d.gn} <span class="muted" style="font-size:14px">${d.bn||""}</span></h2>
-    <div>${insTag(d.ins)}<span class="tag blue">${d.area} / ${d.disease}</span><span class="tag gray">${d.gen}</span><span class="tag amber">${d.origin}</span>${d.excl==="是"?'<span class="tag red">独家</span>':''}</div>
-    <h3>基本信息（基础属性）</h3>
-    <div class="row">
-      <div class="field"><div class="k">通用名</div><div class="v">${d.gn}</div></div>
-      <div class="field"><div class="k">商品名</div><div class="v">${d.bn||"—"}</div></div>
-      <div class="field"><div class="k">研发/生产公司</div><div class="v">${d.mfr||"—"}</div></div>
-      <div class="field"><div class="k">国药准字</div><div class="v">${d.appr||"—"}</div></div>
-      <div class="field"><div class="k">注册分类</div><div class="v">${d.cls||"—"}</div></div>
-      <div class="field"><div class="k">药品类别</div><div class="v">${d.excl==="是"?"独家创新药":"处方药"}</div></div>
-      <div class="field"><div class="k">获批适应症</div><div class="v" style="font-weight:500;font-size:13px">${idv}</div></div>
-      <div class="field"><div class="k">获批时间</div><div class="v">${d.adate||"—"}</div></div>
-      <div class="field"><div class="k">剂型 / 规格</div><div class="v">${d.form||"—"} / ${d.spec||"—"}</div></div>
-      <div class="field"><div class="k">作用机制</div><div class="v" style="font-weight:500;font-size:13px">${d.mech||"—"}</div></div>
-      <div class="field"><div class="k">冷链要求</div><div class="v">${d.cold||"—"}</div></div>
-      <div class="field"><div class="k">目前价格</div><div class="v" style="color:var(--red)">${d.price?("¥"+d.price+" /次"):"—"}</div></div>
-      <div class="field"><div class="k">年化费用(估算)</div><div class="v" style="color:var(--red)">${d.annual?("¥"+Number(d.annual).toLocaleString()):"—"}</div></div>
-    </div>
-    <h3>医保与政策路径</h3>
-    <div class="row">
-      <div class="field"><div class="k">医保状态</div><div class="v">${d.ins||"—"}${d.insyear?(" ("+d.insyear+")"):""}</div></div>
-      <div class="field"><div class="k">双通道</div><div class="v">${d.dual||"—"}</div></div>
-      <div class="field"><div class="k">集采风险</div><div class="v">${d.vbp||"—"}</div></div>
-      <div class="field"><div class="k">专利到期日</div><div class="v">${d.patent||"—"}</div></div>
-      <div class="field"><div class="k">仿制药围攻数</div><div class="v">${d.followers != null ? d.followers + " 家" : "—"}</div></div>
-      <div class="field"><div class="k">指南推荐</div><div class="v">${d.gl||"—"}</div></div>
-      <div class="field"><div class="k">进医保概率(模型)</div><div class="v">${d.prob!=null?(d.prob*100).toFixed(0)+"%":"—"}</div></div>
-    </div>
-    ${d.ind2?`<h3>在研 / 拓展适应症</h3><div class="muted">${d.ind2}</div>`:""}
-    ${d.nt?`<h3>临床试验项目</h3><div class="muted">${d.nt}</div>`:""}
-    ${d.note?`<h3>风险提示</h3><div class="note">${d.note}</div>`:""}
-    <h3>同病种迭代对比</h3>
-    <div id="miniChart"></div>
-    <p class="muted">👉 切换上方「② 同病种迭代趋势」查看该病种完整迭代线与市场/利润趋势。</p>
-  </div>`;
-}
-function drawMini(d){
-  const peers=DB.filter(x=>x.disease===d.disease);
-  const el=document.getElementById('miniChart');if(!el)return;
-  const c=echarts.init(el);
-  c.setOption({
-    tooltip:{trigger:'axis'},grid:{left:50,right:20,top:30,bottom:40},
-    legend:{data:['年化费用(元)','进医保概率(%)'],top:0},
-    xAxis:{type:'category',data:peers.map(x=>x.gn),axisLabel:{interval:0,rotate:30,fontSize:11}},
-    yAxis:[{type:'value',name:'年化费用'},{type:'value',name:'概率%',max:100}],
-    series:[
-      {name:'年化费用(元)',type:'bar',data:peers.map(x=>x.annual||0),itemStyle:{color:'#4f46e5'}},
-      {name:'进医保概率(%)',type:'line',yAxisIndex:1,data:peers.map(x=>(x.prob!=null?x.prob*100:0)),itemStyle:{color:'#b91c1c'}}
-    ]
-  });
-}
+/* ============ 工具函数 ============ */
+function norm(s){return(s||"").toLowerCase().replace(/\s/g,"");}
+function findDrug(q){q=q.trim().toLowerCase();return DB.find(d=>(d.gn||'').toLowerCase()===q||(d.bn||'').toLowerCase()===q)||DB.find(d=>(d.gn||'').toLowerCase().includes(q)||(d.bn||'').toLowerCase().includes(q));}
+function insTag(s){if(s==="已进医保"||s==="集采"||s==="常规医保")return'<span class="tag green">'+s+'</span>';if(s==="国谈进行中"||s==="国谈")return'<span class="tag amber">'+s+'</span>';return'<span class="tag red">'+(s||'自费')+'</span>';}
+function insTag2(s){if(!s)return'<span class="tag gray">未知</span>';if(s.includes('集采')||s.includes('已进')||s.includes('常规'))return'<span class="tag green">'+s+'</span>';if(s.includes('国谈'))return'<span class="tag amber">'+s+'</span>';return'<span class="tag red">'+s+'</span>';}
+function normIns(ins){if(!ins)return'自费';if(ins.includes('集采')||ins.includes('已进')||ins.includes('常规'))return'常规医保';if(ins.includes('国谈'))return'国谈';return'自费';}
+function field(k,v){return'<div class="field"><div class="k">'+k+'</div><div class="v">'+(v||'—')+'</div></div>';}
+function fallbackCopy(text){const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.top='-9999px';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');alert('已复制到剪贴板');}catch(e){alert('复制失败，请手动复制');}document.body.removeChild(ta);}
 
-/* ============ ② 同病种迭代趋势 ============ */
-function areas(){return treeAreas();}
-function diseasesOf(a){return treeDiseasesOf(a);}
-function buildAreaPick(containerId, cb){
-  const c=document.getElementById(containerId);c.innerHTML="";
-  areas().forEach(a=>{
-    const div=document.createElement('div');div.className='area-card';div.style.flex='1 1 200px';
-    div.innerHTML='<b>'+a+'</b><div class="muted" style="margin-top:4px">'+diseasesOf(a).map(x=>'<span class="pill">'+x+'</span>').join("")+'</div>';
-    div.onclick=()=>cb(a);c.appendChild(div);
-  });
-}
-buildAreaPick('areaPick',a=>pickDisease(a));
-buildAreaPick('hospAreaPick',a=>pickDisease(a,true));
-buildAreaPick('insAreaPick',a=>pickDisease(a,false,true));
-
-let curDisease=null,curArea=null;
-function pickDisease(area, isHosp, isIns){
-  curArea=area;
-  const dis=diseasesOf(area);
-  const html='<div class="card"><div class="muted">选择病种：</div>'+dis.map(d=>'<button class="btn alt" style="margin:6px 6px 0 0" onclick="showDisease(\''+area+'\',\''+d+'\','+(isHosp?1:0)+','+(isIns?1:0)+')">'+d+'</button>').join("")+'</div>';
-  if(isHosp){document.getElementById('hospCharts').innerHTML=html;}
-  else if(isIns){document.getElementById('insCharts').innerHTML=html;}
-  else {document.getElementById('evoTitle').textContent=area+' · 选择病种';document.getElementById('evoCharts').innerHTML=html;}
-  // 默认展示第一个病种
-  if(dis.length)showDisease(area,dis[0],isHosp?1:0,isIns?1:0);
-}
-function showDisease(area,disease,isHosp,isIns){
-  curDisease=disease;
-  if(isIns){renderIns(area,disease);return;}
-  if(isHosp){renderHosp(area,disease);return;}
-  renderEvo(area,disease);
-}
-
-function renderEvo(area,disease){
-  const peers=filterByYear(DB.filter(d=>d.disease===disease)).sort((a,b)=>a.year-b.year);
-  document.getElementById('evoTitle').textContent=area+' / '+disease+' · 迭代趋势（'+peers.length+'个品种，截至 '+getYear()+' 年）';
-  const box=document.getElementById('evoCharts');
-  box.innerHTML=`
-    <div class="grid2">
-      <div class="card"><h3>迭代世代更替（上市年份 × 年化费用）</h3><div id="evo1" class="chart"></div></div>
-      <div class="card"><h3>市场广度 vs 市场深度（患者池 vs 年销售额）</h3><div id="evo2" class="chart"></div></div>
-    </div>
-    <div class="card"><h3>利润空间对比（年化费用 × 销售额 代理测算）</h3><div id="evo3" class="chart"></div></div>
-    <div class="card"><h3>迭代线一览表</h3><button class="btn alt" style="margin-bottom:10px" onclick="doCompare()">对比所选品种</button>${evoTable(peers)}</div>`;
-  // 图1 世代时间轴
-  echarts.init(document.getElementById('evo1')).setOption({
-    tooltip:{trigger:'axis'},grid:{left:60,right:20,top:20,bottom:70},
-    xAxis:{type:'category',data:peers.map(p=>p.gn),axisLabel:{interval:0,rotate:35,fontSize:11}},
-    yAxis:[{type:'value',name:'上市年'},{type:'value',name:'年化费用',position:'right'}],
-    series:[
-      {name:'上市年份',type:'bar',data:peers.map(p=>p.year),itemStyle:{color:'#334155'},
-        label:{show:true,position:'top',fontSize:10,formatter:p=>peers[p.dataIndex].gen}},
-      {name:'年化费用',type:'line',yAxisIndex:1,data:peers.map(p=>p.annual||0),itemStyle:{color:'#b91c1c'}}
-    ]
-  });
-  // 图2 患者池 vs 销售额
-  echarts.init(document.getElementById('evo2')).setOption({
-    tooltip:{trigger:'axis'},grid:{left:55,right:55,top:20,bottom:70},
-    legend:{data:['省内目标患者/年','年销售额(亿)'],top:0},
-    xAxis:{type:'category',data:peers.map(p=>p.gn),axisLabel:{interval:0,rotate:35,fontSize:11}},
-    yAxis:[{type:'value',name:'患者/年'},{type:'value',name:'销售额亿'}],
-    series:[
-      {name:'省内目标患者/年',type:'bar',data:peers.map(p=>p.pt?+p.pt:0),itemStyle:{color:'#4f46e5'}},
-      {name:'年销售额(亿)',type:'line',yAxisIndex:1,data:peers.map(p=>p.sales||0),itemStyle:{color:'#b45309'}}
-    ]
-  });
-  // 图3 利润空间
-  const profit=peers.map(p=>({value:((p.sales||0)*100000000*(p.annual||0)*0.3), name:p.gn}));
-  echarts.init(document.getElementById('evo3')).setOption({
-    tooltip:{trigger:'item',formatter:p=>p.name+'：年化费用¥'+(peers[p.dataIndex].annual||0)+' × 销售额'+(peers[p.dataIndex].sales||0)+'亿（代理测算，毛利率30%）'},
-    series:[{type:'pie',radius:['35%','68%'],data:peers.map(p=>({name:p.gn,value:((p.sales||0)*((p.annual||0)||1))})),label:{fontSize:11}}]
-  });
-}
-function evoTable(peers){
-  const head='<tr><th><input type="checkbox" onclick="toggleAllCmp(this)"></th><th>通用名</th><th>商品名</th><th>迭代世代</th><th>上市年</th><th>厂家</th><th>医保</th><th>双通道</th><th>年化费用</th><th>销售额(亿)</th><th>进医保概率</th><th>仿制药围攻数</th></tr>';
-  const body=peers.map(p=>{const idx=DB.indexOf(p);return '<tr><td><input type="checkbox" class="cmpChk" value="'+idx+'"></td><td>'+p.gn+'</td><td>'+p.bn+'</td><td>'+p.gen+'</td><td>'+p.year+'</td><td>'+p.mfr+'</td><td>'+insTag(p.ins)+'</td><td>'+(p.dual||'')+'</td><td>'+(p.annual?('¥'+p.annual):'—')+'</td><td>'+(p.sales||'—')+'</td><td>'+(p.prob!=null?(p.prob*100).toFixed(0)+'%':'—')+'</td><td>'+(p.followers!=null?p.followers+'家':'—')+'</td></tr>';}).join('');
-  return '<table>'+head+body+'</table>';
-}
-
-/* ============ ③ 医院青睐度 ============ */
-function hospScore(d){
-  // 0-100，权重可由现实数据替换
-  const w={gl:0.30,ins:0.22,vbp:0.15,route:0.13,cold:0.10,drg:0.10};
-  let s=0;
-  // 指南
-  const gl=(d.gl||"");
-  if(gl.includes('I级')||gl.includes('1A'))s+=w.gl*100; else if(gl.includes('推荐'))s+=w.gl*70; else s+=w.gl*40;
-  // 医保可及
-  if(d.ins==="集采")s+=w.ins*100; else if(d.ins==="已进医保"||d.dual==="是")s+=w.ins*85; else if(d.ins==="国谈进行中")s+=w.ins*60; else s+=w.ins*25;
-  // 集采(放量快)
-  if((d.vbp||"").includes("高"))s+=w.vbp*100; else if((d.vbp||"").includes("中"))s+=w.vbp*70; else if((d.vbp||"").includes("低")||(d.vbp||"").includes("极低"))s+=w.vbp*40; else s+=w.vbp*60;
-  // 给药便利
-  s+=(d.route==="口服")?w.route*100:w.route*55;
-  // 冷链门槛
-  s+=(d.cold||"").includes("2–8")?w.cold*55:w.cold*100;
-  // DRG友好(低价/集采更友好)
-  if(d.ins==="集采")s+=w.drg*100; else if((d.annual||0)>30000)s+=w.drg*45; else s+=w.drg*80;
-  return Math.round(s);
-}
-function renderHosp(area,disease){
-  const peers=filterByYear(DB.filter(d=>d.disease===disease)).sort((a,b)=>hospScore(b)-hospScore(a));
-  document.getElementById('hospCharts').innerHTML=`
-    <div class="card"><h3>${disease} · 医院青睐度排名（准入便利度模型）</h3><div id="hosp1" class="chart"></div></div>
-    <div class="card"><h3>维度雷达（谁更均衡易进院）</h3><div id="hosp2" class="chart"></div></div>
-    <div class="card"><h3>明细评分</h3>${hospTable(peers)}<div class="row" style="margin-top:10px"><button class="btn alt" onclick="openCompareFrom('hospCharts')">对比所选品种</button><span class="muted">勾选左侧复选框后点击，可在弹窗中横向比对医院青睐度、医保、价格、专利等</span></div></div>`;
-  echarts.init(document.getElementById('hosp1')).setOption({
-    tooltip:{trigger:'axis'},grid:{left:90,right:30,top:20,bottom:30},
-    xAxis:{type:'value',max:100,name:'青睐度'},
-    yAxis:{type:'category',data:peers.map(p=>p.gn).reverse(),axisLabel:{fontSize:12}},
-    series:[{type:'bar',data:peers.map(p=>hospScore(p)).reverse(),itemStyle:{color:'#4f46e5'},
-      label:{show:true,position:'right',formatter:'{c}'}}]
-  });
-  const dims=["指南","医保可及","集采放量","口服便利","冷链低门槛","DRG友好"];
-  echarts.init(document.getElementById('hosp2')).setOption({
-    tooltip:{},legend:{data:peers.map(p=>p.gn),top:0,type:'scroll'},
-    radar:{indicator:dims.map(d=>({name:d,max:100})),radius:'62%'},
-    series:[{type:'radar',data:peers.map((p,i)=>({name:p.gn,value:hospRadar(p),
-      lineStyle:{width:1.5},areaStyle:{opacity:0.05}}))}]
-  });
-}
-function hospRadar(d){
-  const gl=(d.gl||"");
-  const a=gl.includes('I级')||gl.includes('1A')?100:gl.includes('推荐')?70:40;
-  const b=d.ins==="集采"?100:(d.ins==="已进医保"||d.dual==="是")?85:(d.ins==="国谈进行中")?60:25;
-  const c=(d.vbp||"").includes("高")?100:(d.vbp||"").includes("中")?70:40;
-  const e=d.route==="口服"?100:55;
-  const f=(d.cold||"").includes("2–8")?55:100;
-  const g=d.ins==="集采"?100:((d.annual||0)>30000?45:80);
-  return [a,b,c,e,f,g];
-}
-function hospTable(peers){
-  return '<table><tr><th><input type="checkbox" onclick="toggleCmpBox(this,\'hospCharts\')"></th><th>排名</th><th>通用名</th><th>迭代世代</th><th>青睐度</th><th>医保</th><th>集采风险</th><th>给药</th><th>冷链</th><th>指南</th></tr>'+
-  peers.map((p,i)=>'<tr><td><input type="checkbox" class="cmpChk" value="'+DB.indexOf(p)+'"></td><td>'+(i+1)+'</td><td>'+p.gn+'</td><td>'+p.gen+'</td><td><div class="scorebar"><i style="width:'+hospScore(p)+'%"></i></div>'+hospScore(p)+'</td><td>'+insTag(p.ins)+'</td><td>'+(p.vbp||'')+'</td><td>'+p.route+'</td><td>'+(p.cold||'')+'</td><td>'+(p.gl||'')+'</td></tr>').join('')+'</table>';
-}
-
-/* ============ ④ 进医保分析 ============ */
-function renderIns(area,disease){
-  const peers=filterByYear(DB.filter(d=>d.disease===disease)).sort((a,b)=>(a.insyear||3000)-(b.insyear||3000));
-  document.getElementById('insCharts').innerHTML=`
-    <div class="card"><h3>${disease} · 进入医保时间轴（越早越易放量）</h3><div id="ins1" class="chart"></div></div>
-    <div class="card"><h3>进医保概率 vs 年化费用（越便宜+创新越易谈成）</h3><div id="ins2" class="chart"></div></div>
-    <div class="card"><h3>明细</h3>${insTable(peers)}<div class="row" style="margin-top:10px"><button class="btn alt" onclick="openCompareFrom('insCharts')">对比所选品种</button><span class="muted">勾选左侧复选框后点击，可在弹窗中横向比对医保、价格、专利等</span></div></div>`;
-  // 时间轴
-  echarts.init(document.getElementById('ins1')).setOption({
-    tooltip:{formatter:p=>peers[p.dataIndex].gn+'：'+(peers[p.dataIndex].insyear||'未进/国谈中')+' · '+(peers[p.dataIndex].ins)},
-    grid:{left:60,right:30,top:30,bottom:50},
-    xAxis:{type:'value',name:'年份',min:2015,max:2027,interval:1},
-    yAxis:{type:'category',data:peers.map(p=>p.gn).reverse(),axisLabel:{fontSize:12}},
-    series:[{type:'scatter',symbolSize:16,data:peers.map(p=>[p.insyear||2026.5,p.gn]).reverse(),
-      itemStyle:{color:p=>{const st=peers[peers.length-1-p.dataIndex%peers.length]?.ins;return '#4f46e5';}},
-      label:{show:true,formatter:p=>peers[p.dataIndex].ins,y:18,fontSize:10,color:'#5a6b7e'}}]
-  });
-  echarts.init(document.getElementById('ins2')).setOption({
-    tooltip:{trigger:'axis'},grid:{left:60,right:30,top:20,bottom:60},
-    legend:{data:['进医保概率(%)','年化费用'],top:0},
-    xAxis:{type:'category',data:peers.map(p=>p.gn),axisLabel:{interval:0,rotate:35,fontSize:11}},
-    yAxis:[{type:'value',name:'概率%',max:100},{type:'value',name:'年化费用'}],
-    series:[
-      {name:'进医保概率(%)',type:'bar',data:peers.map(p=>(p.prob!=null?p.prob*100:0)),itemStyle:{color:'#166534'}},
-      {name:'年化费用',type:'line',yAxisIndex:1,data:peers.map(p=>p.annual||0),itemStyle:{color:'#b91c1c'}}
-    ]
-  });
-}
-function insTable(peers){
-  return '<table><tr><th><input type="checkbox" onclick="toggleCmpBox(this,\'insCharts\')"></th><th>通用名</th><th>迭代世代</th><th>医保状态</th><th>进医保年份</th><th>双通道</th><th>集采风险</th><th>进医保概率</th><th>年均费用</th></tr>'+
-  peers.map(p=>'<tr><td><input type="checkbox" class="cmpChk" value="'+DB.indexOf(p)+'"></td><td>'+p.gn+'</td><td>'+p.gen+'</td><td>'+insTag(p.ins)+'</td><td>'+(p.insyear||'—')+'</td><td>'+(p.dual||'')+'</td><td>'+(p.vbp||'')+'</td><td>'+(p.prob!=null?(p.prob*100).toFixed(0)+'%':'—')+'</td><td>'+(p.annual?('¥'+p.annual):'—')+'</td></tr>').join('')+'</table>';
-}
-
-/* ============ ⑤ 品种简报 ============ */
-function fillBriefSel(){const s=document.getElementById('briefSel');s.innerHTML=DB.map((d,i)=>'<option value="'+i+'">'+d.gn+'（'+d.disease+'）</option>').join("");}
-fillBriefSel();
-function genBrief(){
-  const d=DB[+document.getElementById('briefSel').value];
-  const peers=DB.filter(x=>x.disease===d.disease);
-  document.getElementById('briefOut').innerHTML=`
-  <div class="card">
-    <h2>关于${d.excl==="是"?"未引进/在谈":"在市"}品种 ${d.gn}（${d.form || '未定义剂型'}）的品种分析简报</h2>
-    <h3>摘要</h3><div class="muted">${d.gn}（${d.bn||""}）为${d.mfr}研发的${d.cls||""}，${d.adate}获批用于${d.ind||d.disease}。${d.gl||""}。当前${d.ins}，双通道${d.dual}。${d.note||""}</div>
-    <h3>基本信息（基础属性）</h3>
-    <div class="row">
-      <div class="field"><div class="k">通用名</div><div class="v">${d.gn}</div></div>
-      <div class="field"><div class="k">商品名</div><div class="v">${d.bn||"—"}</div></div>
-      <div class="field"><div class="k">规格</div><div class="v">${d.spec||"—"}</div></div>
-      <div class="field"><div class="k">目前价格</div><div class="v" style="color:var(--red)">${d.price?("¥"+d.price):"—"}</div></div>
-      <div class="field"><div class="k">实际采购价(内部)</div><div class="v" style="color:#9d174d">${d.pprice?("¥"+d.pprice):"—"}${d.pprice_date?("<br><span style='font-size:11px;color:var(--sub)'>"+d.pprice_date+"</span>"):""}</div></div>
-      <div class="field"><div class="k">药品类型</div><div class="v">${d.dtype||"—"}</div></div>
-      <div class="field"><div class="k">研发公司</div><div class="v">${d.mfr||"—"}</div></div>
-      <div class="field"><div class="k">上市许可</div><div class="v">${d.mfr||"—"}</div></div>
-      <div class="field"><div class="k">注册分类</div><div class="v">${d.cls||"—"}</div></div>
-      <div class="field"><div class="k">药品类别</div><div class="v">${d.excl==="是"?"独家创新药":"处方药"}</div></div>
-      <div class="field"><div class="k">国药准字</div><div class="v">${d.appr||"—"}</div></div>
-      <div class="field"><div class="k">是否独家</div><div class="v">${d.excl}</div></div>
-      <div class="field"><div class="k">获批时间</div><div class="v">${d.adate||"—"}</div></div>
-      <div class="field"><div class="k">剂型</div><div class="v">${d.form||"—"}</div></div>
-    </div>
-    <h3>作用机制 & 适应症</h3>
-    <div class="field"><div class="k">作用机制</div><div class="v" style="font-weight:500">${d.mech||"—"}</div></div>
-    <div class="muted" style="margin-top:8px"><b>获批适应症：</b>${d.ind||"—"}</div>
-    ${d.ind2?`<div class="muted"><b>在研/拓展适应症：</b>${d.ind2}</div>`:""}
-    <h3>市场分析</h3>
-    <div class="muted"><b>全国市场：</b>该病种同迭代线共 ${peers.length} 个己收录药品；最新世代为「${peers.slice(-1)[0].gen}」。年销售额最高：${peers.filter(p=>p.sales).sort((a,b)=>b.sales-a.sales)[0]?.gn||"—"}（约${peers.filter(p=>p.sales).sort((a,b)=>b.sales-a.sales)[0]?.sales||"—"}亿）。</div>
-    <div class="muted"><b>湖南市场：</b>${d.prov||"湖南"}省内目标患者约 ${d.pt||"—"}/年；当前${d.ins}，双通道${d.dual}${d.pt?"；按年化费用¥"+d.annual+"估算稳定期年用药金额约 ¥"+(Math.round(d.pt*d.annual/10000)/100)+"万":""}。</div>
-    <h3>政策路径评估</h3>
-    <div class="muted">医保状态：<b>${d.ins}</b>${d.insyear?("（"+d.insyear+"）"):""}；双通道：${d.dual}；集采风险：${d.vbp||"—"}；指南：${d.gl||"—"}；进医保概率(模型)：${d.prob!=null?(d.prob*100).toFixed(0)+"%":"—"}；专利到期日：<b>${d.patent||"—"}</b>。</div>
-    <div class="muted">专利到期日：${d.patent || "—"}；仿制药围攻数：${d.followers != null ? d.followers + " 家" : "—"}</div>
-    <h3>竞争格局（同病种迭代）</h3>
-    ${evoTable(peers)}
-    <h3>引进优先级-综合判断</h3>
-    <div class="note"><b>品种价值：</b>${d.mech||""}；<b>市场空间：</b>${peers.length}个迭代品种同台；<b>政策环境：</b>${d.ins}/${d.vbp}；<b>匹配度：</b>请结合贵司渠道覆盖核对。</div>
-    <div class="muted">数据来源说明：以上数据来源于 NMPA、CDE、国家/省医保局公开信息及公开估算，部分数值为估算，仅供参考，需人工复核后用于决策。</div>
-  </div>`;
-}
-
-/* ============ ⑥ 业务员速查 ============ */
-function salesAutoComplete(){
-  const q=document.getElementById('salesQ').value.trim().toLowerCase();
-  const box=document.getElementById('salesAC');
+/* ============ 全局搜索 ============ */
+function globalAC(){
+  const q=norm(document.getElementById('globalQ').value);
+  const box=document.getElementById('globalAC');
   if(!q){box.style.display='none';return;}
-  const matches=DB.filter(d=>(d.gn||'').toLowerCase().includes(q)||(d.bn||'').toLowerCase().includes(q)).slice(0,10);
-  if(!matches.length){box.style.display='none';return;}
-  box.innerHTML=matches.map(d=>'<div class="ac-item" onclick="document.getElementById(\'salesQ\').value=\''+d.gn+'\';document.getElementById(\'salesAC\').style.display=\'none\';genSalesBrief()">'+d.gn+(d.bn?'<span class="sub">'+d.bn+'</span>':'')+'</div>').join('');
+  const hits=DB.filter(d=>norm(d.gn).includes(q)||norm(d.bn).includes(q)).slice(0,10);
+  if(!hits.length){box.style.display='none';return;}
+  box.innerHTML='<div class="ac-list">'+hits.map(d=>'<div class="ac-item" onmousedown="globalPick(\''+d.gn.replace(/'/g,"\\'")+'\')">'+d.gn+'<span class="sub">'+(d.bn||'')+' · '+(d.disease||'')+'</span></div>').join('')+'</div>';
   box.style.display='block';
 }
-function findDrug(q){
-  q=q.trim().toLowerCase();
-  return DB.find(d=>(d.gn||'').toLowerCase()===q||(d.bn||'').toLowerCase()===q)
-    || DB.find(d=>(d.gn||'').toLowerCase().includes(q)||(d.bn||'').toLowerCase().includes(q));
+function globalPick(gn){
+  document.getElementById('globalQ').value=gn;
+  document.getElementById('globalAC').style.display='none';
+  showSection('clinicalSection');
+  document.getElementById('clinicalQ').value=gn;
+  genClinicalBrief();
 }
-function insTag2(s){
-  if(!s)return'<span class="sales-tag" style="background:#f1f5f9;color:#64748b">未知</span>';
-  if(s.includes('集采'))return'<span class="sales-tag ins">集采</span>';
-  if(s.includes('已进'))return'<span class="sales-tag ins">已进医保</span>';
-  if(s.includes('国谈'))return'<span class="sales-tag" style="background:#fef3c7;color:#b45309">国谈中</span>';
-  return'<span class="sales-tag" style="background:#fee2e2;color:#dc2626">'+s+'</span>';
+
+/* ============ 评分模型 ============ */
+function scoreDetail(d){
+  const w=WEIGHTS;const total=w.gl+w.ins+w.route+w.vbp+w.cold+w.drg;
+  const s={gl:0,ins:0,route:0,vbp:0,cold:0,drg:0};
+  const gl=d.gl||"";
+  if(gl.includes('I级')||gl.includes('1A'))s.gl=100;else if(gl.includes('推荐'))s.gl=70;else s.gl=40;
+  if(d.ins==="集采"||d.ins==="已进医保"||d.ins==="常规医保")s.ins=(d.dual==="是")?100:85;else if(d.ins==="国谈进行中"||d.ins==="国谈")s.ins=60;else s.ins=25;
+  s.route=(d.route==="口服")?100:55;
+  const vbp=d.vbp||"";
+  if(vbp.includes('高'))s.vbp=100;else if(vbp.includes('中'))s.vbp=70;else if(vbp.includes('低')||vbp.includes('极低'))s.vbp=40;else s.vbp=60;
+  const cd=d.cold||"";
+  s.cold=(cd.includes('2-8')||cd.includes('2–8'))?55:100;
+  if(d.ins==="集采")s.drg=100;else if((d.annual||0)>30000)s.drg=45;else s.drg=80;
+  const ts=Math.round((s.gl*w.gl+s.ins*w.ins+s.route*w.route+s.vbp*w.vbp+s.cold*w.cold+s.drg*w.drg)/total);
+  return{total:ts,breakdown:s};
 }
-function genSalesBrief(){
-  const q=document.getElementById('salesQ').value;
-  if(!q.trim()){document.getElementById('salesOut').innerHTML='<div class="muted">请输入药品名</div>';return;}
-  const d=findDrug(q);
-  if(!d){document.getElementById('salesOut').innerHTML='<div class="muted">未找到「'+q+'」，请检查名称或先在数据管理中录入。</div>';return;}
-  const peers=DB.filter(x=>x.disease===d.disease).sort((a,b)=>(a.year||9999)-(b.year||9999));
-  const dname=d.gn+(d.bn?'（'+d.bn+'）':'');
-  // 通俗化内容（有则用通俗化，没有则用原始字段）
-  const mechPlain=d.mech_plain||d.mech||'暂无';
-  const indPlain=d.ind_plain||d.ind||d.disease||'暂无';
-  const points=d.talking_points||'';
-  // 价格展示
-  const priceTxt=d.price?('¥'+d.price+(d.spec?'/'+d.spec:'')):'暂无';
-  const annualTxt=d.annual?('¥'+d.annual+'/年'):'—';
-  // 生成HTML
-  const html=`
-  <div class="sales-card">
-    <button class="btn alt copy-btn" onclick="copySalesBrief()">📋 复制简报</button>
-    <h2>${dname}</h2>
-    <div class="sub-title">${d.area} · ${d.disease} · ${d.gen||'—'} · ${d.mfr||'—'}</div>
+function hospScore(d){return scoreDetail(d).total;}
+function hospRadar(d){const sc=scoreDetail(d).breakdown;return[sc.gl,sc.ins,sc.vbp,sc.route,sc.cold,sc.drg];}
 
-    <div class="sales-section plain">
-      <div class="sec-title">💊 这个药是干什么的？</div>
-      <div class="sec-body">${mechPlain}</div>
-    </div>
-
-    <div class="sales-section plain">
-      <div class="sec-title">🏥 适用于哪些患者？</div>
-      <div class="sec-body">${indPlain}</div>
-    </div>
-
-    ${points?`
-    <div class="sales-section points">
-      <div class="sec-title">⭐ 沟通要点（卖点 & 常见疑问）</div>
-      <div class="sec-body" style="white-space:pre-line">${points}</div>
-    </div>`:''}
-
-    <div class="sales-section info">
-      <div class="sec-title">📊 关键信息速览</div>
-      <div class="info-grid">
-        <div class="item"><div class="k">价格</div><div class="v" style="color:var(--red)">${priceTxt}</div></div>
-        <div class="item"><div class="k">年化费用</div><div class="v">${annualTxt}</div></div>
-        <div class="item"><div class="k">医保</div><div class="v">${insTag2(d.ins)}</div></div>
-        <div class="item"><div class="k">双通道</div><div class="v">${d.dual||'—'}</div></div>
-        <div class="item"><div class="k">给药途径</div><div class="v">${d.route||'—'}</div></div>
-        <div class="item"><div class="k">冷链</div><div class="v">${d.cold||'常温'}</div></div>
-        <div class="item"><div class="k">获批时间</div><div class="v">${d.adate||d.year||'—'}</div></div>
-        <div class="item"><div class="k">规格</div><div class="v">${d.spec||'—'}</div></div>
-        <div class="item"><div class="k">指南推荐</div><div class="v">${d.gl||'—'}</div></div>
-        <div class="item"><div class="k">集采风险</div><div class="v">${d.vbp||'—'}</div></div>
-      </div>
-    </div>
-
-    ${peers.length>1?`
-    <div class="sales-section" style="background:var(--soft);border-left:4px solid var(--brand2)">
-      <div class="sec-title">📋 同类药品一览（${d.disease}）</div>
-      <table style="margin-top:6px">
-        <tr><th>药品名</th><th>世代</th><th>上市年</th><th>医保</th><th>给药</th>${d.price?'<th>价格</th>':''}</tr>
-        ${peers.map(p=>'<tr'+(p===d?' style="background:#fef3c7;font-weight:600"':'')+'><td>'+(p.bn?p.gn+'('+p.bn+')':p.gn)+'</td><td>'+(p.gen||'—')+'</td><td>'+(p.year||'—')+'</td><td>'+insTag2(p.ins)+'</td><td>'+(p.route||'—')+'</td>'+(d.price?'<td>'+(p.price?'¥'+p.price:'—')+'</td>':'')+'</tr>').join('')}
-      </table>
-      <div class="muted" style="margin-top:6px">黄色高亮为当前查询药品</div>
-    </div>`:''}
-
-    <div class="muted" style="margin-top:12px;font-size:12px">数据来源：NMPA、医保局等公开信息，部分为估算，仅供参考。生成时间：${new Date().toLocaleString('zh-CN')}。</div>
-  </div>`;
-  document.getElementById('salesOut').innerHTML=html;
+/* ============ 引进评估 - 数据浏览 ============ */
+function buildAssessAreaPick(){
+  const c=document.getElementById('assessAreaPick');c.innerHTML='';
+  treeAreas().forEach(a=>{
+    const dis=treeDiseasesOf(a);const count=DB.filter(d=>d.area===a).length;
+    const div=document.createElement('div');div.className='area-card';div.style.flex='1 1 200px';
+    div.innerHTML='<b>'+a+'</b> <span class="muted">('+count+'个品种)</span><div class="muted" style="margin-top:4px">'+dis.map(x=>'<span class="pill">'+x+'</span>').join('')+'</div>';
+    div.onclick=()=>assessPickDisease(a);c.appendChild(div);
+  });
 }
-function copySalesBrief(){
-  const q=document.getElementById('salesQ').value;
-  const d=findDrug(q);
-  if(!d){alert('请先生成简报');return;}
-  const peers=DB.filter(x=>x.disease===d.disease).sort((a,b)=>(a.year||9999)-(b.year||9999));
-  const lines=[];
-  lines.push('【'+d.gn+(d.bn?'（'+d.bn+'）':'')+'】品种速查简报');
-  lines.push('');
-  lines.push('领域：'+(d.area||'—')+' ｜ 病种：'+(d.disease||'—')+' ｜ 世代：'+(d.gen||'—'));
-  lines.push('厂家：'+(d.mfr||'—'));
-  lines.push('');
-  lines.push('■ 这个药是干什么的？');
-  lines.push(d.mech_plain||d.mech||'暂无');
-  lines.push('');
-  lines.push('■ 适用于哪些患者？');
-  lines.push(d.ind_plain||d.ind||d.disease||'暂无');
-  lines.push('');
-  if(d.talking_points){
-    lines.push('■ 沟通要点');
-    lines.push(d.talking_points);
-    lines.push('');
-  }
-  lines.push('■ 关键信息');
-  lines.push('价格：'+(d.price?'¥'+d.price+(d.spec?'/'+d.spec:''):'暂无'));
-  lines.push('年化费用：'+(d.annual?'¥'+d.annual+'/年':'—'));
-  lines.push('医保：'+(d.ins||'—')+' ｜ 双通道：'+(d.dual||'—'));
-  lines.push('给药途径：'+(d.route||'—')+' ｜ 冷链：'+(d.cold||'常温'));
-  lines.push('获批时间：'+(d.adate||d.year||'—')+' ｜ 规格：'+(d.spec||'—'));
-  lines.push('指南推荐：'+(d.gl||'—')+' ｜ 集采风险：'+(d.vbp||'—'));
-  if(peers.length>1){
-    lines.push('');
-    lines.push('■ 同类药品（'+d.disease+'）');
-    peers.forEach(p=>{
-      const mark=p===d?' ← 当前':'';
-      lines.push('· '+(p.bn?p.gn+'('+p.bn+')':p.gn)+' ｜ '+(p.gen||'—')+' ｜ '+(p.year||'—')+'年 ｜ '+(p.ins||'—')+(p.price?' ｜ ¥'+p.price:'')+mark);
+function assessPickDisease(area){
+  const dis=treeDiseasesOf(area);
+  document.getElementById('assessBrowseContent').innerHTML=
+    '<div class="card"><button class="btn gray back-btn" onclick="buildAssessAreaPick()">← 返回领域选择</button>'+
+    '<h3>'+area+' · 选择病种</h3>'+
+    dis.map(d=>{const cnt=DB.filter(x=>x.disease===d).length;return'<button class="btn alt" style="margin:6px 6px 0 0" onclick="assessShowDisease(\''+area+'\',\''+d.replace(/'/g,"\\'")+'\')">'+d+' ('+cnt+')</button>';}).join('')+'</div>';
+  if(dis.length)assessShowDisease(area,dis[0]);
+}
+function assessShowDisease(area,disease){
+  const peers=DB.filter(d=>d.disease===disease).sort((a,b)=>(a.year||9999)-(b.year||9999));
+  document.getElementById('assessBrowseContent').innerHTML=
+    '<div class="card"><div style="display:flex;justify-content:space-between;align-items:center">'+
+    '<h3 style="margin:0">'+area+' / '+disease+' ('+peers.length+'个品种)</h3>'+
+    '<button class="btn gray" onclick="buildAssessAreaPick()">← 返回领域选择</button></div></div>'+
+    '<div class="card">'+assessTable(peers)+'</div>';
+}
+function assessTable(peers){
+  let html='<table><tr><th>通用名</th><th>商品名</th><th>厂家</th><th>迭代世代</th><th>上市年</th><th>医保</th><th>挂网价</th><th>给药</th><th>冷链</th><th>操作</th></tr>';
+  peers.forEach(p=>{
+    const idx=DB.indexOf(p);
+    html+='<tr style="cursor:pointer" onclick="toggleDetail('+idx+')">'+
+      '<td>'+p.gn+' <button class="copy-name-btn" onclick="event.stopPropagation();copyDrugName(\''+p.gn.replace(/'/g,"\\'")+'\')" title="复制药名">📋</button></td>'+
+      '<td>'+(p.bn||'—')+'</td><td>'+(p.mfr||'—')+'</td><td>'+(p.gen||'—')+'</td>'+
+      '<td>'+(p.year||'—')+'</td><td>'+insTag(p.ins)+'</td>'+
+      '<td>'+(p.price!=null?'¥'+p.price:'—')+'</td><td>'+(p.route||'—')+'</td><td>'+(p.cold||'—')+'</td>'+
+      '<td><button class="btn gray" style="padding:4px 10px;font-size:12px" onclick="event.stopPropagation();toggleDetail('+idx+')">展开</button></td></tr>';
+    html+='<tr id="detail_'+idx+'" style="display:none"><td colspan="10">'+renderDrugDetail(p)+'</td></tr>';
+  });
+  html+='</table>';
+  return html;
+}
+function toggleDetail(idx){const row=document.getElementById('detail_'+idx);if(row)row.style.display=(row.style.display==='none')?'':'none';}
+function renderDrugDetail(d){
+  return'<div class="drug-detail"><div class="row">'+
+    field('通用名',d.gn)+field('商品名',d.bn)+field('厂家',d.mfr)+field('批准文号',d.appr)+
+    field('注册分类',d.cls)+field('获批日期',d.adate)+field('剂型/规格',(d.form||'—')+' / '+(d.spec||'—'))+
+    field('作用机制',d.mech)+field('冷链',d.cold)+field('挂网价',d.price!=null?'¥'+d.price:'—')+
+    field('年化费用',d.annual!=null?'¥'+Number(d.annual).toLocaleString():'—')+
+    field('采购价(内部)',d.pprice!=null?'¥'+d.pprice:'—')+
+    field('医保',d.ins+(d.insyear?(' ('+d.insyear+')'):''))+field('双通道',d.dual)+
+    field('集采风险',d.vbp)+field('指南推荐',d.gl)+field('给药',d.route)+
+    field('专利到期',d.patent)+field('仿制药',d.followers!=null?d.followers+'家':'—')+
+    field('青睐度',hospScore(d))+
+    '</div>'+(d.ind?'<h3>适应症</h3><div class="muted">'+d.ind+'</div>':'')+
+    (d.ind2?'<div class="muted"><b>拓展：</b>'+d.ind2+'</div>':'')+
+    (d.note?'<div class="note" style="margin-top:8px">'+d.note+'</div>':'')+'</div>';
+}
+function copyDrugName(gn){if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(gn).then(()=>{}).catch(()=>{});}
+
+/* ============ 引进评估 - 决策分析 ============ */
+function initDecision(){
+  const sel=document.getElementById('decArea');
+  sel.innerHTML='<option value="">选择领域</option>'+treeAreas().map(a=>'<option value="'+a+'">'+a+'</option>').join('');
+  renderWeightBar();
+}
+function decAreaChange(){
+  const a=document.getElementById('decArea').value;
+  const sel=document.getElementById('decDisease');
+  if(!a){sel.innerHTML='<option value="">先选领域</option>';return;}
+  sel.innerHTML='<option value="">全部病种</option>'+treeDiseasesOf(a).map(d=>'<option value="'+d+'">'+d+'</option>').join('');
+  renderDecision();
+}
+function renderWeightBar(){
+  const box=document.getElementById('weightBar');const keys=['gl','ins','route','vbp','cold','drg'];
+  const total=keys.reduce((s,k)=>s+WEIGHTS[k],0);
+  let html='<div class="weight-bar">';
+  keys.forEach(k=>{const pct=(WEIGHTS[k]/total*100).toFixed(1);
+    html+='<div class="weight-seg" style="width:'+pct+'%;background:'+WEIGHT_COLORS[k]+'" title="'+WEIGHT_LABELS[k]+': '+WEIGHTS[k]+'%">'+(pct>8?'<span style="color:#fff;font-size:11px;font-weight:600">'+WEIGHT_LABELS[k]+' '+WEIGHTS[k]+'%</span>':'')+'</div>';});
+  html+='</div><div style="margin-top:6px">';
+  keys.forEach(k=>{html+='<span style="display:inline-block;margin:2px 8px;font-size:12px"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:'+WEIGHT_COLORS[k]+';margin-right:4px"></span>'+WEIGHT_LABELS[k]+': '+WEIGHTS[k]+'%</span>';});
+  html+='</div>';box.innerHTML=html;
+}
+function renderDecision(){
+  const area=document.getElementById('decArea').value;const disease=document.getElementById('decDisease').value;
+  let peers=DB.slice();
+  if(area)peers=peers.filter(d=>d.area===area);
+  if(disease)peers=peers.filter(d=>d.disease===disease);
+  peers=peers.sort((a,b)=>scoreDetail(b).total-scoreDetail(a).total);
+  const keys=['gl','ins','route','vbp','cold','drg'];
+  let html='<table><tr><th>排名</th><th>通用名</th><th>病种</th><th>总分</th>';
+  keys.forEach(k=>{html+='<th>'+WEIGHT_LABELS[k]+'<br><span style="font-size:11px;color:var(--sub)">'+WEIGHTS[k]+'%</span></th>';});
+  html+='</tr>';
+  peers.forEach((p,i)=>{const sc=scoreDetail(p);
+    html+='<tr><td>'+(i+1)+'</td><td>'+p.gn+'</td><td>'+(p.disease||'—')+'</td>';
+    html+='<td style="font-weight:700;color:var(--accent)">'+sc.total+'</td>';
+    keys.forEach(k=>{const val=sc.breakdown[k];const cls=val>=80?'green':val>=60?'amber':'red';
+      html+='<td><span class="tag '+cls+'">'+val+'</span></td>';});
+    html+='</tr>';});
+  html+='</table>';
+  document.getElementById('decTable').innerHTML=html;
+}
+function openWeightEditor(){
+  ['gl','ins','route','vbp','cold','drg'].forEach(k=>{const el=document.getElementById('w_'+k);if(el)el.value=WEIGHTS[k];});
+  updateWeightTotal();document.getElementById('weightBg').classList.add('on');
+}
+function updateWeightTotal(){
+  let total=0;['gl','ins','route','vbp','cold','drg'].forEach(k=>{const el=document.getElementById('w_'+k);if(el)total+=(+el.value||0);});
+  const el=document.getElementById('weightTotal');el.textContent=total+'%';el.style.color=total===100?'var(--green)':'var(--red)';
+}
+function saveWeights(){
+  let total=0;
+  ['gl','ins','route','vbp','cold','drg'].forEach(k=>{const el=document.getElementById('w_'+k);if(el){WEIGHTS[k]=+el.value||0;total+=WEIGHTS[k];}});
+  if(total!==100){if(!confirm('权重总和'+total+'%≠100%，确定保存？'))return;}
+  localStorage.setItem('drug_weights',JSON.stringify(WEIGHTS));
+  document.getElementById('weightBg').classList.remove('on');
+  renderWeightBar();renderDecision();
+}
+function resetWeights(){WEIGHTS={...DEFAULT_WEIGHTS};localStorage.setItem('drug_weights',JSON.stringify(WEIGHTS));openWeightEditor();renderWeightBar();renderDecision();}
+
+/* ============ 竞争格局 ============ */
+function buildCompeteAreaPick(){
+  const c=document.getElementById('competeAreaPick');c.innerHTML='';
+  treeAreas().forEach(a=>{const dis=treeDiseasesOf(a);const count=DB.filter(d=>d.area===a).length;
+    const div=document.createElement('div');div.className='area-card';div.style.flex='1 1 200px';
+    div.innerHTML='<b>'+a+'</b> <span class="muted">('+count+'个品种)</span><div class="muted" style="margin-top:4px">'+dis.map(x=>'<span class="pill">'+x+'</span>').join('')+'</div>';
+    div.onclick=()=>competePickDisease(a);c.appendChild(div);});
+}
+function competePickDisease(area){
+  const dis=treeDiseasesOf(area);
+  document.getElementById('competeContent').innerHTML=
+    '<div class="card"><button class="btn gray" onclick="buildCompeteAreaPick()">← 返回领域选择</button>'+
+    '<h3>'+area+' · 选择病种</h3>'+
+    dis.map(d=>'<button class="btn alt" style="margin:6px 6px 0 0" onclick="competeShowDisease(\''+area+'\',\''+d.replace(/'/g,"\\'")+'\')">'+d+'</button>').join('')+'</div>';
+  if(dis.length)competeShowDisease(area,dis[0]);
+}
+function competeShowDisease(area,disease){
+  const peers=DB.filter(d=>d.disease===disease).sort((a,b)=>(a.year||9999)-(b.year||9999));
+  document.getElementById('competeContent').innerHTML=
+    '<div class="card"><div style="display:flex;justify-content:space-between;align-items:center">'+
+    '<h3 style="margin:0">'+area+' / '+disease+' ('+peers.length+'个品种)</h3>'+
+    '<button class="btn gray" onclick="buildCompeteAreaPick()">← 返回领域选择</button></div></div>'+
+    '<div class="card"><h3>迭代时间线</h3><div id="competeChart" class="chart"></div></div>'+
+    '<div class="card"><h3>横向对比</h3>'+competeTable(peers)+'</div>';
+  if(peers.length){
+    echarts.init(document.getElementById('competeChart')).setOption({
+      tooltip:{trigger:'axis'},grid:{left:60,right:30,top:30,bottom:60},
+      legend:{data:['年化费用','青睐度'],top:0},
+      xAxis:{type:'category',data:peers.map(p=>p.gn),axisLabel:{interval:0,rotate:35,fontSize:11}},
+      yAxis:[{type:'value',name:'年化费用'},{type:'value',name:'青睐度',max:100}],
+      series:[
+        {name:'年化费用',type:'bar',data:peers.map(p=>p.annual||0),itemStyle:{color:'#4f46e5'}},
+        {name:'青睐度',type:'line',yAxisIndex:1,data:peers.map(p=>hospScore(p)),itemStyle:{color:'#b91c1c'}}
+      ]
     });
   }
-  lines.push('');
-  lines.push('（数据来源：NMPA/医保局等公开信息，仅供参考）');
-  const text=lines.join('\n');
-  if(navigator.clipboard&&navigator.clipboard.writeText){
-    navigator.clipboard.writeText(text).then(()=>{alert('简报已复制到剪贴板，可粘贴到微信/邮件');}).catch(()=>{fallbackCopy(text);});
-  }else{fallbackCopy(text);}
 }
-function fallbackCopy(text){
-  const ta=document.createElement('textarea');
-  ta.value=text;ta.style.position='fixed';ta.style.top='-9999px';
-  document.body.appendChild(ta);ta.select();
-  try{document.execCommand('copy');alert('简报已复制到剪贴板，可粘贴到微信/邮件');}catch(e){alert('复制失败，请手动选中简报内容复制');}
-  document.body.removeChild(ta);
+function competeTable(peers){
+  let html='<table><tr><th><input type="checkbox" onclick="document.querySelectorAll(\'#competeContent .cmpChk\').forEach(x=>x.checked=this.checked)"></th><th>通用名</th><th>商品名</th><th>厂家</th><th>世代</th><th>上市年</th><th>医保</th><th>挂网价</th><th>年化费用</th><th>青睐度</th><th>集采</th><th>给药</th><th>冷链</th></tr>';
+  peers.forEach(p=>{const idx=DB.indexOf(p);
+    html+='<tr><td><input type="checkbox" class="cmpChk" value="'+idx+'"></td>'+
+      '<td>'+p.gn+'</td><td>'+(p.bn||'—')+'</td><td>'+(p.mfr||'—')+'</td>'+
+      '<td>'+(p.gen||'—')+'</td><td>'+(p.year||'—')+'</td><td>'+insTag(p.ins)+'</td>'+
+      '<td>'+(p.price!=null?'¥'+p.price:'—')+'</td>'+
+      '<td>'+(p.annual!=null?'¥'+Number(p.annual).toLocaleString():'—')+'</td>'+
+      '<td>'+hospScore(p)+'</td><td>'+(p.vbp||'—')+'</td><td>'+(p.route||'—')+'</td><td>'+(p.cold||'—')+'</td></tr>';});
+  html+='</table><div class="row" style="margin-top:10px"><button class="btn alt" onclick="doCompareFromCompete()">对比所选品种</button></div>';
+  return html;
+}
+function doCompareFromCompete(){const ids=[...document.querySelectorAll('#competeContent .cmpChk:checked')].map(c=>+c.value);openCompare(ids);}
+
+/* ============ 临床简报 ============ */
+function clinicalAC(){
+  const q=norm(document.getElementById('clinicalQ').value);const box=document.getElementById('clinicalAC');
+  if(!q){box.style.display='none';return;}
+  const hits=DB.filter(d=>norm(d.gn).includes(q)||norm(d.bn).includes(q)).slice(0,10);
+  if(!hits.length){box.style.display='none';return;}
+  box.innerHTML='<div class="ac-list">'+hits.map(d=>'<div class="ac-item" onmousedown="clinicalPick(\''+d.gn.replace(/'/g,"\\'")+'\')">'+d.gn+'<span class="sub">'+(d.bn||'')+' · '+(d.disease||'')+'</span></div>').join('')+'</div>';
+  box.style.display='block';
+}
+function clinicalPick(gn){document.getElementById('clinicalQ').value=gn;document.getElementById('clinicalAC').style.display='none';genClinicalBrief();}
+function genClinicalBrief(){
+  const q=document.getElementById('clinicalQ').value;
+  if(!q.trim()){document.getElementById('clinicalOut').innerHTML='<div class="muted">请输入药品名</div>';return;}
+  const d=findDrug(q);
+  if(!d){document.getElementById('clinicalOut').innerHTML='<div class="muted">未找到「'+q+'」，请先在数据管理中录入。</div>';return;}
+  const peers=DB.filter(x=>x.disease===d.disease).sort((a,b)=>(a.year||9999)-(b.year||9999));
+  const sc=scoreDetail(d);
+  const html='<div class="card" style="border-radius:14px">'+
+    '<button class="btn alt copy-btn" onclick="copyClinicalBrief()">📋 复制</button>'+
+    '<h2>'+d.gn+(d.bn?'（'+d.bn+'）':'')+'</h2>'+
+    '<div class="muted" style="margin-bottom:14px">'+(d.area||'')+' · '+(d.disease||'')+' · '+(d.gen||'')+' · '+(d.mfr||'')+'</div>'+
+    '<div class="sales-section" style="background:#f0f7ff;border-left:4px solid #3b82f6"><div style="font-size:14px;font-weight:700;margin-bottom:8px">📌 一句话结论</div>'+
+    '<div style="font-size:14.5px;line-height:1.8">'+d.gn+'是'+(d.mfr||'')+'开发的'+(d.mech||'')+'，'+(d.ins||'未进医保')+'，医院青睐度'+sc.total+'分。'+(d.note||'')+'</div></div>'+
+    (d.talking_points?'<div class="sales-section" style="background:#fffbeb;border-left:4px solid #f59e0b"><div style="font-size:14px;font-weight:700;margin-bottom:8px">⭐ 沟通要点</div><div style="font-size:14.5px;line-height:1.8;white-space:pre-line">'+d.talking_points+'</div></div>':'')+
+    '<div class="sales-section" style="background:#f0fdf4;border-left:4px solid #22c55e"><div style="font-size:14px;font-weight:700;margin-bottom:8px">🏥 适用人群</div>'+
+    '<div style="font-size:14.5px;line-height:1.8">'+(d.ind_plain||d.ind||d.disease||'暂无')+'</div>'+
+    (d.mech_plain?'<div style="margin-top:8px;font-size:14.5px"><b>作用机制（大白话）：</b>'+d.mech_plain+'</div>':'')+'</div>'+
+    '<div class="sales-section" style="background:#fef2f2;border-left:4px solid #ef4444"><div style="font-size:14px;font-weight:700;margin-bottom:8px">💰 价格与医保</div>'+
+    '<div class="info-grid">'+
+    '<div class="item"><div class="k">挂网价</div><div class="v" style="color:var(--red)">'+(d.price!=null?'¥'+d.price:'—')+'</div></div>'+
+    '<div class="item"><div class="k">年化费用</div><div class="v">'+(d.annual!=null?'¥'+Number(d.annual).toLocaleString():'—')+'</div></div>'+
+    '<div class="item"><div class="k">医保</div><div class="v">'+insTag2(d.ins)+'</div></div>'+
+    '<div class="item"><div class="k">双通道</div><div class="v">'+(d.dual||'—')+'</div></div>'+
+    '<div class="item"><div class="k">采购价(内部)</div><div class="v" style="color:#9d174d">'+(d.pprice!=null?'¥'+d.pprice:'—')+'</div></div>'+
+    '<div class="item"><div class="k">给药途径</div><div class="v">'+(d.route||'—')+'</div></div>'+
+    '<div class="item"><div class="k">冷链</div><div class="v">'+(d.cold||'常温')+'</div></div>'+
+    '<div class="item"><div class="k">指南推荐</div><div class="v">'+(d.gl||'—')+'</div></div>'+
+    '</div></div>'+
+    (peers.length>1?'<div class="sales-section" style="background:var(--soft);border-left:4px solid var(--brand2)"><div style="font-size:14px;font-weight:700;margin-bottom:8px">📋 同类药品（'+d.disease+'）</div>'+
+    '<table style="margin-top:6px"><tr><th>药品名</th><th>世代</th><th>上市年</th><th>医保</th><th>给药</th><th>青睐度</th></tr>'+
+    peers.map(p=>'<tr'+(p===d?' style="background:#fef3c7;font-weight:600"':'')+'><td>'+(p.bn?p.gn+'('+p.bn+')':p.gn)+'</td><td>'+(p.gen||'—')+'</td><td>'+(p.year||'—')+'</td><td>'+insTag2(p.ins)+'</td><td>'+(p.route||'—')+'</td><td>'+hospScore(p)+'</td></tr>').join('')+
+    '</table></div>':'')+
+    '<div class="muted" style="margin-top:12px;font-size:12px">数据来源：NMPA/医保局等公开信息，仅供参考。生成时间：'+new Date().toLocaleString('zh-CN')+'</div>'+
+    '</div>';
+  document.getElementById('clinicalOut').innerHTML=html;
+}
+function copyClinicalBrief(){
+  const q=document.getElementById('clinicalQ').value;const d=findDrug(q);
+  if(!d){alert('请先生成简报');return;}
+  const peers=DB.filter(x=>x.disease===d.disease).sort((a,b)=>(a.year||9999)-(b.year||9999));
+  const L=[];
+  L.push('【'+d.gn+(d.bn?'（'+d.bn+'）':'')+'】临床简报');L.push('');
+  L.push('领域：'+(d.area||'—')+' ｜ 病种：'+(d.disease||'—')+' ｜ 世代：'+(d.gen||'—'));L.push('厂家：'+(d.mfr||'—'));L.push('');
+  L.push('■ 一句话结论');L.push(d.gn+'是'+(d.mfr||'')+'开发的'+(d.mech||'')+'，'+(d.ins||'未进医保'));L.push('');
+  if(d.talking_points){L.push('■ 沟通要点');L.push(d.talking_points);L.push('');}
+  L.push('■ 适用人群');L.push(d.ind_plain||d.ind||d.disease||'暂无');
+  if(d.mech_plain)L.push('作用机制：'+d.mech_plain);L.push('');
+  L.push('■ 价格与医保');
+  L.push('挂网价：'+(d.price!=null?'¥'+d.price:'—'));
+  L.push('年化费用：'+(d.annual!=null?'¥'+d.annual:'—'));
+  L.push('医保：'+(d.ins||'—')+' ｜ 双通道：'+(d.dual||'—'));
+  L.push('给药：'+(d.route||'—')+' ｜ 冷链：'+(d.cold||'常温'));
+  L.push('指南：'+(d.gl||'—'));L.push('');
+  if(peers.length>1){L.push('■ 同类药品（'+d.disease+'）');
+    peers.forEach(p=>{L.push('· '+(p.bn?p.gn+'('+p.bn+')':p.gn)+' ｜ '+(p.gen||'—')+' ｜ '+(p.year||'—')+'年 ｜ '+(p.ins||'—')+(p===d?' ← 当前':''));});}
+  L.push('');L.push('（数据来源：NMPA/医保局等公开信息，仅供参考）');
+  const text=L.join('\n');
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(text).then(()=>alert('简报已复制到剪贴板')).catch(()=>fallbackCopy(text));
+  else fallbackCopy(text);
 }
 
-/* ============ ⑦ 数据管理 ============ */
+/* ============ 数据管理 ============ */
 function renderManager(){
-  document.getElementById('managerTable').innerHTML='<table><tr><th>通用名</th><th>病种</th><th>世代</th><th>年份</th><th>医保</th><th>类型</th><th>挂网价</th><th>采购价(内部)</th><th>操作</th></tr>'+
+  document.getElementById('managerTable').innerHTML='<table><tr><th>通用名</th><th>病种</th><th>世代</th><th>年份</th><th>医保</th><th>类型</th><th>挂网价</th><th>采购价</th><th>操作</th></tr>'+
   DB.map((d,i)=>'<tr><td>'+d.gn+'</td><td>'+d.disease+'</td><td>'+d.gen+'</td><td>'+d.year+'</td><td>'+insTag(d.ins)+'</td><td>'+(d.dtype?'<span class="tag '+(d.dtype==='创新药'?'blue':d.dtype==='集采药'?'amber':'gray')+'">'+d.dtype+'</span>':'<span class="muted">—</span>')+'</td><td>'+(d.price!=null?'¥'+d.price:'—')+'</td><td style="color:#9d174d">'+(d.pprice!=null?'¥'+d.pprice:'—')+'</td><td><button class="btn gray" onclick="openEditor('+i+')">编辑</button> <button class="btn gray" onclick="delDrug('+i+')">删除</button></td></tr>').join('')+'</table>';
 }
-renderManager();
 let editIdx=-1;
-function initAreaSelect(){
-  const sel=document.getElementById('f_area');
-  sel.innerHTML='<option value="">请选择领域</option>'+treeAreas().map(a=>'<option value="'+a+'">'+a+'</option>').join('');
-}
-function cascadeDisease(){
-  const a=document.getElementById('f_area').value;
-  const sel=document.getElementById('f_disease');
-  if(!a){sel.innerHTML='<option value="">请先选择领域</option>';return;}
-  sel.innerHTML='<option value="">请选择病种</option>'+treeDiseasesOf(a).map(d=>'<option value="'+d+'">'+d+'</option>').join('');
-}
-initAreaSelect();
-function openEditor(i){editIdx=(i==null?-1:i);const d=editIdx>=0?DB[editIdx]:{};
-  ['gn','bn','area','disease','gen','year','origin','excl','cls','mech','mfr','appr','form','spec','adate','cold','price','annual','ins','insyear','dual','vbp','gl','route','sales','prob','prov','pt','ind','ind2','nt','note','patent','followers','dtype','pcycle','pprice','pprice_date','price_check','price_src','mech_plain','ind_plain','talking_points']
-  .forEach(k=>{const el=document.getElementById('f_'+k);if(!el)return;el.value=d[k]!=null?d[k]:"";if(k==='area')cascadeDisease();});
+function initAreaSelect(){const sel=document.getElementById('f_area');sel.innerHTML='<option value="">请选择领域</option>'+treeAreas().map(a=>'<option value="'+a+'">'+a+'</option>').join('');}
+function cascadeDisease(){const a=document.getElementById('f_area').value;const sel=document.getElementById('f_disease');if(!a){sel.innerHTML='<option value="">请先选择领域</option>';return;}sel.innerHTML='<option value="">请选择病种</option>'+treeDiseasesOf(a).map(d=>'<option value="'+d+'">'+d+'</option>').join('');}
+function openEditor(i){
+  editIdx=(i==null?-1:i);const d=editIdx>=0?DB[editIdx]:{};
+  const keys=['gn','bn','area','disease','gen','year','origin','excl','cls','mech','mfr','appr','form','spec','adate','cold','price','annual','ins','insyear','dual','vbp','gl','route','sales','prob','prov','pt','ind','ind2','nt','note','patent','followers','dtype','pcycle','pprice','pprice_date','price_check','price_src','mech_plain','ind_plain','talking_points','paystd'];
+  keys.forEach(k=>{const el=document.getElementById('f_'+k);if(!el)return;el.value=d[k]!=null?d[k]:"";if(k==='area')cascadeDisease();});
   document.getElementById('editorBg').classList.add('on');
 }
 function closeEditor(){document.getElementById('editorBg').classList.remove('on');}
 function saveDrug(){
-  const keys=['gn','bn','area','disease','gen','year','origin','excl','cls','mech','mfr','appr','form','spec','adate','cold','price','annual','ins','insyear','dual','vbp','gl','route','sales','prob','prov','pt','ind','ind2','nt','note','patent','followers','dtype','pcycle','pprice','pprice_date','price_check','price_src','mech_plain','ind_plain','talking_points'];
-  const d={};keys.forEach(k=>{const el=document.getElementById('f_'+k);if(el) d[k]=el.value;});
+  const keys=['gn','bn','area','disease','gen','year','origin','excl','cls','mech','mfr','appr','form','spec','adate','cold','price','annual','ins','insyear','dual','vbp','gl','route','sales','prob','prov','pt','ind','ind2','nt','note','patent','followers','dtype','pcycle','pprice','pprice_date','price_check','price_src','mech_plain','ind_plain','talking_points','paystd'];
+  const d={};keys.forEach(k=>{const el=document.getElementById('f_'+k);if(el)d[k]=el.value;});
   if(!d.gn){alert("通用名必填");return;}
-  ['year','price','annual','insyear','sales','prob','followers','pprice'].forEach(k=>{if(d[k]!=="") d[k]=+d[k];});
+  ['year','price','annual','insyear','sales','prob','followers','pprice'].forEach(k=>{if(d[k]!=="")d[k]=+d[k];});
   if(editIdx>=0)DB[editIdx]=d;else DB.push(d);
-  saveDB();closeEditor();renderManager();fillBriefSel();
-  // 刷新所有侧边栏菜单（新增药品后必须执行）
-  buildAreaPick('areaPick', a => pickDisease(a));
-  buildAreaPick('hospAreaPick', a => pickDisease(a, true));
-  buildAreaPick('insAreaPick', a => pickDisease(a, false, true));
+  saveDB();closeEditor();renderManager();
+  buildAssessAreaPick();buildCompeteAreaPick();
   alert("已保存（本地）。");
 }
-function delDrug(i){if(confirm("确认删除 "+DB[i].gn+"？")){DB.splice(i,1);saveDB();renderManager();fillBriefSel();}}
+function delDrug(i){if(confirm("确认删除 "+DB[i].gn+"？")){DB.splice(i,1);saveDB();renderManager();buildAssessAreaPick();buildCompeteAreaPick();}}
 function exportJSON(){const blob=new Blob([JSON.stringify(DB,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='药品数据库.json';a.click();}
-function importJSON(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const arr=JSON.parse(r.result);if(!Array.isArray(arr))throw 0;const before=DB.length;const keys=new Set(DB.map(d=>norm(d.gn)+'|'+norm(d.disease)));let added=0;arr.forEach(d=>{const k=norm(d.gn)+'|'+norm(d.disease);if(!keys.has(k)){DB.push(d);keys.add(k);added++;}});saveDB();renderManager();fillBriefSel();refreshYear();alert("导入成功：新增 "+added+" 条（原 "+before+" 条，重复已跳过）");}catch(err){alert("JSON 解析失败");}};r.readAsText(f);}
-function resetData(){if(confirm("恢复为示例数据？当前本地修改将丢失。")){DB=JSON.parse(JSON.stringify(SEED));saveDB();renderManager();fillBriefSel();alert("已恢复示例数据");}}
+function importJSON(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const arr=JSON.parse(r.result);if(!Array.isArray(arr))throw 0;const before=DB.length;const keys=new Set(DB.map(d=>norm(d.gn)+'|'+norm(d.disease)));let added=0;arr.forEach(d=>{const k=norm(d.gn)+'|'+norm(d.disease);if(!keys.has(k)){DB.push(d);keys.add(k);added++;}});saveDB();renderManager();buildAssessAreaPick();buildCompeteAreaPick();alert("导入成功：新增 "+added+" 条（原 "+before+" 条）");}catch(err){alert("JSON解析失败");}};r.readAsText(f);}
+function resetData(){if(confirm("恢复示例数据？当前修改将丢失。")){DB=JSON.parse(JSON.stringify(SEED));saveDB();renderManager();buildAssessAreaPick();buildCompeteAreaPick();alert("已恢复示例数据");}}
+
+/* ============ 自动补全（兼容旧调用） ============ */
+function autoComplete(){globalAC();}
+function pickAC(gn){globalPick(gn);}
+function fillBriefSel(){}
+
+/* ============ 初始化 ============ */
+initAreaSelect();
+buildAssessAreaPick();
+buildCompeteAreaPick();
+renderManager();
+initDecision();
+loadCCParams();
+calcColdChain();
+ptInitCmpArea();
 
 /* ============ 文档/文本批量导入（R01 智能解析增强） ============ */
 const DOC_FIELDS={
@@ -1649,17 +1252,6 @@ async function docxToText(file){
   return paras.map(pa=>[...pa.matchAll(/<w:t[^>]*>([\s\S]*?)<\/w:t>/g)].map(m=>m[1]).join('')).join('\n');
 }
 
-/* ============ ① 查询框自动补全 ============ */
-function autoComplete(){
-  const q=norm(document.getElementById('q').value);
-  const box=document.getElementById('qAC');
-  if(!q){box.style.display='none';box.innerHTML='';return;}
-  const hits=DB.filter(d=>norm(d.gn).includes(q)||norm(d.bn).includes(q)).slice(0,10);
-  if(!hits.length){box.style.display='none';box.innerHTML='';return;}
-  box.innerHTML='<div class="ac-list">'+hits.map(d=>'<div class="ac-item" onmousedown="pickAC(\''+d.gn+'\')">'+d.gn+'<span class="sub">'+d.bn+' · '+d.disease+'</span></div>').join('')+'</div>';
-  box.style.display='block';
-}
-function pickAC(gn){document.getElementById('q').value=gn;document.getElementById('qAC').style.display='none';doSearch();}
 
 /* ============ 横向对比（通用 Compare 弹窗） ============ */
 function toggleAllCmp(cb){document.querySelectorAll('#evoCharts .cmpChk').forEach(x=>x.checked=cb.checked);}
@@ -1696,6 +1288,7 @@ function openCompare(ids){
   document.getElementById('compareBody').innerHTML=html;
   document.getElementById('compareBg').classList.add('on');
 }
+
 
 /* ============ ⑧ 价格批量核算 ============ */
 let PRICE_ROWS=[];
@@ -1756,6 +1349,7 @@ function writePriceCalc(){
     renderPriceTable();
   }else document.getElementById('priceMsg').textContent='未选中可写回的行（已有年化费用的行默认不勾选）。';
 }
+
 
 /* ============ R04 冷链成本估算器 ============ */
 function calcColdChain(){
@@ -1827,6 +1421,7 @@ function loadCCParams(){
     Object.keys(p).forEach(id=>{const el=document.getElementById(id);if(el)el.value=p[id];});
   }catch(e){}
 }
+
 
 /* ============ R05+R06+R10 价格追踪与核查 ============ */
 function ptTab(name,btn){
@@ -2007,14 +1602,7 @@ function ptMarkCheck(idx){
   alert('已标记 '+DB[idx].gn+' 为今日已核查。');
 }
 
-/* 初始建议 */
-document.getElementById('qSuggestions').innerHTML='试试：'+DB.slice(0,10).map(d=>'<span class="pill">'+d.gn+'</span>').join("");
-/* R04 冷链计算器初始化 */
-loadCCParams();
-calcColdChain();
-/* R06 比价领域下拉初始化 */
-ptInitCmpArea();
-</script>
 
+</script>
 
 </body></html>
