@@ -284,16 +284,27 @@ nav button.active{
     </div>
 
     <div class="card" style="margin-top:14px">
-      <h2>📄 文档 / 文本批量导入（自动识别字段）</h2>
-      <p class="muted">把 Word 文档<b>另存为 .txt</b> 或直接粘贴内容，按「字段: 值」格式书写（每个药品之间空一行），点「解析预览」即可一键入库。也支持上传 <b>.csv / .docx</b>。下方有模板。</p>
-      <textarea id="docText" rows="9" style="width:100%;font-family:consolas;font-size:12px;padding:8px;border:1px solid var(--line);border-radius:8px" placeholder="示例：
+      <h2>📄 文档 / 文本批量导入（智能识别字段）</h2>
+      <p class="muted">支持两种模式：<b>① 结构化</b>——按「字段: 值」格式书写，每个药品之间空一行；<b>② 智能模式</b>——直接粘贴非结构化文本（新闻稿、NMPA查询结果、说明书摘要等），系统自动识别药品名、厂家、批准文号、价格、医保状态、病种等字段。也支持上传 <b>.csv / .docx</b>。</p>
+      <textarea id="docText" rows="9" style="width:100%;font-family:consolas;font-size:12px;padding:8px;border:1px solid var(--line);border-radius:8px" placeholder="支持两种输入方式：
 
+【结构化】每行一个字段，药品间空行分隔：
 通用名: 德曲妥珠单抗
 商品名: 优赫得
 领域: 肿瘤
 病种: 乳腺癌
 迭代世代: ADC(第3代)
 上市年: 2023
+
+【智能模式】直接粘贴任意文本：
+国药准字SJ20230045
+德曲妥珠单抗，阿斯利康/第一三共联合开发
+2023年获批上市，适应症为乳腺癌
+医保已进，双通道
+价格约5500元/支，2-8℃冷藏
+ADC药物，注射途径
+
+系统会自动识别字段并用标签标注来源。">
 来源: 进口
 医保状态: 已进医保
 进医保年: 2023
@@ -318,41 +329,60 @@ nav button.active{
       <div id="docPreview"></div>
       <details style="margin-top:10px">
         <summary class="muted">📋 查看字段模板与填写说明</summary>
-        <pre style="background:var(--soft);padding:10px;border-radius:8px;font-size:12px;white-space:pre-wrap;margin-top:6px">每个药品之间空一行；字段名后用英文冒号「:」或中文冒号「：」均可。
+        <pre style="background:var(--soft);padding:10px;border-radius:8px;font-size:12px;white-space:pre-wrap;margin-top:6px">【结构化模式】每行一个字段，药品之间空一行；字段名后用英文「:」或中文「：」均可。
+也支持英文字段名（如 generic name, manufacturer, price 等）。
 
 通用名: 必填
-商品名: 
-领域: 肿瘤 / 代谢 / 自免疫 / 罕见病（四选一）
+商品名:
+领域: 肿瘤 / 代谢 / 自免疫 / 罕见病（四选一，留空可自动反查）
 病种: 如 乳腺癌、结直肠癌
 迭代世代: 如 第3代EGFR-TKI、ADC
 上市年: 如 2023
 来源: 国产 / 进口
 是否未引进: 是 / 否
-药品类别: 
-作用机制: 
-生产厂家: 
-批准文号: 
-剂型: 
-规格: 
-批准日期: 
-贮藏: 
-单价: 
-年化费用: 
+药品类别:
+作用机制:
+生产厂家:
+批准文号:
+剂型:
+规格:
+批准日期:
+贮藏:
+单价:
+年化费用:
 医保状态: 集采 / 已进医保 / 国谈进行中 / 未进医保
 进医保年: 如 2023
 双通道: 是 / 否
-集采风险: 
-指南推荐: 
+集采风险:
+指南推荐:
 给药途径: 口服 / 注射
-销售额: 
+销售额:
 进医保概率: 0-1 小数，如 0.9
-省内患者: 
-专利到期日: 
+省内患者:
+专利到期日:
 仿制药围攻数: 数字，如 3
-适应症: 
-拓展适应症: 
-临床试验: 
-备注: 
+适应症:
+拓展适应症:
+临床试验:
+备注:
+药品类型: 创新药 / 集采药 / 其他
+采购周期: 如 第9批国采（集采药填写）
+
+【智能模式】直接粘贴非结构化文本即可，系统自动识别以下字段：
+- 批准文号（国药准字H/S/Z…）
+- 厂家（XX药业/制药/医药…）
+- 日期/上市年（YYYY年MM月 / YYYY-MM-DD）
+- 价格（XX元/盒）
+- 医保状态（已进医保/集采/国谈/未进医保）
+- 病种+领域（匹配病种库自动反查）
+- 给药途径（口服/注射）
+- 冷链（2-8℃冷藏/常温）
+- 规格（XXmg/XXml）
+- 作用机制（TKI/ADC/单抗/GLP-1/PD-1/JAK…）
+- 来源（国产/进口）
+- 通用名（匹配已有数据库）
+
+识别结果用彩色标签标注来源：结构化 / 智能识别 / 自动反查 / 数据库匹配
 
 CSV 格式：第一行为表头（字段名同上），之后每行一个药品，逗号分隔。</pre>
       </details>
@@ -954,41 +984,44 @@ function exportJSON(){const blob=new Blob([JSON.stringify(DB,null,2)],{type:'app
 function importJSON(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const arr=JSON.parse(r.result);if(!Array.isArray(arr))throw 0;const before=DB.length;const keys=new Set(DB.map(d=>norm(d.gn)+'|'+norm(d.disease)));let added=0;arr.forEach(d=>{const k=norm(d.gn)+'|'+norm(d.disease);if(!keys.has(k)){DB.push(d);keys.add(k);added++;}});saveDB();renderManager();fillBriefSel();refreshYear();alert("导入成功：新增 "+added+" 条（原 "+before+" 条，重复已跳过）");}catch(err){alert("JSON 解析失败");}};r.readAsText(f);}
 function resetData(){if(confirm("恢复为示例数据？当前本地修改将丢失。")){DB=JSON.parse(JSON.stringify(SEED));saveDB();renderManager();fillBriefSel();alert("已恢复示例数据");}}
 
-/* ============ 文档/文本批量导入 ============ */
+/* ============ 文档/文本批量导入（R01 智能解析增强） ============ */
 const DOC_FIELDS={
-  '通用名':'gn','药名':'gn','名称':'gn',
-  '商品名':'bn','品牌名':'bn',
-  '领域':'area','治疗领域':'area',
-  '病种':'disease','适应症领域':'disease','疾病':'disease',
-  '迭代世代':'gen','代次':'gen','世代':'gen',
-  '上市年':'year','获批年':'year','上市年份':'year',
-  '来源':'origin',
-  '是否未引进':'excl','未引进':'excl',
-  '药品类别':'cls','分类':'cls','类别':'cls',
-  '作用机制':'mech','机制':'mech',
-  '生产厂家':'mfr','企业':'mfr','厂家':'mfr',
-  '批准文号':'appr','批件号':'appr',
-  '剂型':'form',
-  '规格':'spec',
-  '批准日期':'adate','获批日期':'adate',
-  '贮藏':'cold','储存':'cold',
-  '单价':'price','价格':'price',
-  '年化费用':'annual',
-  '医保状态':'ins','医保':'ins',
-  '进医保年':'insyear',
-  '双通道':'dual',
-  '集采风险':'vbp',
-  '指南推荐':'gl','指南':'gl',
-  '给药途径':'route',
-  '销售额':'sales',
-  '进医保概率':'prob',
-  '省内患者':'pt','患者池':'pt',
-  '专利到期日':'patent','专利':'patent',
-  '仿制药围攻数':'followers','仿制药数':'followers',
-  '适应症':'ind',
-  '拓展适应症':'ind2','拓展':'ind2',
-  '临床试验':'nt','试验':'nt',
-  '备注':'note','风险':'note'
+  '通用名':'gn','通用名称':'gn','药名':'gn','名称':'gn','药品名称':'gn','药品名':'gn',
+  'generic name':'gn','generic':'gn','drug name':'gn','drug':'gn',
+  '商品名':'bn','商品名称':'bn','品牌名':'bn','品牌':'bn','trade name':'bn','brand name':'bn','brand':'bn',
+  '领域':'area','治疗领域':'area','疾病领域':'area','治疗领域分类':'area','therapeutic area':'area','area':'area',
+  '病种':'disease','适应症领域':'disease','疾病':'disease','disease':'disease','indication area':'disease',
+  '迭代世代':'gen','代次':'gen','世代':'gen','迭代':'gen','generation':'gen',
+  '上市年':'year','获批年':'year','上市年份':'year','获批年份':'year','上市时间':'year','获批时间':'year','year':'year','approval year':'year',
+  '来源':'origin','origin':'origin',
+  '是否未引进':'excl','未引进':'excl','是否引进':'excl','引进状态':'excl',
+  '药品类别':'cls','分类':'cls','类别':'cls','药品分类':'cls','drug class':'cls','class':'cls',
+  '作用机制':'mech','机制':'mech','mechanism':'mech','mechanism of action':'mech','MOA':'mech',
+  '生产厂家':'mfr','企业':'mfr','厂家':'mfr','生产商':'mfr','制药企业':'mfr','生产企业':'mfr','manufacturer':'mfr','company':'mfr','生产厂商':'mfr',
+  '批准文号':'appr','批件号':'appr','批准号':'appr','注册号':'appr','批准文号/注册证号':'appr','approval number':'appr','registration':'appr','注册证号':'appr',
+  '剂型':'form','dosage form':'form','formulation':'form',
+  '规格':'spec','strength':'spec','specification':'spec',
+  '批准日期':'adate','获批日期':'adate','批准时间':'adate','获批时间':'adate','approval date':'adate','批准上市日期':'adate',
+  '贮藏':'cold','储存':'cold','贮藏条件':'cold','储存条件':'cold','storage':'cold','storage condition':'cold','保存条件':'cold',
+  '单价':'price','价格':'price','中标价':'price','挂网价':'price','price':'price','unit price':'price','采购价':'pprice','实际采购价':'pprice','purchase price':'pprice',
+  '年化费用':'annual','年费用':'annual','年用药费用':'annual','annual cost':'annual','annual fee':'annual','年用药金额':'annual',
+  '医保状态':'ins','医保':'ins','医保目录':'ins','是否医保':'ins','insurance':'ins','medical insurance':'ins','医保情况':'ins',
+  '进医保年':'insyear','医保纳入年':'insyear','医保年份':'insyear','纳入医保年份':'insyear',
+  '双通道':'dual','双通道政策':'dual','dual channel':'dual','是否双通道':'dual',
+  '集采风险':'vbp','集采':'vbp','带量采购':'vbp','VBP':'vbp',
+  '指南推荐':'gl','指南':'gl','guideline':'gl','指南推荐等级':'gl',
+  '给药途径':'route','给药方式':'route','用药途径':'route','route':'route','route of administration':'route','用药方式':'route',
+  '销售额':'sales','年销售额':'sales','sales':'sales','年销售':'sales',
+  '进医保概率':'prob','医保概率':'prob','probability':'prob',
+  '省内患者':'pt','患者池':'pt','患者数':'pt','patient pool':'pt','患者人群':'pt',
+  '专利到期日':'patent','专利':'patent','专利期限':'patent','专利失效日':'patent','patent expiry':'patent','patent expiration':'patent','专利保护期':'patent',
+  '仿制药围攻数':'followers','仿制药数':'followers','仿制药数量':'followers','generics count':'followers','仿制药家数':'followers',
+  '适应症':'ind','适应证':'ind','indication':'ind','indications':'ind',
+  '拓展适应症':'ind2','拓展':'ind2','拓展适应证':'ind2','additional indication':'ind2','扩展适应症':'ind2',
+  '临床试验':'nt','试验':'nt','clinical trial':'nt','临床试验数据':'nt',
+  '备注':'note','风险':'note','备注信息':'note','说明':'note','remarks':'note','note':'note','comment':'note','备注说明':'note',
+  '药品类型':'dtype','drug type':'dtype','类型':'dtype',
+  '采购周期':'pcycle','procurement cycle':'pcycle','集采周期':'pcycle'
 };
 const DOC_NUM=['year','price','annual','insyear','sales','followers'];
 function coerceField(f,val){
@@ -1001,14 +1034,134 @@ function coerceField(f,val){
   if(f==='origin') return /进口/.test(val)?'进口':'国产';
   return val;
 }
+
+/* ---- R01: 病种→领域反查 ---- */
+function areaFromDisease(disease){
+  if(!disease) return '';
+  const e = DISEASE_TREE.find(x => x.disease === disease);
+  return e ? e.area : '';
+}
+
+/* ---- R01: 智能识别（从非结构化文本提取字段） ---- */
+function smartExtract(text){
+  const d = {}, src = {};
+
+  // 1. 批准文号：国药准字 + 字母 + 数字
+  let m = text.match(/国药准字([HSZCBFJG]\w{5,})/);
+  if(m){ d.appr='国药准字'+m[1]; src.appr='智能识别'; }
+
+  // 2. 厂家：XX药业/制药/医药/生物技术等
+  m = text.match(/([\u4e00-\u9fa5]{2,8}(?:药业|制药|医药|生物技术|医疗科技|健康科技|制药有限|医药有限))/);
+  if(!m) m = text.match(/([\u4e00-\u9fa5]{2,6}(?:有限公司|股份有限公司))/);
+  if(m && m[1].length <= 14){ d.mfr=m[1].replace(/有限.*/,''); src.mfr='智能识别'; }
+
+  // 3. 批准日期：YYYY年MM月DD日 / YYYY-MM-DD / YYYY.MM
+  m = text.match(/(\d{4})[-年](\d{1,2})[-月.](\d{1,2})/);
+  if(m){ d.adate=m[1]+'-'+String(m[2]).padStart(2,'0')+'-'+String(m[3]).padStart(2,'0'); src.adate='智能识别'; }
+  else { m = text.match(/(\d{4})[-年](\d{1,2})月?/); if(m){ d.adate=m[1]+'-'+String(m[2]).padStart(2,'0'); src.adate='智能识别'; } }
+
+  // 4. 上市年（支持年份在关键词前后两种语序）
+  m = text.match(/(\d{4})\s*年?\s*(?:获批上市|上市|获批|批准)/);
+  if(!m) m = text.match(/(?:上市年|获批年|上市时间|获批时间|批准时间)[：:]?\s*(\d{4})/);
+  if(!m) m = text.match(/(?:上市|获批|批准)[^\d]{0,6}(\d{4})/);
+  if(m){ d.year=parseInt(m[1]); src.year='智能识别'; }
+  else if(!d.year){ m = text.match(/20[0-2]\d年/); if(m){ d.year=parseInt(m[0]); src.year='智能识别'; } }
+
+  // 5. 价格：XX元/盒、XX元
+  m = text.match(/(?:价格|单价|售价|中标价|挂网价)[：:]?\s*(\d+(?:\.\d+)?)\s*元?(?:\/?(?:盒|支|瓶|剂|片|粒))?/);
+  if(m){ d.price=parseFloat(m[1]); src.price='智能识别'; }
+  else { m = text.match(/(\d+(?:\.\d+)?)\s*元\/?(?:盒|支|瓶|剂|片|粒)/); if(m){ d.price=parseFloat(m[1]); src.price='智能识别'; } }
+
+  // 6. 医保状态
+  if(/已进医保|进入医保|医保目录内|纳入医保|医保乙类|医保甲类|医保已进|进医保了|医保覆盖/.test(text)){ d.ins='已进医保'; src.ins='智能识别'; }
+  else if(/集采|集中采购|带量采购|中标采购/.test(text)){ d.ins='集采'; src.ins='智能识别'; }
+  else if(/国谈|国家谈判|谈判药品|协议期内/.test(text)){ d.ins='国谈进行中'; src.ins='智能识别'; }
+  else if(/未进医保|非医保|自费药|未纳入/.test(text)){ d.ins='未进医保'; src.ins='智能识别'; }
+
+  // 7. 病种：匹配 DISEASE_TREE（从长到短避免子串误匹配）
+  const diseases = [...DISEASE_TREE].sort((a,b)=>b.disease.length-a.disease.length);
+  for(const e of diseases){
+    if(text.includes(e.disease)){
+      d.disease=e.disease; d.area=e.area;
+      src.disease='智能识别'; src.area='自动反查';
+      break;
+    }
+  }
+
+  // 8. 给药途径
+  if(/口服|片剂|胶囊|丸剂|颗粒剂|散剂|口服液/.test(text) && !/注射/.test(text)){ d.route='口服'; src.route='智能识别'; }
+  else if(/注射|静脉|静滴|静注|输注|皮下注射|肌注|滴注/.test(text)){ d.route='注射'; src.route='智能识别'; }
+
+  // 9. 冷链
+  if(/冷藏|冷链|2-8|2～8|2~8℃|低温保存/.test(text)){ d.cold='2-8℃冷藏'; src.cold='智能识别'; }
+  else if(/常温|室温|阴凉/.test(text)){ d.cold='常温'; src.cold='智能识别'; }
+
+  // 10. 来源（国产/进口）
+  if(/进口药|进口|境外|外资药企/.test(text)){ d.origin='进口'; src.origin='智能识别'; }
+  else if(/国产|境内|民族药企/.test(text)){ d.origin='国产'; src.origin='智能识别'; }
+
+  // 11. 双通道
+  if(/双通道/.test(text)){ d.dual='是'; src.dual='智能识别'; }
+
+  // 12. 通用名：从已有数据库匹配
+  if(DB && DB.length){
+    const sorted = [...DB].sort((a,b)=>(b.gn||'').length-(a.gn||'').length);
+    for(const drug of sorted){
+      if(drug.gn && text.includes(drug.gn)){
+        d.gn=drug.gn; src.gn='数据库匹配';
+        if(!d.disease && drug.disease){ d.disease=drug.disease; d.area=drug.area; src.disease='数据库匹配'; src.area='数据库匹配'; }
+        break;
+      }
+    }
+  }
+
+  // 13. 规格：XXmg / XXml / XX片
+  m = text.match(/(\d+(?:\.\d+)?)\s*(mg|mg\/ml|ml|μg|μg\/ml|ug|IU|万IU|片|粒|支|瓶|袋)/i);
+  if(m){ d.spec=m[1]+m[2]; src.spec='智能识别'; }
+
+  // 14. 作用机制关键词
+  if(/TKI|酪氨酸激酶抑制剂/.test(text) && !d.mech){ d.mech='TKI'; src.mech='智能识别'; }
+  else if(/ADC|抗体偶联药物/.test(text) && !d.mech){ d.mech='ADC'; src.mech='智能识别'; }
+  else if(/单抗|单克隆抗体/.test(text) && !d.mech){ d.mech='单抗'; src.mech='智能识别'; }
+  else if(/GLP-1/.test(text) && !d.mech){ d.mech='GLP-1受体激动剂'; src.mech='智能识别'; }
+  else if(/PD-1/.test(text) && !d.mech){ d.mech='PD-1单抗'; src.mech='智能识别'; }
+  else if(/JAK抑制剂/.test(text) && !d.mech){ d.mech='JAK抑制剂'; src.mech='智能识别'; }
+
+  return {data:d, sources:src};
+}
+
+/* ---- R01: 增强版药品块解析（结构化 + 智能识别） ---- */
 function parseDrugBlock(block){
-  const d={};
+  // 第一轮：结构化解析（字段: 值）
+  const d = {};
+  const src = {};
   block.split(/\r?\n/).forEach(line=>{
-    const m=line.match(/^\s*([一-龥A-Za-z0-9（）()]+)\s*[:：]\s*([\s\S]*)$/);
+    const m = line.match(/^\s*([一-龥A-Za-z0-9（）()]+)\s*[:：]\s*([\s\S]*)$/);
     if(!m) return;
-    const f=DOC_FIELDS[m[1].trim()];
-    if(f) d[f]=coerceField(f,m[2].trim());
+    const f = DOC_FIELDS[m[1].trim()];
+    if(f){ d[f]=coerceField(f,m[2].trim()); src[f]='结构化'; }
   });
+
+  // 第二轮：如果结构化识别少于2个字段，叠加智能识别
+  const fieldCount = Object.keys(d).length;
+  if(fieldCount < 2){
+    const smart = smartExtract(block);
+    Object.keys(smart.data).forEach(k=>{
+      if(d[k]===undefined || d[k]==='' ){
+        d[k]=smart.data[k];
+        src[k]=smart.sources[k];
+      }
+    });
+  }
+
+  // 第三轮：病种→领域自动补全
+  if(d.disease && !d.area){
+    const a = areaFromDisease(d.disease);
+    if(a){ d.area=a; src.area='自动反查'; }
+  }
+
+  // 把来源信息附在数据上（不入库，仅预览用）
+  d._src = src;
   return d;
 }
 function parseCSV(lines){
@@ -1029,30 +1182,102 @@ function parseDoc(){
   const msg=document.getElementById('docMsg');
   const text=document.getElementById('docText').value;
   if(!text.trim()){msg.textContent='请先粘贴文本或上传文件';return;}
+
+  // URL 识别提示
+  if(/^https?:\/\//.test(text.trim())){
+    const url=text.trim().split(/\s+/)[0];
+    msg.innerHTML='检测到URL：<span class="muted">'+url.substring(0,60)+(url.length>60?'…':'')+'</span>。因浏览器跨域限制无法自动抓取，请手动复制页面内容粘贴后解析。';
+    return;
+  }
+
   const lines=text.replace(/\r/g,'').split('\n');
   let parsed=[];
-  if(text.includes(',')&&lines.length>1&&lines[0].includes(',')) parsed=parseCSV(lines);
-  else parsed=text.split(/\n\s*\n|(?:\n\s*[-—=*]{3,}\s*\n)/).map(parseDrugBlock).filter(d=>d.gn);
+  let smartCount=0;
+
+  if(text.includes(',')&&lines.length>1&&lines[0].includes(',')&&lines[0].length<200){
+    // CSV 模式
+    parsed=parseCSV(lines);
+  } else {
+    // 结构化 + 智能模式：按空行、分隔线、或编号项分段
+    const blocks=text.split(/\n\s*\n|(?:\n\s*[-—=*]{3,}\s*\n)|(?:\n(?=\d+[.、）]))/).map(b=>b.trim()).filter(b=>b);
+    parsed=blocks.map(b=>{
+      const d=parseDrugBlock(b);
+      if(d._src){
+        const hasSmart=Object.values(d._src).some(s=>s!=='结构化');
+        if(hasSmart) smartCount++;
+      }
+      return d;
+    }).filter(d=>d.gn);
+  }
+
   DOC_PREVIEW=parsed;
   renderDocPreview(parsed);
-  msg.textContent='解析出 '+parsed.length+' 个药品（预览如下，确认后入库）';
+  const smartNote = smartCount>0 ? '（其中 '+smartCount+' 条含智能识别字段）' : '';
+  msg.textContent='解析出 '+parsed.length+' 个药品'+smartNote+'（预览如下，确认后入库）';
+}
+function srcBadge(src,label){
+  if(!src) return '';
+  const colors={'结构化':'#185fa5','智能识别':'#ba7517','自动反查':'#0F6E56','数据库匹配':'#3B6D11'};
+  const c=colors[src]||'#888';
+  return ' <span style="font-size:10px;color:'+c+';border:1px solid '+c+'33;border-radius:3px;padding:0 3px">'+src+'</span>';
 }
 function renderDocPreview(list){
   const box=document.getElementById('docPreview');
   if(!list||!list.length){box.innerHTML='';return;}
-  box.innerHTML='<div class="card" style="margin-top:10px"><h3>解析预览（共 '+list.length+' 条）</h3>'+
-    '<table><tr><th>通用名</th><th>商品名</th><th>领域</th><th>病种</th><th>迭代世代</th><th>上市年</th><th>医保</th><th>操作</th></tr>'+
-    list.map((d,i)=>'<tr><td>'+(d.gn||'')+'</td><td>'+(d.bn||'')+'</td><td>'+(d.area||'')+'</td><td>'+(d.disease||'')+'</td><td>'+(d.gen||'')+'</td><td>'+(d.year||'')+'</td><td>'+(d.ins||'')+'</td><td><button class="btn gray" onclick="DOC_PREVIEW.splice('+i+',1);renderDocPreview(DOC_PREVIEW)">移除</button></td></tr>').join('')+
-    '</table><div class="row" style="margin-top:10px"><button class="btn" onclick="commitDoc()">确认入库（去重合并）</button><button class="btn alt" onclick="DOC_PREVIEW=[];renderDocPreview([])">清空</button></div></div>';
+
+  // 统计智能识别字段数
+  let totalSmart=0,totalFields=0;
+  list.forEach(d=>{if(d._src)Object.entries(d._src).forEach(([k,v])=>{if(k!=='_src'){totalFields++;if(v!=='结构化')totalSmart++;}});});
+
+  box.innerHTML='<div class="card" style="margin-top:10px"><h3>解析预览（共 '+list.length+' 条'+(totalSmart>0?'，含 '+totalSmart+' 个智能识别字段':'')+'）</h3>'+
+    '<table><tr><th>通用名</th><th>商品名</th><th>领域</th><th>病种</th><th>上市年</th><th>医保</th><th>厂家</th><th>批准文号</th><th>操作</th></tr>'+
+    list.map((d,i)=>{
+      const s=d._src||{};
+      return '<tr>'+
+        '<td>'+(d.gn||'')+srcBadge(s.gn,'')+'</td>'+
+        '<td>'+(d.bn||'')+'</td>'+
+        '<td>'+(d.area||'')+srcBadge(s.area,'')+'</td>'+
+        '<td>'+(d.disease||'')+srcBadge(s.disease,'')+'</td>'+
+        '<td>'+(d.year||'')+'</td>'+
+        '<td>'+(d.ins||'')+srcBadge(s.ins,'')+'</td>'+
+        '<td>'+(d.mfr||'')+srcBadge(s.mfr,'')+'</td>'+
+        '<td style="font-size:12px">'+(d.appr||'')+srcBadge(s.appr,'')+'</td>'+
+        '<td><button class="btn gray" onclick="DOC_PREVIEW.splice('+i+',1);renderDocPreview(DOC_PREVIEW)">移除</button></td>'+
+      '</tr>';
+    }).join('')+
+    '</table>'+
+    '<details style="margin-top:8px"><summary class="muted" style="cursor:pointer">查看全部字段（含智能识别详情）</summary>'+
+    '<div style="margin-top:8px;max-height:300px;overflow-y:auto">'+
+    list.map((d,i)=>{
+      const s=d._src||{};
+      const allKeys=Object.keys(d).filter(k=>k!=='_src');
+      return '<div style="border:1px solid var(--line);border-radius:6px;padding:8px;margin-bottom:6px">'+
+        '<b>'+(d.gn||'药品'+(i+1))+'</b>'+
+        '<div style="font-size:12px;margin-top:4px">'+
+        allKeys.map(k=>'<span style="display:inline-block;margin:2px 6px 2px 0">'+k+': '+d[k]+srcBadge(s[k],'')+'</span>').join('')+
+        '</div></div>';
+    }).join('')+
+    '</div></details>'+
+    '<div class="row" style="margin-top:10px"><button class="btn" onclick="commitDoc()">确认入库（去重合并）</button><button class="btn alt" onclick="DOC_PREVIEW=[];renderDocPreview([])">清空</button></div></div>';
 }
 function commitDoc(){
   if(!DOC_PREVIEW.length){alert('没有可入库的数据');return;}
   const before=DB.length;
   const keys=new Set(DB.map(d=>norm(d.gn)+'|'+norm(d.disease)));
-  let added=0;
-  DOC_PREVIEW.forEach(d=>{const k=norm(d.gn)+'|'+norm(d.disease);if(!keys.has(k)){DB.push(d);keys.add(k);added++;}});
+  let added=0,smartAdded=0;
+  DOC_PREVIEW.forEach(d=>{
+    const k=norm(d.gn)+'|'+norm(d.disease);
+    if(!keys.has(k)){
+      // 清除 _src 临时字段后入库
+      const clean={};
+      Object.keys(d).forEach(k2=>{if(k2!=='_src')clean[k2]=d[k2];});
+      DB.push(clean);keys.add(k);added++;
+      if(d._src){const hasSmart=Object.values(d._src).some(s=>s!=='结构化');if(hasSmart)smartAdded++;}
+    }
+  });
   saveDB();renderManager();fillBriefSel();refreshYear();
-  alert('入库成功：新增 '+added+' 条（原 '+before+' 条，重复已跳过）');
+  const smartNote=smartAdded>0?'（含 '+smartAdded+' 条智能识别）':'';
+  alert('入库成功：新增 '+added+' 条'+smartNote+'（原 '+before+' 条，重复已跳过）');
   DOC_PREVIEW=[];renderDocPreview([]);
   document.getElementById('docMsg').textContent='';
 }
