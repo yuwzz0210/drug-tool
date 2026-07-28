@@ -158,6 +158,26 @@ nav button.active{
   .cmp-table th,.cmp-table td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
   .cmp-table th{background:var(--soft);color:var(--sub)}
   .cmp-table .cmp-k{background:var(--soft);font-weight:600;white-space:nowrap;width:96px}
+  /* —— 业务员速查 —— */
+  .sales-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:16px;box-shadow:0 2px 6px rgba(20,40,80,.06)}
+  .sales-card h2{margin:0 0 4px;font-size:19px;color:var(--brand)}
+  .sales-card .sub-title{font-size:13px;color:var(--sub);margin-bottom:14px}
+  .sales-section{margin-top:16px;padding:14px 16px;border-radius:10px}
+  .sales-section.plain{background:#f0f7ff;border-left:4px solid #3b82f6}
+  .sales-section.points{background:#fffbeb;border-left:4px solid #f59e0b}
+  .sales-section.info{background:#f0fdf4;border-left:4px solid #22c55e}
+  .sales-section .sec-title{font-size:14px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+  .sales-section .sec-body{font-size:14.5px;line-height:1.8;color:var(--ink)}
+  .sales-tag{display:inline-block;padding:3px 12px;border-radius:8px;font-size:13px;font-weight:600;margin:2px}
+  .sales-tag.price{background:#fef2f2;color:#dc2626}
+  .sales-tag.ins{background:#f0fdf4;color:#16a34a}
+  .sales-tag.cold{background:#eff6ff;color:#2563eb}
+  .sales-tag.route{background:#faf5ff;color:#9333ea}
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:8px}
+  .info-grid .item{background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 12px}
+  .info-grid .item .k{font-size:12px;color:var(--sub)}
+  .info-grid .item .v{font-size:15px;font-weight:600;margin-top:2px}
+  .copy-btn{position:sticky;top:10px;float:right}
 </style>
 <script src="./药品数据分析工具 · 按疾病领域收集与对比药品迭代数据_files/beacon_web.min.js.下载"></script>
 <script>
@@ -193,9 +213,10 @@ nav button.active{
   <button data-t="hosp">③ 医院青睐度分析</button>
   <button data-t="ins">④ 进医保分析</button>
   <button data-t="brief">⑤ 品种简报生成</button>
-  <button data-t="manager">⑥ 数据管理</button>
-  <button data-t="source">⑦ 数据来源指引</button>
-  <button data-t="price">⑧ 价格批量核算</button>
+  <button data-t="sales">⑥ 业务员速查</button>
+  <button data-t="manager">⑦ 数据管理</button>
+  <button data-t="source">⑧ 数据来源指引</button>
+  <button data-t="price">⑨ 价格批量核算</button>
 </nav>
 
 <div class="yearbar">
@@ -268,7 +289,25 @@ nav button.active{
     </div>
   </section>
 
-  <!-- ⑥ 数据管理 -->
+  <!-- ⑥ 业务员速查 -->
+  <section class="tab" id="sales">
+    <div class="card">
+      <h2>业务员速查 · 输入品名一键出简报</h2>
+      <p class="muted">专为非药学背景业务员设计：输入药品名 → 自动生成通俗易懂的品种简报，包含大白话作用机制、沟通要点、价格医保信息。支持一键复制到微信。</p>
+      <div class="searchbar">
+        <div class="ac-box">
+          <input type="text" id="salesQ" placeholder="输入通用名 / 商品名，如：奥希替尼、司美格鲁肽…" oninput="salesAutoComplete()" onblur="setTimeout(()=>{document.getElementById('salesAC').style.display='none'},150)">
+          <div id="salesAC" class="ac-list" style="display:none"></div>
+        </div>
+        <button onclick="genSalesBrief()">生成简报</button>
+        <button class="btn gray" onclick="window.print()">打印/另存PDF</button>
+      </div>
+      <div class="muted">试试：<span class="pill" onclick="document.getElementById('salesQ').value='奥希替尼';genSalesBrief()">奥希替尼</span><span class="pill" onclick="document.getElementById('salesQ').value='司美格鲁肽(注射)';genSalesBrief()">司美格鲁肽(注射)</span><span class="pill" onclick="document.getElementById('salesQ').value='德曲妥珠单抗';genSalesBrief()">德曲妥珠单抗</span></div>
+    </div>
+    <div id="salesOut"></div>
+  </section>
+
+  <!-- ⑦ 数据管理 -->
   <section class="tab" id="manager">
     <div class="card">
       <h2>数据录入 / 导入 / 导出</h2>
@@ -384,6 +423,11 @@ ADC药物，注射途径
 
 识别结果用彩色标签标注来源：结构化 / 智能识别 / 自动反查 / 数据库匹配
 
+备注:
+通俗作用机制: (可选，大白话解释作用机制)
+适应症通俗: (可选，大白话描述适应症)
+沟通要点: (可选，卖点/对比/常见疑问)
+
 CSV 格式：第一行为表头（字段名同上），之后每行一个药品，逗号分隔。</pre>
       </details>
     </div>
@@ -470,7 +514,7 @@ CSV 格式：第一行为表头（字段名同上），之后每行一个药品�
       <div><label>双通道</label>
         <select id="f_dual"><option>是</option><option>否</option></select></div>
       <div><label>集采风险</label><input id="f_vbp" placeholder="如：低/无"></div>
-      <div><label>指南推荐</label><input id="f_guideline" placeholder="如：CSCO I级推荐"></div>
+      <div><label>指南推荐</label><input id="f_gl" placeholder="如：CSCO I级推荐"></div>
       <div><label>给药途径</label><select id="f_route"><option>注射</option><option>口服</option></select></div>
       <div><label>年销售额(亿元,示例)</label><input id="f_sales" type="number" placeholder="公开估算"></div>
       <div><label>进医保概率(0-1)</label><input id="f_prob" type="number" step="0.05"></div>
@@ -483,6 +527,12 @@ CSV 格式：第一行为表头（字段名同上），之后每行一个药品�
     <div><label>专利到期日</label><input id="f_patent" placeholder="如 2032-07-03 或 已过期"></div>
     <div><label>在研仿制药/竞品申请数</label><input id="f_followers" type="number" placeholder="单位：家"></div>
     <div><label>备注/风险</label><textarea id="f_note" rows="2"></textarea></div>
+    <div style="margin-top:10px;padding:10px;background:#f0f7ff;border-radius:8px;border:1px dashed #93c5fd">
+      <div style="font-size:13px;font-weight:600;color:#1e40af;margin-bottom:6px">通俗易懂化字段（R03 · 供业务员速查使用）</div>
+      <div><label>作用机制（大白话）</label><textarea id="f_mech_plain" rows="2" placeholder="如：这个药像精准制导导弹，只杀带某种标记的癌细胞，不误伤正常细胞"></textarea></div>
+      <div><label>适应症（大白话）</label><textarea id="f_ind_plain" rows="2" placeholder="如：用于晚期肺癌患者，特别是基因检测发现EGFR突变的人群"></textarea></div>
+      <div><label>沟通要点（卖点/对比/常见疑问）</label><textarea id="f_talking_points" rows="3" placeholder="如：① 比上一代副作用更小 ② 每天口服一次很方便 ③ 已进医保报销 ④ 与XX药相比优势：..."></textarea></div>
+    </div>
     <div class="row" style="margin-top:14px;justify-content:flex-end">
       <button class="btn gray" onclick="closeEditor()">取消</button>
       <button class="btn" onclick="saveDrug()">保存</button>
@@ -508,7 +558,7 @@ const SEED = [
   {gn:"吉非替尼",bn:"易瑞沙",area:"肿瘤",disease:"肺癌",gen:"第1代EGFR-TKI",year:2005,origin:"进口",excl:"否",cls:"化学药",mech:"EGFR酪氨酸激酶抑制剂",mfr:"阿斯利康",appr:"国药准字H20070070",form:"片剂",spec:"250mg",adate:"2005-02",cold:"常温",price:228,annual:27360,ins:"集采",insyear:2019,dual:"否",vbp:"高(已集采)",gl:"NCCN推荐",route:"口服",sales:null,prob:0.99,prov:"湖南",pt:"",patent:"2016-04-23",followers:12,ind:"EGFR突变阳性晚期NSCLC一线",ind2:"—",nt:"—",note:"首个EGFR-TKI，已过专利期，仿制药大量上市"},
   {gn:"埃克替尼",bn:"凯美纳",area:"肿瘤",disease:"肺癌",gen:"第1代EGFR-TKI(国产)",year:2011,origin:"国产",excl:"否",cls:"化学药1类",mech:"EGFR酪氨酸激酶抑制剂",mfr:"贝达药业",appr:"国药准字H20110027",form:"片剂",spec:"125mg",adate:"2011-06",cold:"常温",price:155,annual:18600,ins:"集采",insyear:2019,dual:"否",vbp:"高(已集采)",gl:"CSCO推荐",route:"口服",sales:12,prob:0.99,prov:"湖南",pt:"",patent:"2023-05-12",followers:8,ind:"EGFR突变阳性晚期NSCLC",ind2:"—",nt:"—",note:"国产首个EGFR-TKI，专利已到期"},
   {gn:"阿法替尼",bn:"吉泰瑞",area:"肿瘤",disease:"肺癌",gen:"第2代EGFR-TKI",year:2017,origin:"进口",excl:"否",cls:"化学药",mech:"不可逆EGFR/HER2抑制剂",mfr:"勃林格殷格翰",appr:"国药准字J20170029",form:"片剂",spec:"40mg",adate:"2017-02",cold:"常温",price:140,annual:16800,ins:"已进医保",insyear:2018,dual:"否",vbp:"中",gl:"CSCO推荐",route:"口服",sales:null,prob:0.9,prov:"湖南",pt:"",patent:"2025-08-14",followers:5,ind:"EGFR突变阳性NSCLC一线；鳞癌二线",ind2:"—",nt:"—",note:"2代TKI，专利即将到期"},
-  {gn:"奥希替尼",bn:"泰瑞沙",area:"肿瘤",disease:"肺癌",gen:"第3代EGFR-TKI",year:2017,origin:"进口",excl:"否",cls:"化学药",mech:"EGFR T790M抑制剂",mfr:"阿斯利康",appr:"国药准字J20171015",form:"片剂",spec:"80mg",adate:"2017-03",cold:"常温",price:5580,annual:66960,ins:"已进医保",insyear:2018,dual:"是",vbp:"中",gl:"CSCO I级推荐",route:"口服",sales:60,prob:0.95,prov:"湖南",pt:"",patent:"2032-07-03",followers:15,ind:"EGFR T790M突变NSCLC；一线EGFR突变",ind2:"辅助治疗",nt:"ADAURA研究",note:"3代TKI金标准，专利保护期长"},
+  {gn:"奥希替尼",bn:"泰瑞沙",area:"肿瘤",disease:"肺癌",gen:"第3代EGFR-TKI",year:2017,origin:"进口",excl:"否",cls:"化学药",mech:"EGFR T790M抑制剂",mfr:"阿斯利康",appr:"国药准字J20171015",form:"片剂",spec:"80mg",adate:"2017-03",cold:"常温",price:5580,annual:66960,ins:"已进医保",insyear:2018,dual:"是",vbp:"中",gl:"CSCO I级推荐",route:"口服",sales:60,prob:0.95,prov:"湖南",pt:"",patent:"2032-07-03",followers:15,ind:"EGFR T790M突变NSCLC；一线EGFR突变",ind2:"辅助治疗",nt:"ADAURA研究",note:"3代TKI金标准，专利保护期长",mech_plain:"精准靶向药——专门对付发生了T790M耐药突变的肺癌细胞，像锁匙配对一样只杀带这个突变的癌细胞，对正常细胞伤害小。",ind_plain:"用于EGFR基因突变阳性晚期非小细胞肺癌，尤其是一线治疗后出现T790M耐药突变的患者；也可直接用于一线治疗。",talking_points:"① 3代TKI金标准，CSCO I级推荐\n② 每天口服一片，非常方便\n③ 已进医保+双通道，患者负担大幅降低\n④ 比一代药（吉非替尼）无进展生存期翻倍\n⑤ 脑转移患者也有显著疗效\n⑥ 注意：用前需基因检测确认T790M突变"},
   {gn:"阿美替尼",bn:"阿美乐",area:"肿瘤",disease:"肺癌",gen:"第3代EGFR-TKI(国产)",year:2020,origin:"国产",excl:"否",cls:"化学药1类",mech:"EGFR T790M抑制剂",mfr:"翰森制药",appr:"国药准字H20200025",form:"片剂",spec:"55mg",adate:"2020-03",cold:"常温",price:1760,annual:21120,ins:"已进医保",insyear:2020,dual:"是",vbp:"中",gl:"CSCO推荐",route:"口服",sales:30,prob:0.95,prov:"湖南",pt:"",patent:"2034-11-09",followers:7,ind:"EGFR T790M突变NSCLC",ind2:"一线EGFR突变",nt:"APOLLO研究",note:"国产3代TKI主力"},
   {gn:"伏美替尼",bn:"艾弗沙",area:"肿瘤",disease:"肺癌",gen:"第3代EGFR-TKI(国产)",year:2021,origin:"国产",excl:"是",cls:"化学药1类",mech:"EGFR T790M抑制剂",mfr:"艾力斯",appr:"国药准字H20210028",form:"片剂",spec:"40mg",adate:"2021-03",cold:"常温",price:1908,annual:22896,ins:"已进医保",insyear:2021,dual:"是",vbp:"低",gl:"CSCO推荐",route:"口服",sales:25,prob:0.95,prov:"湖南",pt:"",patent:"2035-08-22",followers:4,ind:"EGFR T790M突变NSCLC",ind2:"一线EGFR突变",nt:"FURLONG研究",note:"国产3代TKI，市场增速快"},
   {gn:"贝福替尼",bn:"赛美纳",area:"肿瘤",disease:"肺癌",gen:"第3代EGFR-TKI(国产)",year:2023,origin:"国产",excl:"是",cls:"化学药1类",mech:"EGFR T790M抑制剂",mfr:"贝达药业",appr:"国药准字H20230015",form:"片剂",spec:"25mg",adate:"2023-05",cold:"常温",price:null,annual:null,ins:"已进医保",insyear:2023,dual:"是",vbp:"低",gl:"CSCO推荐",route:"口服",sales:null,prob:0.9,prov:"湖南",pt:"",patent:"2036-12-01",followers:2,ind:"EGFR T790M突变NSCLC",ind2:"—",nt:"—",note:"最新获批3代TKI"},
@@ -534,7 +584,7 @@ const SEED = [
   {gn:"西格列汀",bn:"捷诺维",area:"代谢",disease:"2型糖尿病",gen:"第1代DPP-4",year:2009,origin:"进口",excl:"否",cls:"化学药",mech:"DPP-4抑制剂",mfr:"默沙东",appr:"国药准字J20140095",form:"片剂",spec:"100mg",adate:"2009",cold:"常温",price:4,annual:1460,ins:"集采",insyear:2022,dual:"否",vbp:"高(已集采)",gl:"指南推荐",route:"口服",sales:null,prob:0.99,prov:"湖南",pt:"",patent:"已过期",followers:30,ind:"2型糖尿病",ind2:"—",nt:"—",note:"首个DPP-4"},
   {gn:"达格列净",bn:"安达唐",area:"代谢",disease:"2型糖尿病",gen:"SGLT-2抑制剂",year:2017,origin:"进口",excl:"否",cls:"化学药",mech:"SGLT-2抑制剂",mfr:"阿斯利康",appr:"国药准字J20170040",form:"片剂",spec:"10mg",adate:"2017-03",cold:"常温",price:5,annual:1825,ins:"已进医保",insyear:2019,dual:"否",vbp:"中",gl:"指南推荐",route:"口服",sales:null,prob:0.97,prov:"湖南",pt:"",patent:"2027-08-11",followers:18,ind:"2型糖尿病；心力衰竭；慢性肾病",ind2:"心肾保护",nt:"DECLARE研究",note:"SGLT-2标杆"},
   {gn:"利拉鲁肽",bn:"诺和力",area:"代谢",disease:"2型糖尿病",gen:"第1代GLP-1(日针)",year:2011,origin:"进口",excl:"否",cls:"治疗用生物制品",mech:"GLP-1受体激动剂",mfr:"诺和诺德",appr:"国药准字J20160037",form:"注射液",spec:"18mg/3mL",adate:"2011-04",cold:"2-8℃冷藏",price:410,annual:14600,ins:"已进医保",insyear:2019,dual:"否",vbp:"中",gl:"指南推荐",route:"注射",sales:null,prob:0.92,prov:"湖南",pt:"",patent:"已过期",followers:12,ind:"2型糖尿病",ind2:"肥胖症",nt:"LEAD研究",note:"首个GLP-1"},
-  {gn:"司美格鲁肽(注射)",bn:"诺和泰",area:"代谢",disease:"2型糖尿病",gen:"第2代GLP-1(周针)",year:2021,origin:"进口",excl:"否",cls:"治疗用生物制品",mech:"GLP-1受体激动剂(周制剂)",mfr:"诺和诺德",appr:"国药准字SJ20210018",form:"注射液",spec:"1.5mL",adate:"2021-04",cold:"2-8℃冷藏",price:1260,annual:6552,ins:"已进医保",insyear:2022,dual:"否",vbp:"中",gl:"指南推荐",route:"注射",sales:50,prob:0.95,prov:"湖南",pt:"",patent:"2031-06-18",followers:8,ind:"2型糖尿病；肥胖症",ind2:"心血管获益",nt:"SUSTAIN研究",note:"GLP-1重磅品种"},
+  {gn:"司美格鲁肽(注射)",bn:"诺和泰",area:"代谢",disease:"2型糖尿病",gen:"第2代GLP-1(周针)",year:2021,origin:"进口",excl:"否",cls:"治疗用生物制品",mech:"GLP-1受体激动剂(周制剂)",mfr:"诺和诺德",appr:"国药准字SJ20210018",form:"注射液",spec:"1.5mL",adate:"2021-04",cold:"2-8℃冷藏",price:1260,annual:6552,ins:"已进医保",insyear:2022,dual:"否",vbp:"中",gl:"指南推荐",route:"注射",sales:50,prob:0.95,prov:"湖南",pt:"",patent:"2031-06-18",followers:8,ind:"2型糖尿病；肥胖症",ind2:"心血管获益",nt:"SUSTAIN研究",note:"GLP-1重磅品种",mech_plain:"模拟人体天然GLP-1激素——既刺激胰岛素分泌降血糖，又延缓胃排空让人有饱腹感少吃，还能保护心血管。一周只需打一针。",ind_plain:"用于2型糖尿病患者（尤其合并心血管疾病），也批准用于肥胖症体重管理。不适合1型糖尿病或糖尿病酮症酸中毒。",talking_points:"① 一周一次注射，患者依从性远超日针\n② 既降糖又减重，一举两得\n③ 已进医保，年费用约6500元\n④ 心血管获益有循证证据（SUSTAIN研究）\n⑤ 需2-8℃冷藏运输储存\n⑥ 与口服版（诺和忻）形成互补：怕打针选口服，追求性价比选注射"},
   {gn:"司美格鲁肽(口服)",bn:"诺和忻",area:"代谢",disease:"2型糖尿病",gen:"第2代GLP-1(口服)",year:2024,origin:"进口",excl:"否",cls:"治疗用生物制品",mech:"口服GLP-1受体激动剂",mfr:"诺和诺德",appr:"国药准字S20240035",form:"片剂",spec:"14mg",adate:"2024-01",cold:"常温",price:900,annual:10800,ins:"国谈进行中",insyear:2025,dual:"否",vbp:"低",gl:"指南推荐",route:"口服",sales:null,prob:0.8,prov:"湖南",pt:"",patent:"2033-09-22",followers:3,ind:"2型糖尿病",ind2:"—",nt:"PIONEER研究",note:"全球首个口服GLP-1"},
   {gn:"替尔泊肽",bn:"穆峰达",area:"代谢",disease:"2型糖尿病",gen:"第3代GIP/GLP-1双靶",year:2024,origin:"进口",excl:"是",cls:"治疗用生物制品",mech:"GIP/GLP-1双受体激动剂",mfr:"礼来",appr:"国药准字SJ20240055",form:"注射液",spec:"多剂量",adate:"2024-05",cold:"2-8℃冷藏",price:1900,annual:9880,ins:"未进医保",insyear:null,dual:"否",vbp:"极低",gl:"指南推荐",route:"注射",sales:null,prob:0.6,prov:"湖南",pt:"",patent:"2036-11-30",followers:2,ind:"2型糖尿病；肥胖症",ind2:"—",nt:"SURPASS研究",note:"双靶点降糖效果最优"},
 
@@ -563,7 +613,7 @@ const SEED = [
 
   // ===== 罕见病 / Wilson病（肝豆状核变性）=====
   {gn:"盐酸曲恩汀片",bn:"—",area:"罕见病",disease:"Wilson病(肝豆状核变性)",gen:"铜离子络合剂",year:2024,origin:"进口",excl:"是",cls:"化学药",mech:"铜离子络合剂",mfr:"Orphalan",appr:"国药准字H20240012",form:"片剂",spec:"—",adate:"2024-01",cold:"常温",price:null,annual:null,ins:"未进医保",insyear:null,dual:"否",vbp:"极低",gl:"—",route:"口服",sales:null,prob:0.7,prov:"湖南",pt:"",patent:"2035-01-01",followers:0,ind:"不耐受D-青霉胺治疗的Wilson病",ind2:"—",nt:"—",note:"2024年NMPA获批"},
-{gn:"德曲妥珠单抗",bn:"优赫得",area:"肿瘤",disease:"乳腺癌",gen:"ADC(第3代HER2)",year:2023,origin:"进口",excl:"是",cls:"治疗用生物制品",mech:"HER2 ADC(拓扑异构酶I载荷)",mfr:"第一三共/阿斯利康",appr:"国药准字SJ20230018",form:"注射液",spec:"100mg",adate:"2023-02",cold:"2-8℃冷藏",price:null,annual:null,ins:"已进医保",insyear:2025,dual:"是",vbp:"极低",gl:"CSCO推荐",route:"注射",sales:null,prob:0.9,prov:"湖南",pt:"",patent:"2038-01-01",followers:0,ind:"HER2阳性乳腺癌(既往抗HER2治疗)",ind2:"HER2阳性胃癌",nt:"DESTINY-Breast系列",note:"重磅HER2 ADC，2024国谈进入医保"},
+{gn:"德曲妥珠单抗",bn:"优赫得",area:"肿瘤",disease:"乳腺癌",gen:"ADC(第3代HER2)",year:2023,origin:"进口",excl:"是",cls:"治疗用生物制品",mech:"HER2 ADC(拓扑异构酶I载荷)",mfr:"第一三共/阿斯利康",appr:"国药准字SJ20230018",form:"注射液",spec:"100mg",adate:"2023-02",cold:"2-8℃冷藏",price:null,annual:null,ins:"已进医保",insyear:2025,dual:"是",vbp:"极低",gl:"CSCO推荐",route:"注射",sales:null,prob:0.9,prov:"湖南",pt:"",patent:"2038-01-01",followers:0,ind:"HER2阳性乳腺癌(既往抗HER2治疗)",ind2:"HER2阳性胃癌",nt:"DESTINY-Breast系列",note:"重磅HER2 ADC，2024国谈进入医保",mech_plain:"生物导弹ADC——抗体部分像GPS精准找到HER2阳性的癌细胞，连着的化疗药物像炸弹在癌细胞内部引爆，实现精准化疗，全身副作用大幅降低。",ind_plain:"用于HER2阳性晚期乳腺癌，特别是之前用过曲妥珠单抗等抗HER2药物后疾病仍进展的患者。拓展适应症：HER2阳性胃癌。",talking_points:"① ADC精准化疗，疗效远超传统靶向药\n② DESTINY-Breast04研究：总生存期翻倍\n③ 2024国谈进入医保，患者可及性大增\n④ 需2-8℃冷链储运\n⑤ 注意间质性肺病风险，需定期监测\n⑥ 专利保护到2038年，短期内无仿制药竞争\n⑦ 罕见病方向：HER2低表达也有突破性疗效"},
   {gn:"恩美曲妥珠单抗",bn:"赫赛莱",area:"肿瘤",disease:"乳腺癌",gen:"ADC(T-DM1,第2代)",year:2020,origin:"进口",excl:"是",cls:"治疗用生物制品",mech:"HER2 ADC(微管抑制剂载荷)",mfr:"罗氏",appr:"国药准字SJ20200009",form:"注射液",spec:"100mg",adate:"2020-01",cold:"2-8℃冷藏",price:null,annual:null,ins:"已进医保",insyear:2021,dual:"是",vbp:"低",gl:"NCCN推荐",route:"注射",sales:null,prob:0.9,prov:"湖南",pt:"",patent:"2032-09-15",followers:1,ind:"HER2阳性早期乳腺癌辅助治疗",ind2:"—",nt:"KATHERINE研究",note:"T-DM1 ADC"},
   {gn:"拉帕替尼",bn:"泰立沙",area:"肿瘤",disease:"乳腺癌",gen:"小分子TKI(HER2/EGFR)",year:2010,origin:"进口",excl:"否",cls:"化学药",mech:"EGFR/HER2双靶TKI",mfr:"葛兰素史克",appr:"国药准字H20100085",form:"片剂",spec:"250mg",adate:"2010",cold:"常温",price:null,annual:null,ins:"已进医保",insyear:2017,dual:"否",vbp:"中",gl:"NCCN推荐",route:"口服",sales:null,prob:0.9,prov:"湖南",pt:"",patent:"已过期",followers:5,ind:"HER2阳性晚期乳腺癌",ind2:"—",nt:"—",note:"老药，专利已过期"},
   {gn:"奈拉替尼",bn:"贺俪安",area:"肿瘤",disease:"乳腺癌",gen:"小分子TKI(泛HER)",year:2020,origin:"进口",excl:"是",cls:"化学药",mech:"泛HER(EGFR/HER2/HER4)TKI",mfr:"北海康成/辉瑞",appr:"国药准字H20200045",form:"片剂",spec:"240mg",adate:"2020-04",cold:"常温",price:null,annual:null,ins:"已进医保",insyear:2021,dual:"否",vbp:"低",gl:"NCCN推荐",route:"口服",sales:null,prob:0.9,prov:"湖南",pt:"",patent:"2030-06-30",followers:2,ind:"HER2阳性早期强化辅助治疗",ind2:"—",nt:"ExteNET研究",note:"强化辅助治疗"},
@@ -942,7 +992,148 @@ function genBrief(){
   </div>`;
 }
 
-/* ============ ⑥ 数据管理 ============ */
+/* ============ ⑥ 业务员速查 ============ */
+function salesAutoComplete(){
+  const q=document.getElementById('salesQ').value.trim().toLowerCase();
+  const box=document.getElementById('salesAC');
+  if(!q){box.style.display='none';return;}
+  const matches=DB.filter(d=>(d.gn||'').toLowerCase().includes(q)||(d.bn||'').toLowerCase().includes(q)).slice(0,10);
+  if(!matches.length){box.style.display='none';return;}
+  box.innerHTML=matches.map(d=>'<div class="ac-item" onclick="document.getElementById(\'salesQ\').value=\''+d.gn+'\';document.getElementById(\'salesAC\').style.display=\'none\';genSalesBrief()">'+d.gn+(d.bn?'<span class="sub">'+d.bn+'</span>':'')+'</div>').join('');
+  box.style.display='block';
+}
+function findDrug(q){
+  q=q.trim().toLowerCase();
+  return DB.find(d=>(d.gn||'').toLowerCase()===q||(d.bn||'').toLowerCase()===q)
+    || DB.find(d=>(d.gn||'').toLowerCase().includes(q)||(d.bn||'').toLowerCase().includes(q));
+}
+function insTag2(s){
+  if(!s)return'<span class="sales-tag" style="background:#f1f5f9;color:#64748b">未知</span>';
+  if(s.includes('集采'))return'<span class="sales-tag ins">集采</span>';
+  if(s.includes('已进'))return'<span class="sales-tag ins">已进医保</span>';
+  if(s.includes('国谈'))return'<span class="sales-tag" style="background:#fef3c7;color:#b45309">国谈中</span>';
+  return'<span class="sales-tag" style="background:#fee2e2;color:#dc2626">'+s+'</span>';
+}
+function genSalesBrief(){
+  const q=document.getElementById('salesQ').value;
+  if(!q.trim()){document.getElementById('salesOut').innerHTML='<div class="muted">请输入药品名</div>';return;}
+  const d=findDrug(q);
+  if(!d){document.getElementById('salesOut').innerHTML='<div class="muted">未找到「'+q+'」，请检查名称或先在数据管理中录入。</div>';return;}
+  const peers=DB.filter(x=>x.disease===d.disease).sort((a,b)=>(a.year||9999)-(b.year||9999));
+  const dname=d.gn+(d.bn?'（'+d.bn+'）':'');
+  // 通俗化内容（有则用通俗化，没有则用原始字段）
+  const mechPlain=d.mech_plain||d.mech||'暂无';
+  const indPlain=d.ind_plain||d.ind||d.disease||'暂无';
+  const points=d.talking_points||'';
+  // 价格展示
+  const priceTxt=d.price?('¥'+d.price+(d.spec?'/'+d.spec:'')):'暂无';
+  const annualTxt=d.annual?('¥'+d.annual+'/年'):'—';
+  // 生成HTML
+  const html=`
+  <div class="sales-card">
+    <button class="btn alt copy-btn" onclick="copySalesBrief()">📋 复制简报</button>
+    <h2>${dname}</h2>
+    <div class="sub-title">${d.area} · ${d.disease} · ${d.gen||'—'} · ${d.mfr||'—'}</div>
+
+    <div class="sales-section plain">
+      <div class="sec-title">💊 这个药是干什么的？</div>
+      <div class="sec-body">${mechPlain}</div>
+    </div>
+
+    <div class="sales-section plain">
+      <div class="sec-title">🏥 适用于哪些患者？</div>
+      <div class="sec-body">${indPlain}</div>
+    </div>
+
+    ${points?`
+    <div class="sales-section points">
+      <div class="sec-title">⭐ 沟通要点（卖点 & 常见疑问）</div>
+      <div class="sec-body" style="white-space:pre-line">${points}</div>
+    </div>`:''}
+
+    <div class="sales-section info">
+      <div class="sec-title">📊 关键信息速览</div>
+      <div class="info-grid">
+        <div class="item"><div class="k">价格</div><div class="v" style="color:var(--red)">${priceTxt}</div></div>
+        <div class="item"><div class="k">年化费用</div><div class="v">${annualTxt}</div></div>
+        <div class="item"><div class="k">医保</div><div class="v">${insTag2(d.ins)}</div></div>
+        <div class="item"><div class="k">双通道</div><div class="v">${d.dual||'—'}</div></div>
+        <div class="item"><div class="k">给药途径</div><div class="v">${d.route||'—'}</div></div>
+        <div class="item"><div class="k">冷链</div><div class="v">${d.cold||'常温'}</div></div>
+        <div class="item"><div class="k">获批时间</div><div class="v">${d.adate||d.year||'—'}</div></div>
+        <div class="item"><div class="k">规格</div><div class="v">${d.spec||'—'}</div></div>
+        <div class="item"><div class="k">指南推荐</div><div class="v">${d.gl||'—'}</div></div>
+        <div class="item"><div class="k">集采风险</div><div class="v">${d.vbp||'—'}</div></div>
+      </div>
+    </div>
+
+    ${peers.length>1?`
+    <div class="sales-section" style="background:var(--soft);border-left:4px solid var(--brand2)">
+      <div class="sec-title">📋 同类药品一览（${d.disease}）</div>
+      <table style="margin-top:6px">
+        <tr><th>药品名</th><th>世代</th><th>上市年</th><th>医保</th><th>给药</th>${d.price?'<th>价格</th>':''}</tr>
+        ${peers.map(p=>'<tr'+(p===d?' style="background:#fef3c7;font-weight:600"':'')+'><td>'+(p.bn?p.gn+'('+p.bn+')':p.gn)+'</td><td>'+(p.gen||'—')+'</td><td>'+(p.year||'—')+'</td><td>'+insTag2(p.ins)+'</td><td>'+(p.route||'—')+'</td>'+(d.price?'<td>'+(p.price?'¥'+p.price:'—')+'</td>':'')+'</tr>').join('')}
+      </table>
+      <div class="muted" style="margin-top:6px">黄色高亮为当前查询药品</div>
+    </div>`:''}
+
+    <div class="muted" style="margin-top:12px;font-size:12px">数据来源：NMPA、医保局等公开信息，部分为估算，仅供参考。生成时间：${new Date().toLocaleString('zh-CN')}。</div>
+  </div>`;
+  document.getElementById('salesOut').innerHTML=html;
+}
+function copySalesBrief(){
+  const q=document.getElementById('salesQ').value;
+  const d=findDrug(q);
+  if(!d){alert('请先生成简报');return;}
+  const peers=DB.filter(x=>x.disease===d.disease).sort((a,b)=>(a.year||9999)-(b.year||9999));
+  const lines=[];
+  lines.push('【'+d.gn+(d.bn?'（'+d.bn+'）':'')+'】品种速查简报');
+  lines.push('');
+  lines.push('领域：'+(d.area||'—')+' ｜ 病种：'+(d.disease||'—')+' ｜ 世代：'+(d.gen||'—'));
+  lines.push('厂家：'+(d.mfr||'—'));
+  lines.push('');
+  lines.push('■ 这个药是干什么的？');
+  lines.push(d.mech_plain||d.mech||'暂无');
+  lines.push('');
+  lines.push('■ 适用于哪些患者？');
+  lines.push(d.ind_plain||d.ind||d.disease||'暂无');
+  lines.push('');
+  if(d.talking_points){
+    lines.push('■ 沟通要点');
+    lines.push(d.talking_points);
+    lines.push('');
+  }
+  lines.push('■ 关键信息');
+  lines.push('价格：'+(d.price?'¥'+d.price+(d.spec?'/'+d.spec:''):'暂无'));
+  lines.push('年化费用：'+(d.annual?'¥'+d.annual+'/年':'—'));
+  lines.push('医保：'+(d.ins||'—')+' ｜ 双通道：'+(d.dual||'—'));
+  lines.push('给药途径：'+(d.route||'—')+' ｜ 冷链：'+(d.cold||'常温'));
+  lines.push('获批时间：'+(d.adate||d.year||'—')+' ｜ 规格：'+(d.spec||'—'));
+  lines.push('指南推荐：'+(d.gl||'—')+' ｜ 集采风险：'+(d.vbp||'—'));
+  if(peers.length>1){
+    lines.push('');
+    lines.push('■ 同类药品（'+d.disease+'）');
+    peers.forEach(p=>{
+      const mark=p===d?' ← 当前':'';
+      lines.push('· '+(p.bn?p.gn+'('+p.bn+')':p.gn)+' ｜ '+(p.gen||'—')+' ｜ '+(p.year||'—')+'年 ｜ '+(p.ins||'—')+(p.price?' ｜ ¥'+p.price:'')+mark);
+    });
+  }
+  lines.push('');
+  lines.push('（数据来源：NMPA/医保局等公开信息，仅供参考）');
+  const text=lines.join('\n');
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>{alert('简报已复制到剪贴板，可粘贴到微信/邮件');}).catch(()=>{fallbackCopy(text);});
+  }else{fallbackCopy(text);}
+}
+function fallbackCopy(text){
+  const ta=document.createElement('textarea');
+  ta.value=text;ta.style.position='fixed';ta.style.top='-9999px';
+  document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy');alert('简报已复制到剪贴板，可粘贴到微信/邮件');}catch(e){alert('复制失败，请手动选中简报内容复制');}
+  document.body.removeChild(ta);
+}
+
+/* ============ ⑦ 数据管理 ============ */
 function renderManager(){
   document.getElementById('managerTable').innerHTML='<table><tr><th>通用名</th><th>病种</th><th>世代</th><th>年份</th><th>医保</th><th>操作</th></tr>'+
   DB.map((d,i)=>'<tr><td>'+d.gn+'</td><td>'+d.disease+'</td><td>'+d.gen+'</td><td>'+d.year+'</td><td>'+insTag(d.ins)+'</td><td><button class="btn gray" onclick="openEditor('+i+')">编辑</button> <button class="btn gray" onclick="delDrug('+i+')">删除</button></td></tr>').join('')+'</table>';
@@ -967,7 +1158,7 @@ function openEditor(i){editIdx=(i==null?-1:i);const d=editIdx>=0?DB[editIdx]:{};
 }
 function closeEditor(){document.getElementById('editorBg').classList.remove('on');}
 function saveDrug(){
-  const keys=['gn','bn','area','disease','gen','year','origin','excl','cls','mech','mfr','appr','form','spec','adate','cold','price','annual','ins','insyear','dual','vbp','gl','route','sales','prob','prov','pt','ind','ind2','nt','note','patent','followers'];
+  const keys=['gn','bn','area','disease','gen','year','origin','excl','cls','mech','mfr','appr','form','spec','adate','cold','price','annual','ins','insyear','dual','vbp','gl','route','sales','prob','prov','pt','ind','ind2','nt','note','patent','followers','mech_plain','ind_plain','talking_points'];
   const d={};keys.forEach(k=>{const el=document.getElementById('f_'+k);if(el) d[k]=el.value;});
   if(!d.gn){alert("通用名必填");return;}
   ['year','price','annual','insyear','sales','prob','followers'].forEach(k=>{if(d[k]!=="") d[k]=+d[k];});
@@ -1021,7 +1212,10 @@ const DOC_FIELDS={
   '临床试验':'nt','试验':'nt','clinical trial':'nt','临床试验数据':'nt',
   '备注':'note','风险':'note','备注信息':'note','说明':'note','remarks':'note','note':'note','comment':'note','备注说明':'note',
   '药品类型':'dtype','drug type':'dtype','类型':'dtype',
-  '采购周期':'pcycle','procurement cycle':'pcycle','集采周期':'pcycle'
+  '采购周期':'pcycle','procurement cycle':'pcycle','集采周期':'pcycle',
+  '通俗作用机制':'mech_plain','作用机制大白话':'mech_plain','plain mechanism':'mech_plain','mech plain':'mech_plain','机制通俗':'mech_plain',
+  '适应症通俗':'ind_plain','适应症大白话':'ind_plain','通俗适应症':'ind_plain','plain indication':'ind_plain','indication plain':'ind_plain','适应证通俗':'ind_plain',
+  '沟通要点':'talking_points','卖点':'talking_points','销售要点':'talking_points','话术':'talking_points','talking points':'talking_points','key points':'talking_points'
 };
 const DOC_NUM=['year','price','annual','insyear','sales','followers'];
 function coerceField(f,val){
