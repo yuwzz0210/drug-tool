@@ -9,6 +9,7 @@
 {"@context":"https://schema.org","@type":"WebApplication","name":"药品数据分析工具","description":"品种引进评估与临床沟通工具","applicationCategory":"BusinessApplication","operatingSystem":"任何现代浏览器","inLanguage":"zh-CN"}
 </script>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pinyin-pro@3/dist/index.js"></script>
 <style>
 :root{
 --bg:#f8fafc;--panel:#fff;--ink:#0f172a;--sub:#475569;--line:#e2e8f0;
@@ -144,6 +145,41 @@ a{color:var(--brand)}
 .brief-conclusion.watch{background:#fffbeb;border:2px solid #f59e0b}
 .brief-conclusion.nogo{background:#fef2f2;border:2px solid #ef4444}
 @media print{body *{visibility:hidden}.brief-paper,.brief-paper *{visibility:visible}.brief-paper{position:absolute;left:0;top:0;width:100%;box-shadow:none;border-radius:0;padding:20px}.no-print{display:none!important}}
+/* === Disease Tree === */
+.dtree{margin:0 0 16px}
+.dtree-node{margin-bottom:6px}
+.dtree-area{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:10px;cursor:pointer;font-weight:600;font-size:14px;transition:all .15s}
+.dtree-area:hover{border-color:var(--accent)}
+.dtree-area.on{background:var(--soft);border-color:var(--brand2)}
+.dtree-area .arrow{font-size:12px;transition:transform .2s;color:var(--sub)}
+.dtree-area.on .arrow{transform:rotate(90deg)}
+.dtree-area .cnt{margin-left:auto;font-size:12px;color:var(--sub);font-weight:400}
+.dtree-children{display:none;padding:6px 0 6px 28px}
+.dtree-children.on{display:block}
+.dtree-disease{display:flex;align-items:center;gap:6px;padding:7px 12px;margin:3px 0;border-radius:8px;cursor:pointer;font-size:13.5px;transition:background .12s}
+.dtree-disease:hover{background:var(--soft)}
+.dtree-disease.on{background:#e0e7ff;color:var(--accent);font-weight:600}
+.dtree-disease .cnt{margin-left:auto;font-size:11px;color:var(--sub)}
+.dtree-subs{padding:4px 0 4px 20px}
+.dtree-sub{display:inline-block;padding:2px 8px;margin:2px 4px 2px 0;font-size:11.5px;background:#f1f5f9;border-radius:12px;color:var(--sub)}
+/* === Assess Search === */
+.assess-search{display:flex;gap:10px;margin-bottom:14px;align-items:flex-start}
+.assess-search .ac-box{flex:1 1 400px}
+.assess-tags{margin-top:8px}
+.assess-tag{display:inline-block;padding:4px 12px;margin:3px 4px 3px 0;background:#fff;border:1px solid var(--line);border-radius:16px;font-size:12.5px;cursor:pointer;color:var(--sub);transition:all .12s}
+.assess-tag:hover{border-color:var(--accent);color:var(--accent);background:#eef2ff}
+/* === Breadcrumb === */
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--sub);margin-bottom:10px}
+.breadcrumb b{color:var(--ink)}
+.breadcrumb .sep{color:var(--line)}
+/* === Subtype tags above table === */
+.subtype-tags{margin-bottom:10px}
+.subtype-tags .st{display:inline-block;padding:3px 10px;margin:3px 4px 3px 0;background:#e0e7ff;border-radius:12px;font-size:12px;color:var(--accent)}
+/* === Assess search result === */
+.assess-hit{padding:10px 14px;border:1px solid var(--line);border-radius:10px;margin:6px 0;cursor:pointer;transition:border-color .12s}
+.assess-hit:hover{border-color:var(--accent)}
+.assess-hit .h-gn{font-weight:600;font-size:14px}
+.assess-hit .h-sub{font-size:12.5px;color:var(--sub);margin-top:2px}
 </style>
 </head>
 <body>
@@ -184,7 +220,17 @@ a{color:var(--brand)}
     <button class="sub-tab" onclick="switchSub('assessSection','assessManage',this)">数据管理</button>
   </div>
   <div id="assessBrowse" class="sub-content on">
-    <div id="assessAreaPick" class="row"></div>
+    <div class="card">
+      <div class="assess-search">
+        <div class="ac-box">
+          <input type="text" id="assessQ" placeholder="搜索药品名/病种/亚型/靶点…（如：奥希替尼、肺癌、EGFR、fxl）" oninput="assessSearchAC()" onblur="setTimeout(()=>document.getElementById('assessAC').style.display='none',200)">
+          <div id="assessAC" style="display:none"></div>
+        </div>
+        <button class="btn" onclick="assessDoSearch()">搜索</button>
+      </div>
+      <div class="assess-tags" id="assessTags"></div>
+    </div>
+    <div id="assessTree" class="card"></div>
     <div id="assessBrowseContent"></div>
   </div>
   <div id="assessDecision" class="sub-content">
@@ -195,7 +241,11 @@ a{color:var(--brand)}
       <button class="btn alt" onclick="openWeightEditor()">调整权重</button>
     </div>
     <div class="card">
-      <div class="row" style="align-items:center;margin-bottom:10px">
+      <div class="searchbar" style="margin-bottom:10px">
+        <div class="ac-box">
+          <input type="text" id="decSearch" placeholder="输入药品名快速定位…" oninput="decSearchAC()" onblur="setTimeout(()=>document.getElementById('decAC').style.display='none',200)">
+          <div id="decAC" style="display:none"></div>
+        </div>
         <select id="decArea" onchange="decAreaChange()" style="padding:8px 12px;border:1px solid var(--line);border-radius:8px"><option value="">选择领域</option></select>
         <select id="decDisease" onchange="renderDecision()" style="padding:8px 12px;border:1px solid var(--line);border-radius:8px"><option value="">全部病种</option></select>
       </div>
@@ -628,30 +678,82 @@ function scoreDetail(d){
 function hospScore(d){return scoreDetail(d).total;}
 function hospRadar(d){const sc=scoreDetail(d).breakdown;return[sc.gl,sc.ins,sc.vbp,sc.route,sc.cold,sc.drg];}
 
-/* ============ 引进评估 - 数据浏览 ============ */
-function buildAssessAreaPick(){
-  const c=document.getElementById('assessAreaPick');c.innerHTML='';
-  treeAreas().forEach(a=>{
-    const dis=treeDiseasesOf(a);const count=DB.filter(d=>d.area===a).length;
-    const div=document.createElement('div');div.className='area-card';div.style.flex='1 1 200px';
-    div.innerHTML='<b>'+a+'</b> <span class="muted">('+count+'个品种)</span><div class="muted" style="margin-top:4px">'+dis.map(x=>'<span class="pill">'+x+'</span>').join('')+'</div>';
-    div.onclick=()=>assessPickDisease(a);c.appendChild(div);
-  });
+/* ============ 拼音首字母 ============ */
+function pinyinInit(s){if(!s||!window.pinyinPro)return'';try{return pinyinPro.pinyin(s,{toneType:'none',type:'array'}).map(w=>w[0]).join('');}catch(e){return'';}}
+
+/* ============ 引进评估 - 模糊搜索 ============ */
+function buildAssessTags(){
+  const c=document.getElementById('assessTags');
+  if(!c)return;
+  const tags=['肿瘤','肺癌','EGFR','乳腺癌','HER2','自免疫','银屑病','代谢','2型糖尿病','GLP-1','罕见病','SMA'];
+  c.innerHTML='<span class="muted" style="font-size:12px;margin-right:6px">高频：</span>'+tags.map(t=>'<span class="assess-tag" onclick="assessTagClick(\''+t+'\')">'+t+'</span>').join('');
 }
-function assessPickDisease(area){
-  const dis=treeDiseasesOf(area);
+function assessTagClick(tag){document.getElementById('assessQ').value=tag;assessDoSearch();}
+function assessSearchAC(){
+  const q=norm(document.getElementById('assessQ').value);const box=document.getElementById('assessAC');
+  if(!q){box.style.display='none';return;}
+  const hits=DB.filter(d=>{
+    const h=norm(d.gn+' '+(d.bn||'')+' '+(d.disease||'')+' '+(d.gen||'')+' '+(d.ind||'')+' '+(d.mech||''));
+    if(h.includes(q))return true;
+    return norm(pinyinInit(d.gn)).includes(q);
+  }).slice(0,12);
+  if(!hits.length){box.innerHTML='<div class="ac-list"><div class="ac-item muted">无匹配结果</div></div>';box.style.display='block';return;}
+  box.innerHTML='<div class="ac-list">'+hits.map(d=>'<div class="ac-item" onmousedown="assessSearchPick(\''+d.gn.replace(/'/g,"\\'")+'\')">'+d.gn+'<span class="sub">'+(d.bn||'')+' · '+(d.disease||'')+'</span></div>').join('')+'</div>';
+  box.style.display='block';
+}
+function assessSearchPick(gn){
+  document.getElementById('assessQ').value=gn;document.getElementById('assessAC').style.display='none';
+  const d=findDrug(gn);if(!d)return;
   document.getElementById('assessBrowseContent').innerHTML=
-    '<div class="card"><button class="btn gray back-btn" onclick="buildAssessAreaPick()">← 返回领域选择</button>'+
-    '<h3>'+area+' · 选择病种</h3>'+
-    dis.map(d=>{const cnt=DB.filter(x=>x.disease===d).length;return'<button class="btn alt" style="margin:6px 6px 0 0" onclick="assessShowDisease(\''+area+'\',\''+d.replace(/'/g,"\\'")+'\')">'+d+' ('+cnt+')</button>';}).join('')+'</div>';
-  if(dis.length)assessShowDisease(area,dis[0]);
+    '<div class="card"><div class="breadcrumb"><span>搜索结果</span><span class="sep">›</span><b>'+d.gn+'</b></div>'+
+    '<div class="card" style="margin:0">'+assessTable([d])+'</div></div>';
 }
+function assessDoSearch(){
+  const q=document.getElementById('assessQ').value.trim();
+  if(!q){document.getElementById('assessBrowseContent').innerHTML='';return;}
+  const nq=norm(q);const terms=nq.split(/\s+/).filter(t=>t);
+  const hits=DB.filter(d=>{
+    const h=norm(d.gn+' '+(d.bn||'')+' '+(d.disease||'')+' '+(d.gen||'')+' '+(d.ind||'')+' '+(d.mech||'')+' '+(d.area||''));
+    const py=norm(pinyinInit(d.gn));
+    return terms.every(t=>h.includes(t)||py.includes(t));
+  });
+  if(!hits.length){document.getElementById('assessBrowseContent').innerHTML='<div class="card muted">未找到匹配「'+q+'」的品种</div>';return;}
+  const byD={};hits.forEach(d=>{const k=d.disease||'其他';if(!byD[k])byD[k]=[];byD[k].push(d);});
+  let html='<div class="card"><div class="breadcrumb"><span>搜索</span><span class="sep">›</span><b>"'+q+'"</b> <span class="muted">('+hits.length+'个结果)</span></div>';
+  Object.keys(byD).forEach(dn=>{html+='<h3 style="margin:10px 0 4px">'+dn+' ('+byD[dn].length+')</h3>'+assessTable(byD[dn].sort((a,b)=>(a.year||9999)-(b.year||9999)));});
+  html+='</div>';
+  document.getElementById('assessBrowseContent').innerHTML=html;
+}
+
+/* ============ 引进评估 - 病种树 ============ */
+let assessTreeState={};
+function buildAssessTree(){
+  const c=document.getElementById('assessTree');if(!c)return;
+  let html='<h2 style="margin:0 0 10px">病种导航（点击展开）</h2><div class="dtree">';
+  treeAreas().forEach(a=>{
+    const dis=treeDiseasesOf(a);const count=DB.filter(d=>d.area===a).length;const isOpen=assessTreeState[a];
+    html+='<div class="dtree-node"><div class="dtree-area'+(isOpen?' on':'')+'" onclick="assessTreeToggle(\''+a+'\')">'+
+      '<span class="arrow">▶</span><span>'+a+'</span><span class="cnt">'+count+'个品种 · '+dis.length+'个病种</span></div>'+
+      '<div class="dtree-children'+(isOpen?' on':'')+'">';
+    dis.forEach(dn=>{
+      const cnt=DB.filter(d=>d.disease===dn).length;const subs=treeSubDiseaseOf(a,dn);
+      html+='<div class="dtree-disease" onclick="assessTreeDisease(\''+a+'\',\''+dn.replace(/'/g,"\\'")+'\')"><span>'+dn+'</span><span class="cnt">'+cnt+'</span></div>';
+      if(subs&&subs.length)html+='<div class="dtree-subs">'+subs.map(s=>'<span class="dtree-sub">'+s+'</span>').join('')+'</div>';
+    });
+    html+='</div></div>';
+  });
+  html+='</div>';c.innerHTML=html;
+}
+function assessTreeToggle(area){if(assessTreeState[area])delete assessTreeState[area];else assessTreeState[area]=true;buildAssessTree();}
+function assessTreeDisease(area,disease){assessShowDisease(area,disease);}
+function buildAssessAreaPick(){buildAssessTree();}
+
 function assessShowDisease(area,disease){
   const peers=DB.filter(d=>d.disease===disease).sort((a,b)=>(a.year||9999)-(b.year||9999));
+  const subs=treeSubDiseaseOf(area,disease);
+  let subHtml= subs&&subs.length?'<div class="subtype-tags"><span class="muted" style="font-size:12px">亚型/线数：</span>'+subs.map(s=>'<span class="st">'+s+'</span>').join('')+'</div>':'';
   document.getElementById('assessBrowseContent').innerHTML=
-    '<div class="card"><div style="display:flex;justify-content:space-between;align-items:center">'+
-    '<h3 style="margin:0">'+area+' / '+disease+' ('+peers.length+'个品种)</h3>'+
-    '<button class="btn gray" onclick="buildAssessAreaPick()">← 返回领域选择</button></div></div>'+
+    '<div class="card"><div class="breadcrumb"><span>'+area+'</span><span class="sep">›</span><b>'+disease+'</b> <span class="muted">('+peers.length+'个品种)</span></div>'+subHtml+'</div>'+
     '<div class="card">'+assessTable(peers)+'</div>';
 }
 function assessTable(peers){
@@ -845,9 +947,11 @@ function renderWeightBar(){
 }
 function renderDecision(){
   const area=document.getElementById('decArea').value;const disease=document.getElementById('decDisease').value;
+  const searchQ=document.getElementById('decSearch')?norm(document.getElementById('decSearch').value):'';
   let peers=DB.slice();
   if(area)peers=peers.filter(d=>d.area===area);
   if(disease)peers=peers.filter(d=>d.disease===disease);
+  if(searchQ)peers=peers.filter(d=>norm(d.gn).includes(searchQ)||norm(d.bn).includes(searchQ));
   peers=peers.sort((a,b)=>scoreDetail(b).total-scoreDetail(a).total);
   const keys=['gl','ins','route','vbp','cold','drg'];
   let html='<table><tr><th>排名</th><th>通用名</th><th>病种</th><th>总分</th>';
@@ -879,6 +983,21 @@ function saveWeights(){
   renderWeightBar();renderDecision();
 }
 function resetWeights(){WEIGHTS={...DEFAULT_WEIGHTS};localStorage.setItem('drug_weights',JSON.stringify(WEIGHTS));openWeightEditor();renderWeightBar();renderDecision();}
+
+/* ============ 决策分析 - 药品搜索 ============ */
+function decSearchAC(){
+  const q=norm(document.getElementById('decSearch').value);const box=document.getElementById('decAC');
+  if(!q){box.style.display='none';return;}
+  const hits=DB.filter(d=>norm(d.gn).includes(q)||norm(d.bn).includes(q)||norm(pinyinInit(d.gn)).includes(q)).slice(0,10);
+  if(!hits.length){box.style.display='none';return;}
+  box.innerHTML='<div class="ac-list">'+hits.map(d=>'<div class="ac-item" onmousedown="decSearchPick(\''+d.gn.replace(/'/g,"\\'")+'\')">'+d.gn+'<span class="sub">'+(d.bn||'')+' · '+(d.disease||'')+'</span></div>').join('')+'</div>';
+  box.style.display='block';
+}
+function decSearchPick(gn){
+  document.getElementById('decSearch').value=gn;document.getElementById('decAC').style.display='none';
+  document.getElementById('decArea').value='';document.getElementById('decDisease').innerHTML='<option value="">全部病种</option>';
+  renderDecision();
+}
 
 /* ============ 竞争格局 ============ */
 function buildCompeteAreaPick(){
@@ -1039,7 +1158,8 @@ function fillBriefSel(){}
 
 /* ============ 初始化 ============ */
 initAreaSelect();
-buildAssessAreaPick();
+buildAssessTree();
+buildAssessTags();
 buildCompeteAreaPick();
 renderManager();
 initDecision();
