@@ -128,6 +128,22 @@ a{color:var(--brand)}
 .weight-input-row label{width:120px;font-size:13px}
 .weight-input-row input{width:80px;padding:6px 10px;border:1px solid var(--line);border-radius:6px}
 .weight-input-row .pct{color:var(--sub);font-size:13px}
+/* === Full Brief === */
+.brief-overlay{position:fixed;inset:0;background:rgba(20,30,50,.5);display:none;align-items:flex-start;justify-content:center;z-index:60;overflow:auto;padding:30px 0}
+.brief-overlay.on{display:flex}
+.brief-paper{background:#fff;width:min(900px,94vw);border-radius:12px;padding:36px 44px;box-shadow:0 12px 40px rgba(20,40,80,.2);margin-bottom:40px}
+.brief-paper h1{font-size:22px;text-align:center;margin:0 0 4px;color:var(--ink)}
+.brief-paper h2{font-size:17px;margin:28px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--accent);color:var(--accent)}
+.brief-paper h3{font-size:15px;margin:16px 0 8px;color:var(--brand)}
+.brief-paper .brief-meta{text-align:center;font-size:13px;color:var(--sub);margin-bottom:20px}
+.brief-info-table{width:100%;border-collapse:collapse;font-size:13.5px;margin:8px 0}
+.brief-info-table td{border:1px solid var(--line);padding:8px 12px;vertical-align:top}
+.brief-info-table .k{background:var(--soft);font-weight:600;width:110px;white-space:nowrap;color:var(--sub)}
+.brief-conclusion{border-radius:10px;padding:18px 22px;margin:16px 0;font-size:14.5px;line-height:1.8}
+.brief-conclusion.rec{background:#f0fdf4;border:2px solid #22c55e}
+.brief-conclusion.watch{background:#fffbeb;border:2px solid #f59e0b}
+.brief-conclusion.nogo{background:#fef2f2;border:2px solid #ef4444}
+@media print{body *{visibility:hidden}.brief-paper,.brief-paper *{visibility:visible}.brief-paper{position:absolute;left:0;top:0;width:100%;box-shadow:none;border-radius:0;padding:20px}.no-print{display:none!important}}
 </style>
 </head>
 <body>
@@ -395,6 +411,11 @@ a{color:var(--brand)}
   </div>
 </div></div>
 
+<!-- Full Brief Overlay -->
+<div id="briefOverlay" class="brief-overlay" onclick="if(event.target===this)closeBrief()">
+  <div class="brief-paper" id="briefPaper"></div>
+</div>
+
 <script>
 const SEED = [
   // ===== 肿瘤 / 肺癌（EGFR-TKI 迭代线）=====
@@ -650,6 +671,7 @@ function assessTable(peers){
 }
 function toggleDetail(idx){const row=document.getElementById('detail_'+idx);if(row)row.style.display=(row.style.display==='none')?'':'none';}
 function renderDrugDetail(d){
+  const idx=DB.indexOf(d);
   return'<div class="drug-detail"><div class="row">'+
     field('通用名',d.gn)+field('商品名',d.bn)+field('厂家',d.mfr)+field('批准文号',d.appr)+
     field('注册分类',d.cls)+field('获批日期',d.adate)+field('剂型/规格',(d.form||'—')+' / '+(d.spec||'—'))+
@@ -662,9 +684,141 @@ function renderDrugDetail(d){
     field('青睐度',hospScore(d))+
     '</div>'+(d.ind?'<h3>适应症</h3><div class="muted">'+d.ind+'</div>':'')+
     (d.ind2?'<div class="muted"><b>拓展：</b>'+d.ind2+'</div>':'')+
-    (d.note?'<div class="note" style="margin-top:8px">'+d.note+'</div>':'')+'</div>';
+    (d.note?'<div class="note" style="margin-top:8px">'+d.note+'</div>':'')+
+    '<div style="margin-top:14px;text-align:center"><button class="btn" onclick="genFullBrief('+idx+')">📄 查看完整品种简报</button></div>'+
+    '</div>';
 }
 function copyDrugName(gn){if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(gn).then(()=>{}).catch(()=>{});}
+
+/* ============ 品种简报分析 ============ */
+var BRIEF_POOL={
+  '肺癌':'年新发约82.8万例（中国）','胃癌':'年新发约35.9万例','结直肠癌':'年新发约38.8万例',
+  '乳腺癌':'年新发约30.6万例','肝癌':'年新发约36.8万例','食管癌':'年新发约24.6万例',
+  '胰腺癌':'年新发约10.2万例','前列腺癌':'年新发约12.5万例','卵巢癌':'年新发约5.7万例',
+  '白血病':'年新发约8.6万例','淋巴瘤':'年新发约9.5万例','多发性骨髓瘤':'年新发约2.8万例',
+  '黑色素瘤':'年新发约2.2万例','肾细胞癌':'年新发约7.4万例',
+  '2型糖尿病':'患者约1.4亿','肥胖症':'患者约1.6亿','高血脂':'患者约2.0亿',
+  '高血压':'患者约2.7亿','NASH':'患者约5000万','MASH':'患者约5000万',
+  '痛风':'患者约1470万','甲状腺疾病':'患者约2.0亿',
+  '类风湿关节炎':'患者约500万','银屑病':'患者约650万','强直性脊柱炎':'患者约300万',
+  '系统性红斑狼疮':'患者约100万','炎症性肠病':'患者约150万','特应性皮炎':'患者约3500万',
+  '脊髓性肌萎缩症(SMA)':'患者约2-3万（罕见病）','阵发性睡眠性血红蛋白尿症(PNH)':'患者约2-5万（罕见病）',
+  'Wilson病(肝豆状核变性)':'患者约5-10万（罕见病）','亨特综合征':'罕见病，患者极少','法布雷病':'罕见病，患者极少','戈谢病':'罕见病，患者极少',
+  '血友病':'患者约13.9万'
+};
+function genFullBrief(idx){
+  var d=DB[idx];if(!d)return;
+  var peers=DB.filter(function(x){return x.disease===d.disease;}).sort(function(a,b){return (a.year||9999)-(b.year||9999);});
+  var sc=scoreDetail(d);var insNorm=normIns(d.ins);
+  var pool=BRIEF_POOL[d.disease]||BRIEF_POOL[d.area]||'数据待补充';
+  var rec,recClass,recText;
+  if(sc.total>=70){rec='建议引进';recClass='rec';recText='综合评分'+sc.total+'分，各项指标整体表现优秀。'+(d.gl?('指南推荐：'+d.gl+'。'):'')+(insNorm!=='自费'?'医保覆盖良好。':'')+'建议列为引进优先品种，尽快对接厂家推进准入。';}
+  else if(sc.total>=50){rec='观望';recClass='watch';recText='综合评分'+sc.total+'分，部分维度存在不确定性。建议持续关注医保/集采动态，适时推进引进。';}
+  else{rec='暂不建议引进';recClass='nogo';recText='综合评分'+sc.total+'分，多项指标偏弱。建议暂缓引进，待条件改善后再评估。';}
+  var L=[];
+  L.push('<h1>品种分析简报</h1>');
+  L.push('<div class="brief-meta">'+d.gn+(d.bn?'（'+d.bn+'）':'')+' ｜ '+(d.mfr||'—')+' ｜ 生成日期：'+new Date().toLocaleDateString('zh-CN')+'</div>');
+  /* ① 基本信息表 */
+  L.push('<h2>一、品种基本信息</h2>');
+  L.push('<table class="brief-info-table">'+
+    '<tr><td class="k">通用名</td><td>'+d.gn+'</td><td class="k">商品名</td><td>'+(d.bn||'—')+'</td></tr>'+
+    '<tr><td class="k">研发/生产</td><td>'+(d.mfr||'—')+'</td><td class="k">批准文号</td><td>'+(d.appr||'—')+'</td></tr>'+
+    '<tr><td class="k">注册分类</td><td>'+(d.cls||'—')+'</td><td class="k">获批日期</td><td>'+(d.adate||'—')+'</td></tr>'+
+    '<tr><td class="k">剂型</td><td>'+(d.form||'—')+'</td><td class="k">规格</td><td>'+(d.spec||'—')+'</td></tr>'+
+    '<tr><td class="k">作用机制</td><td colspan="3">'+(d.mech||'—')+'</td></tr>'+
+    '<tr><td class="k">获批适应症</td><td colspan="3">'+(d.ind||'—')+'</td></tr>'+
+    (d.ind2?'<tr><td class="k">拓展适应症</td><td colspan="3">'+d.ind2+'</td></tr>':'')+
+    '<tr><td class="k">迭代世代</td><td>'+(d.gen||'—')+'</td><td class="k">上市年份</td><td>'+(d.year||'—')+'</td></tr>'+
+    '<tr><td class="k">冷链要求</td><td>'+(d.cold||'常温')+'</td><td class="k">给药途径</td><td>'+(d.route||'—')+'</td></tr>'+
+    '<tr><td class="k">指南推荐</td><td>'+(d.gl||'—')+'</td><td class="k">专利到期</td><td>'+(d.patent||'—')+'</td></tr>'+
+    (d.followers!=null?'<tr><td class="k">仿制药</td><td>'+d.followers+'家</td><td class="k">是否独家</td><td>'+(d.followers===0?'是':'否')+'</td></tr>':'')+
+    '</table>');
+  /* ② 市场空间测算 */
+  L.push('<h2>二、市场空间测算</h2>');
+  L.push('<h3>患者池估算</h3>');
+  L.push('<div style="font-size:14px;line-height:1.8">适应症领域：'+(d.area||'—')+' / '+(d.disease||'—')+'<br>全国'+pool+'<br>目标人群：根据适应症范围筛选后的潜在患者群体（晚期/特定基因突变/特定分期等）</div>');
+  if(d.price!=null||d.annual!=null){
+    L.push('<h3>价格与用药金额</h3>');
+    L.push('<table class="brief-info-table">'+
+      '<tr><td class="k">挂网价</td><td>'+(d.price!=null?'¥'+d.price:'—')+'</td><td class="k">年化费用</td><td>'+(d.annual!=null?'¥'+Number(d.annual).toLocaleString():'—')+'</td></tr>'+
+      '<tr><td class="k">采购价(内部)</td><td>'+(d.pprice!=null?'¥'+d.pprice:'—')+'</td><td class="k">支付标准</td><td>'+(d.paystd||'—')+'</td></tr>'+
+      '</table>');
+    if(d.annual!=null){
+      L.push('<div style="margin-top:8px;font-size:14px">按年化费用¥'+Number(d.annual).toLocaleString()+'估算，每1000名患者年用药金额约<b>¥'+(d.annual*1000/10000).toFixed(1)+'万元</b>。国谈降价后实际规模需相应调整。</div>');
+    }
+  }
+  /* ③ 医保准入判断 */
+  L.push('<h2>三、医保准入判断</h2>');
+  L.push('<table class="brief-info-table">'+
+    '<tr><td class="k">当前医保状态</td><td>'+insTag2(d.ins)+'</td><td class="k">双通道</td><td>'+(d.dual||'—')+'</td></tr>'+
+    '<tr><td class="k">医保年份</td><td>'+(d.insyear||'—')+'</td><td class="k">支付标准</td><td>'+(d.paystd||'—')+'</td></tr>'+
+    (d.nt&&d.nt!=='—'?'<tr><td class="k">国谈信息</td><td colspan="3">'+d.nt+'</td></tr>':'')+
+    '</table>');
+  if(insNorm==='常规医保'){
+    L.push('<div class="note" style="margin-top:8px">已纳入常规医保目录'+(d.dual==='是'?'，双通道管理（院外DTP药房可报销）':'，非双通道')+'。医保覆盖降低患者自付负担，有利于处方渗透和上量。</div>');
+  }else if(insNorm==='国谈'){
+    L.push('<div class="note" style="margin-top:8px">国谈品种，享受医保报销'+(d.dual==='是'?'，已纳入双通道管理':'，暂未纳入双通道')+'。关注国谈周期内的价格变化和续约情况。国谈品种通常降价幅度40%-60%。</div>');
+  }else{
+    L.push('<div class="note" style="margin-top:8px">当前为自费品种，未纳入医保。'+(d.cls&&d.cls.includes('创新')?'作为创新药，建议关注国谈窗口期，评估申报国谈的可行性。':'建议持续关注医保准入进展。')+'</div>');
+  }
+  /* ④ 竞争格局分析 */
+  L.push('<h2>四、竞争格局分析</h2>');
+  if(peers.length>1){
+    L.push('<h3>同类品种对比（'+d.disease+'）</h3>');
+    L.push('<table style="margin-top:6px"><tr><th>药品名</th><th>商品名</th><th>厂家</th><th>世代</th><th>上市年</th><th>医保</th><th>挂网价</th><th>年化费用</th><th>青睐度</th></tr>');
+    peers.forEach(function(p){
+      L.push('<tr'+(p===d?' style="background:#fef3c7;font-weight:600"':'')+'><td>'+p.gn+'</td><td>'+(p.bn||'—')+'</td><td>'+(p.mfr||'—')+'</td><td>'+(p.gen||'—')+'</td><td>'+(p.year||'—')+'</td><td>'+insTag2(p.ins)+'</td><td>'+(p.price!=null?'¥'+p.price:'—')+'</td><td>'+(p.annual!=null?'¥'+Number(p.annual).toLocaleString():'—')+'</td><td>'+hospScore(p)+'</td></tr>');
+    });
+    L.push('</table>');
+    var drugIdx=peers.indexOf(d);
+    if(drugIdx===0){
+      L.push('<div class="note" style="margin-top:8px">该品种为'+d.disease+'领域最早上市的品种之一，具有先发优势。需关注后续迭代品种的竞争压力。</div>');
+    }else if(drugIdx===peers.length-1){
+      L.push('<div class="note" style="margin-top:8px">该品种为'+d.disease+'领域最新上市品种，需关注与先发品种的差异化定位。'+(d.gen?'定位：'+d.gen:'')+'</div>');
+    }else{
+      L.push('<div class="note" style="margin-top:8px">该品种处于'+d.disease+'领域第'+(drugIdx+1)+'代位置，前有'+peers[0].gn+'等先发品种，后有迭代产品。需明确差异化竞争优势。</div>');
+    }
+  }else{
+    L.push('<div class="note">当前'+(d.disease||'该领域')+'仅有1个品种收录，竞争格局数据待补充。建议手动调研同类品种后录入系统。</div>');
+  }
+  /* ⑤ 风险评估 */
+  L.push('<h2>五、风险评估</h2>');
+  L.push('<table class="brief-info-table">'+
+    '<tr><td class="k">集采风险</td><td>'+(d.vbp||'—')+'</td><td class="k">DRG控费</td><td>'+(sc.breakdown.drg>=80?'低':sc.breakdown.drg>=50?'中':'高')+'</td></tr>'+
+    '<tr><td class="k">冷链门槛</td><td>'+(d.cold&&(d.cold.includes('2')||d.cold.includes('冷'))?'需冷链配送，有运营门槛':'无冷链要求')+'</td><td class="k">专利到期</td><td>'+(d.patent||'—')+'</td></tr>'+
+    (d.followers!=null?'<tr><td class="k">仿制药竞争</td><td>'+d.followers+'家已上市/在研</td><td class="k">独家品种</td><td>'+(d.followers===0?'是':'否')+'</td></tr>':'')+
+    '</table>');
+  if(d.vbp&&(d.vbp.includes('高')||d.vbp.includes('已集采'))){
+    L.push('<div class="note" style="background:#fef2f2;border-color:#fca5a5;color:#991b1b">⚠️ 集采风险'+d.vbp+'，需密切关注集采动态，价格大幅下降可能影响利润空间。</div>');
+  }
+  if(d.patent){
+    var yr=new Date().getFullYear();
+    var pmatch=d.patent.match(/(\d{4})/);
+    if(pmatch&&parseInt(pmatch[1])-yr<=2){
+      L.push('<div class="note" style="background:#fef2f2;border-color:#fca5a5;color:#991b1b">⚠️ 专利'+(parseInt(pmatch[1])<=yr?'已到期':'即将到期')+'，仿制药上市后将面临价格竞争。</div>');
+    }
+  }
+  /* ⑥ 综合结论 */
+  L.push('<h2>六、综合结论</h2>');
+  L.push('<div class="brief-conclusion '+recClass+'">');
+  L.push('<div style="font-size:18px;font-weight:700;margin-bottom:8px">建议：'+rec+'</div>');
+  L.push('<div>'+recText+'</div>');
+  L.push('<div style="margin-top:14px"><b>评分明细（总分'+sc.total+'分）：</b></div>');
+  L.push('<table style="margin-top:6px"><tr>');
+  var wk=['gl','ins','route','vbp','cold','drg'];
+  wk.forEach(function(k){L.push('<th>'+WEIGHT_LABELS[k]+'<br><span style="font-size:11px;color:var(--sub)">'+WEIGHTS[k]+'%</span></th>');});
+  L.push('<th>总分</th></tr><tr>');
+  wk.forEach(function(k){var val=sc.breakdown[k];var cls=val>=80?'green':val>=60?'amber':'red';L.push('<td style="text-align:center"><span class="tag '+cls+'">'+val+'</span></td>');});
+  L.push('<td style="text-align:center;font-weight:700;color:var(--accent);font-size:16px">'+sc.total+'</td></tr></table>');
+  L.push('</div>');
+  L.push('<div style="margin-top:20px;font-size:12px;color:var(--sub);text-align:center;border-top:1px solid var(--line);padding-top:12px">数据来源：NMPA/医保局等公开信息，患者池为估算数据，仅供参考。生成时间：'+new Date().toLocaleString('zh-CN')+'</div>');
+  L.push('<div class="no-print" style="text-align:center;margin-top:20px"><button class="btn" onclick="exportBriefPDF()">📄 导出为PDF</button> <button class="btn gray" onclick="closeBrief()">关闭</button></div>');
+  document.getElementById('briefPaper').innerHTML=L.join('');
+  document.getElementById('briefOverlay').classList.add('on');
+  document.body.style.overflow='hidden';
+}
+function closeBrief(){document.getElementById('briefOverlay').classList.remove('on');document.body.style.overflow='';}
+function exportBriefPDF(){window.print();}
 
 /* ============ 引进评估 - 决策分析 ============ */
 function initDecision(){
