@@ -178,6 +178,23 @@ nav button.active{
   .info-grid .item .k{font-size:12px;color:var(--sub)}
   .info-grid .item .v{font-size:15px;font-weight:600;margin-top:2px}
   .copy-btn{position:sticky;top:10px;float:right}
+  /* —— 冷链计算器 —— */
+  .cc-stat{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:14px 16px;text-align:center}
+  .cc-stat .k{font-size:12px;color:var(--sub)}
+  .cc-stat .v{font-size:24px;font-weight:700;color:#166534;margin-top:4px}
+  .cc-stat .u{font-size:12px;color:var(--sub)}
+  .cc-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:8px}
+  /* —— 价格追踪 —— */
+  .pt-timeline{position:relative;padding-left:24px;margin-top:10px}
+  .pt-timeline:before{content:"";position:absolute;left:8px;top:0;bottom:0;width:2px;background:var(--line)}
+  .pt-event{position:relative;margin-bottom:14px;padding:10px 14px;background:#fff;border:1px solid var(--line);border-radius:10px;margin-left:12px}
+  .pt-event:before{content:"";position:absolute;left:-20px;top:14px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid #fff;box-shadow:0 0 0 2px var(--accent)}
+  .pt-event .date{font-size:12px;color:var(--sub)}
+  .pt-event .price{font-size:16px;font-weight:700;margin:4px 0}
+  .pt-event .src{font-size:12px;color:var(--sub)}
+  .pt-check-ok{background:#dcfce7!important;color:#166534!important}
+  .pt-check-warn{background:#fef3c7!important;color:#b45309!important}
+  .pt-check-overdue{background:#fee2e2!important;color:#b91c1c!important}
 </style>
 <script src="./药品数据分析工具 · 按疾病领域收集与对比药品迭代数据_files/beacon_web.min.js.下载"></script>
 <script>
@@ -217,6 +234,8 @@ nav button.active{
   <button data-t="manager">⑦ 数据管理</button>
   <button data-t="source">⑧ 数据来源指引</button>
   <button data-t="price">⑨ 价格批量核算</button>
+  <button data-t="coldchain">⑩ 冷链成本估算</button>
+  <button data-t="pricetrack">⑪ 价格追踪与核查</button>
 </nav>
 
 <div class="yearbar">
@@ -427,6 +446,11 @@ ADC药物，注射途径
 通俗作用机制: (可选，大白话解释作用机制)
 适应症通俗: (可选，大白话描述适应症)
 沟通要点: (可选，卖点/对比/常见疑问)
+药品类型: (创新药/集采药/其他)
+采购周期: (集采药填写，如：第10批集采)
+采购价: (内部，采购员录入)
+价格核查日期: (如：2025-07-01)
+价格核查来源: (如：省招采网/厂家通知)
 
 CSV 格式：第一行为表头（字段名同上），之后每行一个药品，逗号分隔。</pre>
       </details>
@@ -481,9 +505,86 @@ CSV 格式：第一行为表头（字段名同上），之后每行一个药品�
     </div>
   </section>
 
-</div>
+  <!-- ⑩ 冷链成本估算 -->
+  <section class="tab" id="coldchain">
+    <div class="card">
+      <h2>⑩ 冷链成本估算器（R04）</h2>
+      <div class="note">用途：输入公司冷库运营参数，自动计算年化冷链成本，并按药品分摊估算单位储运成本。参数已预填<b>行业参考默认值</b>（基于医药流通企业100㎡级冷库调研），请根据实际情况修改。后续去冷库实地了解后校准。</div>
+      <div class="grid2" style="margin-top:14px">
+        <div class="card" style="margin:0;border-color:#bfdbfe">
+          <h3 style="color:#1e40af">公司级参数（可编辑）</h3>
+          <div class="grid2">
+            <div><label style="font-size:12.5px;color:var(--sub)">冷库面积(㎡)</label><input id="cc_area" type="number" value="100" style="width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:7px;font-size:13.5px"></div>
+            <div><label style="font-size:12.5px;color:var(--sub)">日耗电量(kWh)</label><input id="cc_kwh" type="number" value="15" style="width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:7px;font-size:13.5px"></div>
+            <div><label style="font-size:12.5px;color:var(--sub)">电费单价(元/kWh)</label><input id="cc_rate" type="number" value="0.8" step="0.05" style="width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:7px;font-size:13.5px"></div>
+            <div><label style="font-size:12.5px;color:var(--sub)">运输单次成本(元)</label><input id="cc_trans" type="number" value="250" style="width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:7px;font-size:13.5px"></div>
+            <div><label style="font-size:12.5px;color:var(--sub)">月均运输次数</label><input id="cc_times" type="number" value="30" style="width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:7px;font-size:13.5px"></div>
+            <div><label style="font-size:12.5px;color:var(--sub)">年折旧/租金(元)</label><input id="cc_depr" type="number" value="25000" style="width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:7px;font-size:13.5px"></div>
+            <div><label style="font-size:12.5px;color:var(--sub)">其他固定成本(元/年)</label><input id="cc_other" type="number" value="8000" style="width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:7px;font-size:13.5px"></div>
+          </div>
+          <button class="btn" style="margin-top:10px" onclick="calcColdChain()">重新计算</button>
+          <button class="btn alt" onclick="saveCCParams()">保存参数到本地</button>
+        </div>
+        <div class="card" style="margin:0;border-color:#bbf7d0">
+          <h3 style="color:#166534">成本汇总</h3>
+          <div id="ccSummary"></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <h3>冷链药品储运成本分摊</h3>
+        <p class="muted">仅显示需冷链储运的品种（2-8℃冷藏）。分摊方式：按冷链品种数均摊固定成本（折旧+其他），可变成本（电费+运输）按总费用均摊。</p>
+        <div id="ccDrugTable"></div>
+      </div>
+    </div>
+  </section>
 
-<!-- 编辑弹窗 -->
+  <!-- ⑪ 价格追踪与核查 -->
+  <section class="tab" id="pricetrack">
+    <div class="card">
+      <h2>⑪ 价格追踪与核查（R05+R06+R10）</h2>
+      <div class="note">用途：R05 价格历史时间线（记录每次价格变更）、R06 横向归一比价（按规格归一化后同病种对比）、R10 价格核查提醒（创新药每月/集采药周期结束重点核查）。</div>
+
+      <div class="seg" style="margin:12px 0">
+        <button class="on" onclick="ptTab('history',this)">R05 价格历史</button>
+        <button onclick="ptTab('compare',this)">R06 归一比价</button>
+        <button onclick="ptTab('check',this)">R10 核查提醒</button>
+      </div>
+
+      <!-- R05 价格历史 -->
+      <div id="ptHistory">
+        <div class="searchbar">
+          <div class="ac-box">
+            <input type="text" id="ptSearch" placeholder="输入药品名查价格历史…" oninput="ptAutoComplete()" onblur="setTimeout(()=>document.getElementById('ptAC').style.display='none',150)">
+            <div id="ptAC" class="ac-list" style="display:none"></div>
+          </div>
+          <button class="btn" onclick="ptShowHistory()">查看时间线</button>
+        </div>
+        <div id="ptTimeline"></div>
+      </div>
+
+      <!-- R06 归一比价 -->
+      <div id="ptCompare" style="display:none">
+        <div class="searchbar">
+          <select id="ptCmpArea" onchange="ptCmpDisease()" style="padding:9px 12px;border:1px solid var(--line);border-radius:9px;font-size:14px"></select>
+          <select id="ptCmpDisease" style="padding:9px 12px;border:1px solid var(--line);border-radius:9px;font-size:14px"></select>
+          <button class="btn" onclick="ptRenderCompare()">生成比价表</button>
+        </div>
+        <div id="ptCmpTable"></div>
+      </div>
+
+      <!-- R10 核查提醒 -->
+      <div id="ptCheck" style="display:none">
+        <div class="row" style="align-items:center;margin-bottom:10px">
+          <div class="field"><div class="k">创新药核查周期</div><div class="v">每月一次</div></div>
+          <div class="field"><div class="k">集采药核查节点</div><div class="v">采购周期结束</div></div>
+          <div class="field"><div class="k">今日日期</div><div class="v" id="ptToday"></div></div>
+        </div>
+        <div id="ptCheckTable"></div>
+      </div>
+    </div>
+  </section>
+
+</div>
 <div class="modal-bg" id="editorBg">
   <div class="modal">
     <h2 style="margin-top:0">药品录入（对应文档收集标准）</h2>
@@ -527,6 +628,18 @@ CSV 格式：第一行为表头（字段名同上），之后每行一个药品�
     <div><label>专利到期日</label><input id="f_patent" placeholder="如 2032-07-03 或 已过期"></div>
     <div><label>在研仿制药/竞品申请数</label><input id="f_followers" type="number" placeholder="单位：家"></div>
     <div><label>备注/风险</label><textarea id="f_note" rows="2"></textarea></div>
+    <div style="margin-top:10px;padding:10px;background:#fef3f7;border-radius:8px;border:1px dashed #f9a8d4">
+      <div style="font-size:13px;font-weight:600;color:#9d174d;margin-bottom:6px">内部字段（R09 采购价 + R10 价格核查）</div>
+      <div class="grid2">
+        <div><label>药品类型</label>
+          <select id="f_dtype"><option value="">请选择</option><option>创新药</option><option>集采药</option><option>其他</option></select></div>
+        <div><label>采购周期（集采药填）</label><input id="f_pcycle" placeholder="如：第10批集采(2024-2025)"></div>
+        <div><label>实际采购价(元)</label><input id="f_pprice" type="number" placeholder="采购员录入"></div>
+        <div><label>采购价录入日期</label><input id="f_pprice_date" type="date"></div>
+        <div><label>最近价格核查日期</label><input id="f_price_check" type="date"></div>
+        <div><label>价格核查来源</label><input id="f_price_src" placeholder="如：各省招采网/厂家通知"></div>
+      </div>
+    </div>
     <div style="margin-top:10px;padding:10px;background:#f0f7ff;border-radius:8px;border:1px dashed #93c5fd">
       <div style="font-size:13px;font-weight:600;color:#1e40af;margin-bottom:6px">通俗易懂化字段（R03 · 供业务员速查使用）</div>
       <div><label>作用机制（大白话）</label><textarea id="f_mech_plain" rows="2" placeholder="如：这个药像精准制导导弹，只杀带某种标记的癌细胞，不误伤正常细胞"></textarea></div>
@@ -965,6 +1078,8 @@ function genBrief(){
       <div class="field"><div class="k">商品名</div><div class="v">${d.bn||"—"}</div></div>
       <div class="field"><div class="k">规格</div><div class="v">${d.spec||"—"}</div></div>
       <div class="field"><div class="k">目前价格</div><div class="v" style="color:var(--red)">${d.price?("¥"+d.price):"—"}</div></div>
+      <div class="field"><div class="k">实际采购价(内部)</div><div class="v" style="color:#9d174d">${d.pprice?("¥"+d.pprice):"—"}${d.pprice_date?("<br><span style='font-size:11px;color:var(--sub)'>"+d.pprice_date+"</span>"):""}</div></div>
+      <div class="field"><div class="k">药品类型</div><div class="v">${d.dtype||"—"}</div></div>
       <div class="field"><div class="k">研发公司</div><div class="v">${d.mfr||"—"}</div></div>
       <div class="field"><div class="k">上市许可</div><div class="v">${d.mfr||"—"}</div></div>
       <div class="field"><div class="k">注册分类</div><div class="v">${d.cls||"—"}</div></div>
@@ -1135,8 +1250,8 @@ function fallbackCopy(text){
 
 /* ============ ⑦ 数据管理 ============ */
 function renderManager(){
-  document.getElementById('managerTable').innerHTML='<table><tr><th>通用名</th><th>病种</th><th>世代</th><th>年份</th><th>医保</th><th>操作</th></tr>'+
-  DB.map((d,i)=>'<tr><td>'+d.gn+'</td><td>'+d.disease+'</td><td>'+d.gen+'</td><td>'+d.year+'</td><td>'+insTag(d.ins)+'</td><td><button class="btn gray" onclick="openEditor('+i+')">编辑</button> <button class="btn gray" onclick="delDrug('+i+')">删除</button></td></tr>').join('')+'</table>';
+  document.getElementById('managerTable').innerHTML='<table><tr><th>通用名</th><th>病种</th><th>世代</th><th>年份</th><th>医保</th><th>类型</th><th>挂网价</th><th>采购价(内部)</th><th>操作</th></tr>'+
+  DB.map((d,i)=>'<tr><td>'+d.gn+'</td><td>'+d.disease+'</td><td>'+d.gen+'</td><td>'+d.year+'</td><td>'+insTag(d.ins)+'</td><td>'+(d.dtype?'<span class="tag '+(d.dtype==='创新药'?'blue':d.dtype==='集采药'?'amber':'gray')+'">'+d.dtype+'</span>':'<span class="muted">—</span>')+'</td><td>'+(d.price!=null?'¥'+d.price:'—')+'</td><td style="color:#9d174d">'+(d.pprice!=null?'¥'+d.pprice:'—')+'</td><td><button class="btn gray" onclick="openEditor('+i+')">编辑</button> <button class="btn gray" onclick="delDrug('+i+')">删除</button></td></tr>').join('')+'</table>';
 }
 renderManager();
 let editIdx=-1;
@@ -1152,16 +1267,16 @@ function cascadeDisease(){
 }
 initAreaSelect();
 function openEditor(i){editIdx=(i==null?-1:i);const d=editIdx>=0?DB[editIdx]:{};
-  ['gn','bn','area','disease','gen','year','origin','excl','cls','mech','mfr','appr','form','spec','adate','cold','price','annual','ins','insyear','dual','vbp','gl','route','sales','prob','prov','pt','ind','ind2','nt','note','patent','followers']
+  ['gn','bn','area','disease','gen','year','origin','excl','cls','mech','mfr','appr','form','spec','adate','cold','price','annual','ins','insyear','dual','vbp','gl','route','sales','prob','prov','pt','ind','ind2','nt','note','patent','followers','dtype','pcycle','pprice','pprice_date','price_check','price_src','mech_plain','ind_plain','talking_points']
   .forEach(k=>{const el=document.getElementById('f_'+k);if(!el)return;el.value=d[k]!=null?d[k]:"";if(k==='area')cascadeDisease();});
   document.getElementById('editorBg').classList.add('on');
 }
 function closeEditor(){document.getElementById('editorBg').classList.remove('on');}
 function saveDrug(){
-  const keys=['gn','bn','area','disease','gen','year','origin','excl','cls','mech','mfr','appr','form','spec','adate','cold','price','annual','ins','insyear','dual','vbp','gl','route','sales','prob','prov','pt','ind','ind2','nt','note','patent','followers','mech_plain','ind_plain','talking_points'];
+  const keys=['gn','bn','area','disease','gen','year','origin','excl','cls','mech','mfr','appr','form','spec','adate','cold','price','annual','ins','insyear','dual','vbp','gl','route','sales','prob','prov','pt','ind','ind2','nt','note','patent','followers','dtype','pcycle','pprice','pprice_date','price_check','price_src','mech_plain','ind_plain','talking_points'];
   const d={};keys.forEach(k=>{const el=document.getElementById('f_'+k);if(el) d[k]=el.value;});
   if(!d.gn){alert("通用名必填");return;}
-  ['year','price','annual','insyear','sales','prob','followers'].forEach(k=>{if(d[k]!=="") d[k]=+d[k];});
+  ['year','price','annual','insyear','sales','prob','followers','pprice'].forEach(k=>{if(d[k]!=="") d[k]=+d[k];});
   if(editIdx>=0)DB[editIdx]=d;else DB.push(d);
   saveDB();closeEditor();renderManager();fillBriefSel();
   // 刷新所有侧边栏菜单（新增药品后必须执行）
@@ -1213,11 +1328,14 @@ const DOC_FIELDS={
   '备注':'note','风险':'note','备注信息':'note','说明':'note','remarks':'note','note':'note','comment':'note','备注说明':'note',
   '药品类型':'dtype','drug type':'dtype','类型':'dtype',
   '采购周期':'pcycle','procurement cycle':'pcycle','集采周期':'pcycle',
+  '采购价录入日期':'pprice_date','采购日期':'pprice_date','purchase date':'pprice_date',
+  '价格核查日期':'price_check','核查日期':'price_check','最近核查':'price_check','price check date':'price_check',
+  '价格核查来源':'price_src','核查来源':'price_src','price source':'price_src',
   '通俗作用机制':'mech_plain','作用机制大白话':'mech_plain','plain mechanism':'mech_plain','mech plain':'mech_plain','机制通俗':'mech_plain',
   '适应症通俗':'ind_plain','适应症大白话':'ind_plain','通俗适应症':'ind_plain','plain indication':'ind_plain','indication plain':'ind_plain','适应证通俗':'ind_plain',
   '沟通要点':'talking_points','卖点':'talking_points','销售要点':'talking_points','话术':'talking_points','talking points':'talking_points','key points':'talking_points'
 };
-const DOC_NUM=['year','price','annual','insyear','sales','followers'];
+const DOC_NUM=['year','price','annual','insyear','sales','followers','pprice'];
 function coerceField(f,val){
   val=(val==null?'':val).toString().trim();
   if(!val) return '';
@@ -1639,8 +1757,263 @@ function writePriceCalc(){
   }else document.getElementById('priceMsg').textContent='未选中可写回的行（已有年化费用的行默认不勾选）。';
 }
 
+/* ============ R04 冷链成本估算器 ============ */
+function calcColdChain(){
+  const area=+document.getElementById('cc_area').value||100;
+  const kwh=+document.getElementById('cc_kwh').value||15;
+  const rate=+document.getElementById('cc_rate').value||0.8;
+  const trans=+document.getElementById('cc_trans').value||250;
+  const times=+document.getElementById('cc_times').value||30;
+  const depr=+document.getElementById('cc_depr').value||25000;
+  const other=+document.getElementById('cc_other').value||8000;
+  const elecMonth=kwh*30*rate;
+  const transMonth=trans*times;
+  const deprMonth=depr/12;
+  const otherMonth=other/12;
+  const totalMonth=elecMonth+transMonth+deprMonth+otherMonth;
+  const totalYear=totalMonth*12;
+  const perSqmYear=area>0?totalYear/area:0;
+  // 冷链药品列表
+  const coldDrugs=filterByYear(DB.map((d,i)=>({d,i}))).filter(({d})=>d.cold&&/2-8|2~8|冷藏|冷链/.test(d.cold));
+  const n=coldDrugs.length;
+  const fixedMonth=deprMonth+otherMonth;
+  const varMonth=elecMonth+transMonth;
+  const perDrugFixed=n>0?fixedMonth/n:0;
+  const perDrugVar=n>0?varMonth/n:0;
+  const perDrugTotal=perDrugFixed+perDrugVar;
+  // 汇总卡片
+  document.getElementById('ccSummary').innerHTML=
+    '<div class="cc-row">'+
+    '<div class="cc-stat"><div class="k">月度电费</div><div class="v">'+elecMonth.toFixed(0)+'</div><div class="u">元/月</div></div>'+
+    '<div class="cc-stat"><div class="k">月度运输</div><div class="v">'+transMonth.toFixed(0)+'</div><div class="u">元/月</div></div>'+
+    '<div class="cc-stat"><div class="k">月度折旧</div><div class="v">'+deprMonth.toFixed(0)+'</div><div class="u">元/月</div></div>'+
+    '<div class="cc-stat"><div class="k">月度其他</div><div class="v">'+otherMonth.toFixed(0)+'</div><div class="u">元/月</div></div>'+
+    '</div>'+
+    '<div class="cc-row" style="margin-top:10px">'+
+    '<div class="cc-stat" style="background:#eff6ff;border-color:#bfdbfe"><div class="k">月度总成本</div><div class="v" style="color:#1e40af">'+totalMonth.toFixed(0)+'</div><div class="u">元/月</div></div>'+
+    '<div class="cc-stat" style="background:#eff6ff;border-color:#bfdbfe"><div class="k">年度总成本</div><div class="v" style="color:#1e40af">'+totalYear.toFixed(0)+'</div><div class="u">元/年</div></div>'+
+    '<div class="cc-stat" style="background:#eff6ff;border-color:#bfdbfe"><div class="k">每㎡年成本</div><div class="v" style="color:#1e40af">'+perSqmYear.toFixed(0)+'</div><div class="u">元/㎡·年</div></div>'+
+    '<div class="cc-stat" style="background:#f0fdf4;border-color:#bbf7d0"><div class="k">冷链品种数</div><div class="v" style="color:#166534">'+n+'</div><div class="u">个品种</div></div>'+
+    '</div>';
+  // 药品分摊表
+  if(!n){
+    document.getElementById('ccDrugTable').innerHTML='<div class="muted">暂无冷链品种（需在药品数据中标注"2-8℃冷藏"等冷链条件）</div>';
+    return;
+  }
+  let html='<table><tr><th>通用名</th><th>商品名</th><th>病种</th><th>单价(元)</th><th>冷链条件</th><th>月度分摊成本(元)</th><th>年化分摊成本(元)</th></tr>';
+  coldDrugs.forEach(({d})=>{
+    html+='<tr><td>'+d.gn+'</td><td>'+(d.bn||'—')+'</td><td>'+(d.disease||'—')+'</td>'+
+      '<td>'+(d.price!=null?d.price:'—')+'</td><td>'+d.cold+'</td>'+
+      '<td style="color:var(--red);font-weight:600">'+perDrugTotal.toFixed(0)+'</td>'+
+      '<td style="color:var(--red);font-weight:600">'+(perDrugTotal*12).toFixed(0)+'</td></tr>';
+  });
+  html+='</table>';
+  html+='<div class="muted" style="margin-top:8px">分摊方式：固定成本（折旧'+deprMonth.toFixed(0)+'+其他'+otherMonth.toFixed(0)+'='+(fixedMonth).toFixed(0)+'元/月）和可变成本（电费'+elecMonth.toFixed(0)+'+运输'+transMonth.toFixed(0)+'='+(varMonth).toFixed(0)+'元/月）均按'+n+'个冷链品种均摊。每品种月度分摊≈'+perDrugTotal.toFixed(0)+'元，年化≈'+(perDrugTotal*12).toFixed(0)+'元。</div>';
+  document.getElementById('ccDrugTable').innerHTML=html;
+}
+function saveCCParams(){
+  const params={};
+  ['cc_area','cc_kwh','cc_rate','cc_trans','cc_times','cc_depr','cc_other'].forEach(id=>{
+    params[id]=document.getElementById(id).value;
+  });
+  localStorage.setItem('cc_params',JSON.stringify(params));
+  alert('冷链参数已保存到本地。');
+}
+function loadCCParams(){
+  try{
+    const s=localStorage.getItem('cc_params');
+    if(!s)return;
+    const p=JSON.parse(s);
+    Object.keys(p).forEach(id=>{const el=document.getElementById(id);if(el)el.value=p[id];});
+  }catch(e){}
+}
+
+/* ============ R05+R06+R10 价格追踪与核查 ============ */
+function ptTab(name,btn){
+  document.querySelectorAll('#pricetrack .seg button').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  ['history','compare','check'].forEach(t=>{
+    const el=document.getElementById('pt'+t.charAt(0).toUpperCase()+t.slice(1));
+    if(el)el.style.display=(t===name?'block':'none');
+  });
+  if(name==='compare'&&!document.getElementById('ptCmpArea').options.length){
+    ptInitCmpArea();
+  }
+  if(name==='check'){
+    ptRenderCheck();
+  }
+}
+// R05 价格历史
+function ptAutoComplete(){
+  const q=document.getElementById('ptSearch').value.trim().toLowerCase();
+  const box=document.getElementById('ptAC');
+  if(!q){box.style.display='none';return;}
+  const matches=DB.filter(d=>(d.gn||'').toLowerCase().includes(q)||(d.bn||'').toLowerCase().includes(q)).slice(0,10);
+  if(!matches.length){box.style.display='none';return;}
+  box.innerHTML=matches.map(d=>'<div class="ac-item" onmousedown="document.getElementById(\'ptSearch\').value=\''+d.gn+'\';ptShowHistory()">'+d.gn+(d.bn?'<span class="sub">'+d.bn+'</span>':'')+'</div>').join('');
+  box.style.display='block';
+}
+function ptShowHistory(){
+  const q=document.getElementById('ptSearch').value.trim();
+  const drug=DB.find(d=>d.gn===q);
+  const box=document.getElementById('ptTimeline');
+  if(!drug){box.innerHTML='<div class="muted">未找到该药品。请从下拉列表选择。</div>';return;}
+  document.getElementById('ptAC').style.display='none';
+  let html='<div class="card" style="margin-top:10px"><h3>'+drug.gn+(drug.bn?' ('+drug.bn+')':'')+' — 价格历史时间线</h3>';
+  // 当前价格
+  html+='<div class="pt-event"><div class="date">当前价格</div><div class="price" style="color:var(--red)">'+(drug.price!=null?'¥'+drug.price.toLocaleString():'未录入')+'</div><div class="src">挂网价/中标价</div></div>';
+  // 历史记录
+  if(drug.price_history&&drug.price_history.length){
+    drug.price_history.slice().reverse().forEach(h=>{
+      const change=h.old_price!=null?'由 ¥'+h.old_price+' → ¥'+h.price:'首次记录 ¥'+h.price;
+      html+='<div class="pt-event"><div class="date">'+(h.date||'日期不详')+'</div><div class="price">'+change+'</div><div class="src">来源：'+(h.source||'未记录')+'</div></div>';
+    });
+  }else{
+    html+='<div class="muted" style="margin:8px 0">暂无历史价格变更记录。可在下方添加。</div>';
+  }
+  html+='</div>';
+  // 添加价格记录表单
+  html+='<div class="card" style="margin-top:10px"><h3>添加价格变更记录</h3>'+
+    '<div class="row" style="align-items:flex-end">'+
+    '<div style="flex:1"><label style="font-size:12.5px;color:var(--sub)">变更日期</label><input id="ptNewDate" type="date" style="width:100%;padding:8px;border:1px solid var(--line);border-radius:8px"></div>'+
+    '<div style="flex:1"><label style="font:12.5px var(--sub)">新价格(元)</label><input id="ptNewPrice" type="number" style="width:100%;padding:8px;border:1px solid var(--line);border-radius:8px"></div>'+
+    '<div style="flex:2"><label style="font-size:12.5px;color:var(--sub)">来源/备注</label><input id="ptNewSrc" placeholder="如：国谈降价/省招采网/厂家通知" style="width:100%;padding:8px;border:1px solid var(--line);border-radius:8px"></div>'+
+    '<button class="btn" onclick="ptAddHistory(\''+drug.gn.replace(/'/g,"\\'")+'\')">添加记录</button>'+
+    '</div></div>';
+  box.innerHTML=html;
+}
+function ptAddHistory(gn){
+  const drug=DB.find(d=>d.gn===gn);
+  if(!drug)return;
+  const date=document.getElementById('ptNewDate').value;
+  const price=parseFloat(document.getElementById('ptNewPrice').value);
+  const src=document.getElementById('ptNewSrc').value;
+  if(!date||!price){alert('请填写日期和新价格');return;}
+  if(!drug.price_history)drug.price_history=[];
+  drug.price_history.push({date:date,price:price,old_price:drug.price!=null?drug.price:null,source:src});
+  drug.price_history.sort((a,b)=>(a.date||'').localeCompare(b.date||''));
+  drug.price=price;
+  drug.price_check=date;
+  drug.price_src=src;
+  saveDB();
+  ptShowHistory();
+}
+// R06 归一比价
+function ptInitCmpArea(){
+  const sel=document.getElementById('ptCmpArea');
+  sel.innerHTML='<option value="">选择领域</option>'+treeAreas().map(a=>'<option value="'+a+'">'+a+'</option>').join('');
+}
+function ptCmpDisease(){
+  const a=document.getElementById('ptCmpArea').value;
+  const sel=document.getElementById('ptCmpDisease');
+  if(!a){sel.innerHTML='<option value="">先选领域</option>';return;}
+  sel.innerHTML='<option value="">全部病种</option>'+treeDiseasesOf(a).map(d=>'<option value="'+d+'">'+d+'</option>').join('');
+}
+function parseSpecNum(spec){
+  if(!spec)return null;
+  const m=spec.match(/(\d+(?:\.\d+)?)\s*(mg|ml|μg|IU|片|粒|支|瓶|袋|g|mL|mg\/mL)/i);
+  return m?{num:parseFloat(m[1]),unit:m[2].toLowerCase()}:null;
+}
+function ptRenderCompare(){
+  const area=document.getElementById('ptCmpArea').value;
+  const disease=document.getElementById('ptCmpDisease').value;
+  let drugs=filterByYear(DB.map((d,i)=>({d,i}))).filter(({d})=>d.price!=null);
+  if(area)drugs=drugs.filter(({d})=>d.area===area);
+  if(disease)drugs=drugs.filter(({d})=>d.disease===disease);
+  if(!drugs.length){document.getElementById('ptCmpTable').innerHTML='<div class="muted">无匹配品种（需要有单价格的品种才能比价）</div>';return;}
+  // 归一化：尝试提取规格数值，计算 元/规格单位
+  let rows=drugs.map(({d,i})=>{
+    const sp=parseSpecNum(d.spec);
+    const unitPrice=sp?d.price/sp.num:null;
+    return{gn:d.gn,bn:d.bn,disease:d.disease,price:d.price,spec:d.spec,specNum:sp?sp.num:null,specUnit:sp?sp.unit:null,unitPrice:unitPrice,pprice:d.pprice,annual:d.annual,route:d.route,i:i};
+  });
+  // 按单位归一价排序
+  rows.sort((a,b)=>(a.unitPrice||Infinity)-(b.unitPrice||Infinity));
+  let html='<table><tr><th>通用名</th><th>商品名</th><th>病种</th><th>单价(元)</th><th>规格</th><th>规格数值</th><th>归一价(元/规格单位)</th><th>采购价(内部)</th><th>年化费用</th><th>给药</th></tr>';
+  rows.forEach(r=>{
+    html+='<tr><td>'+r.gn+'</td><td>'+(r.bn||'—')+'</td><td>'+(r.disease||'—')+'</td>'+
+      '<td>'+(r.price!=null?'¥'+r.price:'—')+'</td><td>'+(r.spec||'—')+'</td>'+
+      '<td>'+(r.specNum!=null?r.specNum+r.specUnit:'—')+'</td>'+
+      '<td style="font-weight:600;color:'+(r.unitPrice!=null?'var(--red)':'var(--sub)')+'">'+(r.unitPrice!=null?'¥'+r.unitPrice.toFixed(2):'无法归一')+'</td>'+
+      '<td style="color:#9d174d">'+(r.pprice!=null?'¥'+r.pprice:'—')+'</td>'+
+      '<td>'+(r.annual!=null?'¥'+Number(r.annual).toLocaleString():'—')+'</td>'+
+      '<td>'+(r.route||'—')+'</td></tr>';
+  });
+  html+='</table>';
+  // 比价摘要
+  const priced=rows.filter(r=>r.unitPrice!=null);
+  if(priced.length>=2){
+    const min=Math.min(...priced.map(r=>r.unitPrice));
+    const max=Math.max(...priced.map(r=>r.unitPrice));
+    html+='<div class="note" style="margin-top:10px">归一比价摘要：最低 <b>¥'+min.toFixed(2)+'</b> / 最高 <b>¥'+max.toFixed(2)+'</b> / 倍差 <b>'+(max/min).toFixed(1)+'倍</b>。归一价 = 单价 ÷ 规格数值，便于不同包装/剂型间横向对比。</div>';
+  }
+  document.getElementById('ptCmpTable').innerHTML=html;
+}
+// R10 核查提醒
+function ptRenderCheck(){
+  const today=new Date();
+  const todayStr=today.toISOString().slice(0,10);
+  document.getElementById('ptToday').textContent=todayStr;
+  let rows=filterByYear(DB.map((d,i)=>({d,i})));
+  let html='<table><tr><th>通用名</th><th>病种</th><th>药品类型</th><th>单价</th><th>采购价(内部)</th><th>上次核查</th><th>核查来源</th><th>状态</th><th>操作</th></tr>';
+  let overdue=0,warn=0,ok=0;
+  rows.forEach(({d,i})=>{
+    let dtype=d.dtype||'';
+    // 自动推断药类型
+    if(!dtype){
+      if(/集采/.test(d.ins))dtype='集采药';
+      else if(/创新|ADC|双抗|新药/.test((d.mech||'')+(d.gen||'')))dtype='创新药';
+      else dtype='其他';
+    }
+    const lastCheck=d.price_check||'';
+    let status='—',cls='pt-check-ok',daysStr='';
+    if(lastCheck){
+      const diff=Math.floor((today-new Date(lastCheck))/86400000);
+      daysStr=diff+'天前';
+      if(dtype==='创新药'){
+        if(diff>45){status='超期';cls='pt-check-overdue';overdue++;}
+        else if(diff>30){status='待核查';cls='pt-check-warn';warn++;}
+        else{status='正常';cls='pt-check-ok';ok++;}
+      }else if(dtype==='集采药'){
+        if(diff>90){status='超期';cls='pt-check-overdue';overdue++;}
+        else if(diff>75){status='待核查';cls='pt-check-warn';warn++;}
+        else{status='正常';cls='pt-check-ok';ok++;}
+      }else{
+        if(diff>180){status='超期';cls='pt-check-overdue';overdue++;}
+        else if(diff>150){status='待核查';cls='pt-check-warn';warn++;}
+        else{status='正常';cls='pt-check-ok';ok++;}
+      }
+    }else{
+      status='未核查';cls='pt-check-overdue';overdue++;
+    }
+    html+='<tr><td>'+d.gn+'</td><td>'+(d.disease||'—')+'</td><td><span class="tag '+(dtype==='创新药'?'blue':dtype==='集采药'?'amber':'gray')+'">'+dtype+'</span></td>'+
+      '<td>'+(d.price!=null?'¥'+d.price:'—')+'</td>'+
+      '<td style="color:#9d174d">'+(d.pprice!=null?'¥'+d.pprice:'—')+'</td>'+
+      '<td>'+(lastCheck||'<span class="muted">—</span>')+(daysStr?'<br><span class="muted">'+daysStr+'</span>':'')+'</td>'+
+      '<td>'+(d.price_src||'—')+'</td>'+
+      '<td><span class="tag '+cls+'">'+status+'</span></td>'+
+      '<td><button class="btn gray" style="padding:4px 10px;font-size:12px" onclick="ptMarkCheck('+i+')">标记已核查</button></td></tr>';
+  });
+  html+='</table>';
+  html+='<div class="note" style="margin-top:10px"><b>核查规则</b>：创新药每<b>30天</b>核查一次（超期>45天红色）、集采药每<b>90天</b>核查一次（采购周期结束重点核查，超期>90天红色）、其他药品每<b>180天</b>核查一次。<br><b>今日统计</b>：正常 <span style="color:var(--green);font-weight:600">'+ok+'</span> 条 / 待核查 <span style="color:var(--amber);font-weight:600">'+warn+'</span> 条 / 超期 <span style="color:var(--red);font-weight:600">'+overdue+'</span> 条</div>';
+  document.getElementById('ptCheckTable').innerHTML=html;
+}
+function ptMarkCheck(idx){
+  const today=new Date().toISOString().slice(0,10);
+  DB[idx].price_check=today;
+  if(!DB[idx].price_src)DB[idx].price_src='手动标记';
+  saveDB();
+  ptRenderCheck();
+  alert('已标记 '+DB[idx].gn+' 为今日已核查。');
+}
+
 /* 初始建议 */
 document.getElementById('qSuggestions').innerHTML='试试：'+DB.slice(0,10).map(d=>'<span class="pill">'+d.gn+'</span>').join("");
+/* R04 冷链计算器初始化 */
+loadCCParams();
+calcColdChain();
+/* R06 比价领域下拉初始化 */
+ptInitCmpArea();
 </script>
 
 
