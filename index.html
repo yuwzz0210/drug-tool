@@ -416,8 +416,8 @@ CSV 格式：第一行为表头（字段名同上），之后每行一个药品�
     <div class="grid2">
       <div><label>通用名</label><input id="f_gn"></div>
       <div><label>商品名</label><input id="f_bn"></div>
-      <div><label>疾病领域</label><input id="f_area" placeholder="如：肿瘤"></div>
-      <div><label>病种</label><input id="f_disease" placeholder="如：胃癌"></div>
+      <div><label>疾病领域</label><select id="f_area" onchange="cascadeDisease()"></select></div>
+      <div><label>病种</label><select id="f_disease"></select></div>
       <div><label>迭代世代</label><input id="f_gen" placeholder="如：第3代/双靶免疫/胰岛素类似物"></div>
       <div><label>上市年份</label><input id="f_year" type="number"></div>
       <div><label>国产/进口</label>
@@ -475,17 +475,17 @@ CSV 格式：第一行为表头（字段名同上），之后每行一个药品�
 /* ============ 示例数据（按文档标准，部分数值为公开估算，需人工补全） ============ */
 const SEED = [
   // ===== 肿瘤 / 非小细胞肺癌（EGFR-TKI 迭代线）=====
-  {gn:"吉非替尼",bn:"易瑞沙",area:"肿瘤",disease:"非小细胞肺癌",gen:"第1代EGFR-TKI",year:2005,origin:"进口",excl:"否",cls:"化学药",mech:"EGFR酪氨酸激酶抑制剂",mfr:"阿斯利康",appr:"国药准字H20070070",form:"片剂",spec:"250mg",adate:"2005-02",cold:"常温",price:228,annual:27360,ins:"集采",insyear:2019,dual:"否",vbp:"高(已集采)",gl:"NCCN推荐",route:"口服",sales:null,prob:0.99,prov:"湖南",pt:"",patent:"2016-04-23",followers:12,ind:"EGFR突变阳性晚期NSCLC一线",ind2:"—",nt:"—",note:"首个EGFR-TKI，已过专利期，仿制药大量上市"},
-  {gn:"埃克替尼",bn:"凯美纳",area:"肿瘤",disease:"非小细胞肺癌",gen:"第1代EGFR-TKI(国产)",year:2011,origin:"国产",excl:"否",cls:"化学药1类",mech:"EGFR酪氨酸激酶抑制剂",mfr:"贝达药业",appr:"国药准字H20110027",form:"片剂",spec:"125mg",adate:"2011-06",cold:"常温",price:155,annual:18600,ins:"集采",insyear:2019,dual:"否",vbp:"高(已集采)",gl:"CSCO推荐",route:"口服",sales:12,prob:0.99,prov:"湖南",pt:"",patent:"2023-05-12",followers:8,ind:"EGFR突变阳性晚期NSCLC",ind2:"—",nt:"—",note:"国产首个EGFR-TKI，专利已到期"},
-  {gn:"阿法替尼",bn:"吉泰瑞",area:"肿瘤",disease:"非小细胞肺癌",gen:"第2代EGFR-TKI",year:2017,origin:"进口",excl:"否",cls:"化学药",mech:"不可逆EGFR/HER2抑制剂",mfr:"勃林格殷格翰",appr:"国药准字J20170029",form:"片剂",spec:"40mg",adate:"2017-02",cold:"常温",price:140,annual:16800,ins:"已进医保",insyear:2018,dual:"否",vbp:"中",gl:"CSCO推荐",route:"口服",sales:null,prob:0.9,prov:"湖南",pt:"",patent:"2025-08-14",followers:5,ind:"EGFR突变阳性NSCLC一线；鳞癌二线",ind2:"—",nt:"—",note:"2代TKI，专利即将到期"},
-  {gn:"奥希替尼",bn:"泰瑞沙",area:"肿瘤",disease:"非小细胞肺癌",gen:"第3代EGFR-TKI",year:2017,origin:"进口",excl:"否",cls:"化学药",mech:"EGFR T790M抑制剂",mfr:"阿斯利康",appr:"国药准字J20171015",form:"片剂",spec:"80mg",adate:"2017-03",cold:"常温",price:5580,annual:66960,ins:"已进医保",insyear:2018,dual:"是",vbp:"中",gl:"CSCO I级推荐",route:"口服",sales:60,prob:0.95,prov:"湖南",pt:"",patent:"2032-07-03",followers:15,ind:"EGFR T790M突变NSCLC；一线EGFR突变",ind2:"辅助治疗",nt:"ADAURA研究",note:"3代TKI金标准，专利保护期长"},
-  {gn:"阿美替尼",bn:"阿美乐",area:"肿瘤",disease:"非小细胞肺癌",gen:"第3代EGFR-TKI(国产)",year:2020,origin:"国产",excl:"否",cls:"化学药1类",mech:"EGFR T790M抑制剂",mfr:"翰森制药",appr:"国药准字H20200025",form:"片剂",spec:"55mg",adate:"2020-03",cold:"常温",price:1760,annual:21120,ins:"已进医保",insyear:2020,dual:"是",vbp:"中",gl:"CSCO推荐",route:"口服",sales:30,prob:0.95,prov:"湖南",pt:"",patent:"2034-11-09",followers:7,ind:"EGFR T790M突变NSCLC",ind2:"一线EGFR突变",nt:"APOLLO研究",note:"国产3代TKI主力"},
-  {gn:"伏美替尼",bn:"艾弗沙",area:"肿瘤",disease:"非小细胞肺癌",gen:"第3代EGFR-TKI(国产)",year:2021,origin:"国产",excl:"是",cls:"化学药1类",mech:"EGFR T790M抑制剂",mfr:"艾力斯",appr:"国药准字H20210028",form:"片剂",spec:"40mg",adate:"2021-03",cold:"常温",price:1908,annual:22896,ins:"已进医保",insyear:2021,dual:"是",vbp:"低",gl:"CSCO推荐",route:"口服",sales:25,prob:0.95,prov:"湖南",pt:"",patent:"2035-08-22",followers:4,ind:"EGFR T790M突变NSCLC",ind2:"一线EGFR突变",nt:"FURLONG研究",note:"国产3代TKI，市场增速快"},
-  {gn:"贝福替尼",bn:"赛美纳",area:"肿瘤",disease:"非小细胞肺癌",gen:"第3代EGFR-TKI(国产)",year:2023,origin:"国产",excl:"是",cls:"化学药1类",mech:"EGFR T790M抑制剂",mfr:"贝达药业",appr:"国药准字H20230015",form:"片剂",spec:"25mg",adate:"2023-05",cold:"常温",price:null,annual:null,ins:"已进医保",insyear:2023,dual:"是",vbp:"低",gl:"CSCO推荐",route:"口服",sales:null,prob:0.9,prov:"湖南",pt:"",patent:"2036-12-01",followers:2,ind:"EGFR T790M突变NSCLC",ind2:"—",nt:"—",note:"最新获批3代TKI"},
+  {gn:"吉非替尼",bn:"易瑞沙",area:"肿瘤",disease:"肺癌",gen:"第1代EGFR-TKI",year:2005,origin:"进口",excl:"否",cls:"化学药",mech:"EGFR酪氨酸激酶抑制剂",mfr:"阿斯利康",appr:"国药准字H20070070",form:"片剂",spec:"250mg",adate:"2005-02",cold:"常温",price:228,annual:27360,ins:"集采",insyear:2019,dual:"否",vbp:"高(已集采)",gl:"NCCN推荐",route:"口服",sales:null,prob:0.99,prov:"湖南",pt:"",patent:"2016-04-23",followers:12,ind:"EGFR突变阳性晚期NSCLC一线",ind2:"—",nt:"—",note:"首个EGFR-TKI，已过专利期，仿制药大量上市"},
+  {gn:"埃克替尼",bn:"凯美纳",area:"肿瘤",disease:"肺癌",gen:"第1代EGFR-TKI(国产)",year:2011,origin:"国产",excl:"否",cls:"化学药1类",mech:"EGFR酪氨酸激酶抑制剂",mfr:"贝达药业",appr:"国药准字H20110027",form:"片剂",spec:"125mg",adate:"2011-06",cold:"常温",price:155,annual:18600,ins:"集采",insyear:2019,dual:"否",vbp:"高(已集采)",gl:"CSCO推荐",route:"口服",sales:12,prob:0.99,prov:"湖南",pt:"",patent:"2023-05-12",followers:8,ind:"EGFR突变阳性晚期NSCLC",ind2:"—",nt:"—",note:"国产首个EGFR-TKI，专利已到期"},
+  {gn:"阿法替尼",bn:"吉泰瑞",area:"肿瘤",disease:"肺癌",gen:"第2代EGFR-TKI",year:2017,origin:"进口",excl:"否",cls:"化学药",mech:"不可逆EGFR/HER2抑制剂",mfr:"勃林格殷格翰",appr:"国药准字J20170029",form:"片剂",spec:"40mg",adate:"2017-02",cold:"常温",price:140,annual:16800,ins:"已进医保",insyear:2018,dual:"否",vbp:"中",gl:"CSCO推荐",route:"口服",sales:null,prob:0.9,prov:"湖南",pt:"",patent:"2025-08-14",followers:5,ind:"EGFR突变阳性NSCLC一线；鳞癌二线",ind2:"—",nt:"—",note:"2代TKI，专利即将到期"},
+  {gn:"奥希替尼",bn:"泰瑞沙",area:"肿瘤",disease:"肺癌",gen:"第3代EGFR-TKI",year:2017,origin:"进口",excl:"否",cls:"化学药",mech:"EGFR T790M抑制剂",mfr:"阿斯利康",appr:"国药准字J20171015",form:"片剂",spec:"80mg",adate:"2017-03",cold:"常温",price:5580,annual:66960,ins:"已进医保",insyear:2018,dual:"是",vbp:"中",gl:"CSCO I级推荐",route:"口服",sales:60,prob:0.95,prov:"湖南",pt:"",patent:"2032-07-03",followers:15,ind:"EGFR T790M突变NSCLC；一线EGFR突变",ind2:"辅助治疗",nt:"ADAURA研究",note:"3代TKI金标准，专利保护期长"},
+  {gn:"阿美替尼",bn:"阿美乐",area:"肿瘤",disease:"肺癌",gen:"第3代EGFR-TKI(国产)",year:2020,origin:"国产",excl:"否",cls:"化学药1类",mech:"EGFR T790M抑制剂",mfr:"翰森制药",appr:"国药准字H20200025",form:"片剂",spec:"55mg",adate:"2020-03",cold:"常温",price:1760,annual:21120,ins:"已进医保",insyear:2020,dual:"是",vbp:"中",gl:"CSCO推荐",route:"口服",sales:30,prob:0.95,prov:"湖南",pt:"",patent:"2034-11-09",followers:7,ind:"EGFR T790M突变NSCLC",ind2:"一线EGFR突变",nt:"APOLLO研究",note:"国产3代TKI主力"},
+  {gn:"伏美替尼",bn:"艾弗沙",area:"肿瘤",disease:"肺癌",gen:"第3代EGFR-TKI(国产)",year:2021,origin:"国产",excl:"是",cls:"化学药1类",mech:"EGFR T790M抑制剂",mfr:"艾力斯",appr:"国药准字H20210028",form:"片剂",spec:"40mg",adate:"2021-03",cold:"常温",price:1908,annual:22896,ins:"已进医保",insyear:2021,dual:"是",vbp:"低",gl:"CSCO推荐",route:"口服",sales:25,prob:0.95,prov:"湖南",pt:"",patent:"2035-08-22",followers:4,ind:"EGFR T790M突变NSCLC",ind2:"一线EGFR突变",nt:"FURLONG研究",note:"国产3代TKI，市场增速快"},
+  {gn:"贝福替尼",bn:"赛美纳",area:"肿瘤",disease:"肺癌",gen:"第3代EGFR-TKI(国产)",year:2023,origin:"国产",excl:"是",cls:"化学药1类",mech:"EGFR T790M抑制剂",mfr:"贝达药业",appr:"国药准字H20230015",form:"片剂",spec:"25mg",adate:"2023-05",cold:"常温",price:null,annual:null,ins:"已进医保",insyear:2023,dual:"是",vbp:"低",gl:"CSCO推荐",route:"口服",sales:null,prob:0.9,prov:"湖南",pt:"",patent:"2036-12-01",followers:2,ind:"EGFR T790M突变NSCLC",ind2:"—",nt:"—",note:"最新获批3代TKI"},
   // 新增：非小细胞肺癌其他靶向药（ROS1/ALK）
-  {gn:"克唑替尼",bn:"赛可瑞",area:"肿瘤",disease:"非小细胞肺癌",gen:"第1代ALK/ROS1抑制剂",year:2013,origin:"进口",excl:"否",cls:"化学药",mech:"ALK/ROS1/MET抑制剂",mfr:"辉瑞",appr:"国药准字J20130012",form:"胶囊",spec:"250mg",adate:"2013-01",cold:"常温",price:460,annual:167900,ins:"已进医保",insyear:2018,dual:"是",vbp:"中",gl:"CSCO推荐",route:"口服",sales:null,prob:0.9,prov:"湖南",pt:"",patent:"2027-06-30",followers:6,ind:"ALK阳性或ROS1阳性晚期NSCLC",ind2:"—",nt:"PROFILE研究",note:"首个ALK靶向药，专利临近到期"},
-  {gn:"阿来替尼",bn:"安圣莎",area:"肿瘤",disease:"非小细胞肺癌",gen:"第2代ALK抑制剂",year:2018,origin:"进口",excl:"否",cls:"化学药",mech:"ALK抑制剂",mfr:"罗氏",appr:"国药准字J20180023",form:"胶囊",spec:"150mg",adate:"2018-08",cold:"常温",price:1500,annual:547500,ins:"已进医保",insyear:2019,dual:"是",vbp:"低",gl:"CSCO I级推荐",route:"口服",sales:null,prob:0.95,prov:"湖南",pt:"",patent:"2031-09-15",followers:3,ind:"ALK阳性晚期NSCLC一线",ind2:"—",nt:"ALEX研究",note:"ALK二代标杆，疗效优于克唑替尼"},
-  {gn:"恩沙替尼",bn:"贝美纳",area:"肿瘤",disease:"非小细胞肺癌",gen:"第2代ALK抑制剂(国产)",year:2020,origin:"国产",excl:"是",cls:"化学药1类",mech:"ALK抑制剂",mfr:"贝达药业",appr:"国药准字H20200035",form:"胶囊",spec:"100mg",adate:"2020-11",cold:"常温",price:1200,annual:438000,ins:"已进医保",insyear:2021,dual:"是",vbp:"低",gl:"CSCO推荐",route:"口服",sales:null,prob:0.9,prov:"湖南",pt:"",patent:"2034-08-20",followers:2,ind:"ALK阳性晚期NSCLC",ind2:"—",nt:"eXalt3研究",note:"国产ALK-TKI，价格优势明显"},
+  {gn:"克唑替尼",bn:"赛可瑞",area:"肿瘤",disease:"肺癌",gen:"第1代ALK/ROS1抑制剂",year:2013,origin:"进口",excl:"否",cls:"化学药",mech:"ALK/ROS1/MET抑制剂",mfr:"辉瑞",appr:"国药准字J20130012",form:"胶囊",spec:"250mg",adate:"2013-01",cold:"常温",price:460,annual:167900,ins:"已进医保",insyear:2018,dual:"是",vbp:"中",gl:"CSCO推荐",route:"口服",sales:null,prob:0.9,prov:"湖南",pt:"",patent:"2027-06-30",followers:6,ind:"ALK阳性或ROS1阳性晚期NSCLC",ind2:"—",nt:"PROFILE研究",note:"首个ALK靶向药，专利临近到期"},
+  {gn:"阿来替尼",bn:"安圣莎",area:"肿瘤",disease:"肺癌",gen:"第2代ALK抑制剂",year:2018,origin:"进口",excl:"否",cls:"化学药",mech:"ALK抑制剂",mfr:"罗氏",appr:"国药准字J20180023",form:"胶囊",spec:"150mg",adate:"2018-08",cold:"常温",price:1500,annual:547500,ins:"已进医保",insyear:2019,dual:"是",vbp:"低",gl:"CSCO I级推荐",route:"口服",sales:null,prob:0.95,prov:"湖南",pt:"",patent:"2031-09-15",followers:3,ind:"ALK阳性晚期NSCLC一线",ind2:"—",nt:"ALEX研究",note:"ALK二代标杆，疗效优于克唑替尼"},
+  {gn:"恩沙替尼",bn:"贝美纳",area:"肿瘤",disease:"肺癌",gen:"第2代ALK抑制剂(国产)",year:2020,origin:"国产",excl:"是",cls:"化学药1类",mech:"ALK抑制剂",mfr:"贝达药业",appr:"国药准字H20200035",form:"胶囊",spec:"100mg",adate:"2020-11",cold:"常温",price:1200,annual:438000,ins:"已进医保",insyear:2021,dual:"是",vbp:"低",gl:"CSCO推荐",route:"口服",sales:null,prob:0.9,prov:"湖南",pt:"",patent:"2034-08-20",followers:2,ind:"ALK阳性晚期NSCLC",ind2:"—",nt:"eXalt3研究",note:"国产ALK-TKI，价格优势明显"},
 
   // ===== 肿瘤 / 乳腺癌 =====
   {gn:"曲妥珠单抗",bn:"赫赛汀",area:"肿瘤",disease:"乳腺癌",gen:"第1代抗HER2单抗",year:2002,origin:"进口",excl:"否",cls:"治疗用生物制品",mech:"HER2单抗",mfr:"罗氏",appr:"国药准字S20020019",form:"注射液",spec:"440mg",adate:"2002-09",cold:"2-8℃冷藏",price:5500,annual:66000,ins:"已进医保",insyear:2017,dual:"是",vbp:"中",gl:"NCCN推荐",route:"注射",sales:null,prob:0.95,prov:"湖南",pt:"",patent:"已过期",followers:10,ind:"HER2阳性乳腺癌辅助/新辅助/转移性",ind2:"胃癌",nt:"HERA研究",note:"HER2阳性乳腺癌金标准，生物类似药已上市"},
@@ -520,19 +520,19 @@ const SEED = [
   {gn:"古塞奇尤单抗",bn:"特诺雅",area:"自免疫",disease:"银屑病",gen:"第1代IL-23单抗",year:2019,origin:"进口",excl:"否",cls:"治疗用生物制品",mech:"IL-23p19单抗",mfr:"强生",appr:"国药准字S20190042",form:"注射液",spec:"100mg",adate:"2019-12",cold:"2-8℃冷藏",price:2500,annual:130000,ins:"已进医保",insyear:2021,dual:"是",vbp:"低",gl:"指南推荐",route:"注射",sales:null,prob:0.9,prov:"湖南",pt:"",patent:"2033-01-15",followers:2,ind:"中重度斑块状银屑病",ind2:"—",nt:"—",note:"IL-23抑制剂，给药频率更低"},
 
   // ===== 罕见病 / 脊髓性肌萎缩症（SMA）=====
-  {gn:"诺西那生",bn:"Spinraza",area:"罕见病",disease:"脊髓性肌萎缩症",gen:"反义寡核苷酸(ASO)",year:2016,origin:"进口",excl:"是",cls:"治疗用生物制品",mech:"SMN2外显子7剪接修饰",mfr:"渤健",appr:"国药准字SJ20160025",form:"注射液",spec:"12mg/5mL",adate:"2016-12",cold:"2-8℃冷藏",price:19000,annual:760000,ins:"已进医保",insyear:2021,dual:"是",vbp:"极低",gl:"指南推荐",route:"注射(鞘内)",sales:null,prob:0.85,prov:"湖南",pt:"",patent:"2031-03-21",followers:0,ind:"5q SMA",ind2:"—",nt:"ENDEAR研究",note:"全球首个SMA药物，医保谈判后大幅降价"},
-  {gn:"利司扑兰",bn:"艾满欣",area:"罕见病",disease:"脊髓性肌萎缩症",gen:"小分子SMN2剪接修饰",year:2020,origin:"进口",excl:"是",cls:"化学药",mech:"SMN2剪接修饰",mfr:"罗氏",appr:"国药准字J20200055",form:"口服液",spec:"60mg/mL",adate:"2020-08",cold:"常温",price:12000,annual:438000,ins:"已进医保",insyear:2022,dual:"是",vbp:"极低",gl:"指南推荐",route:"口服",sales:null,prob:0.85,prov:"湖南",pt:"",patent:"2033-05-14",followers:0,ind:"5q SMA",ind2:"—",nt:"FIREFISH研究",note:"口服剂型，便利性优于诺西那生"},
+  {gn:"诺西那生",bn:"Spinraza",area:"罕见病",disease:"脊髓性肌萎缩症(SMA)",gen:"反义寡核苷酸(ASO)",year:2016,origin:"进口",excl:"是",cls:"治疗用生物制品",mech:"SMN2外显子7剪接修饰",mfr:"渤健",appr:"国药准字SJ20160025",form:"注射液",spec:"12mg/5mL",adate:"2016-12",cold:"2-8℃冷藏",price:19000,annual:760000,ins:"已进医保",insyear:2021,dual:"是",vbp:"极低",gl:"指南推荐",route:"注射(鞘内)",sales:null,prob:0.85,prov:"湖南",pt:"",patent:"2031-03-21",followers:0,ind:"5q SMA",ind2:"—",nt:"ENDEAR研究",note:"全球首个SMA药物，医保谈判后大幅降价"},
+  {gn:"利司扑兰",bn:"艾满欣",area:"罕见病",disease:"脊髓性肌萎缩症(SMA)",gen:"小分子SMN2剪接修饰",year:2020,origin:"进口",excl:"是",cls:"化学药",mech:"SMN2剪接修饰",mfr:"罗氏",appr:"国药准字J20200055",form:"口服液",spec:"60mg/mL",adate:"2020-08",cold:"常温",price:12000,annual:438000,ins:"已进医保",insyear:2022,dual:"是",vbp:"极低",gl:"指南推荐",route:"口服",sales:null,prob:0.85,prov:"湖南",pt:"",patent:"2033-05-14",followers:0,ind:"5q SMA",ind2:"—",nt:"FIREFISH研究",note:"口服剂型，便利性优于诺西那生"},
 
   // ===== 罕见病 / 血友病A =====
   {gn:"重组人凝血因子Ⅷ",bn:"百因止",area:"罕见病",disease:"血友病A",gen:"第1代重组FⅧ",year:2009,origin:"进口",excl:"否",cls:"治疗用生物制品",mech:"凝血因子Ⅷ替代",mfr:"百特",appr:"国药准字S20093015",form:"注射液",spec:"250IU",adate:"2009",cold:"2-8℃冷藏",price:800,annual:416000,ins:"已进医保",insyear:2019,dual:"是",vbp:"低",gl:"指南推荐",route:"注射",sales:null,prob:0.95,prov:"湖南",pt:"",patent:"已过期",followers:5,ind:"血友病A出血预防与治疗",ind2:"—",nt:"—",note:"传统重组FⅧ"},
   {gn:"艾美赛珠单抗",bn:"舒友立乐",area:"罕见病",disease:"血友病A",gen:"第2代双特异性抗体(模拟FⅧ)",year:2018,origin:"进口",excl:"是",cls:"治疗用生物制品",mech:"FⅨa/FⅩ双抗模拟FⅧ功能",mfr:"罗氏",appr:"国药准字S20180045",form:"注射液",spec:"30mg/mL",adate:"2018-11",cold:"2-8℃冷藏",price:12000,annual:624000,ins:"已进医保",insyear:2020,dual:"是",vbp:"极低",gl:"指南推荐",route:"注射(皮下)",sales:null,prob:0.85,prov:"湖南",pt:"",patent:"2032-07-08",followers:0,ind:"血友病A预防治疗(含抑制物)",ind2:"—",nt:"HAVEN研究",note:"双抗颠覆性疗法"},
 
   // ===== 罕见病 / 阵发性睡眠性血红蛋白尿症（PNH）=====
-  {gn:"依库珠单抗",bn:"舒立瑞",area:"罕见病",disease:"PNH",gen:"第1代C5单抗",year:2011,origin:"进口",excl:"是",cls:"治疗用生物制品",mech:"C5单抗",mfr:"阿斯利康",appr:"国药准字S20110012",form:"注射液",spec:"300mg",adate:"2011-06",cold:"2-8℃冷藏",price:15000,annual:780000,ins:"已进医保",insyear:2019,dual:"是",vbp:"极低",gl:"指南推荐",route:"注射",sales:null,prob:0.85,prov:"湖南",pt:"",patent:"已过期",followers:2,ind:"PNH；非典型溶血性尿毒症综合征",ind2:"—",nt:"—",note:"首个C5单抗，专利已过期"},
-  {gn:"可伐利单抗",bn:"—",area:"罕见病",disease:"PNH",gen:"第2代C5单抗(新型)",year:2024,origin:"进口",excl:"是",cls:"治疗用生物制品",mech:"抗C5循环单克隆抗体",mfr:"罗氏",appr:"国药准字S20240028",form:"注射液",spec:"—",adate:"2024-02",cold:"2-8℃冷藏",price:null,annual:null,ins:"未进医保",insyear:null,dual:"否",vbp:"极低",gl:"—",route:"注射(皮下)",sales:null,prob:0.7,prov:"湖南",pt:"",patent:"2038-01-01",followers:0,ind:"PNH(未接受过补体抑制剂)",ind2:"—",nt:"—",note:"新型C5单抗，每四周一次皮下注射"},
+  {gn:"依库珠单抗",bn:"舒立瑞",area:"罕见病",disease:"阵发性睡眠性血红蛋白尿症(PNH)",gen:"第1代C5单抗",year:2011,origin:"进口",excl:"是",cls:"治疗用生物制品",mech:"C5单抗",mfr:"阿斯利康",appr:"国药准字S20110012",form:"注射液",spec:"300mg",adate:"2011-06",cold:"2-8℃冷藏",price:15000,annual:780000,ins:"已进医保",insyear:2019,dual:"是",vbp:"极低",gl:"指南推荐",route:"注射",sales:null,prob:0.85,prov:"湖南",pt:"",patent:"已过期",followers:2,ind:"PNH；非典型溶血性尿毒症综合征",ind2:"—",nt:"—",note:"首个C5单抗，专利已过期"},
+  {gn:"可伐利单抗",bn:"—",area:"罕见病",disease:"阵发性睡眠性血红蛋白尿症(PNH)",gen:"第2代C5单抗(新型)",year:2024,origin:"进口",excl:"是",cls:"治疗用生物制品",mech:"抗C5循环单克隆抗体",mfr:"罗氏",appr:"国药准字S20240028",form:"注射液",spec:"—",adate:"2024-02",cold:"2-8℃冷藏",price:null,annual:null,ins:"未进医保",insyear:null,dual:"否",vbp:"极低",gl:"—",route:"注射(皮下)",sales:null,prob:0.7,prov:"湖南",pt:"",patent:"2038-01-01",followers:0,ind:"PNH(未接受过补体抑制剂)",ind2:"—",nt:"—",note:"新型C5单抗，每四周一次皮下注射"},
 
   // ===== 罕见病 / Wilson病（肝豆状核变性）=====
-  {gn:"盐酸曲恩汀片",bn:"—",area:"罕见病",disease:"Wilson病",gen:"铜离子络合剂",year:2024,origin:"进口",excl:"是",cls:"化学药",mech:"铜离子络合剂",mfr:"Orphalan",appr:"国药准字H20240012",form:"片剂",spec:"—",adate:"2024-01",cold:"常温",price:null,annual:null,ins:"未进医保",insyear:null,dual:"否",vbp:"极低",gl:"—",route:"口服",sales:null,prob:0.7,prov:"湖南",pt:"",patent:"2035-01-01",followers:0,ind:"不耐受D-青霉胺治疗的Wilson病",ind2:"—",nt:"—",note:"2024年NMPA获批"},
+  {gn:"盐酸曲恩汀片",bn:"—",area:"罕见病",disease:"Wilson病(肝豆状核变性)",gen:"铜离子络合剂",year:2024,origin:"进口",excl:"是",cls:"化学药",mech:"铜离子络合剂",mfr:"Orphalan",appr:"国药准字H20240012",form:"片剂",spec:"—",adate:"2024-01",cold:"常温",price:null,annual:null,ins:"未进医保",insyear:null,dual:"否",vbp:"极低",gl:"—",route:"口服",sales:null,prob:0.7,prov:"湖南",pt:"",patent:"2035-01-01",followers:0,ind:"不耐受D-青霉胺治疗的Wilson病",ind2:"—",nt:"—",note:"2024年NMPA获批"},
 {gn:"德曲妥珠单抗",bn:"优赫得",area:"肿瘤",disease:"乳腺癌",gen:"ADC(第3代HER2)",year:2023,origin:"进口",excl:"是",cls:"治疗用生物制品",mech:"HER2 ADC(拓扑异构酶I载荷)",mfr:"第一三共/阿斯利康",appr:"国药准字SJ20230018",form:"注射液",spec:"100mg",adate:"2023-02",cold:"2-8℃冷藏",price:null,annual:null,ins:"已进医保",insyear:2025,dual:"是",vbp:"极低",gl:"CSCO推荐",route:"注射",sales:null,prob:0.9,prov:"湖南",pt:"",patent:"2038-01-01",followers:0,ind:"HER2阳性乳腺癌(既往抗HER2治疗)",ind2:"HER2阳性胃癌",nt:"DESTINY-Breast系列",note:"重磅HER2 ADC，2024国谈进入医保"},
   {gn:"恩美曲妥珠单抗",bn:"赫赛莱",area:"肿瘤",disease:"乳腺癌",gen:"ADC(T-DM1,第2代)",year:2020,origin:"进口",excl:"是",cls:"治疗用生物制品",mech:"HER2 ADC(微管抑制剂载荷)",mfr:"罗氏",appr:"国药准字SJ20200009",form:"注射液",spec:"100mg",adate:"2020-01",cold:"2-8℃冷藏",price:null,annual:null,ins:"已进医保",insyear:2021,dual:"是",vbp:"低",gl:"NCCN推荐",route:"注射",sales:null,prob:0.9,prov:"湖南",pt:"",patent:"2032-09-15",followers:1,ind:"HER2阳性早期乳腺癌辅助治疗",ind2:"—",nt:"KATHERINE研究",note:"T-DM1 ADC"},
   {gn:"拉帕替尼",bn:"泰立沙",area:"肿瘤",disease:"乳腺癌",gen:"小分子TKI(HER2/EGFR)",year:2010,origin:"进口",excl:"否",cls:"化学药",mech:"EGFR/HER2双靶TKI",mfr:"葛兰素史克",appr:"国药准字H20100085",form:"片剂",spec:"250mg",adate:"2010",cold:"常温",price:null,annual:null,ins:"已进医保",insyear:2017,dual:"否",vbp:"中",gl:"NCCN推荐",route:"口服",sales:null,prob:0.9,prov:"湖南",pt:"",patent:"已过期",followers:5,ind:"HER2阳性晚期乳腺癌",ind2:"—",nt:"—",note:"老药，专利已过期"},
@@ -556,6 +556,53 @@ const SEED = [
   {gn:"培唑帕尼",bn:"维全特",area:"肿瘤",disease:"肾细胞癌",gen:"多靶TKI(VEGFR等)",year:2016,origin:"进口",excl:"否",cls:"化学药",mech:"多靶TKI(VEGFR/PDGFR)",mfr:"诺华",appr:"国药准字H20160018",form:"片剂",spec:"400mg",adate:"2016-02",cold:"常温",price:null,annual:null,ins:"已进医保",insyear:2017,dual:"否",vbp:"中",gl:"NCCN推荐",route:"口服",sales:null,prob:0.92,prov:"湖南",pt:"",patent:"2025-09-15",followers:6,ind:"肾细胞癌",ind2:"—",nt:"—",note:"多靶TKI"},
   {gn:"阿昔替尼",bn:"英立达",area:"肿瘤",disease:"肾细胞癌",gen:"VEGFR TKI(高选择)",year:2015,origin:"进口",excl:"否",cls:"化学药",mech:"VEGFR1-3抑制剂",mfr:"辉瑞",appr:"国药准字H20150085",form:"片剂",spec:"5mg",adate:"2015-04",cold:"常温",price:null,annual:null,ins:"已进医保",insyear:2017,dual:"否",vbp:"中",gl:"NCCN推荐",route:"口服",sales:null,prob:0.92,prov:"湖南",pt:"",patent:"已过期",followers:5,ind:"肾细胞癌二线",ind2:"—",nt:"AXIS研究",note:"高选择性VEGFR TKI"}
 ];
+
+/* ============ 疾病领域-病种层级结构（数据录入框架） ============ */
+const DISEASE_TREE = [
+  // === 肿瘤 ===
+  {area:"肿瘤",disease:"肺癌",priority:1,sub_disease:["EGFR突变","ALK融合","ROS1融合","KRAS突变","鳞癌","腺癌","小细胞肺癌"]},
+  {area:"肿瘤",disease:"乳腺癌",priority:1,sub_disease:["HER2阳性","HR阳性/HER2阴性","三阴性乳腺癌","BRCA突变"]},
+  {area:"肿瘤",disease:"结直肠癌",priority:1,sub_disease:["RAS/BRAF突变","MSI-H/dMMR","HER2扩增"]},
+  {area:"肿瘤",disease:"胃癌",priority:1,sub_disease:["HER2阳性","PD-L1阳性(CPS≥1)","CLDN18.2阳性","MSI-H"]},
+  {area:"肿瘤",disease:"肝癌",priority:1,sub_disease:["HBV相关","非病毒性"]},
+  {area:"肿瘤",disease:"食管癌",priority:2,sub_disease:["鳞癌","腺癌"]},
+  {area:"肿瘤",disease:"甲状腺癌",priority:2,sub_disease:["乳头状癌","髓样癌","未分化癌"]},
+  {area:"肿瘤",disease:"前列腺癌",priority:2,sub_disease:["激素敏感性","去势抵抗性"]},
+  {area:"肿瘤",disease:"宫颈癌",priority:2,sub_disease:["HPV相关"]},
+  {area:"肿瘤",disease:"胰腺癌",priority:2,sub_disease:["KRAS突变"]},
+  {area:"肿瘤",disease:"肾细胞癌",priority:2,sub_disease:["透明细胞型","非透明细胞型"]},
+  {area:"肿瘤",disease:"淋巴瘤",priority:3,sub_disease:["B细胞淋巴瘤","T细胞淋巴瘤","霍奇金淋巴瘤"]},
+  {area:"肿瘤",disease:"白血病",priority:3,sub_disease:["慢粒CML","急淋ALL","急髓AML","慢淋CLL"]},
+  {area:"肿瘤",disease:"多发性骨髓瘤",priority:3,sub_disease:["高危","标准风险"]},
+  // === 代谢 ===
+  {area:"代谢",disease:"2型糖尿病",priority:2,sub_disease:["GLP-1受体激动剂适用","SGLT-2抑制剂适用","胰岛素依赖型"]},
+  {area:"代谢",disease:"肥胖症",priority:2,sub_disease:["单纯性肥胖","伴代谢综合征"]},
+  {area:"代谢",disease:"高血压",priority:2,sub_disease:["原发性高血压","难治性高血压"]},
+  {area:"代谢",disease:"冠心病",priority:2,sub_disease:["稳定性心绞痛","急性冠脉综合征"]},
+  {area:"代谢",disease:"心力衰竭",priority:2,sub_disease:["HFrEF","HFpEF"]},
+  {area:"代谢",disease:"慢性肾脏病",priority:2,sub_disease:["糖尿病肾病","高血压肾病","IgA肾病"]},
+  {area:"代谢",disease:"高尿酸血症/痛风",priority:3,sub_disease:["急性发作期","慢性期"]},
+  {area:"代谢",disease:"骨质疏松",priority:3,sub_disease:["绝经后骨质疏松","老年性骨质疏松"]},
+  // === 自免疫 ===
+  {area:"自免疫",disease:"类风湿关节炎",priority:3,sub_disease:["中重度活动性"]},
+  {area:"自免疫",disease:"银屑病",priority:3,sub_disease:["中重度斑块状银屑病","关节病型银屑病"]},
+  {area:"自免疫",disease:"强直性脊柱炎",priority:3,sub_disease:["活动性"]},
+  {area:"自免疫",disease:"炎症性肠病",priority:3,sub_disease:["克罗恩病","溃疡性结肠炎"]},
+  {area:"自免疫",disease:"系统性红斑狼疮",priority:3,sub_disease:["轻中度","重度活动性"]},
+  {area:"自免疫",disease:"特应性皮炎",priority:3,sub_disease:["中重度"]},
+  // === 罕见病 ===
+  {area:"罕见病",disease:"脊髓性肌萎缩症(SMA)",priority:4,sub_disease:["婴儿型","迟发型"]},
+  {area:"罕见病",disease:"血友病A",priority:4,sub_disease:["伴抑制物","不伴抑制物"]},
+  {area:"罕见病",disease:"阵发性睡眠性血红蛋白尿症(PNH)",priority:4,sub_disease:["初治","经治"]},
+  {area:"罕见病",disease:"Wilson病(肝豆状核变性)",priority:4,sub_disease:["对D-青霉胺不耐受"]},
+  {area:"罕见病",disease:"多发性硬化",priority:4,sub_disease:["复发缓解型","继发进展型"]},
+  {area:"罕见病",disease:"法布雷病",priority:4,sub_disease:["经典型","迟发型"]},
+  {area:"罕见病",disease:"戈谢病",priority:4,sub_disease:["I型","II型","III型"]}
+];
+function treeAreas(){return [...new Set(DISEASE_TREE.map(d=>d.area))];}
+function treeDiseasesOf(a){return DISEASE_TREE.filter(d=>d.area===a).sort((x,y)=>x.priority-y.priority).map(d=>d.disease);}
+function treePriorityOf(a,d){const e=DISEASE_TREE.find(x=>x.area===a&&x.disease===d);return e?e.priority:9;}
+function treeSubDiseaseOf(a,d){const e=DISEASE_TREE.find(x=>x.area===a&&x.disease===d);return e?e.sub_disease:[];}
 
 /* ============ 状态 ============ */
 const LS_KEY="drug_db_v1";
@@ -655,8 +702,8 @@ function drawMini(d){
 }
 
 /* ============ ② 同病种迭代趋势 ============ */
-function areas(){return [...new Set(DB.map(d=>d.area))];}
-function diseasesOf(a){return [...new Set(DB.filter(d=>d.area===a).map(d=>d.disease))];}
+function areas(){return treeAreas();}
+function diseasesOf(a){return treeDiseasesOf(a);}
 function buildAreaPick(containerId, cb){
   const c=document.getElementById(containerId);c.innerHTML="";
   areas().forEach(a=>{
@@ -872,9 +919,20 @@ function renderManager(){
 }
 renderManager();
 let editIdx=-1;
+function initAreaSelect(){
+  const sel=document.getElementById('f_area');
+  sel.innerHTML='<option value="">请选择领域</option>'+treeAreas().map(a=>'<option value="'+a+'">'+a+'</option>').join('');
+}
+function cascadeDisease(){
+  const a=document.getElementById('f_area').value;
+  const sel=document.getElementById('f_disease');
+  if(!a){sel.innerHTML='<option value="">请先选择领域</option>';return;}
+  sel.innerHTML='<option value="">请选择病种</option>'+treeDiseasesOf(a).map(d=>'<option value="'+d+'">'+d+'</option>').join('');
+}
+initAreaSelect();
 function openEditor(i){editIdx=(i==null?-1:i);const d=editIdx>=0?DB[editIdx]:{};
   ['gn','bn','area','disease','gen','year','origin','excl','cls','mech','mfr','appr','form','spec','adate','cold','price','annual','ins','insyear','dual','vbp','gl','route','sales','prob','prov','pt','ind','ind2','nt','note','patent','followers']
-  .forEach(k=>{const el=document.getElementById('f_'+k);if(!el)return;el.value=d[k]!=null?d[k]:"";});
+  .forEach(k=>{const el=document.getElementById('f_'+k);if(!el)return;el.value=d[k]!=null?d[k]:"";if(k==='area')cascadeDisease();});
   document.getElementById('editorBg').classList.add('on');
 }
 function closeEditor(){document.getElementById('editorBg').classList.remove('on');}
