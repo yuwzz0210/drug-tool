@@ -243,6 +243,7 @@ a{color:var(--brand)}
     <button class="sub-tab on" onclick="switchSub('assessSection','assessBrowse',this)">数据浏览</button>
     <button class="sub-tab" onclick="switchSub('assessSection','assessDecision',this)">决策分析</button>
     <button class="sub-tab" onclick="switchSub('assessSection','assessManage',this)">数据管理</button>
+    <button class="sub-tab" onclick="switchSub('assessSection','assessIter',this)">迭代路径</button>
   </div>
   <div id="assessBrowse" class="sub-content on">
     <div class="card">
@@ -374,9 +375,17 @@ a{color:var(--brand)}
       <div class="note">⚠️ 合规声明：数据来源于NMPA、CDE、医保局等官方公开渠道，采用"人工录入为主、官方核对为辅"方式。</div>
     </div>
   </div>
+  <div id="assessIter" class="sub-content">
+    <div class="card">
+      <h2>迭代路径分析</h2>
+      <p class="muted">选择迭代链，查看各代品种时间轴、生命周期阶段和医院青睐度。替代窗口 = 成长期品种出现 + 衰退期品种共存</p>
+      <div class="row" style="margin:10px 0">
+        <select id="iterLineage" onchange="renderIterPath()" style="flex:0 0 320px;padding:8px 12px;border:1px solid var(--line);border-radius:8px;font-size:14px"></select>
+      </div>
+    </div>
+    <div id="iterPathOut"></div>
+  </div>
 </div>
-
-<!-- 竞争格局 -->
 <div id="competeSection" class="section wrap">
   <button class="btn gray back-btn" onclick="backToEntry()">← 返回首页</button>
   <div class="card"><h2>竞争格局 · 同病种横向对比</h2><div id="competeAreaPick" class="row"></div></div>
@@ -455,6 +464,14 @@ a{color:var(--brand)}
       <div><label>核查日期</label><input id="f_price_check" type="date"></div>
       <div><label>核查来源</label><input id="f_price_src"></div>
       <div><label>DRG证据</label><select id="f_drgBenefit"><option value="">请选择</option><option value="high">明确证据（缩短住院/减少并发症）</option><option value="medium">部分证据</option><option value="low">非住院/无证据</option></select></div>
+    </div>
+  </div>
+  <div style="margin-top:10px;padding:10px;background:#f0fdf4;border-radius:8px;border:1px dashed #22c55e">
+    <div style="font-size:13px;font-weight:600;color:#166534;margin-bottom:6px">迭代分析</div>
+    <div class="grid2">
+      <div><label>迭代链</label><input id="f_lineage" placeholder="如 EGFR-TKI（留空自动推导）"></div>
+      <div><label>生命周期</label><select id="f_lifecycle"><option value="">自动推导</option><option>新兴</option><option>成长</option><option>成熟</option><option>衰退</option></select></div>
+      <div><label>前代品种</label><input id="f_predecessor" placeholder="上一代品种名"></div>
     </div>
   </div>
   <div style="margin-top:10px;padding:10px;background:#f0f7ff;border-radius:8px;border:1px dashed #93c5fd">
@@ -665,6 +682,7 @@ function switchSub(parent,name,btn){
   document.querySelectorAll('#'+parent+' .sub-tab').forEach(b=>b.classList.remove('on'));
   document.getElementById(name).classList.add('on');
   if(btn)btn.classList.add('on');
+  if(name==='assessIter')initIterPath();
 }
 
 /* ============ 工具函数 ============ */
@@ -751,6 +769,154 @@ function recCssClass(level){
   if(level==='B')return'rec';
   if(level==='C')return'watch';
   return'nogo';
+}
+
+/* ============ 迭代分析 ============ */
+/* getLineage: 提取迭代链标识（优先手动lineage，否则从gen自动推导） */
+function getLineage(d){
+  if(d.lineage)return d.lineage;
+  const gen=d.gen||'';
+  const m=gen.match(/^第\d+代(.+)/);
+  if(m)return m[1].replace(/\(.*?\)/g,'').trim();
+  return gen.replace(/第\d+代/g,'').replace(/\(.*?\)/g,'').replace(/[(),，]/g,' ').replace(/\s+/g,' ').trim()||'未分类';
+}
+/* getLifecycle: 推导生命周期阶段（优先手动lifecycle，否则从year/ins/vbp/patent自动推导） */
+function getLifecycle(d){
+  if(d.lifecycle)return d.lifecycle;
+  const year=d.year||9999,ins=d.ins||'',vbp=d.vbp||'',patent=d.patent||'',cy=2026;
+  if(ins.includes('集采')||(patent.includes('过期')&&year<2012)){
+    if((vbp.includes('高')||ins.includes('集采'))&&year<2008)return'成熟';
+    return'衰退';
+  }
+  if(cy-year<=3)return'新兴';
+  if(patent&&!patent.includes('过期')){const m=patent.match(/(\d{4})/);if(m&&parseInt(m[1])-cy<=3)return'成熟';}
+  if(ins.includes('医保')||ins.includes('国谈'))return'成长';
+  return'成熟';
+}
+/* lifecycleColor: 生命周期→配色 */
+function lifecycleColor(lc){
+  if(lc==='新兴')return{fill:'#E6F1FB',stroke:'#378ADD',text:'#042C53'};
+  if(lc==='成长')return{fill:'#EAF3DE',stroke:'#639922',text:'#173404'};
+  if(lc==='成熟')return{fill:'#FAEEDA',stroke:'#EF9F27',text:'#412402'};
+  if(lc==='衰退')return{fill:'#FCEBEB',stroke:'#E24B4A',text:'#501313'};
+  return{fill:'#F1EFE8',stroke:'#888780',text:'#444441'};
+}
+/* lifecycleTag: 生命周期→HTML标签 */
+function lifecycleTag(lc){
+  const c=lifecycleColor(lc);
+  return'<span style="background:'+c.fill+';color:'+c.text+';padding:2px 8px;border-radius:4px;font-size:12px;border:0.5px solid '+c.stroke+'">'+lc+'</span>';
+}
+/* calcFavor: 医院青睐度评分（4维代理指标，0-100） */
+function calcFavor(d){
+  const gl=(d.gl||'').toUpperCase();
+  let s1;
+  if(gl.includes('I级')||gl.includes('1A')||gl.includes('1B'))s1=90;
+  else if(gl.includes('II级')||gl.includes('2A')||gl.includes('2B'))s1=70;
+  else if(gl.includes('推荐'))s1=55;
+  else s1=35;
+  const ins=normIns(d.ins||'');
+  let s2;
+  if(ins==='国谈')s2=85;else if(ins==='常规医保')s2=75;else if(ins==='集采')s2=60;else s2=25;
+  const lc=getLifecycle(d);
+  let s3;
+  if(lc==='成长')s3=90;else if(lc==='新兴')s3=70;else if(lc==='成熟')s3=50;else s3=25;
+  const annual=d.annual||0,vbp=d.vbp||'';
+  let s4;
+  if(vbp.includes('高')||vbp.includes('集采'))s4=90;
+  else if(annual>0&&annual<=10000)s4=80;
+  else if(annual>0&&annual<=30000)s4=60;
+  else if(annual>0&&annual<=100000)s4=40;
+  else if(annual>100000)s4=25;
+  else s4=50;
+  return Math.round(s1*0.35+s2*0.25+s3*0.25+s4*0.15);
+}
+/* favorLabel: 青睐度等级标签 */
+function favorLabel(score){
+  if(score>=75)return{label:'高',color:'#166534'};
+  if(score>=55)return{label:'中',color:'#b45309'};
+  return{label:'低',color:'#b91c1c'};
+}
+
+/* ============ 迭代路径可视化 ============ */
+function initIterPath(){
+  const sel=document.getElementById('iterLineage');if(!sel||sel.options.length>0)return;
+  const lineages={};
+  DB.forEach(d=>{const l=getLineage(d);if(!lineages[l])lineages[l]=[];lineages[l].push(d);});
+  const byArea={};
+  Object.keys(lineages).forEach(l=>{
+    if(l==='未分类'||lineages[l].length<1)return;
+    const a=lineages[l][0].area||'其他';
+    if(!byArea[a])byArea[a]=[];
+    byArea[a].push({l,n:lineages[l].length});
+  });
+  let html='';
+  Object.keys(byArea).sort().forEach(a=>{
+    html+='<optgroup label="'+a+'">';
+    byArea[a].sort((x,y)=>y.n-x.n).forEach(o=>{html+='<option value="'+o.l+'">'+o.l+' ('+o.n+'个品种)</option>';});
+    html+='</optgroup>';
+  });
+  sel.innerHTML=html;
+  const firstMulti=Object.entries(lineages).find(([l,arr])=>l!=='未分类'&&arr.length>=2);
+  if(firstMulti){sel.value=firstMulti[0];renderIterPath();}
+}
+function renderIterPath(){
+  const lineage=document.getElementById('iterLineage').value;
+  const out=document.getElementById('iterPathOut');
+  if(!lineage){out.innerHTML='';return;}
+  const drugs=DB.filter(d=>getLineage(d)===lineage).sort((a,b)=>(a.year||9999)-(b.year||9999));
+  if(!drugs.length){out.innerHTML='<div class="note">暂无数据</div>';return;}
+  const years=drugs.map(d=>d.year).filter(y=>y);
+  const minY=Math.min(...years)-1,maxY=Math.max(Math.max(...years),2026)+1,range=maxY-minY;
+  const W=680,padL=90,padR=50,tlW=W-padL-padR;
+  const xY=y=>padL+((y-minY)/range)*tlW;
+  const rowH=58,H=drugs.length*rowH+50;
+  let svg='<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img"><title>'+lineage+'迭代路径</title><desc>'+drugs.length+'个品种的上市时间轴</desc>';
+  svg+='<line x1="'+padL+'" y1="25" x2="'+(W-padR)+'" y2="25" stroke="#B4B2A9" stroke-width="0.5"/>';
+  const tickStep=range>12?5:2;
+  for(let y=Math.ceil(minY/tickStep)*tickStep;y<=maxY;y+=tickStep){
+    const x=xY(y);
+    svg+='<line x1="'+x+'" y1="22" x2="'+x+'" y2="28" stroke="#888780" stroke-width="0.5"/>';
+    svg+='<text x="'+x+'" y="18" text-anchor="middle" style="font-size:11px;fill:#5F5E5A">'+y+'</text>';
+  }
+  svg+='<text x="'+(W-padR)+'" y="40" text-anchor="end" style="font-size:11px;fill:#5F5E5A">迭代方向 →</text>';
+  drugs.forEach((d,i)=>{
+    const y=48+i*rowH;
+    const lc=getLifecycle(d),c=lifecycleColor(lc),x=xY(d.year||minY);
+    svg+='<text x="'+(padL-8)+'" y="'+(y+22)+'" text-anchor="end" style="font-size:12px;font-weight:500;fill:#2C2C2A">'+d.gn+'</text>';
+    svg+='<rect x="'+padL+'" y="'+(y+8)+'" width="'+tlW+'" height="28" rx="4" fill="'+c.fill+'" opacity="0.25"/>';
+    svg+='<circle cx="'+x+'" cy="'+(y+22)+'" r="7" fill="'+c.fill+'" stroke="'+c.stroke+'" stroke-width="1"/>';
+    svg+='<text x="'+x+'" y="'+(y+4)+'" text-anchor="middle" style="font-size:10px;fill:'+c.text+'">'+lc+'</text>';
+    if(d.insyear){
+      const ex=xY(d.insyear);
+      if(ex>=padL&&ex<=W-padR){
+        svg+='<line x1="'+ex+'" y1="'+(y+6)+'" x2="'+ex+'" y2="'+(y+38)+'" stroke="#378ADD" stroke-width="0.5" stroke-dasharray="2,2"/>';
+        svg+='<text x="'+ex+'" y="'+(y+46)+'" text-anchor="middle" style="font-size:9px;fill:#378ADD">医保</text>';
+      }
+    }
+    if(d.vbp&&d.vbp.includes('集采'))svg+='<text x="'+(x+10)+'" y="'+(y+30)+'" style="font-size:9px;fill:#A32D2D">集采</text>';
+    const fav=calcFavor(d),fl=favorLabel(fav);
+    svg+='<text x="'+(W-padR+4)+'" y="'+(y+26)+'" style="font-size:12px;font-weight:500;fill:'+fl.color+'">'+fav+'</text>';
+  });
+  svg+='</svg>';
+  let tbl='<table><tr><th>药品名</th><th>世代</th><th>上市年</th><th>生命周期</th><th>医保</th><th>指南</th><th>青睐度</th><th>评分</th></tr>';
+  drugs.forEach(d=>{
+    const fav=calcFavor(d),fl=favorLabel(fav),sc=scoreDetail(d),rec=getRecommendation(sc.total);
+    tbl+='<tr><td style="font-weight:500">'+d.gn+'</td><td>'+(d.gen||'—')+'</td><td>'+(d.year||'—')+'</td><td>'+lifecycleTag(getLifecycle(d))+'</td><td>'+insTag2(d.ins)+'</td><td>'+(d.gl||'—')+'</td><td><span style="color:'+fl.color+';font-weight:500">'+fav+' ('+fl.label+')</span></td><td>'+sc.total+' ('+rec.level+')</td></tr>';
+  });
+  tbl+='</table>';
+  const growing=drugs.filter(d=>getLifecycle(d)==='成长');
+  const emerging=drugs.filter(d=>getLifecycle(d)==='新兴');
+  const declining=drugs.filter(d=>getLifecycle(d)==='衰退');
+  let insight='';
+  if((growing.length||emerging.length)&&declining.length){
+    insight='<div class="card"><div style="background:#f0fdf4;border:1px solid #22c55e;border-radius:8px;padding:14px 18px">';
+    insight+='<b style="color:#166534">替代窗口已打开</b>';
+    if(growing.length)insight+='<div style="margin-top:6px;font-size:13px"><b>成长期：</b>'+growing.map(d=>d.gn+'(青睐度'+calcFavor(d)+')').join('、')+'</div>';
+    if(emerging.length)insight+='<div style="margin-top:4px;font-size:13px"><b>新兴期：</b>'+emerging.map(d=>d.gn+'(青睐度'+calcFavor(d)+')').join('、')+'</div>';
+    insight+='<div style="margin-top:4px;font-size:13px"><b style="color:#b91c1c">衰退期：</b>'+declining.map(d=>d.gn+'(青睐度'+calcFavor(d)+')').join('、')+'</div>';
+    insight+='<div style="margin-top:8px;font-size:13px;color:#166534">建议：引进成长期/新兴期品种，逐步替代衰退期品种。</div></div></div>';
+  }
+  out.innerHTML='<div class="card"><h2>'+lineage+' · 迭代路径</h2><p class="muted">'+drugs.length+'个品种，按上市年排序。颜色=生命周期阶段，右侧数字=医院青睐度</p>'+svg+'</div><div class="card"><h2>迭代对比明细</h2>'+tbl+'</div>'+insight;
 }
 
 /* ============ 拼音首字母 ============ */
@@ -858,7 +1024,10 @@ function renderDrugDetail(d){
     field('医保',d.ins+(d.insyear?(' ('+d.insyear+')'):''))+field('双通道',d.dual)+
     field('集采风险',d.vbp)+field('指南推荐',d.gl)+field('给药',d.route)+
     field('专利到期',d.patent)+field('仿制药',d.followers!=null?d.followers+'家':'—')+
-    field('青睐度',hospScore(d))+
+    field('青睐度',calcFavor(d))+
+    '</div>'+
+    '<div class="row" style="margin-top:8px">'+
+    field('迭代链',getLineage(d))+field('生命周期',lifecycleTag(getLifecycle(d)))+field('前代品种',d.predecessor||'—')+
     '</div>'+(d.ind?'<h3>适应症</h3><div class="muted">'+d.ind+'</div>':'')+
     (d.ind2?'<div class="muted"><b>拓展：</b>'+d.ind2+'</div>':'')+
     (d.note?'<div class="note" style="margin-top:8px">'+d.note+'</div>':'')+
@@ -946,7 +1115,7 @@ function genFullBrief(idx){
     L.push('<h3>同类品种对比（'+d.disease+'）</h3>');
     L.push('<table style="margin-top:6px"><tr><th>药品名</th><th>商品名</th><th>厂家</th><th>世代</th><th>上市年</th><th>医保</th><th>挂网价</th><th>年化费用</th><th>青睐度</th></tr>');
     peers.forEach(function(p){
-      L.push('<tr'+(p===d?' style="background:#fef3c7;font-weight:600"':'')+'><td>'+p.gn+'</td><td>'+(p.bn||'—')+'</td><td>'+(p.mfr||'—')+'</td><td>'+(p.gen||'—')+'</td><td>'+(p.year||'—')+'</td><td>'+insTag2(p.ins)+'</td><td>'+(p.price!=null?'¥'+p.price:'—')+'</td><td>'+(p.annual!=null?'¥'+Number(p.annual).toLocaleString():'—')+'</td><td>'+hospScore(p)+'</td></tr>');
+      L.push('<tr'+(p===d?' style="background:#fef3c7;font-weight:600"':'')+'><td>'+p.gn+'</td><td>'+(p.bn||'—')+'</td><td>'+(p.mfr||'—')+'</td><td>'+(p.gen||'—')+'</td><td>'+(p.year||'—')+'</td><td>'+insTag2(p.ins)+'</td><td>'+(p.price!=null?'¥'+p.price:'—')+'</td><td>'+(p.annual!=null?'¥'+Number(p.annual).toLocaleString():'—')+'</td><td>'+calcFavor(p)+'</td></tr>');
     });
     L.push('</table>');
     var drugIdx=peers.indexOf(d);
@@ -1109,7 +1278,7 @@ function competeShowDisease(area,disease){
       yAxis:[{type:'value',name:'年化费用'},{type:'value',name:'青睐度',max:100}],
       series:[
         {name:'年化费用',type:'bar',data:peers.map(p=>p.annual||0),itemStyle:{color:'#4f46e5'}},
-        {name:'青睐度',type:'line',yAxisIndex:1,data:peers.map(p=>hospScore(p)),itemStyle:{color:'#b91c1c'}}
+        {name:'青睐度',type:'line',yAxisIndex:1,data:peers.map(p=>calcFavor(p)),itemStyle:{color:'#b91c1c'}}
       ]
     });
   }
@@ -1122,7 +1291,7 @@ function competeTable(peers){
       '<td>'+(p.gen||'—')+'</td><td>'+(p.year||'—')+'</td><td>'+insTag(p.ins)+'</td>'+
       '<td>'+(p.price!=null?'¥'+p.price:'—')+'</td>'+
       '<td>'+(p.annual!=null?'¥'+Number(p.annual).toLocaleString():'—')+'</td>'+
-      '<td>'+hospScore(p)+'</td><td>'+(p.vbp||'—')+'</td><td>'+(p.route||'—')+'</td><td>'+(p.cold||'—')+'</td></tr>';});
+      '<td>'+calcFavor(p)+'</td><td>'+(p.vbp||'—')+'</td><td>'+(p.route||'—')+'</td><td>'+(p.cold||'—')+'</td></tr>';});
   html+='</table><div class="row" style="margin-top:10px"><button class="btn alt" onclick="doCompareFromCompete()">对比所选品种</button></div>';
   return html;
 }
@@ -1168,7 +1337,7 @@ function genClinicalBrief(){
     '</div></div>'+
     (peers.length>1?'<div class="sales-section" style="background:var(--soft);border-left:4px solid var(--brand2)"><div style="font-size:14px;font-weight:700;margin-bottom:8px">📋 同类药品（'+d.disease+'）</div>'+
     '<table style="margin-top:6px"><tr><th>药品名</th><th>世代</th><th>上市年</th><th>医保</th><th>给药</th><th>青睐度</th></tr>'+
-    peers.map(p=>'<tr'+(p===d?' style="background:#fef3c7;font-weight:600"':'')+'><td>'+(p.bn?p.gn+'('+p.bn+')':p.gn)+'</td><td>'+(p.gen||'—')+'</td><td>'+(p.year||'—')+'</td><td>'+insTag2(p.ins)+'</td><td>'+(p.route||'—')+'</td><td>'+hospScore(p)+'</td></tr>').join('')+
+    peers.map(p=>'<tr'+(p===d?' style="background:#fef3c7;font-weight:600"':'')+'><td>'+(p.bn?p.gn+'('+p.bn+')':p.gn)+'</td><td>'+(p.gen||'—')+'</td><td>'+(p.year||'—')+'</td><td>'+insTag2(p.ins)+'</td><td>'+(p.route||'—')+'</td><td>'+calcFavor(p)+'</td></tr>').join('')+
     '</table></div>':'')+
     '<div class="muted" style="margin-top:12px;font-size:12px">数据来源：NMPA/医保局等公开信息，仅供参考。生成时间：'+new Date().toLocaleString('zh-CN')+'</div>'+
     '</div>';
@@ -1299,7 +1468,7 @@ function genAnalysisBrief(){
   if(peers.length>1){
     L.push('<h3>同类品种对比（'+d.disease+'）</h3>');
     L.push('<table style="margin-top:6px"><tr><th>药品名</th><th>商品名</th><th>厂家</th><th>世代</th><th>上市年</th><th>医保</th><th>挂网价</th><th>年化费用</th><th>青睐度</th></tr>');
-    peers.forEach(function(p){L.push('<tr'+(p===d?' style="background:#fef3c7;font-weight:600"':'')+'><td>'+p.gn+'</td><td>'+(p.bn||'—')+'</td><td>'+(p.mfr||'—')+'</td><td>'+(p.gen||'—')+'</td><td>'+(p.year||'—')+'</td><td>'+insTag2(p.ins)+'</td><td>'+(p.price!=null?'¥'+p.price:'—')+'</td><td>'+(p.annual!=null?'¥'+Number(p.annual).toLocaleString():'—')+'</td><td>'+hospScore(p)+'</td></tr>');});
+    peers.forEach(function(p){L.push('<tr'+(p===d?' style="background:#fef3c7;font-weight:600"':'')+'><td>'+p.gn+'</td><td>'+(p.bn||'—')+'</td><td>'+(p.mfr||'—')+'</td><td>'+(p.gen||'—')+'</td><td>'+(p.year||'—')+'</td><td>'+insTag2(p.ins)+'</td><td>'+(p.price!=null?'¥'+p.price:'—')+'</td><td>'+(p.annual!=null?'¥'+Number(p.annual).toLocaleString():'—')+'</td><td>'+calcFavor(p)+'</td></tr>');});
     L.push('</table>');
     var di2=peers.indexOf(d);
     if(di2===0)L.push('<div class="note" style="margin-top:8px">该品种为'+d.disease+'领域最早上市的品种之一，具有先发优势。需关注后续迭代品种的竞争压力。</div>');
@@ -1370,13 +1539,13 @@ function initAreaSelect(){const sel=document.getElementById('f_area');sel.innerH
 function cascadeDisease(){const a=document.getElementById('f_area').value;const sel=document.getElementById('f_disease');if(!a){sel.innerHTML='<option value="">请先选择领域</option>';return;}sel.innerHTML='<option value="">请选择病种</option>'+treeDiseasesOf(a).map(d=>'<option value="'+d+'">'+d+'</option>').join('');}
 function openEditor(i){
   editIdx=(i==null?-1:i);const d=editIdx>=0?DB[editIdx]:{};
-  const keys=['gn','bn','area','disease','gen','year','origin','excl','cls','mech','mfr','appr','form','spec','adate','cold','price','annual','ins','insyear','dual','vbp','gl','route','sales','prob','prov','pt','ind','ind2','nt','note','patent','followers','dtype','pcycle','pprice','pprice_date','price_check','price_src','mech_plain','ind_plain','talking_points','paystd','drgBenefit'];
+  const keys=['gn','bn','area','disease','gen','year','origin','excl','cls','mech','mfr','appr','form','spec','adate','cold','price','annual','ins','insyear','dual','vbp','gl','route','sales','prob','prov','pt','ind','ind2','nt','note','patent','followers','dtype','pcycle','pprice','pprice_date','price_check','price_src','mech_plain','ind_plain','talking_points','paystd','drgBenefit','lineage','lifecycle','predecessor'];
   keys.forEach(k=>{const el=document.getElementById('f_'+k);if(!el)return;el.value=d[k]!=null?d[k]:"";if(k==='area')cascadeDisease();});
   document.getElementById('editorBg').classList.add('on');
 }
 function closeEditor(){document.getElementById('editorBg').classList.remove('on');}
 function saveDrug(){
-  const keys=['gn','bn','area','disease','gen','year','origin','excl','cls','mech','mfr','appr','form','spec','adate','cold','price','annual','ins','insyear','dual','vbp','gl','route','sales','prob','prov','pt','ind','ind2','nt','note','patent','followers','dtype','pcycle','pprice','pprice_date','price_check','price_src','mech_plain','ind_plain','talking_points','paystd','drgBenefit'];
+  const keys=['gn','bn','area','disease','gen','year','origin','excl','cls','mech','mfr','appr','form','spec','adate','cold','price','annual','ins','insyear','dual','vbp','gl','route','sales','prob','prov','pt','ind','ind2','nt','note','patent','followers','dtype','pcycle','pprice','pprice_date','price_check','price_src','mech_plain','ind_plain','talking_points','paystd','drgBenefit','lineage','lifecycle','predecessor'];
   const d={};keys.forEach(k=>{const el=document.getElementById('f_'+k);if(el)d[k]=el.value;});
   if(!d.gn){alert("通用名必填");return;}
   ['year','price','annual','insyear','sales','prob','followers','pprice'].forEach(k=>{if(d[k]!=="")d[k]=+d[k];});
@@ -1414,6 +1583,9 @@ const DOC_FIELDS={
   '领域':'area','治疗领域':'area','疾病领域':'area','治疗领域分类':'area','therapeutic area':'area','area':'area',
   '病种':'disease','适应症领域':'disease','疾病':'disease','disease':'disease','indication area':'disease',
   '迭代世代':'gen','代次':'gen','世代':'gen','迭代':'gen','generation':'gen',
+  '迭代链':'lineage','迭代路径':'lineage','lineage':'lineage','治疗线迭代':'lineage',
+  '生命周期':'lifecycle','生命周期阶段':'lifecycle','lifecycle':'lifecycle',
+  '前代':'predecessor','前代品种':'predecessor','上一代':'predecessor','predecessor':'predecessor',
   '上市年':'year','获批年':'year','上市年份':'year','获批年份':'year','上市时间':'year','获批时间':'year','year':'year','approval year':'year',
   '来源':'origin','origin':'origin',
   '是否未引进':'excl','未引进':'excl','是否引进':'excl','引进状态':'excl',
@@ -1784,6 +1956,8 @@ function openCompare(ids){
     ['厂家',d=>d.mfr||'—'],
     ['病种',d=>d.disease],
     ['迭代世代',d=>d.gen],
+    ['迭代链',d=>getLineage(d)],
+    ['生命周期',d=>getLifecycle(d)],
     ['上市年',d=>d.year],
     ['医保状态',d=>d.ins||'—'],
     ['双通道',d=>d.dual||'—'],
@@ -1791,7 +1965,7 @@ function openCompare(ids){
     ['年化费用',d=>d.annual!=null?('¥'+Number(d.annual).toLocaleString()):'—'],
     ['日均费用',d=>d.annual!=null?('¥'+Math.round(d.annual/365)):'—'],
     ['进医保概率',d=>d.prob!=null?(d.prob*100).toFixed(0)+'%':'—'],
-    ['医院青睐度',d=>hospScore(d)],
+    ['医院青睐度',d=>calcFavor(d)],
     ['专利到期',d=>d.patent||'—'],
     ['仿制药围攻',d=>d.followers!=null?d.followers+' 家':'—'],
     ['适应症',d=>d.ind||'—'],
