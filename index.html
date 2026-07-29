@@ -144,7 +144,31 @@ a{color:var(--brand)}
 .brief-conclusion.rec{background:#f0fdf4;border:2px solid #22c55e}
 .brief-conclusion.watch{background:#fffbeb;border:2px solid #f59e0b}
 .brief-conclusion.nogo{background:#fef2f2;border:2px solid #ef4444}
-@media print{body *{visibility:hidden}.brief-paper,.brief-paper *{visibility:visible}.brief-paper{position:absolute;left:0;top:0;width:100%;box-shadow:none;border-radius:0;padding:20px}.no-print{display:none!important}}
+/* 品种分析简报（8板块） */
+.analysis-brief{background:#fff;border-radius:12px;padding:28px 32px;box-shadow:0 4px 16px rgba(20,40,80,.08)}
+.analysis-brief h1{font-size:20px;text-align:center;margin:0 0 4px;color:var(--ink)}
+.analysis-brief h2{font-size:16px;margin:24px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--accent);color:var(--accent)}
+.analysis-brief h3{font-size:14px;margin:14px 0 8px;color:var(--brand)}
+.analysis-summary{background:var(--soft);border-radius:8px;padding:16px 20px;margin:12px 0}
+.analysis-summary p{font-size:14px;line-height:1.8;margin:0}
+.analysis-judge{display:inline-block;padding:2px 10px;border-radius:4px;font-size:12px;font-weight:600;margin-left:8px;vertical-align:middle}
+.judge-full{background:#dcfce7;color:#166534}
+.judge-done{background:#dbeafe;color:#1e40af}
+.judge-partial{background:#fef3c7;color:#92400e}
+.judge-high{background:#fecaca;color:#991b1b}
+.analysis-chain{font-size:13.5px;line-height:2.2;background:#f8fafc;border-radius:8px;padding:14px 18px;margin:8px 0}
+.analysis-chain .arrow{color:var(--sub);margin:0 6px}
+.analysis-chain .result{font-weight:700;color:var(--accent);font-size:15px}
+.analysis-matrix{width:100%;border-collapse:collapse;font-size:13.5px;margin:8px 0}
+.analysis-matrix th{background:var(--accent);color:#fff;padding:8px 12px;text-align:left;font-weight:600}
+.analysis-matrix td{border:1px solid var(--line);padding:8px 12px;vertical-align:top}
+.analysis-matrix .dim{background:var(--soft);font-weight:600;width:120px;color:var(--sub);white-space:nowrap}
+.analysis-risk-item{display:flex;gap:8px;margin:6px 0;font-size:13.5px;line-height:1.7}
+.analysis-risk-item::before{content:'▸';color:var(--red);flex-shrink:0}
+.analysis-strategy{counter-reset:step;margin:8px 0}
+.analysis-strategy .step{position:relative;padding:10px 14px 10px 40px;margin:8px 0;background:#f8fafc;border-radius:8px;font-size:13.5px;line-height:1.7}
+.analysis-strategy .step::before{counter-increment:step;content:counter(step);position:absolute;left:10px;top:10px;width:22px;height:22px;background:var(--accent);color:#fff;border-radius:50%;text-align:center;line-height:22px;font-size:12px;font-weight:700}
+@media print{body *{visibility:hidden}.brief-paper,.brief-paper *,.print-target,.print-target *{visibility:visible}.brief-paper,.print-target{position:absolute;left:0;top:0;width:100%;box-shadow:none;border-radius:0;padding:20px}.no-print{display:none!important}}
 /* === Disease Tree === */
 .dtree{margin:0 0 16px}
 .dtree-node{margin-bottom:6px}
@@ -370,6 +394,15 @@ a{color:var(--brand)}
     </div>
   </div>
   <div id="clinicalOut"></div>
+  <div class="card" style="margin-top:20px">
+    <h2>品种分析简报 · 输入品名生成完整评估报告</h2>
+    <p class="muted">8部分：摘要 → 基本信息 → 市场分析 → 政策路径评估 → 竞争格局 → 引进优先级判断 → 风险提示 → 总结</p>
+    <div class="searchbar">
+      <div class="ac-box"><input type="text" id="analysisQ" placeholder="输入药品名…" oninput="analysisAC()" onblur="setTimeout(()=>document.getElementById('analysisAC').style.display='none',150)"><div id="analysisAC" style="display:none"></div></div>
+      <button class="btn" onclick="genAnalysisBrief()">生成简报</button>
+    </div>
+  </div>
+  <div id="analysisOut"></div>
 </div>
 
 <!-- Editor Modal -->
@@ -1120,6 +1153,165 @@ function copyClinicalBrief(){
   if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(text).then(()=>alert('简报已复制到剪贴板')).catch(()=>fallbackCopy(text));
   else fallbackCopy(text);
 }
+
+/* ============ 品种分析简报（8板块） ============ */
+function analysisAC(){
+  var q=norm(document.getElementById('analysisQ').value);var box=document.getElementById('analysisAC');
+  if(!q){box.style.display='none';return;}
+  var hits=DB.filter(function(d){return norm(d.gn).includes(q)||norm(d.bn).includes(q);}).slice(0,10);
+  if(!hits.length){box.style.display='none';return;}
+  box.innerHTML='<div class="ac-list">'+hits.map(function(d){return '<div class="ac-item" onmousedown="analysisPick(\''+d.gn.replace(/'/g,"\\'")+'\')">'+d.gn+'<span class="sub">'+(d.bn||'')+' · '+(d.disease||'')+'</span></div>';}).join('')+'</div>';
+  box.style.display='block';
+}
+function analysisPick(gn){document.getElementById('analysisQ').value=gn;document.getElementById('analysisAC').style.display='none';genAnalysisBrief();}
+function _jNT(d){var i=normIns(d.ins);if(i==='国谈')return{label:'已国谈',cls:'judge-done'};if(i==='常规医保')return{label:'已进医保',cls:'judge-done'};if(d.cls&&d.cls.includes('创新'))return{label:'完全满足',cls:'judge-full'};return{label:'需评估',cls:'judge-partial'};}
+function _jIns(d){var i=normIns(d.ins);if(i!=='自费')return{label:'已满足',cls:'judge-done'};var s=0;if(d.cls&&d.cls.includes('创新'))s++;if(d.gl&&(d.gl.includes('I')||d.gl.includes('1')))s++;if(d.followers===0)s++;if(s>=2)return{label:'完全满足',cls:'judge-full'};if(s>=1)return{label:'基本满足',cls:'judge-partial'};return{label:'需评估',cls:'judge-partial'};}
+function _jVBP(d){if(d.vbp&&(d.vbp.includes('已集采')||d.vbp.includes('高')))return{label:'高风险',cls:'judge-high'};if(d.vbp&&d.vbp.includes('低'))return{label:'极低',cls:'judge-full'};if(d.cls&&(d.cls.includes('生物制品')||d.cls.includes('创新')))return{label:'极低',cls:'judge-full'};if(d.vbp&&d.vbp.includes('中'))return{label:'中等',cls:'judge-partial'};return{label:'较低',cls:'judge-full'};}
+function _jDual(d){if(d.dual==='是')return{label:'已纳入',cls:'judge-done'};var i=normIns(d.ins);if(i==='国谈')return{label:'预期纳入',cls:'judge-partial'};if(i==='常规医保')return{label:'可申请',cls:'judge-partial'};return{label:'待进医保后评估',cls:'judge-partial'};}
+function _hunanEst(d){
+  var pool=BRIEF_POOL[d.disease]||BRIEF_POOL[d.area]||'';
+  var yiM=pool.match(/(\d+\.?\d*)\s*亿/),wanM=pool.match(/(\d+\.?\d*)\s*万/),num;
+  if(yiM)num=parseFloat(yiM[1])*10000;else if(wanM)num=parseFloat(wanM[1]);else return null;
+  var h=(num*0.03).toFixed(1),t=Math.round(num*0.03*0.3*10)/10;
+  return{national:pool,hunan:h,target:t,annualCost:d.annual?Math.round(t*10000*d.annual/10000):null};
+}
+function genAnalysisBrief(){
+  var q=document.getElementById('analysisQ').value;
+  if(!q.trim()){document.getElementById('analysisOut').innerHTML='<div class="muted">请输入药品名</div>';return;}
+  var d=findDrug(q);
+  if(!d){document.getElementById('analysisOut').innerHTML='<div class="muted">未找到「'+q+'」，请先在数据管理中录入。</div>';return;}
+  var peers=DB.filter(function(x){return x.disease===d.disease;}).sort(function(a,b){return (a.year||9999)-(b.year||9999);});
+  var sc=scoreDetail(d),insNorm=normIns(d.ins),est=_hunanEst(d);
+  var jN=_jNT(d),jI=_jIns(d),jV=_jVBP(d),jD=_jDual(d);
+  var rec,recClass,recText;
+  if(sc.total>=70){rec='引进优先级——较高';recClass='rec';recText=d.gn+'在品种价值、政策环境、竞争格局等维度整体表现优秀，综合评分'+sc.total+'分。建议列为高优先级引进品种，尽快对接厂家推进准入。';}
+  else if(sc.total>=50){rec='引进优先级——中等';recClass='watch';recText=d.gn+'综合评分'+sc.total+'分，部分维度存在不确定性。建议持续关注医保/集采动态，适时推进引进。';}
+  else{rec='引进优先级——较低';recClass='nogo';recText=d.gn+'综合评分'+sc.total+'分，多项指标偏弱。建议暂缓引进，待条件改善后再评估。';}
+  var L=[];
+  L.push('<div class="analysis-brief">');
+  L.push('<h1>品种分析简报</h1>');
+  L.push('<div class="brief-meta">'+d.gn+(d.bn?'（'+d.bn+'）':'')+' ｜ '+(d.mfr||'—')+' ｜ 生成日期：'+new Date().toLocaleDateString('zh-CN')+'</div>');
+  /* 〇 摘要 */
+  L.push('<h2>摘要</h2><div class="analysis-summary"><p>');
+  L.push(d.gn+(d.bn?'（'+d.bn+'）':'')+'是'+(d.mfr||'')+'开发的'+(d.mech||'')+(d.adate?('，'+d.adate+'获批上市'):(d.year?('，'+d.year+'年上市'):''))+'。');
+  if(d.gl)L.push('指南推荐：'+d.gl+'。');
+  L.push('当前'+(insNorm==='自费'?'非医保非双通道':insNorm==='国谈'?'国谈品种'+(d.dual==='是'?'，已纳入双通道':'，暂未纳入双通道'):'已进医保'+(d.dual==='是'?'，双通道管理':''))+'。');
+  if(peers.length>1){var di=peers.indexOf(d);if(di===peers.length-1)L.push('同类中最新上市品种，具有后发优势。');else if(di===0)L.push('该领域先发品种。');else L.push('处于同类第'+(di+1)+'代位置。');}
+  L.push(recText);
+  L.push('</p></div>');
+  /* 一 基本信息 */
+  L.push('<h2>一、基本信息</h2>');
+  L.push('<table class="brief-info-table">'+
+    '<tr><td class="k">通用名</td><td>'+d.gn+'</td><td class="k">商品名</td><td>'+(d.bn||'—')+'</td></tr>'+
+    '<tr><td class="k">规格</td><td>'+(d.spec||'—')+'</td><td class="k">剂型</td><td>'+(d.form||'—')+'</td></tr>'+
+    '<tr><td class="k">研发/生产</td><td>'+(d.mfr||'—')+'</td><td class="k">批准文号</td><td>'+(d.appr||'—')+'</td></tr>'+
+    '<tr><td class="k">注册分类</td><td>'+(d.cls||'—')+'</td><td class="k">获批时间</td><td>'+(d.adate||d.year||'—')+'</td></tr>'+
+    '<tr><td class="k">目前价格</td><td>'+(d.price!=null?'¥'+d.price:'—')+'</td><td class="k">年化费用</td><td>'+(d.annual!=null?'¥'+Number(d.annual).toLocaleString():'—')+'</td></tr>'+
+    '<tr><td class="k">作用机制</td><td colspan="3">'+(d.mech||'—')+'</td></tr>'+
+    '<tr><td class="k">获批适应症</td><td colspan="3">'+(d.ind||'—')+'</td></tr>'+
+    (d.ind2?'<tr><td class="k">拓展适应症</td><td colspan="3">'+d.ind2+'</td></tr>':'')+
+    '<tr><td class="k">迭代世代</td><td>'+(d.gen||'—')+'</td><td class="k">是否独家</td><td>'+(d.followers===0?'是':d.followers!=null?'否（'+d.followers+'家仿制）':'—')+'</td></tr>'+
+    '<tr><td class="k">冷链要求</td><td>'+(d.cold||'常温')+'</td><td class="k">给药途径</td><td>'+(d.route||'—')+'</td></tr>'+
+    '<tr><td class="k">指南推荐</td><td>'+(d.gl||'—')+'</td><td class="k">专利情况</td><td>'+(d.patent||'—')+'</td></tr>'+
+    '</table>');
+  /* 二 市场分析 */
+  L.push('<h2>二、市场分析</h2><h3>全国市场</h3>');
+  if(est){
+    L.push('<div style="font-size:14px;line-height:1.8">'+est.national+'。根据适应症范围，目标患者群体为晚期/特定分期/特定标志物阳性患者。</div>');
+    L.push('<h3>湖南市场（测算）</h3><div class="analysis-chain">');
+    L.push('<div>湖南年新发/患病约 <b>'+est.hunan+'万</b></div>');
+    L.push('<span class="arrow">→</span> × 晚期/目标分期比例（约65%）');
+    L.push('<br><span class="arrow">→</span> × 生物标志物阳性率/适应症匹配率（约46%）');
+    L.push('<br><span class="arrow">→</span> <span class="result">≈ '+est.target+'万人/年 潜在目标患者</span>');
+    L.push('</div>');
+    if(d.annual&&est.target){var amt=Math.round(est.target*10000*d.annual/10000);L.push('<div style="margin-top:8px;font-size:14px">按年化费用¥'+Number(d.annual).toLocaleString()+'估算，潜在年用药金额约<b>¥'+amt.toLocaleString()+'万元</b>（医保降价前）。国谈后实际规模需相应调整。</div>');}
+  }else{
+    L.push('<div class="note">'+(d.area||d.disease||'该领域')+'市场数据待补充，建议手动调研后录入。</div>');
+  }
+  /* 三 政策路径评估 */
+  L.push('<h2>三、政策路径评估</h2>');
+  L.push('<h3>1. 国谈潜力 <span class="analysis-judge '+jN.cls+'">'+jN.label+'</span></h3>');
+  if(jN.label==='已国谈')L.push('<div style="font-size:14px;line-height:1.8">已通过国谈纳入医保目录'+(d.insyear?('（'+d.insyear+'年）'):'')+'，享受医保报销。关注续约周期内的价格变化。</div>');
+  else if(jN.label==='已进医保')L.push('<div style="font-size:14px;line-height:1.8">已纳入常规医保目录，医保覆盖稳定。</div>');
+  else if(jN.cls==='judge-full')L.push('<div style="font-size:14px;line-height:1.8">'+(d.cls||'创新药')+'，已获批上市'+(d.adate?('（'+d.adate+'）'):'')+'，可申报国谈。'+(d.gl?('指南推荐'+d.gl+'，'):'')+'具备国谈申报条件，建议关注国谈窗口期。</div>');
+  else L.push('<div style="font-size:14px;line-height:1.8">需进一步评估品种是否满足国谈申报条件。</div>');
+  L.push('<h3>2. 进医保条件 <span class="analysis-judge '+jI.cls+'">'+jI.label+'</span></h3>');
+  var ip=[];if(d.cls&&d.cls.includes('创新'))ip.push('创新药');if(d.gl&&(d.gl.includes('I')||d.gl.includes('1')))ip.push('指南高等级推荐');if(d.followers===0)ip.push('独家品种');if(insNorm!=='自费')ip.push('已进医保');
+  L.push('<div style="font-size:14px;line-height:1.8">'+(ip.length?('优势：'+ip.join('、')+'。'):'')+(d.cls&&d.cls.includes('创新')?'创新药进医保通常降价40%-60%。':'')+(d.gl?('指南推荐'+d.gl+'，临床需求明确。'):'')+'</div>');
+  L.push('<h3>3. 集采风险 <span class="analysis-judge '+jV.cls+'">'+jV.label+'</span></h3>');
+  if(jV.cls==='judge-full')L.push('<div style="font-size:14px;line-height:1.8">'+(d.cls&&(d.cls.includes('生物制品')||d.cls.includes('创新'))?'生物制品/创新药不在集采范围内，国务院"创新不集采"政策保护。':'集采风险较低。')+(d.patent?('专利'+d.patent+'。'):'')+'</div>');
+  else if(jV.cls==='judge-high')L.push('<div style="font-size:14px;line-height:1.8;color:#991b1b">集采风险'+d.vbp+'，价格可能大幅下降，需密切关注集采动态。</div>');
+  else L.push('<div style="font-size:14px;line-height:1.8">集采风险中等，需关注后续集采目录动态。</div>');
+  L.push('<h3>4. 双通道与商保 <span class="analysis-judge '+jD.cls+'">'+jD.label+'</span></h3>');
+  if(d.dual==='是')L.push('<div style="font-size:14px;line-height:1.8">已纳入双通道管理，院外DTP药房可报销，有利于处方外流和患者可及性。</div>');
+  else if(insNorm==='国谈')L.push('<div style="font-size:14px;line-height:1.8">国谈品种，预期纳入双通道。国谈成功后预计'+(new Date().getFullYear()+1)+'年纳入湖南双通道（职工70%/居民60%）。首版商保创新药目录可同步申报。</div>');
+  else if(insNorm==='常规医保')L.push('<div style="font-size:14px;line-height:1.8">已进医保，可申请双通道管理。</div>');
+  else L.push('<div style="font-size:14px;line-height:1.8">待进医保后评估双通道准入。首版商保创新药目录可同步申报。</div>');
+  /* 四 竞争格局 */
+  L.push('<h2>四、竞争格局</h2>');
+  if(peers.length>1){
+    L.push('<h3>同类品种对比（'+d.disease+'）</h3>');
+    L.push('<table style="margin-top:6px"><tr><th>药品名</th><th>商品名</th><th>厂家</th><th>世代</th><th>上市年</th><th>医保</th><th>挂网价</th><th>年化费用</th><th>青睐度</th></tr>');
+    peers.forEach(function(p){L.push('<tr'+(p===d?' style="background:#fef3c7;font-weight:600"':'')+'><td>'+p.gn+'</td><td>'+(p.bn||'—')+'</td><td>'+(p.mfr||'—')+'</td><td>'+(p.gen||'—')+'</td><td>'+(p.year||'—')+'</td><td>'+insTag2(p.ins)+'</td><td>'+(p.price!=null?'¥'+p.price:'—')+'</td><td>'+(p.annual!=null?'¥'+Number(p.annual).toLocaleString():'—')+'</td><td>'+hospScore(p)+'</td></tr>');});
+    L.push('</table>');
+    var di2=peers.indexOf(d);
+    if(di2===0)L.push('<div class="note" style="margin-top:8px">该品种为'+d.disease+'领域最早上市的品种之一，具有先发优势。需关注后续迭代品种的竞争压力。</div>');
+    else if(di2===peers.length-1)L.push('<div class="note" style="margin-top:8px">该品种为'+d.disease+'领域最新上市品种，需关注与先发品种的差异化定位。'+(d.gen?'定位：'+d.gen:'')+'</div>');
+    else L.push('<div class="note" style="margin-top:8px">该品种处于'+d.disease+'领域第'+(di2+1)+'代位置，前有'+peers[0].gn+'等先发品种，后有迭代产品。需明确差异化竞争优势。</div>');
+  }else{L.push('<div class="note">当前'+(d.disease||'该领域')+'仅有1个品种收录，竞争格局数据待补充。建议手动调研同类品种后录入系统。</div>');}
+  L.push('<h3>切入策略</h3><div class="analysis-strategy">');
+  L.push('<div class="step">与'+(d.mfr||'厂家')+'商务建立联系，'+(d.cold&&(d.cold.includes('2')||d.cold.includes('冷'))?'确认冷链配送能力和DTP药房准入条件，':'')+'争取成为湖南供应单位。</div>');
+  L.push('<div class="step">协助'+(insNorm==='自费'?'厂家推进医保准入（关注国谈窗口期）':insNorm==='国谈'?'双通道准入（对接湖南省医保局）':'医院准入')+'：锁定药事会排期、KOL网络搭建、DRG经济分析、临采机制。</div>');
+  L.push('<div class="step">推广药品：医生端学术推广'+(d.gl?('（'+d.gl+'）'):'')+' + 患者端依从性管理，构建医+药+服务闭环。</div>');
+  L.push('</div>');
+  /* 五 引进优先级综合判断 */
+  L.push('<h2>五、引进优先级-综合判断</h2>');
+  L.push('<table class="analysis-matrix"><tr><th>维度</th><th>判断</th></tr>');
+  L.push('<tr><td class="dim">品种价值</td><td>'+(d.cls&&d.cls.includes('创新')?'创新药，':'')+(d.mech||'')+(d.gl?('，指南'+d.gl):'')+(d.followers===0?'，独家品种':'')+'</td></tr>');
+  L.push('<tr><td class="dim">市场空间</td><td>'+(est?est.national:'数据待补充')+'，湖南估算目标患者'+(est?est.target+'万人/年':'待测算')+'</td></tr>');
+  L.push('<tr><td class="dim">政策环境</td><td>'+insNorm+(d.dual==='是'?'，双通道':'')+'，集采风险'+jV.label+'</td></tr>');
+  L.push('<tr><td class="dim">竞争格局</td><td>'+peers.length+'个同类品种'+(peers.length>1?'，本品种处于第'+(peers.indexOf(d)+1)+'代位置':'，数据待补充')+'</td></tr>');
+  L.push('<tr><td class="dim">匹配度</td><td>'+(d.cold&&(d.cold.includes('2')||d.cold.includes('冷'))?'需冷链配送能力':'无冷链门槛')+'，'+(d.route||'')+'给药</td></tr>');
+  L.push('<tr><td class="dim">区域特殊性</td><td>'+(d.area||'')+'领域'+(est?'，湖南患者池可观':'')+'</td></tr>');
+  L.push('</table>');
+  L.push('<div class="brief-conclusion '+recClass+'">');
+  L.push('<div style="font-size:18px;font-weight:700;margin-bottom:8px">'+rec+'</div>');
+  L.push('<div style="font-size:14.5px;line-height:1.8">'+recText+'</div>');
+  L.push('<div style="margin-top:14px"><b>评分明细（总分'+sc.total+'分）：</b></div>');
+  L.push('<table style="margin-top:6px"><tr>');
+  var wk=['gl','ins','route','vbp','cold','drg'];
+  wk.forEach(function(k){L.push('<th>'+WEIGHT_LABELS[k]+'<br><span style="font-size:11px;color:var(--sub)">'+WEIGHTS[k]+'%</span></th>');});
+  L.push('<th>总分</th></tr><tr>');
+  wk.forEach(function(k){var val=sc.breakdown[k];var cls=val>=80?'green':val>=60?'amber':'red';L.push('<td style="text-align:center"><span class="tag '+cls+'">'+val+'</span></td>');});
+  L.push('<td style="text-align:center;font-weight:700;color:var(--accent);font-size:16px">'+sc.total+'</td></tr></table>');
+  L.push('</div>');
+  /* 六 风险提示 */
+  L.push('<h2>六、风险提示</h2>');
+  var risks=[];
+  if(d.vbp&&(d.vbp.includes('高')||d.vbp.includes('已集采')))risks.push('集采风险'+d.vbp+'，价格可能大幅下降');
+  if(d.patent){var pm=d.patent.match(/(\d{4})/);if(pm&&parseInt(pm[1])-new Date().getFullYear()<=2)risks.push('专利'+(parseInt(pm[1])<=new Date().getFullYear()?'已到期':'即将到期')+'，仿制药上市后将面临价格竞争');}
+  if(d.followers>0)risks.push('已有'+d.followers+'家仿制药上市/在研，竞争加剧');
+  if(insNorm==='自费')risks.push('当前未进医保，患者自付负担重，处方渗透受限');
+  if(d.cold&&(d.cold.includes('2')||d.cold.includes('冷')))risks.push('需冷链配送，运营成本和合规门槛较高');
+  if(d.annual&&d.annual>50000)risks.push('年化费用较高（¥'+Number(d.annual).toLocaleString()+'），DRG控费压力下医院准入可能受阻');
+  if(peers.length>3)risks.push('同类品种已有'+peers.length+'个，竞争激烈');
+  if(!risks.length)risks.push('暂未识别到重大风险');
+  risks.forEach(function(r){L.push('<div class="analysis-risk-item">'+r+'</div>');});
+  /* 七 总结 */
+  L.push('<h2>七、总结</h2><div class="analysis-summary"><p>');
+  L.push(d.gn+'作为'+(d.mfr||'')+'的'+(d.mech||'')+(d.cls&&d.cls.includes('创新')?'创新药':'')+'，');
+  if(d.gl)L.push('获指南'+d.gl+'推荐，');
+  L.push('当前'+(insNorm==='自费'?'尚未进入医保':insNorm==='国谈'?'为国谈品种':'已纳入医保')+'。');
+  if(est)L.push('湖南目标患者约'+est.target+'万人/年，');
+  L.push('综合评分'+sc.total+'分，'+recText);
+  L.push('</p></div>');
+  L.push('<div style="font-size:12px;color:var(--sub);text-align:center;border-top:1px solid var(--line);padding-top:12px;margin-top:20px">数据来源：NMPA/医保局/CSCO指南等公开信息，患者池为估算数据，仅供参考。生成时间：'+new Date().toLocaleString('zh-CN')+'</div>');
+  L.push('<div class="no-print" style="text-align:center;margin-top:20px"><button class="btn" onclick="exportAnalysisPDF()">📄 导出为PDF</button></div>');
+  L.push('</div>');
+  document.getElementById('analysisOut').innerHTML=L.join('');
+  document.getElementById('analysisOut').scrollIntoView({behavior:'smooth'});
+}
+function exportAnalysisPDF(){var el=document.getElementById('analysisOut');el.classList.add('print-target');window.print();setTimeout(function(){el.classList.remove('print-target');},1000);}
 
 /* ============ 数据管理 ============ */
 function renderManager(){
