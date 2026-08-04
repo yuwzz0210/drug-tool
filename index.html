@@ -2439,7 +2439,6 @@ const POLICY_SEED=[
   {id:"pl303",date:"2026-06-25",region:"云南",source:"云南省医保局",title:"云南省关于开展药品价格联动的通知",type:"价格联动",summary:"跨省价格联动。",advice:"关注价格传导。",deadline:"2026-07-10",batch:""},
 ];
 
-let PDB=[];
 function loadPolicyDB(){
   try{const s=localStorage.getItem(POLICY_KEY);if(s)return JSON.parse(s);}catch(e){}
   return JSON.parse(JSON.stringify(POLICY_SEED));
