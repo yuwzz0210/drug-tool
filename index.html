@@ -205,12 +205,45 @@ a{color:var(--brand)}
 .assess-hit:hover{border-color:var(--accent)}
 .assess-hit .h-gn{font-weight:600;font-size:14px}
 .assess-hit .h-sub{font-size:12.5px;color:var(--sub);margin-top:2px}
+/* === Policy Tracker === */
+.pol-card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:8px 0;background:#fff;transition:border-color .12s}
+.pol-card:hover{border-color:var(--accent)}
+.pol-card .pol-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.pol-card .pol-title{font-weight:600;font-size:14px;line-height:1.5}
+.pol-card .pol-meta{font-size:12px;color:var(--sub);margin-top:4px}
+.pol-card .pol-body{margin-top:8px;font-size:13px;color:var(--ink);line-height:1.6}
+.pol-card .pol-advice{margin-top:6px;padding:6px 10px;background:#fff8ec;border:1px solid #f3dca6;border-radius:6px;font-size:12.5px;color:#7a5a12}
+.pol-tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11.5px;margin:0 4px 4px 0;white-space:nowrap}
+.pol-tag.t4{background:#fee2e2;color:#b91c1c}
+.pol-tag.t3{background:#fef3c7;color:#b45309}
+.pol-tag.t2{background:#dcfce7;color:#166534}
+.pol-tag.t1{background:#e0e7ff;color:#4338ca}
+.pol-tag.t0{background:#f1f5f9;color:#475569}
+.pol-cmp-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
+.pol-cmp-table th{background:var(--soft);padding:8px 10px;text-align:left;border:1px solid var(--line);font-size:12.5px;color:var(--sub)}
+.pol-cmp-table td{padding:8px 10px;border:1px solid var(--line);vertical-align:top}
+.pol-cmp-table td.pol-prov{font-weight:600;white-space:nowrap;background:#fafbfc}
+.pol-vline{position:relative;padding-left:28px;margin:10px 0}
+.pol-vline::before{content:'';position:absolute;left:10px;top:0;bottom:0;width:2px;background:var(--line)}
+.pol-vnode{position:relative;padding:10px 0 10px 0;margin-bottom:6px}
+.pol-vnode::before{content:'';position:absolute;left:-22px;top:14px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid #fff;box-shadow:0 0 0 2px var(--accent)}
+.pol-vnode .vn-date{font-size:12px;color:var(--sub)}
+.pol-vnode .vn-text{font-size:13.5px;margin-top:2px;line-height:1.5}
+.pol-input-area textarea{width:100%;font-family:"Microsoft YaHei",monospace;font-size:13px;padding:10px;border:1px solid var(--line);border-radius:8px;resize:vertical}
+.pol-preview{margin-top:12px;border:1px solid var(--line);border-radius:10px;padding:14px;background:#fff}
+.pol-preview .pp-field{margin:6px 0}
+.pol-preview .pp-label{font-size:12px;color:var(--sub);margin-bottom:2px}
+.pol-preview .pp-val{font-size:14px}
+.pol-preview input,.pol-preview select,.pol-preview textarea{width:100%;padding:7px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px}
+.pol-badge{font-size:10px;padding:1px 5px;border-radius:3px;margin-left:4px}
+.pol-badge.smart{color:#ba7517;border:1px solid #ba751733}
+.pol-badge.struct{color:#185fa5;border:1px solid #185fa533}
 </style>
 </head>
 <body>
 <header>
   <h1>药品数据分析工具</h1>
-  <p>品种引进评估 · 竞争格局分析 · 临床沟通简报</p>
+  <p>品种引进评估 · 竞争格局分析 · 临床沟通简报 · 政策追踪</p>
 </header>
 
 <!-- Global Search -->
@@ -232,6 +265,9 @@ a{color:var(--brand)}
     </div>
     <div class="entry-card" onclick="showSection('clinicalSection')">
       <div class="icon">📋</div><h3>临床简报</h3><p>一键生成品种沟通简报</p>
+    </div>
+    <div class="entry-card" onclick="showSection('policySection')">
+      <div class="icon">📜</div><h3>政策追踪</h3><p>药品政策收集 · 横纵向对比 · 智能录入</p>
     </div>
   </div>
 </div>
@@ -413,6 +449,84 @@ a{color:var(--brand)}
     </div>
   </div>
   <div id="analysisOut"></div>
+</div>
+
+<!-- 政策追踪 -->
+<div id="policySection" class="section wrap">
+  <button class="btn gray back-btn" onclick="backToEntry()">← 返回首页</button>
+  <div class="sub-nav">
+    <button class="sub-tab on" onclick="switchSub('policySection','polList',this)">政策列表</button>
+    <button class="sub-tab" onclick="switchSub('policySection','polHCompare',this)">横向对比</button>
+    <button class="sub-tab" onclick="switchSub('policySection','polVTrack',this)">纵向追踪</button>
+    <button class="sub-tab" onclick="switchSub('policySection','polInput',this)">智能录入</button>
+  </div>
+
+  <!-- 政策列表 -->
+  <div id="polList" class="sub-content on">
+    <div class="card">
+      <div class="searchbar">
+        <input type="text" id="polSearch" placeholder="搜索政策标题/关键词/地区…" oninput="renderPolicyList()" style="flex:1 1 300px;padding:9px 12px;border:1px solid var(--line);border-radius:8px;font-size:14px">
+        <select id="polFilterRegion" onchange="renderPolicyList()" style="padding:9px 12px;border:1px solid var(--line);border-radius:8px"><option value="">全部地区</option></select>
+        <select id="polFilterType" onchange="renderPolicyList()" style="padding:9px 12px;border:1px solid var(--line);border-radius:8px"><option value="">全部类型</option></select>
+        <button class="btn gray" onclick="exportPolicyJSON()">导出</button>
+        <button class="btn alt" onclick="document.getElementById('polFileIn').click()">导入</button>
+        <input type="file" id="polFileIn" accept=".json" class="hidden" onchange="importPolicyJSON(event)">
+      </div>
+      <div class="muted" id="polCount"></div>
+    </div>
+    <div id="polListOut"></div>
+  </div>
+
+  <!-- 横向对比 -->
+  <div id="polHCompare" class="sub-content">
+    <div class="card">
+      <h2>横向对比</h2>
+      <div class="seg" style="margin:10px 0">
+        <button class="on" onclick="polHCMode('neighbor',this)">临近省份对比</button>
+        <button onclick="polHCMode('batch',this)">同省历史批次</button>
+      </div>
+      <div id="polHCNeighbor">
+        <div class="row" style="align-items:center;margin-bottom:10px">
+          <select id="polHCType" onchange="renderPolHCNeighbor()" style="padding:8px 12px;border:1px solid var(--line);border-radius:8px"><option value="">选择政策类型</option></select>
+          <span class="muted">湖南及周边：湖北 · 江西 · 广东 · 广西 · 贵州 · 重庆</span>
+        </div>
+        <div id="polHCNeighborOut"></div>
+      </div>
+      <div id="polHCBatch" style="display:none">
+        <div class="row" style="align-items:center;margin-bottom:10px">
+          <select id="polHCRegion" onchange="polHCBatchType()" style="padding:8px 12px;border:1px solid var(--line);border-radius:8px"></select>
+          <select id="polHCBatchType" onchange="renderPolHCBatch()" style="padding:8px 12px;border:1px solid var(--line);border-radius:8px"><option value="">选择政策类型</option></select>
+        </div>
+        <div id="polHCBatchOut"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 纵向追踪 -->
+  <div id="polVTrack" class="sub-content">
+    <div class="card">
+      <h2>纵向追踪 · 政策发展脉络</h2>
+      <p class="muted">选择政策类型，查看该类政策从首次出台到当前的发展历程</p>
+      <div class="row" style="margin:10px 0">
+        <select id="polVTType" onchange="renderPolVTrack()" style="flex:0 0 280px;padding:8px 12px;border:1px solid var(--line);border-radius:8px;font-size:14px"><option value="">选择政策类型</option></select>
+      </div>
+    </div>
+    <div id="polVTOut"></div>
+  </div>
+
+  <!-- 智能录入 -->
+  <div id="polInput" class="sub-content">
+    <div class="card pol-input-area">
+      <h2>智能录入 · 粘贴文本自动识别</h2>
+      <p class="muted">粘贴政策原文或摘要，系统自动模糊识别发布时间、来源、标题、类型、时间节点等字段</p>
+      <textarea id="polText" rows="10" placeholder="在此粘贴政策原文…&#10;&#10;例如：&#10;关于暂停受理中药饮片和配方颗粒申报挂网的通知&#10;来源：湖南省医疗保障局医药价格和招标采购处 发布日期：2026年06月30日&#10;…"></textarea>
+      <div class="row" style="margin-top:8px;align-items:center">
+        <button class="btn" onclick="parsePolicyText()">解析预览</button>
+        <span class="muted" id="polParseMsg"></span>
+      </div>
+      <div id="polPreview"></div>
+    </div>
+  </div>
 </div>
 
 <!-- Editor Modal -->
@@ -652,8 +766,10 @@ function treeSubDiseaseOf(a,d){const e=DISEASE_TREE.find(x=>x.area===a&&x.diseas
 /* ============ 状态 ============ */
 const LS_KEY="drug_db_v2";
 let DB=loadDB();
+let PDB=[];
 function loadDB(){try{const s=localStorage.getItem(LS_KEY);if(s)return JSON.parse(s);}catch(e){}return JSON.parse(JSON.stringify(SEED));}
 function saveDB(){localStorage.setItem(LS_KEY,JSON.stringify(DB));}
+function ensurePDB(){if(!PDB.length)PDB=loadPolicyDB();}
 
 /* 年份筛选已移除 — 兼容函数 */
 function getYear(){return 2026;}
@@ -683,6 +799,9 @@ function switchSub(parent,name,btn){
   document.getElementById(name).classList.add('on');
   if(btn)btn.classList.add('on');
   if(name==='assessIter')initIterPath();
+  if(name==='polList')renderPolicyList();
+  if(name==='polHCompare')polHCInit();
+  if(name==='polVTrack')polVTInit();
 }
 
 /* ============ 工具函数 ============ */
@@ -2282,6 +2401,460 @@ function ptMarkCheck(idx){
   saveDB();
   ptRenderCheck();
   alert('已标记 '+DB[idx].gn+' 为今日已核查。');
+}
+
+/* ============================================================
+   政策追踪模块
+   ============================================================ */
+const POLICY_KEY="policy_db_v1";
+const POLICY_TYPES=["四同治理","三同治理","红黄标预警","价格联动","中成药治理","集采联动","中药专项","价格治理","其他"];
+const NEIGHBOR_PROVINCES=["湖南","湖北","江西","广东","广西","贵州","重庆"];
+
+const POLICY_SEED=[
+  // 湖南
+  {id:"pl001",date:"2026-07-30",region:"湖南",source:"湖南省医保局",title:"关于开展\u201c四同\u201d挂网药品价格治理工作的通知（2026年7月）",type:"四同治理",summary:"同通用名/同剂型/同规格/同质量层次药品全国取最低价，7月批治理。",advice:"立即核对附件清单，8月5日17时前完成调价或申投诉，逾期暂停挂网。",deadline:"2026-08-05",batch:"2026-07"},
+  {id:"pl002",date:"2026-07-16",region:"湖南",source:"湖南省医保局",title:"湖南省关于开展2026年度中成药挂网价格纠偏工作的通知",type:"中成药治理",summary:"以日均费用10元为锚点，对高价中成药进行专项纠偏。逾期未调价的暂停挂网3个月。",advice:"排查公司中成药品种日均费用是否超锚点，及时调价。",deadline:"2026-07-24",batch:"2026-Q3"},
+  {id:"pl003",date:"2026-06-30",region:"湖南",source:"湖南省医保局",title:"关于暂停受理中药饮片和配方颗粒申报挂网的通知",type:"中药专项",summary:"暂停受理新增中药饮片和配方颗粒挂网申请，Q3启动价格治理，建议企业合理下调挂网价格。",advice:"新品暂无法申报，已挂网品种提前评估价格竞争力。",deadline:"2026-Q3",batch:""},
+  {id:"pl004",date:"2026-06-22",region:"湖南",source:"湖南省医保局",title:"关于开展\u201c四同\u201d挂网药品价格治理工作的通知（2026年6月）",type:"四同治理",summary:"6月批四同治理，全国取最低价。",advice:"已截止。逾期品种已暂停挂网。",deadline:"2026-06-26",batch:"2026-06"},
+  {id:"pl005",date:"2026-05-25",region:"湖南",source:"湖南省医保局",title:"湖南省部分药品红黄标预警标识",type:"红黄标预警",summary:"对部分药品标识红黄标价格风险预警。",advice:"核查公司品种是否有红标，红标药Q4起终端风险上升。",deadline:"",batch:""},
+  {id:"pl006",date:"2026-05-20",region:"湖南",source:"湖南省医保局",title:"关于开展\u201c四同\u201d挂网药品价格治理工作的通知（2026年5月）",type:"四同治理",summary:"5月批四同治理。",advice:"已截止。",deadline:"2026-05-26",batch:"2026-05"},
+  {id:"pl007",date:"2026-04-21",region:"湖南",source:"湖南省医保局",title:"关于调整部分挂网中成药管理属性的通知",type:"中成药治理",summary:"调整部分中成药管理属性，逾期未申报暂停挂网。",advice:"已截止。",deadline:"2026-04-28",batch:""},
+  {id:"pl008",date:"2026-04-17",region:"湖南",source:"湖南省医保局",title:"关于开展\u201c四同\u201d挂网药品价格治理工作的通知（2026年4月）",type:"四同治理",summary:"4月批四同治理。",advice:"已截止。",deadline:"2026-04-23",batch:"2026-04"},
+  {id:"pl009",date:"2026-04-03",region:"湖南",source:"湖南省医保局",title:"关于做好国家组织集采协议期满品种接续采购非中选产品价格协同工作的通知",type:"集采联动",summary:"集采协议期满品种，非中选产品需申报限价，放弃限价的暂停挂网。",advice:"已截止。",deadline:"2026-04-10",batch:""},
+  {id:"pl010",date:"2026-03-13",region:"湖南",source:"湖南省医保局",title:"湖南省关于开展\u201c四同\u201d挂网药品价格治理工作的通知",type:"四同治理",summary:"首批四同治理，以全国药品价格一览表为基准。",advice:"已截止。后续每月一批常态化。",deadline:"2026-03-18",batch:"2026-03"},
+  {id:"pl011",date:"2026-02-10",region:"湖南",source:"湖南省医保局",title:"湖南省第九、第十批国家集采药品红黄标标识",type:"红黄标预警",summary:"完成第九、十批集采药品红黄标标识。",advice:"核查公司集采品种标识状态。",deadline:"",batch:""},
+  // 国家级
+  {id:"pl101",date:"2026-01-30",region:"国家",source:"国家医保局",title:"关于落实挂网药品价格风险预警标识的通知",type:"红黄标预警",summary:"部署全国药品红黄标预警标识工作：2月中旬集采药、3月底联采药、5月底其他药品。Q4起医院采购红标药占比超10%将被重点监测。",advice:"跟踪公司品种红黄标状态，红标品种需评估终端风险。",deadline:"2026-05-31",batch:""},
+  {id:"pl102",date:"2026-01-01",region:"国家",source:"国家医保局",title:"关于2026年深化医药价格治理重点工作的通知",type:"价格治理",summary:"确定2026年五项重点：四同三同回头看、集采价格联动、红黄标常态化、多渠道比价、中成药专项处置。4月和7月交叉互检纳入考核。",advice:"对照五项重点评估公司品种风险。",deadline:"",batch:""},
+  // 临近省份
+  {id:"pl201",date:"2026-07-25",region:"湖北",source:"湖北省医保局",title:"湖北省关于开展药品价格联动的通知",type:"价格联动",summary:"开展跨省价格联动，非中选产品参考周边省份最低价。",advice:"关注湖北挂网价与湖南的差异。",deadline:"2026-08-10",batch:""},
+  {id:"pl202",date:"2026-07-18",region:"江西",source:"江西省医保局",title:"江西省药品价格风险预警标识（第二批）",type:"红黄标预警",summary:"第二批药品红黄标标识。",advice:"对比湖南标识范围差异。",deadline:"",batch:""},
+  {id:"pl203",date:"2026-07-10",region:"广东",source:"广东省医保局",title:"广东省关于开展\u201c四同\u201d药品价格治理工作的通知",type:"四同治理",summary:"广东四同治理，参考全国最低价调整。",advice:"对比广东与湖南的治理节奏和处置力度。",deadline:"2026-07-25",batch:"2026-07"},
+  {id:"pl204",date:"2026-06-28",region:"广西",source:"广西自治区医保局",title:"广西药品价格联动通知",type:"价格联动",summary:"跨省价格联动。",advice:"关注广西挂网价对湖南的传导效应。",deadline:"2026-07-15",batch:""},
+  {id:"pl205",date:"2026-06-20",region:"贵州",source:"贵州省医保局",title:"贵州省部分药品红黄标预警标识",type:"红黄标预警",summary:"部分药品红黄标标识。",advice:"对比标识范围。",deadline:"",batch:""},
+  {id:"pl206",date:"2026-06-15",region:"重庆",source:"重庆市医保局",title:"重庆市关于开展药品价格治理工作的通知",type:"价格治理",summary:"综合价格治理，含四同+价格联动。",advice:"关注重庆治理模式。",deadline:"2026-06-30",batch:""},
+  // 其他代表性省份
+  {id:"pl301",date:"2026-07-22",region:"四川",source:"四川省医保局",title:"四川省关于开展\u201c四同\u201d药品价格治理工作的通知",type:"四同治理",summary:"四川四同治理7月批。",advice:"对比治理节奏。",deadline:"2026-08-01",batch:"2026-07"},
+  {id:"pl302",date:"2026-07-15",region:"河南",source:"河南省医保局",title:"河南省药品价格风险预警标识通知",type:"红黄标预警",summary:"河南红黄标标识。",advice:"对比标识范围。",deadline:"",batch:""},
+  {id:"pl303",date:"2026-06-25",region:"云南",source:"云南省医保局",title:"云南省关于开展药品价格联动的通知",type:"价格联动",summary:"跨省价格联动。",advice:"关注价格传导。",deadline:"2026-07-10",batch:""},
+];
+
+let PDB=[];
+function loadPolicyDB(){
+  try{const s=localStorage.getItem(POLICY_KEY);if(s)return JSON.parse(s);}catch(e){}
+  return JSON.parse(JSON.stringify(POLICY_SEED));
+}
+function savePolicyDB(){localStorage.setItem(POLICY_KEY,JSON.stringify(PDB));}
+
+/* === 政策类型颜色 === */
+function polTypeTag(type){
+  const m={'四同治理':'t4','三同治理':'t4','红黄标预警':'t3','价格联动':'t2','中成药治理':'t1','集采联动':'t2','中药专项':'t1','价格治理':'t0','其他':'t0'};
+  return '<span class="pol-tag '+(m[type]||'t0')+'">'+type+'</span>';
+}
+
+/* === 政策列表 === */
+function renderPolicyList(){
+  ensurePDB();
+  const q=(document.getElementById('polSearch').value||'').toLowerCase().trim();
+  const fr=document.getElementById('polFilterRegion').value;
+  const ft=document.getElementById('polFilterType').value;
+
+  // populate filters
+  const regSel=document.getElementById('polFilterRegion');
+  const typeSel=document.getElementById('polFilterType');
+  if(regSel.children.length<=1){
+    [...new Set(PDB.map(p=>p.region))].sort().forEach(r=>{const o=document.createElement('option');o.value=r;o.textContent=r;regSel.appendChild(o);});
+  }
+  if(typeSel.children.length<=1){
+    POLICY_TYPES.forEach(t=>{const o=document.createElement('option');o.value=t;o.textContent=t;typeSel.appendChild(o);});
+  }
+
+  let list=PDB.filter(p=>{
+    if(fr&&p.region!==fr)return false;
+    if(ft&&p.type!==ft)return false;
+    if(q){
+      const blob=(p.title+p.summary+p.region+p.source+p.type+(p.advice||'')).toLowerCase();
+      if(!blob.includes(q))return false;
+    }
+    return true;
+  });
+  list.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+
+  document.getElementById('polCount').textContent='共 '+list.length+' 条政策（总计 '+PDB.length+' 条）';
+
+  const out=document.getElementById('polListOut');
+  if(!list.length){out.innerHTML='<div class="card"><p class="muted">无匹配政策</p></div>';return;}
+
+  out.innerHTML=list.map(p=>{
+    const dl=p.deadline?'<span class="tag amber">截止:'+p.deadline+'</span>':'';
+    const isOverdue=p.deadline&&p.deadline.length>=10&&new Date(p.deadline)<new Date();
+    const dlTag=dl?(isOverdue?'<span class="tag red">已截止 '+p.deadline+'</span>':'<span class="tag amber">截止:'+p.deadline+'</span>'):'';
+    return '<div class="pol-card">'+
+      '<div class="pol-head"><div>'+
+        '<div class="pol-title">'+p.title+'</div>'+
+        '<div class="pol-meta">'+p.date+' · '+p.region+' · '+p.source+' '+polTypeTag(p.type)+'</div>'+
+      '</div></div>'+
+      '<div class="pol-body">'+p.summary+'</div>'+
+      (p.advice?'<div class="pol-advice">💡 '+p.advice+'</div>':'')+
+      '<div style="margin-top:6px">'+dlTag+(p.batch?'<span class="tag blue">批次:'+p.batch+'</span>':'')+'</div>'+
+      '<div style="margin-top:6px"><button class="btn gray" style="padding:4px 10px;font-size:12px" onclick="deletePolicy(\''+p.id+'\')">删除</button></div>'+
+    '</div>';
+  }).join('');
+}
+function deletePolicy(id){
+  if(!confirm('确认删除此政策？'))return;
+  PDB=PDB.filter(p=>p.id!==id);
+  savePolicyDB();
+  renderPolicyList();
+}
+
+/* === 横向对比 === */
+let polHCMode_current='neighbor';
+function polHCMode(mode,btn){
+  polHCMode_current=mode;
+  document.querySelectorAll('#polHCompare .seg button').forEach(b=>b.classList.remove('on'));
+  if(btn)btn.classList.add('on');
+  document.getElementById('polHCNeighbor').style.display=mode==='neighbor'?'block':'none';
+  document.getElementById('polHCBatch').style.display=mode==='batch'?'block':'none';
+  if(mode==='batch')polHCBatchInit();
+}
+function polHCInit(){
+  ensurePDB();
+  // populate type dropdown for neighbor mode
+  const sel=document.getElementById('polHCType');
+  if(sel.children.length<=1){
+    POLICY_TYPES.forEach(t=>{const o=document.createElement('option');o.value=t;o.textContent=t;sel.appendChild(o);});
+  }
+  // populate region dropdown for batch mode
+  const regSel=document.getElementById('polHCRegion');
+  if(regSel.children.length<=1){
+    [...new Set(PDB.map(p=>p.region))].sort().forEach(r=>{const o=document.createElement('option');o.value=r;o.textContent=r;regSel.appendChild(o);});
+  }
+  if(polHCMode_current==='neighbor')renderPolHCNeighbor();
+  else polHCBatchInit();
+}
+function renderPolHCNeighbor(){
+  const type=document.getElementById('polHCType').value;
+  const out=document.getElementById('polHCNeighborOut');
+  if(!type){out.innerHTML='<p class="muted">请选择政策类型</p>';return;}
+
+  // 每个省份取最近一条该类型政策
+  const rows=NEIGHBOR_PROVINCES.map(prov=>{
+    const matches=PDB.filter(p=>p.region===prov&&p.type===type).sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+    return {prov,latest:matches[0],all:matches};
+  });
+
+  let html='<table class="pol-cmp-table"><tr><th>省份</th><th>最新政策</th><th>发布时间</th><th>时间节点</th><th>主要内容</th><th>建议</th></tr>';
+  rows.forEach(r=>{
+    if(r.latest){
+      html+='<tr><td class="pol-prov">'+r.prov+(r.prov==='湖南'?' <span style="color:var(--accent)">★</span>':'')+'</td>'+
+        '<td>'+r.latest.title+'</td><td>'+r.latest.date+'</td>'+
+        '<td>'+(r.latest.deadline||'—')+'</td>'+
+        '<td style="max-width:280px">'+r.latest.summary+'</td>'+
+        '<td style="max-width:200px">'+(r.latest.advice||'—')+'</td></tr>';
+    }else{
+      html+='<tr><td class="pol-prov">'+r.prov+'</td><td colspan="5" style="color:var(--sub)">暂无该类型政策</td></tr>';
+    }
+  });
+  html+='</table>';
+
+  // 横向小结
+  const haveCount=rows.filter(r=>r.latest).length;
+  html+='<div class="note" style="margin-top:10px"><b>横向小结</b>：'+NEIGHBOR_PROVINCES.length+'个省份中，'+haveCount+'个已开展"'+type+'"。'+
+    (haveCount<NEIGHBOR_PROVINCES.length?'未开展的省份预计后续跟进。':'全部已开展，关注执行细节差异。')+'</div>';
+
+  out.innerHTML=html;
+}
+function polHCBatchInit(){
+  const regSel=document.getElementById('polHCRegion');
+  if(!regSel.value&&regSel.children.length>1)regSel.value='湖南';
+  polHCBatchType();
+}
+function polHCBatchType(){
+  const region=document.getElementById('polHCRegion').value;
+  const typeSel=document.getElementById('polHCBatchType');
+  // 清除已有option（保留第一个）
+  while(typeSel.children.length>1)typeSel.removeChild(typeSel.lastChild);
+  if(region){
+    [...new Set(PDB.filter(p=>p.region===region).map(p=>p.type))].forEach(t=>{const o=document.createElement('option');o.value=t;o.textContent=t;typeSel.appendChild(o);});
+  }
+  renderPolHCBatch();
+}
+function renderPolHCBatch(){
+  const region=document.getElementById('polHCRegion').value;
+  const type=document.getElementById('polHCBatchType').value;
+  const out=document.getElementById('polHCBatchOut');
+  if(!region||!type){out.innerHTML='<p class="muted">请选择地区和政策类型</p>';return;}
+
+  const matches=PDB.filter(p=>p.region===region&&p.type===type).sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+  if(!matches.length){out.innerHTML='<p class="muted">该地区无此类型政策记录</p>';return;}
+
+  // 取最近3批
+  const recent=matches.slice(0,3);
+  let html='<div class="grid2" style="grid-template-columns:repeat('+Math.min(recent.length,3)+',1fr)">';
+  recent.forEach((p,i)=>{
+    const isLatest=i===0;
+    html+='<div class="pol-card" style="'+(isLatest?'border-color:var(--accent)':'')+'">'+
+      '<div class="pol-meta">'+(isLatest?'<span class="tag blue">最新</span> ':'')+'第'+(recent.length-i)+'批</div>'+
+      '<div class="pol-title" style="margin:6px 0">'+p.title+'</div>'+
+      '<div class="pol-meta">📅 '+p.date+(p.batch?' · 批次:'+p.batch:'')+'</div>'+
+      (p.deadline?'<div style="margin-top:4px"><span class="tag '+(new Date(p.deadline)<new Date()?'red':'amber')+'">截止:'+p.deadline+'</span></div>':'')+
+      '<div class="pol-body">'+p.summary+'</div>'+
+      (p.advice?'<div class="pol-advice">💡 '+p.advice+'</div>':'')+
+    '</div>';
+  });
+  html+='</div>';
+
+  // 批次对比小结
+  if(recent.length>=2){
+    html+='<div class="note" style="margin-top:10px"><b>批次趋势</b>：从第'+recent.length+'批（'+recent[recent.length-1].date+'）到最新批（'+recent[0].date+'），'+
+      '治理频次约'+Math.round((new Date(recent[0].date)-new Date(recent[recent.length-1].date))/(30*86400000))+'个月/批。'+
+      '窗口期稳定在4-7天，处置力度一致（逾期暂停挂网）。</div>';
+  }
+
+  out.innerHTML=html;
+}
+
+/* === 纵向追踪 === */
+function polVTInit(){
+  ensurePDB();
+  const sel=document.getElementById('polVTType');
+  if(sel.children.length<=1){
+    POLICY_TYPES.forEach(t=>{const o=document.createElement('option');o.value=t;o.textContent=t;sel.appendChild(o);});
+  }
+  renderPolVTrack();
+}
+function renderPolVTrack(){
+  const type=document.getElementById('polVTType').value;
+  const out=document.getElementById('polVTOut');
+  if(!type){out.innerHTML='<p class="muted">请选择政策类型</p>';return;}
+
+  // 按时间正序（旧→新）
+  const all=PDB.filter(p=>p.type===type).sort((a,b)=>(a.date||'').localeCompare(b.date||''));
+  if(!all.length){out.innerHTML='<div class="card"><p class="muted">暂无"'+type+'"类型政策记录</p></div>';return;}
+
+  // 生成一句话总结
+  const first=all[0];
+  const latest=all[all.length-1];
+  const regions=[...new Set(all.map(p=>p.region))];
+  const summary='<div class="card"><h3>📋 一句话总结</h3>'+
+    '<p style="font-size:14px;line-height:1.7">"'+type+'"类政策最早于<b>'+first.date+'</b>由<b>'+first.source+'</b>在"'+first.title+'"中提出，'+
+    '背景是'+first.summary.substring(0,60)+'…。'+
+    '此后经历'+all.length+'次发布，覆盖'+regions.length+'个地区（'+regions.slice(0,5).join('、')+(regions.length>5?'等':'')+'），'+
+    '最新动态为<b>'+latest.date+'</b>发布的"'+latest.title+'"。'+
+    (latest.deadline?'当前时间节点：<b>'+latest.deadline+'</b>。':'')+
+    '</p></div>';
+
+  // 时间轴
+  let timeline='<div class="card"><h3>🕐 发展历程</h3><div class="pol-vline">';
+  all.forEach((p,i)=>{
+    const stage = i===0?'<span class="tag blue">首次出台</span> ':i===all.length-1?'<span class="tag amber">最新</span> ':'';
+    timeline+='<div class="pol-vnode">'+
+      '<div class="vn-date">'+p.date+' · '+p.region+' · '+p.source+'</div>'+
+      '<div class="vn-text">'+stage+p.title+
+      (p.deadline?'<span class="tag gray" style="margin-left:6px">截止:'+p.deadline+'</span>':'')+
+      '<br><span style="font-size:12.5px;color:var(--sub)">'+p.summary+'</span></div>'+
+    '</div>';
+  });
+  timeline+='</div></div>';
+
+  out.innerHTML=summary+timeline;
+}
+
+/* === 智能录入：模糊解析 === */
+function parsePolicyText(){
+  const text=document.getElementById('polText').value;
+  const msg=document.getElementById('polParseMsg');
+  if(!text.trim()){msg.textContent='请先粘贴文本';return;}
+
+  const d={};
+  const src={};
+
+  // 1. 日期识别
+  const dateM=text.match(/(\d{4})\s*[年\/\-\.]\s*(\d{1,2})\s*[月\/\-\.]\s*(\d{1,2})\s*[日]?/);
+  if(dateM){
+    d.date=dateM[1]+'-'+String(dateM[2]).padStart(2,'0')+'-'+String(dateM[3]).padStart(2,'0');
+    src.date='智能识别';
+  }else{
+    const dateM2=text.match(/(\d{4})\s*[年\/\-\.]\s*(\d{1,2})\s*[月\/\-\.]/);
+    if(dateM2){
+      d.date=dateM2[1]+'-'+String(dateM2[2]).padStart(2,'0');
+      src.date='智能识别';
+    }
+  }
+
+  // 2. 来源识别
+  const srcM=text.match(/([\u4e00-\u9fa5]{2,8}(?:省|自治区|市|国家))\s*(?:医疗保障局|医保局|卫健委|药品监督管理局|药监局)/);
+  if(srcM){
+    d.source=srcM[0].trim();
+    d.region=srcM[1];
+    src.source='智能识别';
+    src.region='智能识别';
+  }else{
+    // 尝试从"来源："识别
+    const srcLabel=text.match(/来源[：:]\s*(.+?)(?:\s|发布|日期|$)/);
+    if(srcLabel){
+      d.source=srcLabel[1].trim();
+      src.source='智能识别';
+      // 从来源提取地区
+      const regM2=srcLabel[1].match(/([\u4e00-\u9fa5]{2,4})(?:省|市|自治区)/);
+      if(regM2)d.region=regM2[1];
+    }
+  }
+
+  // 3. 标题识别：找"关于...的通知/意见/办法/方案/公告/通报"
+  const titleM=text.match(/(关于[\u4e00-\u9fa5\w\uff08()、《》\u201c\u201d\u3001，,·\-—\s]{4,80}?(?:通知|意见|办法|方案|公告|通报|决定|规定|指引|指南))/);
+  if(titleM){
+    d.title=titleM[1].trim();
+    src.title='智能识别';
+  }else{
+    // 取第一行非空文本作为标题
+    const firstLine=text.trim().split(/\r?\n/).find(l=>l.trim().length>5&&!l.includes('来源')&&!l.includes('发布日期'));
+    if(firstLine){
+      d.title=firstLine.trim().substring(0,80);
+      src.title='智能识别';
+    }
+  }
+
+  // 4. 类型识别（关键词匹配）
+  const typeRules=[
+    [/四同|同通用名.*同剂型.*同规格/,'四同治理'],
+    [/三同/,'三同治理'],
+    [/红黄标|预警标识|价格风险.*标识/,'红黄标预警'],
+    [/中成药.*纠偏|中成药.*价格.*治理|中成药.*管理属性/,'中成药治理'],
+    [/中药饮片|配方颗粒/,'中药专项'],
+    [/价格联动|跨省.*比价|价格协同/,'价格联动'],
+    [/集采.*接续|集采.*协议期满|集采.*非中选/,'集采联动'],
+    [/价格治理|价格风险/,'价格治理'],
+  ];
+  for(const [re,t] of typeRules){
+    if(re.test(text)){d.type=t;src.type='智能识别';break;}
+  }
+  if(!d.type){d.type='其他';src.type='默认';}
+
+  // 5. 截止时间识别
+  const dlM=text.match(/(?:截止|截至|期限|时限|于|前)[：:到至]*\s*(\d{4})\s*[年\/\-\.]\s*(\d{1,2})\s*[月\/\-\.]\s*(\d{1,2})\s*[日]?\s*(?:前|止)?/);
+  if(dlM){
+    d.deadline=dlM[1]+'-'+String(dlM[2]).padStart(2,'0')+'-'+String(dlM[3]).padStart(2,'0');
+    src.deadline='智能识别';
+  }else{
+    // 尝试匹配"Q3""第三季度"等
+    const qM=text.match(/第([一二三四1-4])季度|Q([1-4])/);
+    if(qM){
+      const qMap={'一':'Q1','二':'Q2','三':'Q3','四':'Q4','1':'Q1','2':'Q2','3':'Q3','4':'Q4'};
+      d.deadline=qMap[qM[1]||qM[2]];
+      src.deadline='智能识别';
+    }
+  }
+
+  // 6. 主要内容：取"各相关企业"或正文段落（排除标题/来源行）
+  const lines=text.replace(/\r/g,'').split('\n').map(l=>l.trim()).filter(l=>l);
+  const bodyLines=lines.filter(l=>
+    !l.includes('来源：')&&!l.includes('发布日期')&&!l.match(/^\d{4}年/)&&
+    l.length>15&&!l.match(/^关于.*(?:通知|意见|办法|方案)$/)
+  );
+  if(bodyLines.length){
+    // 取前2-3句关键内容
+    const body=bodyLines.slice(0,3).join(' ');
+    d.summary=body.substring(0,300);
+    src.summary='智能识别';
+  }
+
+  // 7. 建议（留空，由用户填写）
+  d.advice='';
+
+  d._src=src;
+  POLICY_PREVIEW=d;
+  renderPolicyPreview(d);
+  const smartCount=Object.values(src).filter(s=>s==='智能识别').length;
+  msg.textContent='已识别 '+smartCount+' 个字段（智能识别），请核对后保存';
+}
+
+let POLICY_PREVIEW=null;
+function renderPolicyPreview(d){
+  const box=document.getElementById('polPreview');
+  if(!d){box.innerHTML='';return;}
+  const sbadge=s=>s?'<span class="pol-badge smart">智能</span>':'';
+  const mkInput=(key,label,type)=>{
+    const v=d[key]||'';
+    const src=d._src&&d._src[key]?sbadge(d._src[key]):'';
+    if(type==='textarea'){
+      return '<div class="pp-field"><div class="pp-label">'+label+src+'</div><textarea id="pp_'+key+'" rows="3">'+v+'</textarea></div>';
+    }
+    return '<div class="pp-field"><div class="pp-label">'+label+src+'</div><input id="pp_'+key+'" value="'+v.replace(/"/g,'&quot;')+'"></div>';
+  };
+  const mkSelect=(key,label,opts)=>{
+    const v=d[key]||'';
+    const src=d._src&&d._src[key]?sbadge(d._src[key]):'';
+    return '<div class="pp-field"><div class="pp-label">'+label+src+'</div><select id="pp_'+key+'">'+opts.map(o=>'<option value="'+o+'"'+(o===v?' selected':'')+'>'+o+'</option>').join('')+'</select></div>';
+  };
+
+  box.innerHTML='<div class="pol-preview">'+
+    '<h3>解析预览</h3>'+
+    '<div class="grid2">'+
+      mkInput('date','发布时间')+
+      mkInput('region','地区')+
+      mkInput('source','来源')+
+      mkInput('title','文件标题')+
+      mkSelect('type','政策类型',POLICY_TYPES)+
+      mkInput('deadline','时间节点')+
+    '</div>'+
+    mkInput('summary','主要内容','textarea')+
+    mkInput('advice','建议（选填）','textarea')+
+    '<div style="margin-top:10px"><button class="btn" onclick="savePolicyFromPreview()">保存入库</button> '+
+    '<button class="btn gray" onclick="document.getElementById(\'polPreview\').innerHTML=\'\'">取消</button></div>'+
+  '</div>';
+}
+function savePolicyFromPreview(){
+  const d=POLICY_PREVIEW;
+  if(!d)return;
+  const keys=['date','region','source','title','type','deadline','summary','advice'];
+  const saved={};
+  keys.forEach(k=>{
+    const el=document.getElementById('pp_'+k);
+    saved[k]=el?el.value.trim():'';
+  });
+  saved.id='pl_'+Date.now();
+  saved.batch='';
+  delete saved._src;
+  if(!saved.title){alert('标题不能为空');return;}
+  PDB.push(saved);
+  savePolicyDB();
+  document.getElementById('polPreview').innerHTML='';
+  document.getElementById('polText').value='';
+  document.getElementById('polParseMsg').textContent='已保存：'+saved.title;
+  // 切换到列表查看
+  document.querySelectorAll('#policySection .sub-tab').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('#policySection .sub-content').forEach(s=>s.classList.remove('on'));
+  document.getElementById('polList').classList.add('on');
+  document.querySelector('#policySection .sub-tab').classList.add('on');
+  renderPolicyList();
+}
+
+/* === 导出/导入 === */
+function exportPolicyJSON(){
+  ensurePDB();
+  const blob=new Blob([JSON.stringify(PDB,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='policy_db.json';
+  a.click();
+}
+function importPolicyJSON(ev){
+  const f=ev.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{
+    try{
+      const arr=JSON.parse(r.result);
+      if(Array.isArray(arr)){
+        PDB=arr;
+        savePolicyDB();
+        renderPolicyList();
+        alert('已导入 '+arr.length+' 条政策');
+      }
+    }catch(e){alert('文件格式错误');}
+  };
+  r.readAsText(f);
 }
 
 
