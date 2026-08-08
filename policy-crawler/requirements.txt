@@ -1,0 +1,9 @@
+# 核心功能零依赖（Python 3.9+ 标准库即可运行）
+# 可选增强依赖（按需安装）：
+# requests            # 更成熟的 HTTP 客户端（downloader 可替换）
+# lxml                # XPath 选择器（解析器增强）
+# psycopg2-binary     # PostgreSQL 存储（PostgresStore）
+# schedule            # 进程内定时调度（替代 crontab）
+# pdfplumber          # PDF 正文提取（P1，自动尝试链之一）
+# pypdf / PyPDF2      # PDF 提取备选引擎
+# easyocr             # 图片政策 OCR（P1，需模型下载）

@@ -1,0 +1,2902 @@
+{
+  "nhsa_cn": {
+    "name": "国家医疗保障局",
+    "area": "国家",
+    "base": "http://www.nhsa.gov.cn",
+    "portal_url": "http://www.nhsa.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_bj": {
+    "name": "北京市医疗保障局",
+    "area": "北京市",
+    "base": "http://ybj.beijing.gov.cn",
+    "portal_url": "http://ybj.beijing.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_tj": {
+    "name": "天津市医疗保障局",
+    "area": "天津市",
+    "base": "https://ylbz.tj.gov.cn",
+    "portal_url": "https://ylbz.tj.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_heb": {
+    "name": "河北省医疗保障局",
+    "area": "河北省",
+    "base": "http://ylbzj.hebei.gov.cn",
+    "portal_url": "http://ylbzj.hebei.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_sx": {
+    "name": "山西省医疗保障局",
+    "area": "山西省",
+    "base": "https://ybj.shanxi.gov.cn",
+    "portal_url": "https://ybj.shanxi.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_nmg": {
+    "name": "内蒙古自治区医疗保障局",
+    "area": "内蒙古自治区",
+    "base": "http://ylbzj.nmg.gov.cn",
+    "portal_url": "http://ylbzj.nmg.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_ln": {
+    "name": "辽宁省医疗保障局",
+    "area": "辽宁省",
+    "base": "http://ybj.ln.gov.cn",
+    "portal_url": "http://ybj.ln.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_jl": {
+    "name": "吉林省医疗保障局",
+    "area": "吉林省",
+    "base": "http://ybj.jl.gov.cn",
+    "portal_url": "http://ybj.jl.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_hlj": {
+    "name": "黑龙江省医疗保障局",
+    "area": "黑龙江省",
+    "base": "http://ybj.hlj.gov.cn",
+    "portal_url": "http://ybj.hlj.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_sh": {
+    "name": "上海市医疗保障局",
+    "area": "上海市",
+    "base": "https://ybj.sh.gov.cn",
+    "portal_url": "https://ybj.sh.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_js": {
+    "name": "江苏省医疗保障局",
+    "area": "江苏省",
+    "base": "http://ybj.jiangsu.gov.cn",
+    "portal_url": "http://ybj.jiangsu.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_zj": {
+    "name": "浙江省医疗保障局",
+    "area": "浙江省",
+    "base": "http://ybj.zj.gov.cn",
+    "portal_url": "http://ybj.zj.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_ah": {
+    "name": "安徽省医疗保障局",
+    "area": "安徽省",
+    "base": "http://ybj.ah.gov.cn/index.html",
+    "portal_url": "http://ybj.ah.gov.cn/index.html",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_fj": {
+    "name": "福建省医疗保障局",
+    "area": "福建省",
+    "base": "http://ybj.fujian.gov.cn",
+    "portal_url": "http://ybj.fujian.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_jx": {
+    "name": "江西省医疗保障局",
+    "area": "江西省",
+    "base": "http://ybj.jiangxi.gov.cn",
+    "portal_url": "http://ybj.jiangxi.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_sd": {
+    "name": "山东省医疗保障局",
+    "area": "山东省",
+    "base": "http://ybj.shandong.gov.cn//index.html",
+    "portal_url": "http://ybj.shandong.gov.cn//index.html",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_ha": {
+    "name": "河南省医疗保障局",
+    "area": "河南省",
+    "base": "http://ylbz.henan.gov.cn",
+    "portal_url": "http://ylbz.henan.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_湖北": {
+    "name": "湖北医保服务平台",
+    "area": "湖北",
+    "base": "https://ybj.hubei.gov.cn/hubeiHallSt/web/hallEnter/#/Index",
+    "portal_url": "https://ybj.hubei.gov.cn/hubeiHallSt/web/hallEnter/#/Index",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_hb": {
+    "name": "湖北省医疗保障局",
+    "area": "湖北省",
+    "base": "http://ybj.hubei.gov.cn",
+    "portal_url": "http://ybj.hubei.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_hn": {
+    "name": "湖南省医疗保障局",
+    "area": "湖南省",
+    "base": "http://ybj.hunan.gov.cn",
+    "portal_url": "http://ybj.hunan.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_gd": {
+    "name": "广东省医疗保障局",
+    "area": "广东省",
+    "base": "http://hsa.gd.gov.cn",
+    "portal_url": "http://hsa.gd.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_gx": {
+    "name": "广西壮族自治区医疗保障局",
+    "area": "广西壮族自治区",
+    "base": "http://ybj.gxzf.gov.cn/?from=timeline",
+    "portal_url": "http://ybj.gxzf.gov.cn/?from=timeline",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_hi": {
+    "name": "海南省医疗保障局",
+    "area": "海南省",
+    "base": "https://ybj.hainan.gov.cn",
+    "portal_url": "https://ybj.hainan.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_cq": {
+    "name": "重庆市医疗保障局",
+    "area": "重庆市",
+    "base": "http://ylbzj.cq.gov.cn",
+    "portal_url": "http://ylbzj.cq.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_sc": {
+    "name": "四川省医疗保障局",
+    "area": "四川省",
+    "base": "http://ylbzj.sc.gov.cn",
+    "portal_url": "http://ylbzj.sc.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_gz": {
+    "name": "贵州省医疗保障局",
+    "area": "贵州省",
+    "base": "http://ylbzj.guizhou.gov.cn",
+    "portal_url": "http://ylbzj.guizhou.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_yn": {
+    "name": "云南省医疗保障局",
+    "area": "云南省",
+    "base": "http://ylbz.yn.gov.cn",
+    "portal_url": "http://ylbz.yn.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_xz": {
+    "name": "西藏自治区医疗保障局",
+    "area": "西藏自治区",
+    "base": "http://ylbzj.xizang.gov.cn",
+    "portal_url": "http://ylbzj.xizang.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_sn": {
+    "name": "陕西省医疗保障局",
+    "area": "陕西省",
+    "base": "http://ybj.shaanxi.gov.cn",
+    "portal_url": "http://ybj.shaanxi.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_gs": {
+    "name": "甘肃省医疗保障局",
+    "area": "甘肃省",
+    "base": "http://ylbz.gansu.gov.cn",
+    "portal_url": "http://ylbz.gansu.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_qh": {
+    "name": "青海省医疗保障局",
+    "area": "青海省",
+    "base": "https://ybj.qinghai.gov.cn",
+    "portal_url": "https://ybj.qinghai.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_nx": {
+    "name": "宁夏医疗保障局",
+    "area": "宁夏回族自治区",
+    "base": "http://ylbz.nx.gov.cn",
+    "portal_url": "http://ylbz.nx.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_xj": {
+    "name": "新疆维吾尔自治区医疗保障局",
+    "area": "新疆维吾尔自治区",
+    "base": "http://ylbzj.xinjiang.gov.cn/ylbzj/index.shtml",
+    "portal_url": "http://ylbzj.xinjiang.gov.cn/ylbzj/index.shtml",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhsa_xjbt": {
+    "name": "新疆生产建设兵团医疗保障局",
+    "area": "新疆生产建设兵团",
+    "base": "http://btybj.xjbt.gov.cn",
+    "portal_url": "http://btybj.xjbt.gov.cn",
+    "parser": "nhsa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_cn": {
+    "name": "国家药品监督管理局",
+    "area": "国家",
+    "base": "https://www.nmpa.gov.cn",
+    "portal_url": "https://www.nmpa.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_bj": {
+    "name": "北京市药品监督管理局",
+    "area": "北京市",
+    "base": "http://yjj.beijing.gov.cn",
+    "portal_url": "http://yjj.beijing.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_heb": {
+    "name": "河北省药品监督管理局",
+    "area": "河北省",
+    "base": "http://yjj.hebei.gov.cn/hbpda",
+    "portal_url": "http://yjj.hebei.gov.cn/hbpda",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_sx": {
+    "name": "山西省药品监督管理局",
+    "area": "山西省",
+    "base": "https://yjj.shanxi.gov.cn",
+    "portal_url": "https://yjj.shanxi.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_nmg": {
+    "name": "内蒙古自治区药品监督管理局",
+    "area": "内蒙古自治区",
+    "base": "http://mpa.nmg.gov.cn",
+    "portal_url": "http://mpa.nmg.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_ln": {
+    "name": "辽宁省药品监督管理局",
+    "area": "辽宁省",
+    "base": "http://ypjg.ln.gov.cn",
+    "portal_url": "http://ypjg.ln.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_jl": {
+    "name": "吉林省药品监督管理局",
+    "area": "吉林省",
+    "base": "http://mpa.jl.gov.cn",
+    "portal_url": "http://mpa.jl.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_hlj": {
+    "name": "黑龙江省药品监督管理局",
+    "area": "黑龙江省",
+    "base": "http://mpa.hlj.gov.cn",
+    "portal_url": "http://mpa.hlj.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_sh": {
+    "name": "上海市药品监督管理局",
+    "area": "上海市",
+    "base": "http://yjj.sh.gov.cn",
+    "portal_url": "http://yjj.sh.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_js": {
+    "name": "江苏省药品监督管理局",
+    "area": "江苏省",
+    "base": "http://da.jiangsu.gov.cn",
+    "portal_url": "http://da.jiangsu.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_zj": {
+    "name": "浙江省药品监督管理局",
+    "area": "浙江省",
+    "base": "http://mpa.zj.gov.cn",
+    "portal_url": "http://mpa.zj.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_ah": {
+    "name": "安徽省药品监督管理局",
+    "area": "安徽省",
+    "base": "http://mpa.ah.gov.cn/index.html",
+    "portal_url": "http://mpa.ah.gov.cn/index.html",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_fj": {
+    "name": "福建省药品监督管理局",
+    "area": "福建省",
+    "base": "http://yjj.scjgj.fujian.gov.cn/default.htm",
+    "portal_url": "http://yjj.scjgj.fujian.gov.cn/default.htm",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_jx": {
+    "name": "江西省药品监督管理局",
+    "area": "江西省",
+    "base": "http://mpa.jiangxi.gov.cn",
+    "portal_url": "http://mpa.jiangxi.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_sd": {
+    "name": "山东省药品监督管理局",
+    "area": "山东省",
+    "base": "http://mpa.shandong.gov.cn",
+    "portal_url": "http://mpa.shandong.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_ha": {
+    "name": "河南省药品监督管理局",
+    "area": "河南省",
+    "base": "http://yjj.henan.gov.cn",
+    "portal_url": "http://yjj.henan.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_ha_1": {
+    "name": "河南省市场监督管理局",
+    "area": "河南省",
+    "base": "http://scjg.henan.gov.cn",
+    "portal_url": "http://scjg.henan.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_hb": {
+    "name": "湖北省药品监督管理局",
+    "area": "湖北省",
+    "base": "http://mpa.hubei.gov.cn",
+    "portal_url": "http://mpa.hubei.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_hn": {
+    "name": "湖南省药品监督管理局",
+    "area": "湖南省",
+    "base": "http://mpa.hunan.gov.cn",
+    "portal_url": "http://mpa.hunan.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_郴州": {
+    "name": "郴州市市场监督管理局",
+    "area": "郴州市",
+    "base": "http://amr.czs.gov.cn/index.html",
+    "portal_url": "http://amr.czs.gov.cn/index.html",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_gd": {
+    "name": "广东省药品监督管理局",
+    "area": "广东省",
+    "base": "http://mpa.gd.gov.cn",
+    "portal_url": "http://mpa.gd.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_gx": {
+    "name": "广西壮族自治区药品监督管理局",
+    "area": "广西壮族自治区",
+    "base": "http://yjj.gxzf.gov.cn",
+    "portal_url": "http://yjj.gxzf.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_hi": {
+    "name": "海南省药品监督管理局",
+    "area": "海南省",
+    "base": "https://amr.hainan.gov.cn/himpa",
+    "portal_url": "https://amr.hainan.gov.cn/himpa",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_cq": {
+    "name": "重庆市药品监督管理局",
+    "area": "重庆市",
+    "base": "http://yaojianju.cq.gov.cn",
+    "portal_url": "http://yaojianju.cq.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_sc": {
+    "name": "四川省药品监督管理局",
+    "area": "四川省",
+    "base": "http://yjj.sc.gov.cn",
+    "portal_url": "http://yjj.sc.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_gz": {
+    "name": "贵州省药品监督管理局",
+    "area": "贵州省",
+    "base": "http://yjj.guizhou.gov.cn",
+    "portal_url": "http://yjj.guizhou.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_yn": {
+    "name": "云南省药品监督管理局",
+    "area": "云南省",
+    "base": "http://mpa.yn.gov.cn/newsite/default.aspx",
+    "portal_url": "http://mpa.yn.gov.cn/newsite/default.aspx",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_xz": {
+    "name": "西藏自治区药品监督管理局",
+    "area": "西藏自治区",
+    "base": "http://mpa.xizang.gov.cn",
+    "portal_url": "http://mpa.xizang.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_sn": {
+    "name": "陕西省药品监督管理局",
+    "area": "陕西省",
+    "base": "http://mpa.shaanxi.gov.cn",
+    "portal_url": "http://mpa.shaanxi.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_gs": {
+    "name": "甘肃省药品监督管理局",
+    "area": "甘肃省",
+    "base": "http://yjj.gansu.gov.cn",
+    "portal_url": "http://yjj.gansu.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_qh": {
+    "name": "青海省药品监督管理局",
+    "area": "青海省",
+    "base": "http://ypjgj.qinghai.gov.cn",
+    "portal_url": "http://ypjgj.qinghai.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_nx": {
+    "name": "宁夏回族自治区药品监督管理局",
+    "area": "宁夏回族自治区",
+    "base": "http://nxyjj.nx.gov.cn",
+    "portal_url": "http://nxyjj.nx.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_xj": {
+    "name": "新疆维吾尔自治区药品监督管理局",
+    "area": "新疆维吾尔自治区",
+    "base": "http://mpa.xinjiang.gov.cn",
+    "portal_url": "http://mpa.xinjiang.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nmpa_xjbt": {
+    "name": "新疆生产建设兵团市场监督管理局",
+    "area": "新疆生产建设兵团",
+    "base": "http://sjj.xjbt.gov.cn",
+    "portal_url": "http://sjj.xjbt.gov.cn",
+    "parser": "nmpa",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_cn": {
+    "name": "中华人民共和国国家卫生健康委员会",
+    "area": "国家",
+    "base": "http://www.nhc.gov.cn",
+    "portal_url": "http://www.nhc.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_bj": {
+    "name": "北京市卫生健康委员会",
+    "area": "北京市",
+    "base": "http://wjw.beijing.gov.cn",
+    "portal_url": "http://wjw.beijing.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_tj": {
+    "name": "天津市卫生健康委员会",
+    "area": "天津市",
+    "base": "http://wsjk.tj.gov.cn",
+    "portal_url": "http://wsjk.tj.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_heb": {
+    "name": "河北省卫生健康委员会",
+    "area": "河北省",
+    "base": "http://wsjkw.hebei.gov.cn",
+    "portal_url": "http://wsjkw.hebei.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_石家": {
+    "name": "石家庄市卫生健康委员会",
+    "area": "石家庄市",
+    "base": "http://wsjk.sjz.gov.cn",
+    "portal_url": "http://wsjk.sjz.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_唐山": {
+    "name": "唐山市卫生健康委员会",
+    "area": "唐山市",
+    "base": "http://wsjkwyh.tangshan.gov.cn",
+    "portal_url": "http://wsjkwyh.tangshan.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_邯郸": {
+    "name": "邯郸市卫生健康委员会",
+    "area": "邯郸市",
+    "base": "http://wjw.hd.gov.cn/#",
+    "portal_url": "http://wjw.hd.gov.cn/#",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_邢台": {
+    "name": "邢台市卫生健康委员会",
+    "area": "邢台市",
+    "base": "http://wsjkw.xingtai.gov.cn",
+    "portal_url": "http://wsjkw.xingtai.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_承德": {
+    "name": "承德市卫生健康委员会",
+    "area": "承德市",
+    "base": "http://wjw.chengde.gov.cn",
+    "portal_url": "http://wjw.chengde.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_廊坊": {
+    "name": "廊坊市卫生健康委员会",
+    "area": "廊坊市",
+    "base": "http://wjw.lf.gov.cn",
+    "portal_url": "http://wjw.lf.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_衡水": {
+    "name": "衡水市卫生健康委员会",
+    "area": "衡水市",
+    "base": "http://wjw.hengshui.gov.cn",
+    "portal_url": "http://wjw.hengshui.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_sx": {
+    "name": "山西省卫生健康委员会",
+    "area": "山西省",
+    "base": "http://wjw.shanxi.gov.cn",
+    "portal_url": "http://wjw.shanxi.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_太原": {
+    "name": "太原市卫生健康委员会",
+    "area": "太原市",
+    "base": "http://wjw.taiyuan.gov.cn",
+    "portal_url": "http://wjw.taiyuan.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_长治": {
+    "name": "长治市卫生健康委员会",
+    "area": "长治市",
+    "base": "http://wjw.changzhi.gov.cn",
+    "portal_url": "http://wjw.changzhi.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_晋城": {
+    "name": "晋城市卫生健康委员会",
+    "area": "晋城市",
+    "base": "http://wjw.jcgov.gov.cn",
+    "portal_url": "http://wjw.jcgov.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_朔州": {
+    "name": "朔州市卫生健康委员会",
+    "area": "朔州市",
+    "base": "http://szxxgk.shuozhou.gov.cn/szfgzbm/szswsj",
+    "portal_url": "http://szxxgk.shuozhou.gov.cn/szfgzbm/szswsj",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_晋中": {
+    "name": "晋中市卫生健康委员会",
+    "area": "晋中市",
+    "base": "http://wjw.sxjz.gov.cn",
+    "portal_url": "http://wjw.sxjz.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_运城": {
+    "name": "运城市卫生健康委员会",
+    "area": "运城市",
+    "base": "https://wsjkw.yuncheng.gov.cn",
+    "portal_url": "https://wsjkw.yuncheng.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_忻州": {
+    "name": "忻州市卫生健康委员会",
+    "area": "忻州市",
+    "base": "http://wjw.sxxz.gov.cn",
+    "portal_url": "http://wjw.sxxz.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_临汾": {
+    "name": "临汾市卫生健康委",
+    "area": "临汾市",
+    "base": "http://wjw.linfen.gov.cn",
+    "portal_url": "http://wjw.linfen.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_nmg": {
+    "name": "内蒙古自治区卫生健康委员会",
+    "area": "内蒙古自治区",
+    "base": "http://wjw.nmg.gov.cn",
+    "portal_url": "http://wjw.nmg.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_包头": {
+    "name": "包头市卫生健康委员会",
+    "area": "包头市",
+    "base": "http://wjw.baotou.gov.cn",
+    "portal_url": "http://wjw.baotou.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_乌海": {
+    "name": "乌海市卫生健康委员会",
+    "area": "乌海市",
+    "base": "http://wjw.wuhai.gov.cn",
+    "portal_url": "http://wjw.wuhai.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_赤峰": {
+    "name": "赤峰市卫生健康委",
+    "area": "赤峰市",
+    "base": "http://wjw.chifeng.gov.cn",
+    "portal_url": "http://wjw.chifeng.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_通辽": {
+    "name": "通辽市卫生健康委员会",
+    "area": "通辽市",
+    "base": "https://wjw.tongliao.gov.cn",
+    "portal_url": "https://wjw.tongliao.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_鄂尔": {
+    "name": "鄂尔多斯市卫生健康委员会",
+    "area": "鄂尔多斯市",
+    "base": "http://wjw.ordos.gov.cn",
+    "portal_url": "http://wjw.ordos.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_呼伦": {
+    "name": "呼伦贝尔市卫生健康委员会",
+    "area": "呼伦贝尔市",
+    "base": "http://wjw.hlbe.gov.cn",
+    "portal_url": "http://wjw.hlbe.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_巴彦": {
+    "name": "巴彦淖尔市卫生健康委员会",
+    "area": "巴彦淖尔市",
+    "base": "http://wjw.bynr.gov.cn",
+    "portal_url": "http://wjw.bynr.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_乌兰": {
+    "name": "乌兰察布卫生健康委员会",
+    "area": "乌兰察布市",
+    "base": "http://wjw.wulanchabu.gov.cn",
+    "portal_url": "http://wjw.wulanchabu.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_锡林": {
+    "name": "锡林郭勒盟卫生健康委员会",
+    "area": "锡林郭勒盟",
+    "base": "http://wjw.xlgl.gov.cn",
+    "portal_url": "http://wjw.xlgl.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_阿拉": {
+    "name": "阿拉善盟卫生健康委员会",
+    "area": "阿拉善盟",
+    "base": "http://wjw.als.gov.cn",
+    "portal_url": "http://wjw.als.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_ln": {
+    "name": "辽宁省卫生健康委员会",
+    "area": "辽宁省",
+    "base": "https://wsjk.ln.gov.cn",
+    "portal_url": "https://wsjk.ln.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_沈阳": {
+    "name": "沈阳市卫生健康委员会",
+    "area": "沈阳市",
+    "base": "http://wjw.shenyang.gov.cn",
+    "portal_url": "http://wjw.shenyang.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_大连": {
+    "name": "大连市卫生健康委员会",
+    "area": "大连市",
+    "base": "http://hcod.dl.gov.cn",
+    "portal_url": "http://hcod.dl.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_鞍山": {
+    "name": "鞍山市卫生健康委员会",
+    "area": "鞍山市",
+    "base": "http://wjw.anshan.gov.cn",
+    "portal_url": "http://wjw.anshan.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_抚顺": {
+    "name": "抚顺市卫生健康委员会",
+    "area": "抚顺市",
+    "base": "http://fswjw.fushun.gov.cn",
+    "portal_url": "http://fswjw.fushun.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_丹东": {
+    "name": "丹东市卫生健康委员会",
+    "area": "丹东市",
+    "base": "http://wsjsw.dandong.gov.cn",
+    "portal_url": "http://wsjsw.dandong.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_锦州": {
+    "name": "锦州市卫生健康委员会",
+    "area": "锦州市",
+    "base": "http://wjw.jz.gov.cn",
+    "portal_url": "http://wjw.jz.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_营口": {
+    "name": "营口市卫生健康委员会",
+    "area": "营口市",
+    "base": "http://wjw.yingkou.gov.cn",
+    "portal_url": "http://wjw.yingkou.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_辽阳": {
+    "name": "辽阳市卫生健康委员会",
+    "area": "辽阳市",
+    "base": "http://wjw.liaoyang.gov.cn",
+    "portal_url": "http://wjw.liaoyang.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_朝阳": {
+    "name": "朝阳市卫生健康委员会",
+    "area": "朝阳市",
+    "base": "http://wjw.chaoyang.gov.cn",
+    "portal_url": "http://wjw.chaoyang.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_jl": {
+    "name": "吉林省卫生健康委员会",
+    "area": "吉林省",
+    "base": "http://wsjkw.jl.gov.cn",
+    "portal_url": "http://wsjkw.jl.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_四平": {
+    "name": "四平市卫生健康委员会",
+    "area": "四平市",
+    "base": "http://wjw.siping.gov.cn",
+    "portal_url": "http://wjw.siping.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_辽源": {
+    "name": "辽源市卫生健康委员会",
+    "area": "辽源市",
+    "base": "http://wjw.liaoyuan.gov.cn",
+    "portal_url": "http://wjw.liaoyuan.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_通化": {
+    "name": "通化市卫生健康委员会",
+    "area": "通化市",
+    "base": "http://www.tonghua.gov.cn/wjw",
+    "portal_url": "http://www.tonghua.gov.cn/wjw",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_白山": {
+    "name": "白山市卫生健康委员会",
+    "area": "白山市",
+    "base": "http://wsjkw.cbs.gov.cn",
+    "portal_url": "http://wsjkw.cbs.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_松原": {
+    "name": "松原市卫生健康委员会",
+    "area": "松原市",
+    "base": "http://wsjkw.jlsy.gov.cn",
+    "portal_url": "http://wsjkw.jlsy.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_hlj": {
+    "name": "黑龙江省卫生健康委员会",
+    "area": "黑龙江省",
+    "base": "http://wsjkw.hlj.gov.cn",
+    "portal_url": "http://wsjkw.hlj.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_sh": {
+    "name": "上海市卫生健康委员会",
+    "area": "上海市",
+    "base": "http://wsjkw.sh.gov.cn",
+    "portal_url": "http://wsjkw.sh.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_js": {
+    "name": "江苏省卫生健康委员会",
+    "area": "江苏省",
+    "base": "http://wjw.jiangsu.gov.cn",
+    "portal_url": "http://wjw.jiangsu.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_南京": {
+    "name": "南京市卫生健康委员会",
+    "area": "南京市",
+    "base": "http://wjw.nanjing.gov.cn",
+    "portal_url": "http://wjw.nanjing.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_无锡": {
+    "name": "无锡市卫生健康委员会",
+    "area": "无锡市",
+    "base": "http://wjw.wuxi.gov.cn",
+    "portal_url": "http://wjw.wuxi.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_徐州": {
+    "name": "徐州市卫生健康委员会",
+    "area": "徐州市",
+    "base": "http://ws.xz.gov.cn",
+    "portal_url": "http://ws.xz.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_常州": {
+    "name": "常州市卫生健康委员会",
+    "area": "常州市",
+    "base": "http://wjw.changzhou.gov.cn",
+    "portal_url": "http://wjw.changzhou.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_苏州": {
+    "name": "苏州市卫生健康委员会",
+    "area": "苏州市",
+    "base": "http://wsjkw.suzhou.gov.cn",
+    "portal_url": "http://wsjkw.suzhou.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_南通": {
+    "name": "南通市卫生健康委员会",
+    "area": "南通市",
+    "base": "http://wjw.nantong.gov.cn",
+    "portal_url": "http://wjw.nantong.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_连云": {
+    "name": "连云港市卫生健康委员会",
+    "area": "连云港市",
+    "base": "http://wjw.lyg.gov.cn",
+    "portal_url": "http://wjw.lyg.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_淮安": {
+    "name": "淮安市卫生健康委员会",
+    "area": "淮安市",
+    "base": "http://wjw.huaian.gov.cn",
+    "portal_url": "http://wjw.huaian.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_盐城": {
+    "name": "盐城市卫生健康委员会",
+    "area": "盐城市",
+    "base": "http://wsj.yancheng.gov.cn",
+    "portal_url": "http://wsj.yancheng.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_扬州": {
+    "name": "扬州市卫生健康委员会",
+    "area": "扬州市",
+    "base": "http://wjw.yangzhou.gov.cn",
+    "portal_url": "http://wjw.yangzhou.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_镇江": {
+    "name": "镇江市卫生健康委员会",
+    "area": "镇江市",
+    "base": "http://wjw.zhenjiang.gov.cn",
+    "portal_url": "http://wjw.zhenjiang.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_泰州": {
+    "name": "泰州市卫生健康委员会",
+    "area": "泰州市",
+    "base": "http://wjw.taizhou.gov.cn",
+    "portal_url": "http://wjw.taizhou.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_宿迁": {
+    "name": "宿迁市卫生健康委员会",
+    "area": "宿迁市",
+    "base": "http://wjw.suqian.gov.cn",
+    "portal_url": "http://wjw.suqian.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_zj": {
+    "name": "浙江省卫生健康委员会",
+    "area": "浙江省",
+    "base": "https://wsjkw.zj.gov.cn",
+    "portal_url": "https://wsjkw.zj.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_杭州": {
+    "name": "杭州市卫生健康委员会",
+    "area": "杭州市",
+    "base": "http://wsjkw.hangzhou.gov.cn",
+    "portal_url": "http://wsjkw.hangzhou.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_宁波": {
+    "name": "宁波市卫生健康委员会",
+    "area": "宁波市",
+    "base": "http://wjw.ningbo.gov.cn",
+    "portal_url": "http://wjw.ningbo.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_温州": {
+    "name": "温州市卫生健康委员会",
+    "area": "温州市",
+    "base": "http://wjw.wenzhou.gov.cn",
+    "portal_url": "http://wjw.wenzhou.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_绍兴": {
+    "name": "绍兴市卫生健康委员会",
+    "area": "绍兴市",
+    "base": "http://sxws.sx.gov.cn",
+    "portal_url": "http://sxws.sx.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_金华": {
+    "name": "金华市卫生健康委员会",
+    "area": "金华市",
+    "base": "http://wjw.jinhua.gov.cn",
+    "portal_url": "http://wjw.jinhua.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_舟山": {
+    "name": "舟山市卫生健康委员会",
+    "area": "舟山市",
+    "base": "http://wsjkw.zhoushan.gov.cn/index.html",
+    "portal_url": "http://wsjkw.zhoushan.gov.cn/index.html",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_台州": {
+    "name": "台州市卫生健康委员会",
+    "area": "台州市",
+    "base": "http://wsjkw.zjtz.gov.cn",
+    "portal_url": "http://wsjkw.zjtz.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_丽水": {
+    "name": "丽水市卫生健康委员会",
+    "area": "丽水市",
+    "base": "http://wsjsw.lishui.gov.cn",
+    "portal_url": "http://wsjsw.lishui.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_ah": {
+    "name": "安徽省卫生健康委员会",
+    "area": "安徽省",
+    "base": "https://wjw.ah.gov.cn",
+    "portal_url": "https://wjw.ah.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_合肥": {
+    "name": "合肥市卫生健康委员会",
+    "area": "合肥市",
+    "base": "http://wjw.hefei.gov.cn",
+    "portal_url": "http://wjw.hefei.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_芜湖": {
+    "name": "芜湖市卫生健康委员会",
+    "area": "芜湖市",
+    "base": "http://wsjkw.wuhu.gov.cn",
+    "portal_url": "http://wsjkw.wuhu.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_蚌埠": {
+    "name": "蚌埠市卫生健康委员会",
+    "area": "蚌埠市",
+    "base": "http://wjw.bengbu.gov.cn",
+    "portal_url": "http://wjw.bengbu.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_淮南": {
+    "name": "淮南市卫生健康委员会",
+    "area": "淮南市",
+    "base": "http://wjw.huainan.gov.cn",
+    "portal_url": "http://wjw.huainan.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_马鞍": {
+    "name": "马鞍山卫生健康委员会",
+    "area": "马鞍山市",
+    "base": "http://wjw.mas.gov.cn",
+    "portal_url": "http://wjw.mas.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_铜陵": {
+    "name": "铜陵市卫生健康委员会",
+    "area": "铜陵市",
+    "base": "http://wsjkw.tl.gov.cn",
+    "portal_url": "http://wsjkw.tl.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_安庆": {
+    "name": "安庆市卫生健康委员会",
+    "area": "安庆市",
+    "base": "http://wjw.anqing.gov.cn",
+    "portal_url": "http://wjw.anqing.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_黄山": {
+    "name": "黄山市卫生健康委员会",
+    "area": "黄山市",
+    "base": "http://wjw.huangshan.gov.cn",
+    "portal_url": "http://wjw.huangshan.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_滁州": {
+    "name": "滁州市卫生健康委员会",
+    "area": "滁州市",
+    "base": "http://wjw.chuzhou.gov.cn/index.html",
+    "portal_url": "http://wjw.chuzhou.gov.cn/index.html",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_阜阳": {
+    "name": "阜阳市卫生健康委员会",
+    "area": "阜阳市",
+    "base": "https://wjw.fy.gov.cn",
+    "portal_url": "https://wjw.fy.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_宿州": {
+    "name": "宿州市卫生健康委员会",
+    "area": "宿州市",
+    "base": "http://wjw.ahsz.gov.cn",
+    "portal_url": "http://wjw.ahsz.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_六安": {
+    "name": "六安市卫生健康委员会",
+    "area": "六安市",
+    "base": "http://wjw.luan.gov.cn",
+    "portal_url": "http://wjw.luan.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_池州": {
+    "name": "池州市卫生健康委",
+    "area": "池州市",
+    "base": "http://wjw.chizhou.gov.cn",
+    "portal_url": "http://wjw.chizhou.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_宣城": {
+    "name": "宣城市卫生健康委员会",
+    "area": "宣城市",
+    "base": "http://wjw.xuancheng.gov.cn",
+    "portal_url": "http://wjw.xuancheng.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_fj": {
+    "name": "福建省卫生健康委员会",
+    "area": "福建省",
+    "base": "http://wjw.fujian.gov.cn",
+    "portal_url": "http://wjw.fujian.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_厦门": {
+    "name": "厦门市卫生健康委员会",
+    "area": "厦门市",
+    "base": "http://hfpc.xm.gov.cn",
+    "portal_url": "http://hfpc.xm.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_莆田": {
+    "name": "莆田市卫生健康委员会",
+    "area": "莆田市",
+    "base": "http://wjw.putian.gov.cn",
+    "portal_url": "http://wjw.putian.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_三明": {
+    "name": "三明市卫生健康委员会",
+    "area": "三明市",
+    "base": "http://wjw.sm.gov.cn",
+    "portal_url": "http://wjw.sm.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_泉州": {
+    "name": "泉州市卫生健康委员会",
+    "area": "泉州市",
+    "base": "http://health.quanzhou.gov.cn",
+    "portal_url": "http://health.quanzhou.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_南平": {
+    "name": "南平市卫生健康委员会",
+    "area": "南平市",
+    "base": "http://wjw.np.gov.cn",
+    "portal_url": "http://wjw.np.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_龙岩": {
+    "name": "龙岩市卫生健康委员会",
+    "area": "龙岩市",
+    "base": "http://wjw.longyan.gov.cn",
+    "portal_url": "http://wjw.longyan.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_宁德": {
+    "name": "宁德市卫生健康委员会",
+    "area": "宁德市",
+    "base": "http://wjw.ningde.gov.cn",
+    "portal_url": "http://wjw.ningde.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_jx": {
+    "name": "江西省卫生健康委员会",
+    "area": "江西省",
+    "base": "http://hc.jiangxi.gov.cn",
+    "portal_url": "http://hc.jiangxi.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_南昌": {
+    "name": "南昌市卫生健康委员会",
+    "area": "南昌市",
+    "base": "http://hc.nc.gov.cn",
+    "portal_url": "http://hc.nc.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_景德": {
+    "name": "景镇镇市卫生健康委员会",
+    "area": "景德镇市",
+    "base": "http://wsjs.jdz.gov.cn",
+    "portal_url": "http://wsjs.jdz.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_萍乡": {
+    "name": "萍乡市卫生健康委员会",
+    "area": "萍乡市",
+    "base": "http://wjw.pingxiang.gov.cn",
+    "portal_url": "http://wjw.pingxiang.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_九江": {
+    "name": "九江市卫生健康委员会",
+    "area": "九江市",
+    "base": "http://wjw.jiujiang.gov.cn",
+    "portal_url": "http://wjw.jiujiang.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_新余": {
+    "name": "新余市卫生健康委员会",
+    "area": "新余市",
+    "base": "http://wjw.xinyu.gov.cn",
+    "portal_url": "http://wjw.xinyu.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_鹰潭": {
+    "name": "鹰潭市卫生健康委员会",
+    "area": "鹰潭市",
+    "base": "http://wjw.yingtan.gov.cn",
+    "portal_url": "http://wjw.yingtan.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_赣州": {
+    "name": "赣州市卫生健康委员会",
+    "area": "赣州市",
+    "base": "http://wjw.ganzhou.gov.cn",
+    "portal_url": "http://wjw.ganzhou.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_吉安": {
+    "name": "吉安市卫生健康委员会",
+    "area": "吉安市",
+    "base": "http://wsjk.jian.gov.cn",
+    "portal_url": "http://wsjk.jian.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_宜春": {
+    "name": "宜春市卫生健康委员会",
+    "area": "宜春市",
+    "base": "http://wjw.yichun.gov.cn",
+    "portal_url": "http://wjw.yichun.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_抚州": {
+    "name": "抚州市卫生健康委员会",
+    "area": "抚州市",
+    "base": "http://wjw.jxfz.gov.cn",
+    "portal_url": "http://wjw.jxfz.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_上饶": {
+    "name": "上饶市卫生健康委员会",
+    "area": "上饶市",
+    "base": "http://www.zgsr.gov.cn/wjw/bindex.shtml",
+    "portal_url": "http://www.zgsr.gov.cn/wjw/bindex.shtml",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_sd": {
+    "name": "山东省卫生健康委员会",
+    "area": "山东省",
+    "base": "http://wsjkw.shandong.gov.cn",
+    "portal_url": "http://wsjkw.shandong.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_枣庄": {
+    "name": "枣庄市卫生健康委员会",
+    "area": "枣庄市",
+    "base": "http://wsjkw.zaozhuang.gov.cn",
+    "portal_url": "http://wsjkw.zaozhuang.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_东营": {
+    "name": "东营市卫生健康委员会",
+    "area": "东营市",
+    "base": "http://dywsjk.dongying.gov.cn",
+    "portal_url": "http://dywsjk.dongying.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_潍坊": {
+    "name": "潍坊市卫生健康委员会",
+    "area": "潍坊市",
+    "base": "http://wsjkw.weifang.gov.cn",
+    "portal_url": "http://wsjkw.weifang.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_威海": {
+    "name": "威海市卫生健康委员会",
+    "area": "威海市",
+    "base": "http://wsjkw.weihai.gov.cn",
+    "portal_url": "http://wsjkw.weihai.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_日照": {
+    "name": "日照市卫生健康委员会",
+    "area": "日照市",
+    "base": "http://wsjkw.rizhao.gov.cn",
+    "portal_url": "http://wsjkw.rizhao.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_临沂": {
+    "name": "临沂市卫生健康委员会",
+    "area": "临沂市",
+    "base": "http://wsjsw.linyi.gov.cn",
+    "portal_url": "http://wsjsw.linyi.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_德州": {
+    "name": "德州市卫生健康委员会",
+    "area": "德州市",
+    "base": "http://dzwjw.dezhou.gov.cn/index.html",
+    "portal_url": "http://dzwjw.dezhou.gov.cn/index.html",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_聊城": {
+    "name": "聊城市卫生健康委员会",
+    "area": "聊城市",
+    "base": "http://wjw.liaocheng.gov.cn",
+    "portal_url": "http://wjw.liaocheng.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_滨州": {
+    "name": "滨州市卫生健康委员会",
+    "area": "滨州市",
+    "base": "http://wjw.binzhou.gov.cn",
+    "portal_url": "http://wjw.binzhou.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_菏泽": {
+    "name": "菏泽市卫生健康委员会",
+    "area": "菏泽市",
+    "base": "http://hzswsjkw.heze.gov.cn",
+    "portal_url": "http://hzswsjkw.heze.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_ha": {
+    "name": "河南省卫生健康委员会",
+    "area": "河南省",
+    "base": "http://wsjkw.henan.gov.cn",
+    "portal_url": "http://wsjkw.henan.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_郑州": {
+    "name": "郑州市卫生健康委员会",
+    "area": "郑州市",
+    "base": "http://wjw.zhengzhou.gov.cn",
+    "portal_url": "http://wjw.zhengzhou.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_开封": {
+    "name": "开封市卫生健康委员会",
+    "area": "开封市",
+    "base": "https://wjw.kaifeng.gov.cn",
+    "portal_url": "https://wjw.kaifeng.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_洛阳": {
+    "name": "洛阳市卫生健康委员会",
+    "area": "洛阳市",
+    "base": "http://lyws.ly.gov.cn",
+    "portal_url": "http://lyws.ly.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_安阳": {
+    "name": "安阳市卫生健康委员会",
+    "area": "安阳市",
+    "base": "http://aywjw.anyang.gov.cn",
+    "portal_url": "http://aywjw.anyang.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_鹤壁": {
+    "name": "鹤壁市卫生健康委员会",
+    "area": "鹤壁市",
+    "base": "https://wsjkw.hebi.gov.cn",
+    "portal_url": "https://wsjkw.hebi.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_焦作": {
+    "name": "焦作市卫生健康委员会",
+    "area": "焦作市",
+    "base": "http://wjw.jiaozuo.gov.cn",
+    "portal_url": "http://wjw.jiaozuo.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_许昌": {
+    "name": "许昌市卫生健康委员会",
+    "area": "许昌市",
+    "base": "http://xcswjw.xuchang.gov.cn",
+    "portal_url": "http://xcswjw.xuchang.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_漯河": {
+    "name": "漯河市卫生健康委员会",
+    "area": "漯河市",
+    "base": "https://wjw.luohe.gov.cn",
+    "portal_url": "https://wjw.luohe.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_三门": {
+    "name": "三门峡市卫生健康委员会",
+    "area": "三门峡市",
+    "base": "http://wjw.smx.gov.cn",
+    "portal_url": "http://wjw.smx.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_南阳": {
+    "name": "南阳市卫生健康委员会",
+    "area": "南阳市",
+    "base": "http://nyws.nanyang.gov.cn",
+    "portal_url": "http://nyws.nanyang.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_信阳": {
+    "name": "信阳市卫生健康委员会",
+    "area": "信阳市",
+    "base": "http://wsjkw.xinyang.gov.cn/index.html",
+    "portal_url": "http://wsjkw.xinyang.gov.cn/index.html",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_hb": {
+    "name": "湖北省卫生健康委员会",
+    "area": "湖北省",
+    "base": "http://wjw.hubei.gov.cn",
+    "portal_url": "http://wjw.hubei.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_武汉": {
+    "name": "武汉市卫生健康委员会",
+    "area": "武汉市",
+    "base": "http://wjw.wuhan.gov.cn",
+    "portal_url": "http://wjw.wuhan.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_黄石": {
+    "name": "黄石市卫生健康委员会",
+    "area": "黄石市",
+    "base": "http://wjw.huangshi.gov.cn",
+    "portal_url": "http://wjw.huangshi.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_十堰": {
+    "name": "十堰市卫生健康委员会",
+    "area": "十堰市",
+    "base": "http://wjw.shiyan.gov.cn",
+    "portal_url": "http://wjw.shiyan.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_宜昌": {
+    "name": "宜昌市卫生健康委员会",
+    "area": "宜昌市",
+    "base": "http://wjw.yichang.gov.cn",
+    "portal_url": "http://wjw.yichang.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_襄阳": {
+    "name": "襄阳市卫生健康委员会",
+    "area": "襄阳市",
+    "base": "http://wjw.xiangyang.gov.cn",
+    "portal_url": "http://wjw.xiangyang.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_鄂州": {
+    "name": "鄂州市卫生健康委员会",
+    "area": "鄂州市",
+    "base": "http://wjw.ezhou.gov.cn",
+    "portal_url": "http://wjw.ezhou.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_荆门": {
+    "name": "荆门市卫生健康委员会",
+    "area": "荆门市",
+    "base": "http://wjw.jingmen.gov.cn",
+    "portal_url": "http://wjw.jingmen.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_孝感": {
+    "name": "孝感市卫生健康委员会",
+    "area": "孝感市",
+    "base": "http://wjw.xiaogan.gov.cn",
+    "portal_url": "http://wjw.xiaogan.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_荆州": {
+    "name": "荆州市卫生健康委员会",
+    "area": "荆州市",
+    "base": "http://wjw.jingzhou.gov.cn",
+    "portal_url": "http://wjw.jingzhou.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_黄冈": {
+    "name": "黄冈市卫生健康委员会",
+    "area": "黄冈市",
+    "base": "http://wjw.hg.gov.cn",
+    "portal_url": "http://wjw.hg.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_咸宁": {
+    "name": "咸宁市卫生健康委员会",
+    "area": "咸宁市",
+    "base": "http://wjw.xianning.gov.cn",
+    "portal_url": "http://wjw.xianning.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_恩施": {
+    "name": "恩施土家族苗族自治州卫生健康委员会",
+    "area": "恩施土家族苗族自治州",
+    "base": "http://wjw.enshi.gov.cn",
+    "portal_url": "http://wjw.enshi.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_仙桃": {
+    "name": "仙桃卫生健康委员会",
+    "area": "仙桃市",
+    "base": "https://www.xiantao.gov.cn/bmxxgk/wsjkh/zfxxgk/zc/gfxwj",
+    "portal_url": "https://www.xiantao.gov.cn/bmxxgk/wsjkh/zfxxgk/zc/gfxwj",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_hn": {
+    "name": "湖南省卫生健康委员会",
+    "area": "湖南省",
+    "base": "http://wjw.hunan.gov.cn",
+    "portal_url": "http://wjw.hunan.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_长沙": {
+    "name": "长沙市卫生健康委员会",
+    "area": "长沙市",
+    "base": "http://wsjkw.changsha.gov.cn",
+    "portal_url": "http://wsjkw.changsha.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_株洲": {
+    "name": "株洲市卫生健康委员会",
+    "area": "株洲市",
+    "base": "http://wjw.zhuzhou.gov.cn",
+    "portal_url": "http://wjw.zhuzhou.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_湘潭": {
+    "name": "湘潭市卫生健康委员会",
+    "area": "湘潭市",
+    "base": "http://wsjkw.xiangtan.gov.cn",
+    "portal_url": "http://wsjkw.xiangtan.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_邵阳": {
+    "name": "邵阳市卫生健康委员会",
+    "area": "邵阳市",
+    "base": "http://wjw.shaoyang.gov.cn",
+    "portal_url": "http://wjw.shaoyang.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_岳阳": {
+    "name": "岳阳市卫生健康委员会",
+    "area": "岳阳市",
+    "base": "http://wsj.yueyang.gov.cn/wsj/index.htm",
+    "portal_url": "http://wsj.yueyang.gov.cn/wsj/index.htm",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_常德": {
+    "name": "常德市卫生健康委员会",
+    "area": "常德市",
+    "base": "http://wjw.changde.gov.cn",
+    "portal_url": "http://wjw.changde.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_张家": {
+    "name": "张家界市卫生健康委员会",
+    "area": "张家界市",
+    "base": "http://www.zjj.gov.cn/zjjcms/front/s17/c933/index.html",
+    "portal_url": "http://www.zjj.gov.cn/zjjcms/front/s17/c933/index.html",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_郴州": {
+    "name": "郴州市卫生健康委员会",
+    "area": "郴州市",
+    "base": "http://wsjsw.czs.gov.cn",
+    "portal_url": "http://wsjsw.czs.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_永州": {
+    "name": "永州市卫生健康委员会",
+    "area": "永州市",
+    "base": "http://wjw.yzcity.gov.cn",
+    "portal_url": "http://wjw.yzcity.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_怀化": {
+    "name": "怀化市卫生健康委员会",
+    "area": "怀化市",
+    "base": "http://www.huaihua.gov.cn/wsjkw",
+    "portal_url": "http://www.huaihua.gov.cn/wsjkw",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_娄底": {
+    "name": "娄底市卫生健康委员会",
+    "area": "娄底市",
+    "base": "http://wjw.hnloudi.gov.cn",
+    "portal_url": "http://wjw.hnloudi.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_湘西": {
+    "name": "湘西自治州卫生健康委员会",
+    "area": "湘西土家族苗族自治州",
+    "base": "http://wsjkwyh.xxz.gov.cn",
+    "portal_url": "http://wsjkwyh.xxz.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_gd": {
+    "name": "广东省卫生健康委员会",
+    "area": "广东省",
+    "base": "http://wsjkw.gd.gov.cn",
+    "portal_url": "http://wsjkw.gd.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_广州": {
+    "name": "广州市卫生健康委员会",
+    "area": "广州市",
+    "base": "http://wjw.gz.gov.cn",
+    "portal_url": "http://wjw.gz.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_深圳": {
+    "name": "深圳市卫生健康委员会",
+    "area": "深圳市",
+    "base": "http://wjw.sz.gov.cn",
+    "portal_url": "http://wjw.sz.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_阳江": {
+    "name": "阳江市卫生健康委员会",
+    "area": "阳江市",
+    "base": "http://www.yangjiang.gov.cn/yjwsj/gkmlpt/index?jump=false",
+    "portal_url": "http://www.yangjiang.gov.cn/yjwsj/gkmlpt/index?jump=false",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_gx": {
+    "name": "广西壮族自治区卫生健康委员会",
+    "area": "广西壮族自治区",
+    "base": "http://wsjkw.gxzf.gov.cn",
+    "portal_url": "http://wsjkw.gxzf.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_南宁": {
+    "name": "南宁市卫生健康委员会",
+    "area": "南宁市",
+    "base": "http://wjw.nanning.gov.cn",
+    "portal_url": "http://wjw.nanning.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_柳州": {
+    "name": "柳州市卫生健康委员会",
+    "area": "柳州市",
+    "base": "http://wjw.liuzhou.gov.cn",
+    "portal_url": "http://wjw.liuzhou.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_桂林": {
+    "name": "桂林市卫生健康委员会",
+    "area": "桂林市",
+    "base": "http://wjw.guilin.gov.cn",
+    "portal_url": "http://wjw.guilin.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_梧州": {
+    "name": "梧州市卫生健康委员会",
+    "area": "梧州市",
+    "base": "http://wjw.wuzhou.gov.cn",
+    "portal_url": "http://wjw.wuzhou.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_北海": {
+    "name": "北海市卫生健康委员会",
+    "area": "北海市",
+    "base": "http://www.beihai.gov.cn/xxgkbm/bhswsjkwyh",
+    "portal_url": "http://www.beihai.gov.cn/xxgkbm/bhswsjkwyh",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_防城": {
+    "name": "防城港市卫生健康委员会",
+    "area": "防城港市",
+    "base": "http://www.fcgs.gov.cn/wjw",
+    "portal_url": "http://www.fcgs.gov.cn/wjw",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_玉林": {
+    "name": "玉林市卫生健康委员会",
+    "area": "玉林市",
+    "base": "http://wjw.yulin.gov.cn",
+    "portal_url": "http://wjw.yulin.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_河池": {
+    "name": "河池市卫生健康委员会",
+    "area": "河池市",
+    "base": "http://wjw.hechi.gov.cn",
+    "portal_url": "http://wjw.hechi.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_来宾": {
+    "name": "广西来宾市卫生健康委员会",
+    "area": "来宾市",
+    "base": "http://wjw.laibin.gov.cn",
+    "portal_url": "http://wjw.laibin.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_hi": {
+    "name": "海南省卫生健康委员会",
+    "area": "海南省",
+    "base": "http://wst.hainan.gov.cn/swjw/index.html",
+    "portal_url": "http://wst.hainan.gov.cn/swjw/index.html",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_海口": {
+    "name": "海口市卫生健康委员会",
+    "area": "海口市",
+    "base": "http://wjw.haikou.gov.cn",
+    "portal_url": "http://wjw.haikou.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_三亚": {
+    "name": "三亚市卫生健康委员会",
+    "area": "三亚市",
+    "base": "http://ws.sanya.gov.cn",
+    "portal_url": "http://ws.sanya.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_cq": {
+    "name": "重庆市卫生健康委员会",
+    "area": "重庆市",
+    "base": "http://wsjkw.cq.gov.cn",
+    "portal_url": "http://wsjkw.cq.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_sc": {
+    "name": "四川省卫生健康委员会",
+    "area": "四川省",
+    "base": "http://wsjkw.sc.gov.cn",
+    "portal_url": "http://wsjkw.sc.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_自贡": {
+    "name": "自贡市卫生健康委员会",
+    "area": "自贡市",
+    "base": "https://www.zg.gov.cn/zgsrmzf/swsjswjgzn/pc/content/content_1966420102877159424.html",
+    "portal_url": "https://www.zg.gov.cn/zgsrmzf/swsjswjgzn/pc/content/content_1966420102877159424.html",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_攀枝": {
+    "name": "攀枝花市卫生健康委员会",
+    "area": "攀枝花市",
+    "base": "http://wjw.panzhihua.gov.cn",
+    "portal_url": "http://wjw.panzhihua.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_泸州": {
+    "name": "泸州市卫生健康委员会",
+    "area": "泸州市",
+    "base": "http://wjw.luzhou.gov.cn",
+    "portal_url": "http://wjw.luzhou.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_德阳": {
+    "name": "德阳市卫生健康委员会",
+    "area": "德阳市",
+    "base": "https://www.deyang.gov.cn/info/iList.jsp?tm_id=2204",
+    "portal_url": "https://www.deyang.gov.cn/info/iList.jsp?tm_id=2204",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_绵阳": {
+    "name": "绵阳市卫生健康委员会",
+    "area": "绵阳市",
+    "base": "http://wjw.my.gov.cn",
+    "portal_url": "http://wjw.my.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_广元": {
+    "name": "广元市卫生健康委员会",
+    "area": "广元市",
+    "base": "https://wsjkw.cngy.gov.cn",
+    "portal_url": "https://wsjkw.cngy.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_遂宁": {
+    "name": "遂宁市卫生健康委员会",
+    "area": "遂宁市",
+    "base": "http://swjw.suining.gov.cn",
+    "portal_url": "http://swjw.suining.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_乐山": {
+    "name": "乐山市卫生健康委员会",
+    "area": "乐山市",
+    "base": "https://www.leshan.gov.cn/lsswszf/bmxxgk/92337817/index.html",
+    "portal_url": "https://www.leshan.gov.cn/lsswszf/bmxxgk/92337817/index.html",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_南充": {
+    "name": "南充市卫生健康委员会",
+    "area": "南充市",
+    "base": "https://www.nanchong.gov.cn/wsjkw",
+    "portal_url": "https://www.nanchong.gov.cn/wsjkw",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_宜宾": {
+    "name": "宜宾市卫生健康委员会",
+    "area": "宜宾市",
+    "base": "http://ybwjw.yibin.gov.cn",
+    "portal_url": "http://ybwjw.yibin.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_达州": {
+    "name": "达州市卫生健康委员会",
+    "area": "达州市",
+    "base": "http://wjw.dazhou.gov.cn",
+    "portal_url": "http://wjw.dazhou.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_雅安": {
+    "name": "雅安市卫生健康委员会",
+    "area": "雅安市",
+    "base": "http://wjw.yaan.gov.cn",
+    "portal_url": "http://wjw.yaan.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_巴中": {
+    "name": "巴中市卫生健康委员会",
+    "area": "巴中市",
+    "base": "http://wsjkw.cnbz.gov.cn/index.html",
+    "portal_url": "http://wsjkw.cnbz.gov.cn/index.html",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_资阳": {
+    "name": "资阳市卫生健康委员会",
+    "area": "资阳市",
+    "base": "http://www.ziyang.gov.cn/zysrmzf/bmgkzn/pc/list.html?gkfwjg=%E8%B5%84%E9%98%B3%E5%B8%82%E5%8D%AB%E7%94%9F%E5%81%A5%E5%BA%B7%E5%A7%94%E5%91%98%E4%BC%9A",
+    "portal_url": "http://www.ziyang.gov.cn/zysrmzf/bmgkzn/pc/list.html?gkfwjg=%E8%B5%84%E9%98%B3%E5%B8%82%E5%8D%AB%E7%94%9F%E5%81%A5%E5%BA%B7%E5%A7%94%E5%91%98%E4%BC%9A",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_阿坝": {
+    "name": "阿坝藏族羌族自治州卫生健康委员会",
+    "area": "阿坝藏族羌族自治州",
+    "base": "https://www.abazhou.gov.cn/abazhou/c109873/bmzfxxgk_zn.shtml",
+    "portal_url": "https://www.abazhou.gov.cn/abazhou/c109873/bmzfxxgk_zn.shtml",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_凉山": {
+    "name": "凉山彝族自治州卫生健康委员会",
+    "area": "凉山彝族自治州",
+    "base": "http://wjw.lsz.gov.cn",
+    "portal_url": "http://wjw.lsz.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_gz": {
+    "name": "贵州省卫生健康委员会",
+    "area": "贵州省",
+    "base": "http://wjw.guizhou.gov.cn",
+    "portal_url": "http://wjw.guizhou.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_yn": {
+    "name": "云南省卫生健康委员会",
+    "area": "云南省",
+    "base": "http://ynswsjkw.yn.gov.cn/web/index",
+    "portal_url": "http://ynswsjkw.yn.gov.cn/web/index",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_昆明": {
+    "name": "昆明市卫生健康委员会",
+    "area": "昆明市",
+    "base": "https://wsjkw.km.gov.cn",
+    "portal_url": "https://wsjkw.km.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_楚雄": {
+    "name": "楚雄彝族自治州卫生健康委员会",
+    "area": "楚雄彝族自治州",
+    "base": "http://www.cxz.gov.cn/zfxxgk/zfxxbmgk/cxzwsjkwyh.htm",
+    "portal_url": "http://www.cxz.gov.cn/zfxxgk/zfxxbmgk/cxzwsjkwyh.htm",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_xz": {
+    "name": "西藏自治区卫生健康委员会",
+    "area": "西藏自治区",
+    "base": "http://wjw.xizang.gov.cn",
+    "portal_url": "http://wjw.xizang.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_sn": {
+    "name": "陕西省卫生健康委员会",
+    "area": "陕西省",
+    "base": "http://sxwjw.shaanxi.gov.cn",
+    "portal_url": "http://sxwjw.shaanxi.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_西安": {
+    "name": "西安市卫生健康委员会",
+    "area": "西安市",
+    "base": "http://xawjw.xa.gov.cn",
+    "portal_url": "http://xawjw.xa.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_宝鸡": {
+    "name": "宝鸡市卫生健康委",
+    "area": "宝鸡市",
+    "base": "http://wjw.baoji.gov.cn",
+    "portal_url": "http://wjw.baoji.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_咸阳": {
+    "name": "咸阳市卫生健康委员会",
+    "area": "咸阳市",
+    "base": "http://wjw.xianyang.gov.cn",
+    "portal_url": "http://wjw.xianyang.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_延安": {
+    "name": "延安市卫生健康委员会",
+    "area": "延安市",
+    "base": "http://wjw.yanan.gov.cn",
+    "portal_url": "http://wjw.yanan.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_汉中": {
+    "name": "汉中市卫生健康委员会",
+    "area": "汉中市",
+    "base": "http://wj.hanzhong.gov.cn",
+    "portal_url": "http://wj.hanzhong.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_榆林": {
+    "name": "榆林市卫生健康委员会",
+    "area": "榆林市",
+    "base": "http://wjw.yl.gov.cn",
+    "portal_url": "http://wjw.yl.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_安康": {
+    "name": "安康市卫生健康委员会",
+    "area": "安康市",
+    "base": "https://wjw.ankang.gov.cn",
+    "portal_url": "https://wjw.ankang.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_gs": {
+    "name": "甘肃省卫生健康委员会",
+    "area": "甘肃省",
+    "base": "http://wsjk.gansu.gov.cn",
+    "portal_url": "http://wsjk.gansu.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_兰州": {
+    "name": "兰州市卫生健康委员会",
+    "area": "兰州市",
+    "base": "http://wjw.lanzhou.gov.cn",
+    "portal_url": "http://wjw.lanzhou.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_嘉峪": {
+    "name": "嘉峪关市卫生健康委员会",
+    "area": "嘉峪关市",
+    "base": "http://www.jyg.gov.cn/wjw",
+    "portal_url": "http://www.jyg.gov.cn/wjw",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_天水": {
+    "name": "天水市卫生健康委员会",
+    "area": "天水市",
+    "base": "http://www.tianshui.gov.cn/wjw/zfxxgk/fdnrzdgk/zcjd.htm",
+    "portal_url": "http://www.tianshui.gov.cn/wjw/zfxxgk/fdnrzdgk/zcjd.htm",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_武威": {
+    "name": "武威市卫生健康委员会",
+    "area": "武威市",
+    "base": "https://www.gswuwei.gov.cn/col/col861/index.html",
+    "portal_url": "https://www.gswuwei.gov.cn/col/col861/index.html",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_张掖": {
+    "name": "张掖市卫生健康委员会",
+    "area": "张掖市",
+    "base": "http://www.zhangye.gov.cn/wjw",
+    "portal_url": "http://www.zhangye.gov.cn/wjw",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_平凉": {
+    "name": "平凉市卫生健康委员会",
+    "area": "平凉市",
+    "base": "http://wjw.pingliang.gov.cn",
+    "portal_url": "http://wjw.pingliang.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_酒泉": {
+    "name": "酒泉市卫生健康育委员会",
+    "area": "酒泉市",
+    "base": "http://wjw.jiuquan.gov.cn",
+    "portal_url": "http://wjw.jiuquan.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_庆阳": {
+    "name": "庆阳市卫生健康委员会",
+    "area": "庆阳市",
+    "base": "http://wsjk.zgqingyang.gov.cn",
+    "portal_url": "http://wsjk.zgqingyang.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_定西": {
+    "name": "定西市卫生健康委员会",
+    "area": "定西市",
+    "base": "http://wjw.dingxi.gov.cn",
+    "portal_url": "http://wjw.dingxi.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_甘南": {
+    "name": "甘南藏族自治州卫生健康委员会",
+    "area": "甘南藏族自治州",
+    "base": "http://wsjk.gnzrmzf.gov.cn",
+    "portal_url": "http://wsjk.gnzrmzf.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_qh": {
+    "name": "青海省卫生健康委员会",
+    "area": "青海省",
+    "base": "http://wsjkw.qinghai.gov.cn",
+    "portal_url": "http://wsjkw.qinghai.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_西宁": {
+    "name": "西宁市卫生健康委员会",
+    "area": "西宁市",
+    "base": "http://wjw.xining.gov.cn",
+    "portal_url": "http://wjw.xining.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_nx": {
+    "name": "宁夏回族自治区卫生健康委员会",
+    "area": "宁夏回族自治区",
+    "base": "http://wsjkw.nx.gov.cn",
+    "portal_url": "http://wsjkw.nx.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_银川": {
+    "name": "银川市卫生健康委员会",
+    "area": "银川市",
+    "base": "http://wjw.yinchuan.gov.cn",
+    "portal_url": "http://wjw.yinchuan.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_xj": {
+    "name": "新疆维吾尔自治区卫生健康委员会",
+    "area": "新疆维吾尔自治区",
+    "base": "http://wjw.xinjiang.gov.cn",
+    "portal_url": "http://wjw.xinjiang.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  },
+  "nhc_xjbt": {
+    "name": "新疆生产建设兵团卫生健康委员会",
+    "area": "新疆生产建设兵团",
+    "base": "http://wsj.xjbt.gov.cn",
+    "portal_url": "http://wsj.xjbt.gov.cn",
+    "parser": "nhc",
+    "list_url": "",
+    "keep_paths": [],
+    "enabled": false
+  }
+}

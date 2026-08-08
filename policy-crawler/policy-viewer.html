@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>政策信息聚合 · 浏览</title>
+<style>
+:root{
+  --bg:#f8fafc;--panel:#fff;--ink:#0f172a;--sub:#475569;--line:#e2e8f0;
+  --brand:#2563eb;--brand2:#1d4ed8;--soft:#f1f5f9;
+  --red:#dc2626;--green:#16a34a;--amber:#d97706;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+header{padding:18px 24px;background:linear-gradient(90deg,#0f172a,#334155);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+header h1{margin:0;font-size:19px;font-weight:600}
+header .sub{font-size:12px;color:#cbd5e1;margin-top:4px}
+.badge{padding:5px 12px;border-radius:20px;font-size:12px;background:#1e293b;border:1px solid #475569;color:#e2e8f0}
+.badge.on{background:#052e16;border-color:#166534;color:#bbf7d0}
+.badge.off{background:#450a0a;border-color:#991b1b;color:#fecaca}
+.wrap{max-width:1080px;margin:0 auto;padding:22px 18px 60px}
+.toolbar{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:16px;box-shadow:0 1px 3px rgba(20,40,80,.04)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.row + .row{margin-top:10px}
+label{font-size:12px;color:var(--sub);white-space:nowrap}
+input,select{font-family:inherit;font-size:13px;padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);min-width:0}
+#kw{flex:1 1 260px}
+input[type=date]{flex:0 1 150px}
+.btn{padding:10px 18px;border:none;border-radius:10px;background:var(--brand);color:#fff;font-size:13px;cursor:pointer}
+.btn.alt{background:#fff;color:var(--brand);border:1px solid var(--brand)}
+.btn.gray{background:#eef1f6;color:var(--sub)}
+.btn:hover{filter:brightness(.96)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.chip{padding:7px 13px;border-radius:20px;border:1px solid var(--line);background:var(--soft);font-size:12.5px;cursor:pointer;color:var(--sub)}
+.chip:hover{border-color:var(--brand);color:var(--brand)}
+.chip.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 16px;font-size:12px;color:var(--sub);box-shadow:0 1px 3px rgba(20,40,80,.04)}
+.stat b{display:block;font-size:17px;color:var(--ink)}
+.list-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:13px;color:var(--sub)}
+.list-head .total b{color:var(--ink)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px 18px;margin-bottom:12px;cursor:pointer;transition:border-color .15s,box-shadow .15s;box-shadow:0 1px 3px rgba(20,40,80,.04)}
+.card:hover{border-color:var(--brand2);box-shadow:0 4px 12px rgba(15,23,42,.08)}
+.card .t{font-size:15px;font-weight:600;line-height:1.45}
+.card .meta{margin-top:8px;font-size:12px;color:var(--sub);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.tag{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11.5px}
+.tag.green{background:#dcfce7;color:var(--green)}
+.tag.red{background:#fee2e2;color:var(--red)}
+.tag.blue{background:#e0e7ff;color:#4338ca}
+.tag.gray{background:#f1f5f9;color:var(--sub)}
+.empty{text-align:center;color:var(--sub);padding:44px 0;font-size:13px}
+.mask{position:fixed;inset:0;background:rgba(15,23,42,.45);display:none;align-items:flex-start;justify-content:center;padding:36px 14px;z-index:50;overflow:auto}
+.mask.show{display:flex}
+.modal{background:var(--panel);border-radius:16px;max-width:820px;width:100%;padding:24px 26px;box-shadow:0 20px 50px rgba(15,23,42,.25)}
+.modal h2{margin:0 0 12px;font-size:18px;line-height:1.5}
+.mmeta{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;background:var(--soft);border-radius:10px;padding:12px 14px;margin-bottom:14px}
+.mmeta .k{font-size:11.5px;color:var(--sub)}
+.mmeta .v{font-size:13px;margin-top:2px;word-break:break-all}
+.content{white-space:pre-wrap;font-size:14px;line-height:1.85;color:#1e293b;max-height:48vh;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.att{margin-top:14px}
+.att a{color:var(--brand);text-decoration:none;font-size:13px;display:block;margin-top:6px;word-break:break-all}
+.att a:hover{text-decoration:underline}
+.modal-actions{margin-top:18px;text-align:right}
+.hint{font-size:12px;color:var(--amber);margin-top:8px}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>政策信息聚合 · 浏览</h1>
+    <div class="sub">医药流通政策爬虫数据前端 · 对接规格书 P2 API</div>
+  </div>
+  <div class="row">
+    <span id="connBadge" class="badge off">连接检测中…</span>
+    <button class="btn gray" onclick="loadAll(true)">刷新</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="toolbar">
+    <div class="row">
+      <input id="kw" placeholder="关键词：标题 / 文号 / 正文（如：集采、追溯、定点）">
+      <label>发布机构</label>
+      <select id="fAuthority"><option value="">全部</option></select>
+      <label>效力状态</label>
+      <select id="fStatus">
+        <option value="">全部</option>
+        <option>有效</option>
+        <option>废止</option>
+        <option>未生效</option>
+      </select>
+      <label>日期从</label>
+      <input type="date" id="fFrom">
+      <label>至</label>
+      <input type="date" id="fTo">
+      <button class="btn" onclick="doSearch()">搜索</button>
+      <button class="btn alt" onclick="resetFilters()">重置</button>
+    </div>
+    <div class="chips" id="scenarioChips"></div>
+  </div>
+
+  <div class="stats" id="statsBar"></div>
+
+  <div class="list-head">
+    <span class="total">共 <b id="total">0</b> 条</span>
+    <span id="modeHint">API 地址：<span id="apiBase"></span></span>
+  </div>
+  <div id="list"></div>
+  <div class="empty" id="empty" style="display:none">未检索到相关政策，换个关键词试试。</div>
+</div>
+
+<div class="mask" id="mask" onclick="if(event.target===this)closeDetail()">
+  <div class="modal">
+    <h2 id="dTitle"></h2>
+    <div class="mmeta" id="dMeta"></div>
+    <div class="content" id="dContent"></div>
+    <div class="att" id="dAtt"></div>
+    <div class="hint" id="dHint"></div>
+    <div class="modal-actions"><button class="btn alt" onclick="closeDetail()">关闭</button></div>
+  </div>
+</div>
+
+<script>
+"use strict";
+const API_BASE = (new URLSearchParams(location.search).get("api") || "http://127.0.0.1:8000").replace(/\/+$/, "");
+document.getElementById("apiBase").textContent = API_BASE;
+
+let state = { mode: "offline", all: [], detailCache: {} };
+
+const DEMO = [
+  {id:1,title:"国家医保局关于开展国家药品集中带量采购工作的通知",doc_number:"医保发〔2026〕88号",issuing_authority:"国家医疗保障局",publish_date:"2026-07-20",validity_status:"有效",source_url:"https://www.nhsa.gov.cn/",tags:["集采"],content:"为常态化制度化开展药品集中带量采购…（演示数据）"},
+  {id:2,title:"国家药监局综合司关于印发处方药网络零售合规指南的通知",doc_number:"药监综〔2026〕56号",issuing_authority:"国家药品监督管理局",publish_date:"2026-07-05",validity_status:"有效",source_url:"https://www.nmpa.gov.cn/",tags:["网络销售"],content:"规范处方药网络零售行为…（演示数据）"},
+  {id:3,title:"国家医保局关于进一步加强定点零售药店管理的通知",doc_number:"医保办发〔2026〕41号",issuing_authority:"国家医疗保障局",publish_date:"2026-06-12",validity_status:"有效",source_url:"https://www.nhsa.gov.cn/",tags:["医保定点"],content:"加强定点零售药店日常管理…（演示数据）"},
+  {id:4,title:"国家药监局关于废止部分药品追溯相关规范性文件的决定",doc_number:"国家药监局公告2026年第17号",issuing_authority:"国家药品监督管理局",publish_date:"2026-03-01",validity_status:"废止",source_url:"https://www.nmpa.gov.cn/",tags:["追溯"],content:"自2026年4月1日起废止…（演示数据）"},
+];
+
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function statusTag(s){
+  const cls = s==="废止"?"red":(s==="未生效"?"blue":"green");
+  return `<span class="tag ${cls}">${esc(s||"有效")}</span>`;
+}
+
+async function api(path){
+  const r = await fetch(API_BASE + path);
+  if(!r.ok) throw new Error("HTTP " + r.status);
+  return r.json();
+}
+
+async function loadAll(manual){
+  try{
+    const [list, stats] = await Promise.all([
+      api("/api/policies?size=100"),
+      api("/api/stats/latest"),
+    ]);
+    state.all = list.items || [];
+    state.mode = "online";
+    setBadge(true);
+    renderStats(stats);
+    buildAuthorityOptions();
+    renderList(state.all);
+    loadScenarios();
+    if(manual) toast("已连接 API：" + API_BASE);
+  }catch(e){
+    if(state.mode === "online" && manual){ toast("连接 API 失败，已切换演示数据"); }
+    state.all = DEMO;
+    state.mode = "offline";
+    setBadge(false);
+    renderStats({today:0,week:0});
+    buildAuthorityOptions();
+    renderList(DEMO);
+  }
+}
+
+function setBadge(ok){
+  const b = document.getElementById("connBadge");
+  b.className = "badge " + (ok?"on":"off");
+  b.textContent = ok ? ("在线 · " + API_BASE) : "离线演示数据（未连接 API）";
+}
+
+function renderStats(s){
+  document.getElementById("statsBar").innerHTML =
+    `<div class="stat">今日新增<b>${s.today||0}</b></div>` +
+    `<div class="stat">近7天新增<b>${s.week||0}</b></div>` +
+    `<div class="stat">当前展示<b>${state.all.length}</b></div>` +
+    (state.mode==="online" ? "" : `<div class="stat">数据源<b>演示</b></div>`);
+}
+
+function buildAuthorityOptions(){
+  const set = [...new Set(state.all.map(p=>p.issuing_authority).filter(Boolean))].sort();
+  const sel = document.getElementById("fAuthority");
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">全部</option>' + set.map(a=>`<option>${esc(a)}</option>`).join("");
+  if(cur) sel.value = cur;
+}
+
+function renderList(items){
+  const box = document.getElementById("list");
+  document.getElementById("total").textContent = items.length;
+  document.getElementById("empty").style.display = items.length ? "none" : "block";
+  box.innerHTML = items.map(p=>`
+    <div class="card" onclick="openDetail(${p.id})">
+      <div class="t">${esc(p.title)}</div>
+      <div class="meta">
+        ${statusTag(p.validity_status)}
+        <span>${esc(p.publish_date||"")}</span>
+        <span>${esc(p.issuing_authority||"")}</span>
+        <span>${esc(p.doc_number||"")}</span>
+      </div>
+    </div>`).join("");
+}
+
+function doSearch(){
+  const kw = document.getElementById("kw").value.trim();
+  const au = document.getElementById("fAuthority").value;
+  const st = document.getElementById("fStatus").value;
+  const f = document.getElementById("fFrom").value;
+  const t = document.getElementById("fTo").value;
+  let items = state.all;
+  if(kw) items = items.filter(p=>(p.title+" "+p.doc_number+" "+p.content).toLowerCase().includes(kw.toLowerCase()));
+  if(au) items = items.filter(p=>p.issuing_authority===au);
+  if(st) items = items.filter(p=>(p.validity_status||"有效")===st);
+  if(f) items = items.filter(p=>String(p.publish_date||"").slice(0,10) >= f);
+  if(t) items = items.filter(p=>String(p.publish_date||"").slice(0,10) <= t);
+  renderList(items);
+}
+
+function resetFilters(){
+  ["kw","fAuthority","fStatus","fFrom","fTo"].forEach(id=>document.getElementById(id).value="");
+  renderList(state.all);
+}
+
+function loadScenarios(){
+  const box = document.getElementById("scenarioChips");
+  if(state.mode!=="online"){ box.innerHTML = ""; return; }
+  api("/api/scenarios").then(d=>{
+    box.innerHTML = '<span class="chip on" onclick="resetFilters()">全部政策</span>' +
+      (d.items||[]).map(s=>`<span class="chip" onclick="openScenario('${s.id}')">${esc(s.name)}</span>`).join("");
+  }).catch(()=>{});
+}
+
+async function openScenario(id){
+  try{
+    const d = await api(`/api/scenarios/${id}/policies`);
+    state.all = d.items || [];
+    setBadge(true);
+    renderStats({today:0,week:0});
+    buildAuthorityOptions();
+    renderList(state.all);
+    toast("已按业务场景筛选");
+  }catch(e){ toast("场景查询失败"); }
+}
+
+async function openDetail(id){
+  const p = state.detailCache[id] || state.all.find(x=>x.id===id);
+  showDetail(p);
+  if(state.mode==="online" && !state.detailCache[id]){
+    try{
+      const d = await api(`/api/policies/${id}`);
+      state.detailCache[id] = d;
+      showDetail(d);
+    }catch(e){}
+  }
+}
+
+function showDetail(p){
+  if(!p) return;
+  document.getElementById("dTitle").textContent = p.title || "";
+  document.getElementById("dMeta").innerHTML =
+    `<div><div class="k">发文字号</div><div class="v">${esc(p.doc_number||"—")}</div></div>` +
+    `<div><div class="k">发布机构</div><div class="v">${esc(p.issuing_authority||"—")}</div></div>` +
+    `<div><div class="k">发布日期</div><div class="v">${esc(p.publish_date||"—")}</div></div>` +
+    `<div><div class="k">效力状态</div><div class="v">${statusTag(p.validity_status)}</div></div>` +
+    `<div><div class="k">原文链接</div><div class="v">${p.source_url?`<a href="${esc(p.source_url)}" target="_blank" rel="noopener">查看原文 ↗</a>`:"—"}</div></div>`;
+  document.getElementById("dContent").textContent = p.content || "（暂无正文）";
+  let atts = [];
+  try{ atts = JSON.parse(p.attachment_links || "[]"); }catch(e){}
+  document.getElementById("dAtt").innerHTML = atts.length
+    ? "<div class='k' style='font-size:11.5px;color:var(--sub)'>附件</div>" +
+      atts.map(a=>`<a href="${esc(a.url)}" target="_blank" rel="noopener">下载附件：${esc(decodeURIComponent((a.url||"").split("/").pop()||"file"))}</a>`).join("")
+    : "";
+  document.getElementById("dHint").textContent = state.mode==="offline" ? "当前为离线演示数据，启动爬虫 API 后即可浏览真实政策。" : "";
+  document.getElementById("mask").classList.add("show");
+}
+
+function closeDetail(){ document.getElementById("mask").classList.remove("show"); }
+
+let toastTimer;
+function toast(msg){
+  let el = document.getElementById("toast");
+  if(!el){
+    el = document.createElement("div");
+    el.id = "toast";
+    el.style.cssText = "position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:#0f172a;color:#fff;padding:10px 18px;border-radius:10px;font-size:13px;z-index:99;box-shadow:0 8px 24px rgba(15,23,42,.25)";
+    document.body.appendChild(el);
+  }
+  el.textContent = msg;
+  el.style.display = "block";
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>el.style.display="none", 2600);
+}
+
+document.getElementById("kw").addEventListener("keydown", e=>{ if(e.key==="Enter") doSearch(); });
+loadAll(false);
+</script>
+</body>
+</html>
