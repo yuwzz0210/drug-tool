@@ -3,6 +3,18 @@
 $ErrorActionPreference = "Stop"
 Set-Location $PSScriptRoot
 
+# Codex 自带精简 git 默认找不到 git-remote-https，自动定位并启用
+$gitExe = (Get-Command git -ErrorAction SilentlyContinue).Source
+if ($gitExe -and $gitExe -match "codex-runtimes") {
+  $gitRoot = Split-Path (Split-Path $gitExe -Parent) -Parent
+  $helperBin = Join-Path $gitRoot "mingw64\bin"
+  if (Test-Path (Join-Path $helperBin "git-remote-https.exe")) {
+    $env:GIT_EXEC_PATH = $helperBin
+    $env:PATH = "$helperBin;$env:PATH"
+    Write-Host "==> 已启用 git-remote-https 助手: $helperBin"
+  }
+}
+
 $remote = "https://github.com/yuwzz0210/drug-tool.git"
 
 if (-not (git remote | Select-String -Quiet "origin")) {
