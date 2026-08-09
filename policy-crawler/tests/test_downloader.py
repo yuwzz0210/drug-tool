@@ -1,6 +1,8 @@
 import unittest
+import ssl
 
-from downloader import Downloader, PauseSignal
+import downloader as dl
+from downloader import Downloader, PauseSignal, _is_ssl_error
 from proxy import ProxyPool
 
 
@@ -20,6 +22,36 @@ class RecordingFetcher:
 
 
 class TestDownloader(unittest.TestCase):
+    def test_ssl_error_detection(self):
+        self.assertTrue(_is_ssl_error(ssl.SSLError("tlsv1 alert protocol version")))
+        self.assertTrue(_is_ssl_error(OSError("CERTIFICATE_VERIFY_FAILED")))
+        self.assertTrue(_is_ssl_error(OSError("ssl handshake failure")))
+        self.assertFalse(_is_ssl_error(OSError("timed out")))
+
+    def test_tls_fallback_retries_with_relaxed_ssl(self):
+        calls = []
+
+        def fake_fetcher(url, ua):
+            calls.append(("normal", url))
+            raise ssl.SSLError("tlsv1 alert protocol version")
+
+        def fake_relaxed(url, ua):
+            calls.append(("relaxed", url))
+            return (200, "ok")
+
+        original = dl._relaxed_fetcher
+        dl._relaxed_fetcher = fake_relaxed
+        try:
+            d = Downloader(ua_list=["UA"], delay_range=(0, 0), retries=0, fetcher=fake_fetcher)
+            status, body = d.fetch("https://example.com/a")
+        finally:
+            dl._relaxed_fetcher = original
+        self.assertEqual((status, body), (200, "ok"))
+        self.assertEqual(calls, [
+            ("normal", "https://example.com/a"),
+            ("relaxed", "https://example.com/a"),
+        ])
+
     def test_ua_rotation_cycles(self):
         fetcher = RecordingFetcher([(200, "ok")])
         d = Downloader(ua_list=["UA-A", "UA-B"], delay_range=(0, 0), retries=0, fetcher=fetcher)

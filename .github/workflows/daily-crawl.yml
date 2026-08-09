@@ -35,10 +35,20 @@ jobs:
       - name: 运行爬虫并合并输出 data/policies.json
         run: |
           set -x
-          # 单个来源失败不中断流程（合规延迟默认 4-5 秒，三次约 1-2 分钟）
-          python policy-crawler/main.py crawl --source nmpa --days 1 --output data/policies.json || echo "::warning::NMPA 抓取失败，继续"
-          python policy-crawler/main.py crawl --source nhsa --days 1 --output data/policies.json || echo "::warning::NHSA 抓取失败，继续"
-          python policy-crawler/main.py crawl --source nhc --days 1 --output data/policies.json || echo "::warning::NHC 抓取失败，继续"
+          FAILED=""
+          python policy-crawler/main.py crawl --source nmpa --days 1 --output data/policies.json \
+            || { echo "::warning::NMPA 抓取失败，最近日志如下"; tail -n 60 logs/crawler.log 2>/dev/null || true; FAILED="$FAILED nmpa"; }
+          python policy-crawler/main.py crawl --source nhsa --days 1 --output data/policies.json \
+            || { echo "::warning::NHSA 抓取失败，最近日志如下"; tail -n 60 logs/crawler.log 2>/dev/null || true; FAILED="$FAILED nhsa"; }
+          python policy-crawler/main.py crawl --source nhc --days 1 --output data/policies.json \
+            || { echo "::warning::NHC 抓取失败，最近日志如下"; tail -n 60 logs/crawler.log 2>/dev/null || true; FAILED="$FAILED nhc"; }
+          if [ "$FAILED" = " nmpa nhsa nhc" ]; then
+            echo "::error::三个数据源全部抓取失败，请检查上方日志"
+            exit 1
+          fi
+          if [ -n "$FAILED" ]; then
+            echo "::notice::部分来源抓取失败:$FAILED，其余来源数据已提交"
+          fi
 
       - name: 校验产物结构
         run: |

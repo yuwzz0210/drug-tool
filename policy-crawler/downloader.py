@@ -2,6 +2,7 @@
 """下载器：UA 轮换、合规延迟、重试、403 暂停信号、请求留痕、可选代理池。"""
 import logging
 import random
+import ssl
 import time
 import urllib.request
 
@@ -15,10 +16,37 @@ class PauseSignal(Exception):
     """遇到 403/验证码等反爬信号，任务应立即暂停并告警。"""
 
 
-def _default_fetcher(url, ua):
-    req = urllib.request.Request(url, headers={"User-Agent": ua})
-    with urllib.request.urlopen(req, timeout=30) as resp:
+_SSL_HINTS = ("ssl", "handshake", "cipher", "tls", "certificate", "security level")
+
+
+def _is_ssl_error(exc):
+    """判断异常是否与 TLS 握手/密码套件相关（用于兼容降级重试）。"""
+    text = "{} {}".format(type(exc).__name__, exc).lower()
+    return any(hint in text for hint in _SSL_HINTS)
+
+
+def _default_fetcher(url, ua, context=None):
+    """带浏览器请求头的默认抓取器；context 为空时使用 urllib 默认 TLS 配置。"""
+    headers = {
+        "User-Agent": ua,
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,"
+                  "image/avif,image/webp,*/*;q=0.8",
+        "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
+        "Connection": "close",
+    }
+    req = urllib.request.Request(url, headers=headers)
+    with urllib.request.urlopen(req, timeout=30, context=context) as resp:
         return resp.status, resp.read().decode("utf-8", "replace")
+
+
+def _relaxed_fetcher(url, ua):
+    """TLS 兼容降级：允许旧政务站常用的低安全级别密码套件（OpenSSL 3 SECLEVEL=1）。"""
+    ctx = ssl.create_default_context()
+    try:
+        ctx.set_ciphers("DEFAULT:@SECLEVEL=1")
+    except ssl.SSLError:
+        pass
+    return _default_fetcher(url, ua, context=ctx)
 
 
 class Downloader:
@@ -50,6 +78,7 @@ class Downloader:
 
     def fetch(self, url):
         last_error = None
+        relaxed_attempted = False
         for attempt in range(self._retries + 1):
             ua = self._next_ua()
             self._polite_sleep()
@@ -67,6 +96,19 @@ class Downloader:
                 log.warning("请求失败 url=%s attempt=%s err=%s elapsed=%.2fs", url, attempt + 1, exc, elapsed)
                 self._notify(url, 0, elapsed)
                 last_error = exc
+                if not proxy and not relaxed_attempted and _is_ssl_error(exc):
+                    relaxed_attempted = True
+                    start = time.time()
+                    try:
+                        status, body = _relaxed_fetcher(url, ua)
+                    except Exception as exc2:
+                        log.warning("TLS 兼容降级失败 url=%s err=%s", url, exc2)
+                        last_error = exc2
+                        continue
+                    elapsed = time.time() - start
+                    log.info("TLS 兼容降级成功 url=%s status=%s elapsed=%.2fs", url, status, elapsed)
+                    self._notify(url, status, elapsed)
+                    return status, body
                 continue
             elapsed = time.time() - start
             if proxy and self._pool:
