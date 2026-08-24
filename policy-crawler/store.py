@@ -3,7 +3,7 @@
 import json
 import sqlite3
 
-from models import SQLITE_SCHEMA
+from models import DRUG_SCHEMA, SQLITE_SCHEMA
 
 
 class Store:
@@ -38,6 +38,7 @@ class SqliteStore(Store):
         self._conn = sqlite3.connect(db_path, check_same_thread=False)
         self._conn.row_factory = sqlite3.Row
         self._conn.executescript(SQLITE_SCHEMA)
+        self._conn.executescript(DRUG_SCHEMA)
         self._conn.commit()
 
     def close(self):

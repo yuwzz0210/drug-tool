@@ -13,6 +13,8 @@ from queries import (
     scenario_policies,
     stats_latest,
 )
+from drug_queries import drug_detail, drug_stats, list_devices, list_drugs
+from drugstore import DrugStore
 
 VIEWER_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "policy-viewer.html")
 
@@ -96,8 +98,31 @@ class PolicyHandler(BaseHTTPRequestHandler):
                 parts = path.split("/")
                 sid = parts[-2] if parts[-1] == "policies" else parts[-1]
                 self._json({"scenario_id": sid, "items": scenario_policies(self.store, sid)})
+            elif path == "/api/drugs":
+                drugs = DrugStore.from_store(self.store)
+                self._json(list_drugs(
+                    drugs,
+                    keyword=qs.get("search", [""])[0],
+                    page=self._int_param(qs, "page", 1, 1, 10 ** 6),
+                    size=self._int_param(qs, "size", 20, 1, 100),
+                ))
+            elif path.startswith("/api/drugs/"):
+                drugs = DrugStore.from_store(self.store)
+                row = drug_detail(drugs, path.split("/")[-1])
+                self._json(row if row else {"error": "not found"}, 200 if row else 404)
+            elif path == "/api/devices":
+                drugs = DrugStore.from_store(self.store)
+                self._json(list_devices(
+                    drugs,
+                    keyword=qs.get("search", [""])[0],
+                    page=self._int_param(qs, "page", 1, 1, 10 ** 6),
+                    size=self._int_param(qs, "size", 20, 1, 100),
+                ))
             elif path == "/api/stats/latest":
                 self._json(stats_latest(self.store))
+            elif path == "/api/stats/drugs":
+                drugs = DrugStore.from_store(self.store)
+                self._json(drug_stats(drugs))
             elif path == "/api/health":
                 self._json(health_summary(self.store))
             else:

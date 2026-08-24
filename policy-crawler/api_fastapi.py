@@ -8,6 +8,8 @@ from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 
 from config import DB_PATH
+from drug_queries import drug_detail, drug_stats, list_devices, list_drugs
+from drugstore import DrugStore
 from queries import get_policy, list_policies, list_scenarios, scenario_policies, stats_latest
 from store import SqliteStore
 
@@ -58,3 +60,34 @@ def scenario_policies_view(scenario_id: str):
 @app.get("/api/stats/latest")
 def stats():
     return stats_latest(_store)
+
+
+@app.get("/api/drugs")
+def drugs(
+    search: str = "",
+    page: int = Query(1, ge=1),
+    size: int = Query(20, ge=1, le=100),
+):
+    return list_drugs(DrugStore.from_store(_store), keyword=search, page=page, size=size)
+
+
+@app.get("/api/drugs/{product_id}")
+def drug(product_id: int):
+    row = drug_detail(DrugStore.from_store(_store), product_id)
+    if row is None:
+        return {"error": "not found"}, 404
+    return row
+
+
+@app.get("/api/devices")
+def devices(
+    search: str = "",
+    page: int = Query(1, ge=1),
+    size: int = Query(20, ge=1, le=100),
+):
+    return list_devices(DrugStore.from_store(_store), keyword=search, page=page, size=size)
+
+
+@app.get("/api/stats/drugs")
+def drugs_stats():
+    return drug_stats(DrugStore.from_store(_store))
