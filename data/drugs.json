@@ -1,0 +1,2447 @@
+[
+  {
+    "product_id": 40,
+    "generic_name": "盐酸曲恩汀片",
+    "trade_name": "—",
+    "dosage_form": "片剂",
+    "specification": "—",
+    "manufacturer": "Orphalan",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "不耐受D-青霉胺治疗的Wilson病"
+    ],
+    "mechanisms": [
+      "铜离子络合剂"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20240012",
+        "status": "有效",
+        "registration_date": "2024-01"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "未进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "罕见病",
+      "disease": "Wilson病",
+      "gen": "铜离子络合剂",
+      "year": 2024,
+      "origin": "进口",
+      "excl": "是",
+      "cls": "化学药",
+      "cold": "常温",
+      "dual": "否",
+      "vbp": "极低",
+      "gl": "—",
+      "route": "口服",
+      "prob": 0.7,
+      "prov": "湖南",
+      "patent": "2035-01-01",
+      "followers": 0,
+      "nt": "—",
+      "note": "2024年NMPA获批"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 39,
+    "generic_name": "可伐利单抗",
+    "trade_name": "—",
+    "dosage_form": "注射液",
+    "specification": "—",
+    "manufacturer": "罗氏",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "PNH(未接受过补体抑制剂)"
+    ],
+    "mechanisms": [
+      "抗C5循环单克隆抗体"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字S20240028",
+        "status": "有效",
+        "registration_date": "2024-02"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "未进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "罕见病",
+      "disease": "PNH",
+      "gen": "第2代C5单抗(新型)",
+      "year": 2024,
+      "origin": "进口",
+      "excl": "是",
+      "cls": "治疗用生物制品",
+      "cold": "2-8℃冷藏",
+      "dual": "否",
+      "vbp": "极低",
+      "gl": "—",
+      "route": "注射(皮下)",
+      "prob": 0.7,
+      "prov": "湖南",
+      "patent": "2038-01-01",
+      "followers": 0,
+      "nt": "—",
+      "note": "新型C5单抗，每四周一次皮下注射"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 38,
+    "generic_name": "依库珠单抗",
+    "trade_name": "舒立瑞",
+    "dosage_form": "注射液",
+    "specification": "300mg",
+    "manufacturer": "阿斯利康",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "PNH",
+      "非典型溶血性尿毒症综合征"
+    ],
+    "mechanisms": [
+      "C5单抗"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字S20110012",
+        "status": "有效",
+        "registration_date": "2011-06"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "15000",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "罕见病",
+      "disease": "PNH",
+      "gen": "第1代C5单抗",
+      "year": 2011,
+      "origin": "进口",
+      "excl": "是",
+      "cls": "治疗用生物制品",
+      "cold": "2-8℃冷藏",
+      "annual": 780000,
+      "insyear": 2019,
+      "dual": "是",
+      "vbp": "极低",
+      "gl": "指南推荐",
+      "route": "注射",
+      "prob": 0.85,
+      "prov": "湖南",
+      "patent": "已过期",
+      "followers": 2,
+      "nt": "—",
+      "note": "首个C5单抗，专利已过期"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 37,
+    "generic_name": "艾美赛珠单抗",
+    "trade_name": "舒友立乐",
+    "dosage_form": "注射液",
+    "specification": "30mg/mL",
+    "manufacturer": "罗氏",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "血友病A预防治疗(含抑制物)"
+    ],
+    "mechanisms": [
+      "FⅨa",
+      "FⅩ双抗模拟FⅧ功能"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字S20180045",
+        "status": "有效",
+        "registration_date": "2018-11"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "12000",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "罕见病",
+      "disease": "血友病A",
+      "gen": "第2代双特异性抗体(模拟FⅧ)",
+      "year": 2018,
+      "origin": "进口",
+      "excl": "是",
+      "cls": "治疗用生物制品",
+      "cold": "2-8℃冷藏",
+      "annual": 624000,
+      "insyear": 2020,
+      "dual": "是",
+      "vbp": "极低",
+      "gl": "指南推荐",
+      "route": "注射(皮下)",
+      "prob": 0.85,
+      "prov": "湖南",
+      "patent": "2032-07-08",
+      "followers": 0,
+      "nt": "HAVEN研究",
+      "note": "双抗颠覆性疗法"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 36,
+    "generic_name": "重组人凝血因子Ⅷ",
+    "trade_name": "百因止",
+    "dosage_form": "注射液",
+    "specification": "250IU",
+    "manufacturer": "百特",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "血友病A出血预防与治疗"
+    ],
+    "mechanisms": [
+      "凝血因子Ⅷ替代"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字S20093015",
+        "status": "有效",
+        "registration_date": "2009"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "800",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "罕见病",
+      "disease": "血友病A",
+      "gen": "第1代重组FⅧ",
+      "year": 2009,
+      "origin": "进口",
+      "excl": "否",
+      "cls": "治疗用生物制品",
+      "cold": "2-8℃冷藏",
+      "annual": 416000,
+      "insyear": 2019,
+      "dual": "是",
+      "vbp": "低",
+      "gl": "指南推荐",
+      "route": "注射",
+      "prob": 0.95,
+      "prov": "湖南",
+      "patent": "已过期",
+      "followers": 5,
+      "nt": "—",
+      "note": "传统重组FⅧ"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 35,
+    "generic_name": "利司扑兰",
+    "trade_name": "艾满欣",
+    "dosage_form": "口服液",
+    "specification": "60mg/mL",
+    "manufacturer": "罗氏",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "5q",
+      "SMA"
+    ],
+    "mechanisms": [
+      "SMN2剪接修饰"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字J20200055",
+        "status": "有效",
+        "registration_date": "2020-08"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "12000",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "罕见病",
+      "disease": "脊髓性肌萎缩症",
+      "gen": "小分子SMN2剪接修饰",
+      "year": 2020,
+      "origin": "进口",
+      "excl": "是",
+      "cls": "化学药",
+      "cold": "常温",
+      "annual": 438000,
+      "insyear": 2022,
+      "dual": "是",
+      "vbp": "极低",
+      "gl": "指南推荐",
+      "route": "口服",
+      "prob": 0.85,
+      "prov": "湖南",
+      "patent": "2033-05-14",
+      "followers": 0,
+      "nt": "FIREFISH研究",
+      "note": "口服剂型，便利性优于诺西那生"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 34,
+    "generic_name": "诺西那生",
+    "trade_name": "Spinraza",
+    "dosage_form": "注射液",
+    "specification": "12mg/5mL",
+    "manufacturer": "渤健",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "5q",
+      "SMA"
+    ],
+    "mechanisms": [
+      "SMN2外显子7剪接修饰"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字SJ20160025",
+        "status": "有效",
+        "registration_date": "2016-12"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "19000",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "罕见病",
+      "disease": "脊髓性肌萎缩症",
+      "gen": "反义寡核苷酸(ASO)",
+      "year": 2016,
+      "origin": "进口",
+      "excl": "是",
+      "cls": "治疗用生物制品",
+      "cold": "2-8℃冷藏",
+      "annual": 760000,
+      "insyear": 2021,
+      "dual": "是",
+      "vbp": "极低",
+      "gl": "指南推荐",
+      "route": "注射(鞘内)",
+      "prob": 0.85,
+      "prov": "湖南",
+      "patent": "2031-03-21",
+      "followers": 0,
+      "nt": "ENDEAR研究",
+      "note": "全球首个SMA药物，医保谈判后大幅降价"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 33,
+    "generic_name": "古塞奇尤单抗",
+    "trade_name": "特诺雅",
+    "dosage_form": "注射液",
+    "specification": "100mg",
+    "manufacturer": "强生",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "中重度斑块状银屑病"
+    ],
+    "mechanisms": [
+      "IL-23p19单抗"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字S20190042",
+        "status": "有效",
+        "registration_date": "2019-12"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "2500",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "自免疫",
+      "disease": "银屑病",
+      "gen": "第1代IL-23单抗",
+      "year": 2019,
+      "origin": "进口",
+      "excl": "否",
+      "cls": "治疗用生物制品",
+      "cold": "2-8℃冷藏",
+      "annual": 130000,
+      "insyear": 2021,
+      "dual": "是",
+      "vbp": "低",
+      "gl": "指南推荐",
+      "route": "注射",
+      "prob": 0.9,
+      "prov": "湖南",
+      "patent": "2033-01-15",
+      "followers": 2,
+      "nt": "—",
+      "note": "IL-23抑制剂，给药频率更低"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 32,
+    "generic_name": "依奇珠单抗",
+    "trade_name": "拓咨",
+    "dosage_form": "注射液",
+    "specification": "80mg",
+    "manufacturer": "礼来",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "中重度斑块状银屑病"
+    ],
+    "mechanisms": [
+      "IL-17A单抗"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字S20190035",
+        "status": "有效",
+        "registration_date": "2019-09"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "2800",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "自免疫",
+      "disease": "银屑病",
+      "gen": "第1代IL-17A单抗",
+      "year": 2019,
+      "origin": "进口",
+      "excl": "否",
+      "cls": "治疗用生物制品",
+      "cold": "2-8℃冷藏",
+      "annual": 145600,
+      "insyear": 2021,
+      "dual": "是",
+      "vbp": "低",
+      "gl": "指南推荐",
+      "route": "注射",
+      "prob": 0.9,
+      "prov": "湖南",
+      "patent": "2032-08-01",
+      "followers": 3,
+      "nt": "—",
+      "note": "IL-17A，与可善挺竞争"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 31,
+    "generic_name": "司库奇尤单抗",
+    "trade_name": "可善挺",
+    "dosage_form": "注射液",
+    "specification": "150mg",
+    "manufacturer": "诺华",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "中重度斑块状银屑病",
+      "强直性脊柱炎"
+    ],
+    "mechanisms": [
+      "IL-17A单抗"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字S20190028",
+        "status": "有效",
+        "registration_date": "2019-04"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "2990",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "自免疫",
+      "disease": "银屑病",
+      "gen": "第1代IL-17A单抗",
+      "year": 2019,
+      "origin": "进口",
+      "excl": "否",
+      "cls": "治疗用生物制品",
+      "cold": "2-8℃冷藏",
+      "annual": 155480,
+      "insyear": 2021,
+      "dual": "是",
+      "vbp": "低",
+      "gl": "指南推荐",
+      "route": "注射",
+      "prob": 0.9,
+      "prov": "湖南",
+      "patent": "2031-05-12",
+      "followers": 5,
+      "nt": "—",
+      "note": "IL-17A标杆，全球重磅品种"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 30,
+    "generic_name": "乌帕替尼",
+    "trade_name": "瑞福",
+    "dosage_form": "片剂",
+    "specification": "15mg",
+    "manufacturer": "艾伯维",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "RA中重度活动性",
+      "特应性皮炎",
+      "银屑病关节炎"
+    ],
+    "mechanisms": [
+      "JAK1选择性抑制剂"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字J20220035",
+        "status": "有效",
+        "registration_date": "2022-04"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "156",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "自免疫",
+      "disease": "类风湿关节炎",
+      "gen": "第3代JAK抑制剂(高选择性)",
+      "year": 2022,
+      "origin": "进口",
+      "excl": "是",
+      "cls": "化学药",
+      "cold": "常温",
+      "annual": 56940,
+      "insyear": 2023,
+      "dual": "是",
+      "vbp": "低",
+      "gl": "指南推荐",
+      "route": "口服",
+      "prob": 0.9,
+      "prov": "湖南",
+      "patent": "2034-08-19",
+      "followers": 2,
+      "nt": "—",
+      "note": "高选择性JAK1"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 29,
+    "generic_name": "巴瑞替尼",
+    "trade_name": "艾乐明",
+    "dosage_form": "片剂",
+    "specification": "2mg",
+    "manufacturer": "礼来",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "RA中重度活动性",
+      "COVID-19"
+    ],
+    "mechanisms": [
+      "JAK1",
+      "JAK2抑制剂"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字J20190015",
+        "status": "有效",
+        "registration_date": "2019-07"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "58",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "自免疫",
+      "disease": "类风湿关节炎",
+      "gen": "第2代JAK抑制剂",
+      "year": 2019,
+      "origin": "进口",
+      "excl": "是",
+      "cls": "化学药",
+      "cold": "常温",
+      "annual": 21170,
+      "insyear": 2020,
+      "dual": "是",
+      "vbp": "低",
+      "gl": "指南推荐",
+      "route": "口服",
+      "prob": 0.93,
+      "prov": "湖南",
+      "patent": "2031-12-03",
+      "followers": 4,
+      "nt": "—",
+      "note": "JAK抑制剂"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 28,
+    "generic_name": "托法替布",
+    "trade_name": "尚杰",
+    "dosage_form": "片剂",
+    "specification": "5mg",
+    "manufacturer": "辉瑞",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "RA中重度活动性",
+      "银屑病关节炎"
+    ],
+    "mechanisms": [
+      "JAK1",
+      "JAK3抑制剂"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字J20170042",
+        "status": "有效",
+        "registration_date": "2017-03"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "38",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "自免疫",
+      "disease": "类风湿关节炎",
+      "gen": "第1代JAK抑制剂",
+      "year": 2017,
+      "origin": "进口",
+      "excl": "否",
+      "cls": "化学药",
+      "cold": "常温",
+      "annual": 13870,
+      "insyear": 2019,
+      "dual": "否",
+      "vbp": "中",
+      "gl": "指南推荐",
+      "route": "口服",
+      "prob": 0.95,
+      "prov": "湖南",
+      "patent": "2029-09-15",
+      "followers": 10,
+      "nt": "—",
+      "note": "首个口服JAK"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 27,
+    "generic_name": "托珠单抗",
+    "trade_name": "雅美罗",
+    "dosage_form": "注射液",
+    "specification": "400mg",
+    "manufacturer": "罗氏",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "RA中重度活动性",
+      "全身型JIA"
+    ],
+    "mechanisms": [
+      "IL-6受体单抗"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字S20130006",
+        "status": "有效",
+        "registration_date": "2013-03"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "1800",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "自免疫",
+      "disease": "类风湿关节炎",
+      "gen": "第1代生物制剂(IL-6R)",
+      "year": 2013,
+      "origin": "进口",
+      "excl": "否",
+      "cls": "治疗用生物制品",
+      "cold": "2-8℃冷藏",
+      "annual": 64800,
+      "insyear": 2019,
+      "dual": "是",
+      "vbp": "中",
+      "gl": "指南推荐",
+      "route": "注射",
+      "prob": 0.92,
+      "prov": "湖南",
+      "patent": "2028-05-10",
+      "followers": 6,
+      "nt": "—",
+      "note": "经典IL-6R单抗"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 26,
+    "generic_name": "甲氨蝶呤",
+    "trade_name": "—",
+    "dosage_form": "片剂",
+    "specification": "2.5mg",
+    "manufacturer": "多家",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "类风湿关节炎一线"
+    ],
+    "mechanisms": [
+      "二氢叶酸还原酶抑制剂"
+    ],
+    "ingredients": [],
+    "registrations": [],
+    "insurance": [
+      {
+        "category": "集采",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "0.5",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "自免疫",
+      "disease": "类风湿关节炎",
+      "gen": "基础用药(DMARD)",
+      "year": 1999,
+      "origin": "国产",
+      "excl": "否",
+      "cls": "化学药",
+      "cold": "常温",
+      "annual": 182,
+      "insyear": 2020,
+      "dual": "否",
+      "vbp": "高(已集采)",
+      "gl": "指南金标准",
+      "route": "口服",
+      "prob": 0.99,
+      "prov": "湖南",
+      "patent": "已过期",
+      "followers": 100,
+      "nt": "—",
+      "note": "RA基础用药"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 25,
+    "generic_name": "替尔泊肽",
+    "trade_name": "穆峰达",
+    "dosage_form": "注射液",
+    "specification": "多剂量",
+    "manufacturer": "礼来",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "2型糖尿病",
+      "肥胖症"
+    ],
+    "mechanisms": [
+      "GIP",
+      "GLP-1双受体激动剂"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字SJ20240055",
+        "status": "有效",
+        "registration_date": "2024-05"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "未进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "1900",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "代谢",
+      "disease": "2型糖尿病",
+      "gen": "第3代GIP/GLP-1双靶",
+      "year": 2024,
+      "origin": "进口",
+      "excl": "是",
+      "cls": "治疗用生物制品",
+      "cold": "2-8℃冷藏",
+      "annual": 9880,
+      "dual": "否",
+      "vbp": "极低",
+      "gl": "指南推荐",
+      "route": "注射",
+      "prob": 0.6,
+      "prov": "湖南",
+      "patent": "2036-11-30",
+      "followers": 2,
+      "nt": "SURPASS研究",
+      "note": "双靶点降糖效果最优"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 24,
+    "generic_name": "司美格鲁肽(口服)",
+    "trade_name": "诺和忻",
+    "dosage_form": "片剂",
+    "specification": "14mg",
+    "manufacturer": "诺和诺德",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "2型糖尿病"
+    ],
+    "mechanisms": [
+      "口服GLP-1受体激动剂"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字S20240035",
+        "status": "有效",
+        "registration_date": "2024-01"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "国谈进行中",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "900",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "代谢",
+      "disease": "2型糖尿病",
+      "gen": "第2代GLP-1(口服)",
+      "year": 2024,
+      "origin": "进口",
+      "excl": "否",
+      "cls": "治疗用生物制品",
+      "cold": "常温",
+      "annual": 10800,
+      "insyear": 2025,
+      "dual": "否",
+      "vbp": "低",
+      "gl": "指南推荐",
+      "route": "口服",
+      "prob": 0.8,
+      "prov": "湖南",
+      "patent": "2033-09-22",
+      "followers": 3,
+      "nt": "PIONEER研究",
+      "note": "全球首个口服GLP-1"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 23,
+    "generic_name": "司美格鲁肽(注射)",
+    "trade_name": "诺和泰",
+    "dosage_form": "注射液",
+    "specification": "1.5mL",
+    "manufacturer": "诺和诺德",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "2型糖尿病",
+      "肥胖症",
+      "心血管获益"
+    ],
+    "mechanisms": [
+      "GLP-1受体激动剂(周制剂)"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字SJ20210018",
+        "status": "有效",
+        "registration_date": "2021-04"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "1260",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "代谢",
+      "disease": "2型糖尿病",
+      "gen": "第2代GLP-1(周针)",
+      "year": 2021,
+      "origin": "进口",
+      "excl": "否",
+      "cls": "治疗用生物制品",
+      "cold": "2-8℃冷藏",
+      "annual": 6552,
+      "insyear": 2022,
+      "dual": "否",
+      "vbp": "中",
+      "gl": "指南推荐",
+      "route": "注射",
+      "sales": 50,
+      "prob": 0.95,
+      "prov": "湖南",
+      "patent": "2031-06-18",
+      "followers": 8,
+      "nt": "SUSTAIN研究",
+      "note": "GLP-1重磅品种"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 22,
+    "generic_name": "利拉鲁肽",
+    "trade_name": "诺和力",
+    "dosage_form": "注射液",
+    "specification": "18mg/3mL",
+    "manufacturer": "诺和诺德",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "2型糖尿病",
+      "肥胖症"
+    ],
+    "mechanisms": [
+      "GLP-1受体激动剂"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字J20160037",
+        "status": "有效",
+        "registration_date": "2011-04"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "410",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "代谢",
+      "disease": "2型糖尿病",
+      "gen": "第1代GLP-1(日针)",
+      "year": 2011,
+      "origin": "进口",
+      "excl": "否",
+      "cls": "治疗用生物制品",
+      "cold": "2-8℃冷藏",
+      "annual": 14600,
+      "insyear": 2019,
+      "dual": "否",
+      "vbp": "中",
+      "gl": "指南推荐",
+      "route": "注射",
+      "prob": 0.92,
+      "prov": "湖南",
+      "patent": "已过期",
+      "followers": 12,
+      "nt": "LEAD研究",
+      "note": "首个GLP-1"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 21,
+    "generic_name": "达格列净",
+    "trade_name": "安达唐",
+    "dosage_form": "片剂",
+    "specification": "10mg",
+    "manufacturer": "阿斯利康",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "2型糖尿病",
+      "心力衰竭",
+      "慢性肾病",
+      "心肾保护"
+    ],
+    "mechanisms": [
+      "SGLT-2抑制剂"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字J20170040",
+        "status": "有效",
+        "registration_date": "2017-03"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "5",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "代谢",
+      "disease": "2型糖尿病",
+      "gen": "SGLT-2抑制剂",
+      "year": 2017,
+      "origin": "进口",
+      "excl": "否",
+      "cls": "化学药",
+      "cold": "常温",
+      "annual": 1825,
+      "insyear": 2019,
+      "dual": "否",
+      "vbp": "中",
+      "gl": "指南推荐",
+      "route": "口服",
+      "prob": 0.97,
+      "prov": "湖南",
+      "patent": "2027-08-11",
+      "followers": 18,
+      "nt": "DECLARE研究",
+      "note": "SGLT-2标杆"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 20,
+    "generic_name": "西格列汀",
+    "trade_name": "捷诺维",
+    "dosage_form": "片剂",
+    "specification": "100mg",
+    "manufacturer": "默沙东",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "2型糖尿病"
+    ],
+    "mechanisms": [
+      "DPP-4抑制剂"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字J20140095",
+        "status": "有效",
+        "registration_date": "2009"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "集采",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "4",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "代谢",
+      "disease": "2型糖尿病",
+      "gen": "第1代DPP-4",
+      "year": 2009,
+      "origin": "进口",
+      "excl": "否",
+      "cls": "化学药",
+      "cold": "常温",
+      "annual": 1460,
+      "insyear": 2022,
+      "dual": "否",
+      "vbp": "高(已集采)",
+      "gl": "指南推荐",
+      "route": "口服",
+      "prob": 0.99,
+      "prov": "湖南",
+      "patent": "已过期",
+      "followers": 30,
+      "nt": "—",
+      "note": "首个DPP-4"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 19,
+    "generic_name": "二甲双胍",
+    "trade_name": "格华止",
+    "dosage_form": "片剂",
+    "specification": "0.5g",
+    "manufacturer": "默克",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "2型糖尿病一线治疗"
+    ],
+    "mechanisms": [
+      "改善胰岛素敏感性"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20023370",
+        "status": "有效",
+        "registration_date": "1999"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "集采",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "2",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "代谢",
+      "disease": "2型糖尿病",
+      "gen": "基础用药(双胍)",
+      "year": 1999,
+      "origin": "进口",
+      "excl": "否",
+      "cls": "化学药",
+      "cold": "常温",
+      "annual": 730,
+      "insyear": 2020,
+      "dual": "否",
+      "vbp": "高(已集采)",
+      "gl": "指南一线",
+      "route": "口服",
+      "prob": 0.99,
+      "prov": "湖南",
+      "patent": "已过期",
+      "followers": 50,
+      "nt": "—",
+      "note": "经典降糖药"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 18,
+    "generic_name": "瑞拉芙普α",
+    "trade_name": "艾泽利",
+    "dosage_form": "注射液",
+    "specification": "300mg(6mL)/瓶",
+    "manufacturer": "恒瑞医药/苏州盛迪亚",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "PD-L1阳性(CPS≥1)胃及胃食管结合部腺癌一线",
+      "宫颈癌",
+      "结直肠癌",
+      "肝癌",
+      "肺癌",
+      "食管癌等在研"
+    ],
+    "mechanisms": [
+      "同步抑制PD-L1与TGF-β双靶协同"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字S20260002",
+        "status": "有效",
+        "registration_date": "2026-01-07"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "国谈进行中",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "3866",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "肿瘤",
+      "disease": "胃癌",
+      "gen": "第2代免疫(双靶PD-L1/TGF-β)",
+      "year": 2026,
+      "origin": "国产",
+      "excl": "是",
+      "cls": "治疗用生物制品1类",
+      "cold": "2-8℃冷藏",
+      "annual": 23196,
+      "insyear": 2026,
+      "dual": "否",
+      "vbp": "极低(创新药)",
+      "gl": "CSCO I级推荐(1A)",
+      "route": "注射",
+      "prob": 0.85,
+      "prov": "湖南",
+      "pt": "6900",
+      "patent": "2041-09-15",
+      "followers": 0,
+      "nt": "III期RELIGHT研究",
+      "note": "全球首款PD-L1/TGF-β双抗"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 17,
+    "generic_name": "卡度尼利单抗",
+    "trade_name": "开坦尼",
+    "dosage_form": "注射液",
+    "specification": "125mg",
+    "manufacturer": "康方生物",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "胃癌一线等",
+      "多项适应症已全部纳入国家医保"
+    ],
+    "mechanisms": [
+      "PD-1",
+      "CTLA-4双特异性抗体"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字S20240015",
+        "status": "有效",
+        "registration_date": "2024-09"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "肿瘤",
+      "disease": "胃癌",
+      "gen": "双抗(PD-1/CTLA-4)",
+      "year": 2024,
+      "origin": "国产",
+      "excl": "是",
+      "cls": "治疗用生物制品1类",
+      "cold": "2-8℃冷藏",
+      "insyear": 2025,
+      "dual": "是",
+      "vbp": "低",
+      "gl": "多适应症纳入",
+      "route": "注射",
+      "prob": 0.9,
+      "prov": "湖南",
+      "patent": "2038-05-12",
+      "followers": 1,
+      "nt": "已上市多适应症",
+      "note": "市场先占+医保覆盖广"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 16,
+    "generic_name": "替雷利珠单抗",
+    "trade_name": "百泽安",
+    "dosage_form": "注射液",
+    "specification": "100mg",
+    "manufacturer": "百济神州",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "胃癌一线等",
+      "广泛瘤种"
+    ],
+    "mechanisms": [
+      "PD-1单抗"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字S20190022",
+        "status": "有效",
+        "registration_date": "2019-12"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "1376",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "肿瘤",
+      "disease": "胃癌",
+      "gen": "第1代免疫(PD-1单抗)",
+      "year": 2019,
+      "origin": "国产",
+      "excl": "否",
+      "cls": "治疗用生物制品",
+      "cold": "2-8℃冷藏",
+      "annual": 16512,
+      "insyear": 2020,
+      "dual": "是",
+      "vbp": "中",
+      "gl": "CSCO推荐",
+      "route": "注射",
+      "sales": 45,
+      "prob": 0.95,
+      "prov": "湖南",
+      "patent": "2034-06-20",
+      "followers": 0,
+      "nt": "多项III期",
+      "note": "国产PD-1，全球商业化布局最广"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 15,
+    "generic_name": "信迪利单抗",
+    "trade_name": "达伯舒",
+    "dosage_form": "注射液",
+    "specification": "100mg",
+    "manufacturer": "信达生物",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "联合化疗用于胃癌一线",
+      "多瘤种拓展"
+    ],
+    "mechanisms": [
+      "PD-1单抗"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字S20180035",
+        "status": "有效",
+        "registration_date": "2018-12"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "1088",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "肿瘤",
+      "disease": "胃癌",
+      "gen": "第1代免疫(PD-1单抗)",
+      "year": 2018,
+      "origin": "国产",
+      "excl": "否",
+      "cls": "治疗用生物制品",
+      "cold": "2-8℃冷藏",
+      "annual": 13056,
+      "insyear": 2019,
+      "dual": "是",
+      "vbp": "中",
+      "gl": "CSCO推荐",
+      "route": "注射",
+      "sales": 30,
+      "prob": 0.95,
+      "prov": "湖南",
+      "patent": "2033-04-15",
+      "followers": 0,
+      "nt": "多项III期",
+      "note": "国产PD-1主力"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 14,
+    "generic_name": "芦康沙妥珠单抗",
+    "trade_name": "—",
+    "dosage_form": "注射液",
+    "specification": "—",
+    "manufacturer": "科伦博泰",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "三阴性乳腺癌"
+    ],
+    "mechanisms": [
+      "靶向TROP-2的ADC"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字S20250018",
+        "status": "有效",
+        "registration_date": "2025-11"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "肿瘤",
+      "disease": "乳腺癌",
+      "gen": "第1代ADC(国产)",
+      "year": 2025,
+      "origin": "国产",
+      "excl": "是",
+      "cls": "治疗用生物制品1类",
+      "cold": "2-8℃冷藏",
+      "insyear": 2025,
+      "dual": "是",
+      "vbp": "极低",
+      "gl": "—",
+      "route": "注射",
+      "prob": 0.85,
+      "prov": "湖南",
+      "patent": "2040-03-01",
+      "followers": 0,
+      "nt": "OptiTROP-Breast01研究",
+      "note": "2025年新入医保，单支降价8000+元"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 13,
+    "generic_name": "吡咯替尼",
+    "trade_name": "艾瑞妮",
+    "dosage_form": "片剂",
+    "specification": "160mg",
+    "manufacturer": "恒瑞医药",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "HER2阳性晚期乳腺癌"
+    ],
+    "mechanisms": [
+      "EGFR",
+      "HER2抑制剂"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20180023",
+        "status": "有效",
+        "registration_date": "2018-08"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "286",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "肿瘤",
+      "disease": "乳腺癌",
+      "gen": "第1代TKI(国产)",
+      "year": 2018,
+      "origin": "国产",
+      "excl": "是",
+      "cls": "化学药1类",
+      "cold": "常温",
+      "annual": 104390,
+      "insyear": 2019,
+      "dual": "是",
+      "vbp": "低",
+      "gl": "CSCO推荐",
+      "route": "口服",
+      "prob": 0.9,
+      "prov": "湖南",
+      "patent": "2033-06-30",
+      "followers": 2,
+      "nt": "PHOEBE研究",
+      "note": "国产首个HER2-TKI，口服便利"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 12,
+    "generic_name": "帕妥珠单抗",
+    "trade_name": "帕捷特",
+    "dosage_form": "注射液",
+    "specification": "420mg",
+    "manufacturer": "罗氏",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "HER2阳性乳腺癌新辅助",
+      "辅助",
+      "一线"
+    ],
+    "mechanisms": [
+      "HER2单抗(不同表位)"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字S20180056",
+        "status": "有效",
+        "registration_date": "2018-12"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "18800",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "肿瘤",
+      "disease": "乳腺癌",
+      "gen": "第2代抗HER2单抗",
+      "year": 2018,
+      "origin": "进口",
+      "excl": "否",
+      "cls": "治疗用生物制品",
+      "cold": "2-8℃冷藏",
+      "annual": 225600,
+      "insyear": 2019,
+      "dual": "是",
+      "vbp": "低",
+      "gl": "NCCN I级推荐",
+      "route": "注射",
+      "prob": 0.9,
+      "prov": "湖南",
+      "patent": "2030-05-14",
+      "followers": 0,
+      "nt": "CLEOPATRA研究",
+      "note": "与曲妥珠单抗联用构成‘双靶’方案"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 11,
+    "generic_name": "曲妥珠单抗",
+    "trade_name": "赫赛汀",
+    "dosage_form": "注射液",
+    "specification": "440mg",
+    "manufacturer": "罗氏",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "HER2阳性乳腺癌辅助",
+      "新辅助",
+      "转移性",
+      "胃癌"
+    ],
+    "mechanisms": [
+      "HER2单抗"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字S20020019",
+        "status": "有效",
+        "registration_date": "2002-09"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "5500",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "肿瘤",
+      "disease": "乳腺癌",
+      "gen": "第1代抗HER2单抗",
+      "year": 2002,
+      "origin": "进口",
+      "excl": "否",
+      "cls": "治疗用生物制品",
+      "cold": "2-8℃冷藏",
+      "annual": 66000,
+      "insyear": 2017,
+      "dual": "是",
+      "vbp": "中",
+      "gl": "NCCN推荐",
+      "route": "注射",
+      "prob": 0.95,
+      "prov": "湖南",
+      "patent": "已过期",
+      "followers": 10,
+      "nt": "HERA研究",
+      "note": "HER2阳性乳腺癌金标准，生物类似药已上市"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 10,
+    "generic_name": "恩沙替尼",
+    "trade_name": "贝美纳",
+    "dosage_form": "胶囊",
+    "specification": "100mg",
+    "manufacturer": "贝达药业",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "ALK阳性晚期NSCLC"
+    ],
+    "mechanisms": [
+      "ALK抑制剂"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20200035",
+        "status": "有效",
+        "registration_date": "2020-11"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "1200",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "肿瘤",
+      "disease": "非小细胞肺癌",
+      "gen": "第2代ALK抑制剂(国产)",
+      "year": 2020,
+      "origin": "国产",
+      "excl": "是",
+      "cls": "化学药1类",
+      "cold": "常温",
+      "annual": 438000,
+      "insyear": 2021,
+      "dual": "是",
+      "vbp": "低",
+      "gl": "CSCO推荐",
+      "route": "口服",
+      "prob": 0.9,
+      "prov": "湖南",
+      "patent": "2034-08-20",
+      "followers": 2,
+      "nt": "eXalt3研究",
+      "note": "国产ALK-TKI，价格优势明显"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 9,
+    "generic_name": "阿来替尼",
+    "trade_name": "安圣莎",
+    "dosage_form": "胶囊",
+    "specification": "150mg",
+    "manufacturer": "罗氏",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "ALK阳性晚期NSCLC一线"
+    ],
+    "mechanisms": [
+      "ALK抑制剂"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字J20180023",
+        "status": "有效",
+        "registration_date": "2018-08"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "1500",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "肿瘤",
+      "disease": "非小细胞肺癌",
+      "gen": "第2代ALK抑制剂",
+      "year": 2018,
+      "origin": "进口",
+      "excl": "否",
+      "cls": "化学药",
+      "cold": "常温",
+      "annual": 547500,
+      "insyear": 2019,
+      "dual": "是",
+      "vbp": "低",
+      "gl": "CSCO I级推荐",
+      "route": "口服",
+      "prob": 0.95,
+      "prov": "湖南",
+      "patent": "2031-09-15",
+      "followers": 3,
+      "nt": "ALEX研究",
+      "note": "ALK二代标杆，疗效优于克唑替尼"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 8,
+    "generic_name": "克唑替尼",
+    "trade_name": "赛可瑞",
+    "dosage_form": "胶囊",
+    "specification": "250mg",
+    "manufacturer": "辉瑞",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "ALK阳性或ROS1阳性晚期NSCLC"
+    ],
+    "mechanisms": [
+      "ALK",
+      "ROS1",
+      "MET抑制剂"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字J20130012",
+        "status": "有效",
+        "registration_date": "2013-01"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "460",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "肿瘤",
+      "disease": "非小细胞肺癌",
+      "gen": "第1代ALK/ROS1抑制剂",
+      "year": 2013,
+      "origin": "进口",
+      "excl": "否",
+      "cls": "化学药",
+      "cold": "常温",
+      "annual": 167900,
+      "insyear": 2018,
+      "dual": "是",
+      "vbp": "中",
+      "gl": "CSCO推荐",
+      "route": "口服",
+      "prob": 0.9,
+      "prov": "湖南",
+      "patent": "2027-06-30",
+      "followers": 6,
+      "nt": "PROFILE研究",
+      "note": "首个ALK靶向药，专利临近到期"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 7,
+    "generic_name": "贝福替尼",
+    "trade_name": "赛美纳",
+    "dosage_form": "片剂",
+    "specification": "25mg",
+    "manufacturer": "贝达药业",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "EGFR",
+      "T790M突变NSCLC"
+    ],
+    "mechanisms": [
+      "EGFR",
+      "T790M抑制剂"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20230015",
+        "status": "有效",
+        "registration_date": "2023-05"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "肿瘤",
+      "disease": "非小细胞肺癌",
+      "gen": "第3代EGFR-TKI(国产)",
+      "year": 2023,
+      "origin": "国产",
+      "excl": "是",
+      "cls": "化学药1类",
+      "cold": "常温",
+      "insyear": 2023,
+      "dual": "是",
+      "vbp": "低",
+      "gl": "CSCO推荐",
+      "route": "口服",
+      "prob": 0.9,
+      "prov": "湖南",
+      "patent": "2036-12-01",
+      "followers": 2,
+      "nt": "—",
+      "note": "最新获批3代TKI"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 6,
+    "generic_name": "伏美替尼",
+    "trade_name": "艾弗沙",
+    "dosage_form": "片剂",
+    "specification": "40mg",
+    "manufacturer": "艾力斯",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "EGFR",
+      "T790M突变NSCLC",
+      "一线EGFR突变"
+    ],
+    "mechanisms": [
+      "EGFR",
+      "T790M抑制剂"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20210028",
+        "status": "有效",
+        "registration_date": "2021-03"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "1908",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "肿瘤",
+      "disease": "非小细胞肺癌",
+      "gen": "第3代EGFR-TKI(国产)",
+      "year": 2021,
+      "origin": "国产",
+      "excl": "是",
+      "cls": "化学药1类",
+      "cold": "常温",
+      "annual": 22896,
+      "insyear": 2021,
+      "dual": "是",
+      "vbp": "低",
+      "gl": "CSCO推荐",
+      "route": "口服",
+      "sales": 25,
+      "prob": 0.95,
+      "prov": "湖南",
+      "patent": "2035-08-22",
+      "followers": 4,
+      "nt": "FURLONG研究",
+      "note": "国产3代TKI，市场增速快"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 5,
+    "generic_name": "阿美替尼",
+    "trade_name": "阿美乐",
+    "dosage_form": "片剂",
+    "specification": "55mg",
+    "manufacturer": "翰森制药",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "EGFR",
+      "T790M突变NSCLC",
+      "一线EGFR突变"
+    ],
+    "mechanisms": [
+      "EGFR",
+      "T790M抑制剂"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20200025",
+        "status": "有效",
+        "registration_date": "2020-03"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "1760",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "肿瘤",
+      "disease": "非小细胞肺癌",
+      "gen": "第3代EGFR-TKI(国产)",
+      "year": 2020,
+      "origin": "国产",
+      "excl": "否",
+      "cls": "化学药1类",
+      "cold": "常温",
+      "annual": 21120,
+      "insyear": 2020,
+      "dual": "是",
+      "vbp": "中",
+      "gl": "CSCO推荐",
+      "route": "口服",
+      "sales": 30,
+      "prob": 0.95,
+      "prov": "湖南",
+      "patent": "2034-11-09",
+      "followers": 7,
+      "nt": "APOLLO研究",
+      "note": "国产3代TKI主力"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 4,
+    "generic_name": "奥希替尼",
+    "trade_name": "泰瑞沙",
+    "dosage_form": "片剂",
+    "specification": "80mg",
+    "manufacturer": "阿斯利康",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "EGFR",
+      "T790M突变NSCLC",
+      "一线EGFR突变",
+      "辅助治疗"
+    ],
+    "mechanisms": [
+      "EGFR",
+      "T790M抑制剂"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字J20171015",
+        "status": "有效",
+        "registration_date": "2017-03"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "5580",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "肿瘤",
+      "disease": "非小细胞肺癌",
+      "gen": "第3代EGFR-TKI",
+      "year": 2017,
+      "origin": "进口",
+      "excl": "否",
+      "cls": "化学药",
+      "cold": "常温",
+      "annual": 66960,
+      "insyear": 2018,
+      "dual": "是",
+      "vbp": "中",
+      "gl": "CSCO I级推荐",
+      "route": "口服",
+      "sales": 60,
+      "prob": 0.95,
+      "prov": "湖南",
+      "patent": "2032-07-03",
+      "followers": 15,
+      "nt": "ADAURA研究",
+      "note": "3代TKI金标准，专利保护期长"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 3,
+    "generic_name": "阿法替尼",
+    "trade_name": "吉泰瑞",
+    "dosage_form": "片剂",
+    "specification": "40mg",
+    "manufacturer": "勃林格殷格翰",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "EGFR突变阳性NSCLC一线",
+      "鳞癌二线"
+    ],
+    "mechanisms": [
+      "不可逆EGFR",
+      "HER2抑制剂"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字J20170029",
+        "status": "有效",
+        "registration_date": "2017-02"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "140",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "肿瘤",
+      "disease": "非小细胞肺癌",
+      "gen": "第2代EGFR-TKI",
+      "year": 2017,
+      "origin": "进口",
+      "excl": "否",
+      "cls": "化学药",
+      "cold": "常温",
+      "annual": 16800,
+      "insyear": 2018,
+      "dual": "否",
+      "vbp": "中",
+      "gl": "CSCO推荐",
+      "route": "口服",
+      "prob": 0.9,
+      "prov": "湖南",
+      "patent": "2025-08-14",
+      "followers": 5,
+      "nt": "—",
+      "note": "2代TKI，专利即将到期"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 2,
+    "generic_name": "埃克替尼",
+    "trade_name": "凯美纳",
+    "dosage_form": "片剂",
+    "specification": "125mg",
+    "manufacturer": "贝达药业",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "EGFR突变阳性晚期NSCLC"
+    ],
+    "mechanisms": [
+      "EGFR酪氨酸激酶抑制剂"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20110027",
+        "status": "有效",
+        "registration_date": "2011-06"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "集采",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "155",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "肿瘤",
+      "disease": "非小细胞肺癌",
+      "gen": "第1代EGFR-TKI(国产)",
+      "year": 2011,
+      "origin": "国产",
+      "excl": "否",
+      "cls": "化学药1类",
+      "cold": "常温",
+      "annual": 18600,
+      "insyear": 2019,
+      "dual": "否",
+      "vbp": "高(已集采)",
+      "gl": "CSCO推荐",
+      "route": "口服",
+      "sales": 12,
+      "prob": 0.99,
+      "prov": "湖南",
+      "patent": "2023-05-12",
+      "followers": 8,
+      "nt": "—",
+      "note": "国产首个EGFR-TKI，专利已到期"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  },
+  {
+    "product_id": 1,
+    "generic_name": "吉非替尼",
+    "trade_name": "易瑞沙",
+    "dosage_form": "片剂",
+    "specification": "250mg",
+    "manufacturer": "阿斯利康",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "EGFR突变阳性晚期NSCLC一线"
+    ],
+    "mechanisms": [
+      "EGFR酪氨酸激酶抑制剂"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20070070",
+        "status": "有效",
+        "registration_date": "2005-02"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "集采",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "228",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "2025版国家医保目录"
+      }
+    ],
+    "extra_data": {
+      "area": "肿瘤",
+      "disease": "非小细胞肺癌",
+      "gen": "第1代EGFR-TKI",
+      "year": 2005,
+      "origin": "进口",
+      "excl": "否",
+      "cls": "化学药",
+      "cold": "常温",
+      "annual": 27360,
+      "insyear": 2019,
+      "dual": "否",
+      "vbp": "高(已集采)",
+      "gl": "NCCN推荐",
+      "route": "口服",
+      "prob": 0.99,
+      "prov": "湖南",
+      "patent": "2016-04-23",
+      "followers": 12,
+      "nt": "—",
+      "note": "首个EGFR-TKI，已过专利期，仿制药大量上市"
+    },
+    "updated_at": "2026-08-25 07:49:46"
+  }
+]

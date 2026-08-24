@@ -277,9 +277,13 @@ class DrugStore:
         params = []
         if keyword:
             where = """WHERE generic_name LIKE ? OR trade_name LIKE ?
-                       OR manufacturer_norm LIKE ? OR atc_code LIKE ?"""
+                       OR manufacturer_norm LIKE ? OR atc_code LIKE ?
+                       OR extra_data LIKE ?
+                       OR product_id IN (
+                           SELECT product_id FROM drug_indication
+                           WHERE indication_text LIKE ?)"""
             like = "%{}%".format(_norm(keyword))
-            params = [like, like, like, like]
+            params = [like, like, like, like, like, like]
         total = self._conn.execute(
             "SELECT COUNT(*) AS n FROM drug_product " + where, params,
         ).fetchone()["n"]

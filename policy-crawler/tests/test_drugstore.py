@@ -112,6 +112,13 @@ class TestDrugStore(unittest.TestCase):
         self.assertEqual(result["total"], 1)
         self.assertEqual(result["items"][0]["generic_name"], "恩曲替尼")
 
+    def test_list_drugs_search_by_indication(self):
+        pid = self.drugs.upsert_product(DrugProduct(generic_name="奥希替尼"))
+        self.drugs.replace_indications(pid, ["EGFR突变阳性非小细胞肺癌"])
+        result = list_drugs(self.drugs, keyword="非小细胞")
+        self.assertEqual(result["total"], 1)
+        self.assertEqual(result["items"][0]["generic_name"], "奥希替尼")
+
 
 if __name__ == "__main__":
     unittest.main()

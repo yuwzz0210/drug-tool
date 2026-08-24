@@ -31,6 +31,7 @@ MAPPED_KEYS = {
 }
 
 _SPLIT_RE = re.compile(r"[\s;；,，、/]+")
+_PLACEHOLDERS = {"—", "-", "－", "无", "暂无", "待补充", "不适用"}
 
 
 def split_text(value):
@@ -40,7 +41,7 @@ def split_text(value):
     out = []
     for part in _SPLIT_RE.split(str(value)):
         part = _norm(part)
-        if part and part not in out:
+        if part and part not in _PLACEHOLDERS and part not in out:
             out.append(part)
     return out
 
