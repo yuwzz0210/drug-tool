@@ -122,22 +122,22 @@ def import_registrations(drugs, records):
     report = {"records": len(records), "products": 0, "registrations": 0}
     for r in records:
         product = DrugProduct(
-            generic_name=r["generic_name"],
-            dosage_form=r["dosage_form"],
-            specification=r["specification"],
-            manufacturer_norm=r["manufacturer"],
-            trade_name=r["trade_name"],
-            drug_type=r["drug_type"],
-            is_otc=r["is_otc"],
+            generic_name=r.get("generic_name", ""),
+            dosage_form=r.get("dosage_form", ""),
+            specification=r.get("specification", ""),
+            manufacturer_norm=r.get("manufacturer", ""),
+            trade_name=r.get("trade_name", ""),
+            drug_type=r.get("drug_type", ""),
+            is_otc=r.get("is_otc", False),
             source_url=DATASEARCH_URL,
         )
         pid = drugs.upsert_product(product)
         report["products"] += 1
-        if r["approval_number"]:
+        if r.get("approval_number"):
             drugs.upsert_registration(DrugRegistration(
                 product_id=pid,
                 approval_number=r["approval_number"],
-                registration_date=r["approval_date"],
+                registration_date=r.get("approval_date", ""),
                 source_url=DATASEARCH_URL,
             ))
             report["registrations"] += 1

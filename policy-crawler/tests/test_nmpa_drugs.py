@@ -7,6 +7,7 @@ import unittest
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from collectors.nmpa_drugs import import_registrations, parse_registrations  # noqa: E402
+from collectors.nmpa_browser import parse_captured  # noqa: E402
 from drugstore import DrugStore  # noqa: E402
 from store import SqliteStore  # noqa: E402
 
@@ -61,6 +62,40 @@ class TestImportRegistrations(unittest.TestCase):
         self.assertEqual(total, 1)
         detail = self.drugs.fetch_product_detail(rows[0]["product_id"])
         self.assertEqual(detail["registrations"][0]["approval_number"], "国药准字J20180000")
+
+
+class TestParseCaptured(unittest.TestCase):
+    def test_parse_list_and_detail_dedup(self):
+        captured = [
+            {"kind": "list", "url": "x/search", "body": {"code": 200, "data": {"total": 1, "list": [
+                {"f0": "国药准字H20200001", "f1": "阿托伐他汀钙片",
+                 "f2": "天地恒一制药股份有限公司", "f3": "86900000000001", "f4": "dk1"},
+            ]}}},
+            {"kind": "detail", "url": "x/queryDetail", "body": {"code": 200, "data": {
+                "f0": "国药准字H20200001", "f1": "阿托伐他汀钙片", "f3": "立普妥",
+                "f4": "片剂", "f5": "20mg", "f6": "某上市许可持有人",
+                "f8": "天地恒一制药股份有限公司", "f9": "2020-01-01", "f11": "化学药品",
+            }}},
+        ]
+        records = parse_captured(captured)
+        self.assertEqual(len(records), 1)
+        r = records[0]
+        self.assertEqual(r["generic_name"], "阿托伐他汀钙片")
+        self.assertEqual(r["dosage_form"], "片剂")
+        self.assertEqual(r["specification"], "20mg")
+        self.assertEqual(r["manufacturer"], "天地恒一制药股份有限公司")
+        self.assertEqual(r["approval_date"], "2020-01-01")
+
+    def test_skip_bad_records(self):
+        captured = [
+            {"kind": "list", "url": "x/search", "body": {"code": 200, "data": {"list": [
+                {"f0": "", "f1": "无名"},
+                {"f0": "国药准字H20200002", "f1": "阿莫西林"},
+            ]}}},
+        ]
+        records = parse_captured(captured)
+        self.assertEqual(len(records), 1)
+        self.assertEqual(records[0]["approval_number"], "国药准字H20200002")
 
 
 if __name__ == "__main__":

@@ -7,3 +7,6 @@
 # easyocr             # 图片政策 OCR（P1，需模型下载）
 # P2 医保目录 PDF 解析所需（官方目录以 PDF 发布）
 pdfplumber>=0.11
+# P2 NMPA 数据查询全自动采集（真实浏览器通过 JS 挑战；首次需 python -m playwright install chromium）
+playwright>=1.40
+greenlet==2.0.2; python_version < "3.10"
