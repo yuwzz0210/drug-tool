@@ -32,7 +32,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -90,7 +90,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -142,6 +142,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "309",
+        "payment_scope": "限：1.阵发性睡眠性血红蛋白尿症 (PNH)的患者；2.非典型溶血性尿毒症 综合征(aHUS)的患者；3.抗乙酰胆碱 受体(AChR)抗体阳性的难治性全身型 重症肌无力(gMG)成人患者。",
+        "price": "*",
+        "effective_date": "2026-01-01",
+        "expire_date": "2027-12-31",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "已进医保",
         "insurance_code": "",
         "payment_scope": "",
@@ -149,7 +159,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -210,7 +220,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -263,6 +273,26 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "271",
+        "payment_scope": "限儿童乙(B)型血友病；成人乙(B)型血友病限出血时使用。",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "270",
+        "payment_scope": "限儿童甲(A)型血友病；成人甲(A)型血友病限出血时使用。",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "已进医保",
         "insurance_code": "",
         "payment_scope": "",
@@ -270,7 +300,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -331,7 +361,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -392,7 +422,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -445,6 +475,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "288",
+        "payment_scope": "限：1.适合系统性治疗的成人中重度 斑块状银屑病；2.对传统治疗或生物 制剂应答不充分、失应答或不耐受的 成人中度至重度活动性克罗恩病；3. 对传统治疗或生物制剂应答不充分、 失应答或不耐受的成人中度至重度活 动性溃疡性结肠炎。",
+        "price": "*",
+        "effective_date": "2026-01-01",
+        "expire_date": "2026-12-31",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "已进医保",
         "insurance_code": "",
         "payment_scope": "",
@@ -452,7 +492,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -505,6 +545,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "287",
+        "payment_scope": "限：1.适合系统治疗或光疗的中度至 重度斑块型银屑病成人患者；2.常规 治疗疗效欠佳的活动性强直性脊柱炎 成人患者。",
+        "price": "*",
+        "effective_date": "2026-01-01",
+        "expire_date": "2027-12-31",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "已进医保",
         "insurance_code": "",
         "payment_scope": "",
@@ -512,7 +562,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -566,6 +616,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "285",
+        "payment_scope": "限：1.符合系统治疗或光疗指征的中 度至重度斑块状银屑病的6岁及以上患 者；2.常规治疗疗效欠佳的强直性脊 柱炎的成年患者；3. 既往传统的改善 病情抗风湿药(cDMARDs)疗效不佳或不 耐受的活动性银屑病关节炎成人患 者；4.中重度化脓性汗腺炎成人患者 。",
+        "price": "*",
+        "effective_date": "2026-01-01",
+        "expire_date": "2026-12-31",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "已进医保",
         "insurance_code": "",
         "payment_scope": "",
@@ -573,7 +633,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -635,7 +695,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -690,6 +750,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "985",
+        "payment_scope": "限：1.诊断明确的类风湿关节炎经传统DMARDs治疗3-6个月疾 病活动度下降低于50%者；2.对一种或多种既往传统合成或生 物DMARDs应答不佳或不耐受的2岁及以上活动性幼年特发性关 节炎患者，包括：(1)多关节型幼年特发性关节炎(多关节型 类风湿因子阳性[RF+]或阴性[RF-]，扩展型少关节炎),(2)附 着点炎相关关节炎,(3)幼年银屑病关节炎。可单药使用或与 甲氨蝶呤联合用药。",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "已进医保",
         "insurance_code": "",
         "payment_scope": "",
@@ -697,7 +767,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -752,6 +822,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "986",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "已进医保",
         "insurance_code": "",
         "payment_scope": "",
@@ -759,7 +839,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -813,6 +893,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "980",
+        "payment_scope": "限：1.全身型幼年特发性关节炎的二线治疗；2.限诊断明确 的类风湿关节炎经传统DMARDs治疗3-6个月疾病活动度下降低 于50%者。",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "已进医保",
         "insurance_code": "",
         "payment_scope": "",
@@ -820,7 +910,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -867,6 +957,26 @@
     "registrations": [],
     "insurance": [
       {
+        "category": "甲类",
+        "insurance_code": "850",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
+        "category": "甲类",
+        "insurance_code": "850",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "集采",
         "insurance_code": "",
         "payment_scope": "",
@@ -874,7 +984,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -929,6 +1039,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "35",
+        "payment_scope": "限成人2型糖尿病患者的血糖控制：在 饮食控制和运动基础上，接受二甲双 胍和/或磺脲类药物治疗血糖仍控制不 佳的成人2型糖尿病患者。",
+        "price": "*",
+        "effective_date": "2026-01-01",
+        "expire_date": "2027-12-31",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "未进医保",
         "insurance_code": "",
         "payment_scope": "",
@@ -936,7 +1056,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -988,6 +1108,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "29",
+        "payment_scope": "限：1.接受二甲双胍和/或磺脲类药物 治疗血糖仍控制不佳的成人2型糖尿病 患者；2.降低伴有心血管疾病的2型糖 尿病成人患者的主要心血管不良事件 (心血管死亡、非致死性心肌梗死或非 致死性卒中)风险。",
+        "price": "*",
+        "effective_date": "2026-01-01",
+        "expire_date": "2027-12-31",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "国谈进行中",
         "insurance_code": "",
         "payment_scope": "",
@@ -995,7 +1125,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -1050,6 +1180,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "29",
+        "payment_scope": "限：1.接受二甲双胍和/或磺脲类药物 治疗血糖仍控制不佳的成人2型糖尿病 患者；2.降低伴有心血管疾病的2型糖 尿病成人患者的主要心血管不良事件 (心血管死亡、非致死性心肌梗死或非 致死性卒中)风险。",
+        "price": "*",
+        "effective_date": "2026-01-01",
+        "expire_date": "2027-12-31",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "已进医保",
         "insurance_code": "",
         "payment_scope": "",
@@ -1057,7 +1197,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -1112,6 +1252,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "168",
+        "payment_scope": "限2型糖尿病。",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "已进医保",
         "insurance_code": "",
         "payment_scope": "",
@@ -1119,7 +1269,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -1175,6 +1325,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "165",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "已进医保",
         "insurance_code": "",
         "payment_scope": "",
@@ -1182,7 +1342,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -1235,6 +1395,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "集采",
         "insurance_code": "",
         "payment_scope": "",
@@ -1242,7 +1412,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -1295,6 +1465,16 @@
     ],
     "insurance": [
       {
+        "category": "甲类",
+        "insurance_code": "134",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "集采",
         "insurance_code": "",
         "payment_scope": "",
@@ -1302,7 +1482,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -1367,7 +1547,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -1423,6 +1603,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "248",
+        "payment_scope": "限：1.既往接受含铂化疗治疗失败的 复发或转移性宫颈癌患者的治疗；2. 联合紫杉醇和铂类化疗药物联合或不 联合贝伐珠单抗用于持续、复发或转 移性宫颈癌的一线治疗；3.联合含氟 尿嘧啶类和铂类药物化疗用于局部晚 期不可切除或转移性胃或胃食管结合 部腺癌患者的一线治疗。",
+        "price": "*",
+        "effective_date": "2026-01-01",
+        "expire_date": "2026-12-31",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "已进医保",
         "insurance_code": "",
         "payment_scope": "",
@@ -1430,7 +1620,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -1483,6 +1673,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "233",
+        "payment_scope": "限：1.PD-L1高表达的含铂化疗失败包括新辅助或辅助 化疗12个月内进展的局部晚期或转移性尿路上皮癌的治 疗；2.联合紫杉醇和卡铂或注射用紫杉醇(白蛋白结合 型)和卡铂用于不可手术切除的局部晚期或转移性鳞状 非小细胞肺癌的一线治疗；3.联合培美曲塞和铂类化疗 用于表皮生长因子受体(EGFR)基因突变阴性和间变性淋 巴瘤激酶(ALK)阴性、不可手术切除的局部晚期或转移 性非鳞状非小细胞肺癌的一线治疗；4.用于表皮生长因 子受体(EGFR)基因突变阴性和间变性淋巴瘤激酶(ALK) 阴性、既往接受过含铂方案化疗后疾病进展或不可耐受 的局部晚期或转移性非鳞状非小细胞肺癌(NSCLC)成人 患者，以及EGFR和ALK阴性或未知的，既往接受过含铂 方案化疗后疾病进展或不可耐受的局部晚期或转移性鳞 状NSCLC成人患者；5.联合含铂化疗新辅助治疗，并在 手术后继续单药辅助治疗，用于可切除的II期或IIIA期 非小细胞肺癌患者的治疗；6.联合依托泊苷和铂类化疗 用于广泛期小细胞肺癌(ES-SCLC)的一线治疗；7.不可 切除或转移性肝细胞癌患者的一线治疗；8.既往接受过 索拉非尼或仑伐替尼或含奥沙利铂全身化疗的晚期肝细 胞癌患者的治疗；9.不可切除或转移性微卫星高度不稳 定型(MSI-H)或错配修复基因缺陷型(dMMR)的成人晚期 实体瘤患者：既往经过氟尿嘧啶类、奥沙利铂和伊立替 康治疗后出现疾病进展的晚期结直肠癌患者；既往治疗 后出现疾病进展且无满意替代治疗方案的其他晚期实体 瘤患者；10.联合紫杉醇和铂类药物或含氟尿嘧啶类和 铂类药物用于不可切除的局部晚期、复发或转移性食管 鳞状细胞癌的一线治疗；11.既往接受过一线标准化疗 后进展或不可耐受的局部晚期或转移性食管鳞状细胞癌 的治疗；12.联合吉西他滨和顺铂用于复发或转移性鼻 咽癌的一线治疗；13.联合氟尿嘧啶类和铂类药物化疗 用于局部晚期不可切除的或转移性的胃或胃食管结合部 腺癌的一线治疗。",
+        "price": "*",
+        "effective_date": "2026-01-01",
+        "expire_date": "2027-12-31",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "已进医保",
         "insurance_code": "",
         "payment_scope": "",
@@ -1490,7 +1690,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -1545,6 +1745,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "235",
+        "payment_scope": "限：1.至少经过二线系统化疗的复发或难 治性经典型霍奇金淋巴瘤的治疗；2.非鳞 状非小细胞肺癌：(1)联合培美曲塞和铂 类化疗，用于表皮生长因子受体(EGFR)基 因突变阴性和间变性淋巴瘤激酶(ALK)阴 性、不可手术切除的局部晚期或转移性非 鳞状非小细胞肺癌(NSCLC)患者的一线治 疗；(2)联合贝伐珠单抗、培美曲塞和顺 铂，用于经表皮生长因子受体酪氨酸激酶 抑制剂(EGFR-TKI)治疗失败的EGFR基因突 变阳性的局部晚期或转移性非鳞状非小细 胞肺癌(NSCLC)患者的治疗；3.联合吉西 他滨和铂类化疗，用于不可手术切除的局 部晚期或转移性鳞状非小细胞肺癌 (NSCLC)的一线治疗；4.联合贝伐珠单 抗，用于既往未接受过系统治疗的不可切 除或转移性肝细胞癌的一线治疗；5.联合 紫杉醇和顺铂或氟尿嘧啶和顺铂用于不可 切除的局部晚期、复发或转移性食管鳞癌 的一线治疗；6.联合含氟尿嘧啶类和铂类 药物化疗用于不可切除的局部晚期、复发 或转移性胃及胃食管交界处腺癌的一线治 疗；7.联合呋喹替尼胶囊用于既往系统性 抗肿瘤治疗后失败且不适合进行根治性手 术治疗或根治性放疗的晚期错配修复完整 (pMMR)子宫内膜癌患者。",
+        "price": "*",
+        "effective_date": "2026-01-01",
+        "expire_date": "2027-12-31",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "已进医保",
         "insurance_code": "",
         "payment_scope": "",
@@ -1552,7 +1762,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -1613,7 +1823,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -1666,6 +1876,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "187",
+        "payment_scope": "限：1.表皮生长因子受体2(HER2)阳性 的复发或转移性乳腺癌患者；2.表皮 生长因子受体2(HER2)阳性早期或局部 晚期乳腺癌患者的新辅助治疗。",
+        "price": "*",
+        "effective_date": "2026-01-01",
+        "expire_date": "2027-12-31",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "已进医保",
         "insurance_code": "",
         "payment_scope": "",
@@ -1673,7 +1893,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -1728,6 +1948,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "918",
+        "payment_scope": "限以下情况方可支付，且支付不超过12个月：1.HER2阳性的 局部晚期、炎性或早期乳腺癌患者的新辅助治疗；2.具有高 复发风险HER2阳性早期乳腺癌患者的辅助治疗。",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "已进医保",
         "insurance_code": "",
         "payment_scope": "",
@@ -1735,7 +1965,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -1791,6 +2021,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "915",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "已进医保",
         "insurance_code": "",
         "payment_scope": "",
@@ -1798,7 +2038,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -1851,6 +2091,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "189",
+        "payment_scope": "限间变性淋巴瘤激酶(ALK)阳性的局部 晚期或转移性的非小细胞肺癌(NSCLC) 患者。",
+        "price": "*",
+        "effective_date": "2026-01-01",
+        "expire_date": "2027-12-31",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "已进医保",
         "insurance_code": "",
         "payment_scope": "",
@@ -1858,7 +2108,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -1911,6 +2161,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "164",
+        "payment_scope": "限：1.间变性淋巴瘤激酶(ALK)阳性的 ⅠB期至ⅢA期非小细胞肺癌患者术后 辅助治疗；2.间变性淋巴瘤激酶(ALK) 阳性的局部晚期或转移性非小细胞肺 癌患者。",
+        "price": "*",
+        "effective_date": "2026-01-01",
+        "expire_date": "2027-12-31",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "已进医保",
         "insurance_code": "",
         "payment_scope": "",
@@ -1918,7 +2178,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -1973,6 +2233,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "902",
+        "payment_scope": "限间变性淋巴瘤激酶(ALK)阳性的局部晚期或转移性非小细胞 肺癌患者或 ROS1阳性的晚期非小细胞肺癌患者。",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "已进医保",
         "insurance_code": "",
         "payment_scope": "",
@@ -1980,7 +2250,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -2035,6 +2305,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "194",
+        "payment_scope": "限：1.表皮生长因子受体(EGFR)外显 子19缺失或外显子21(L858R)置换突变 的局部晚期或转移性非小细胞肺癌 (NSCLC)成人患者的一线治疗；2.既往 经表皮生长因子受体(EGFR)酪氨酸激 酶抑制剂(TKI)治疗时或治疗后出现疾 病进展，并且经检测确认存在EGFR T790M突变阳性的局部晚期或转移性非 小细胞肺癌(NSCLC)成人患者。",
+        "price": "*",
+        "effective_date": "2026-01-01",
+        "expire_date": "2027-12-31",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "已进医保",
         "insurance_code": "",
         "payment_scope": "",
@@ -2042,7 +2322,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -2097,6 +2377,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "190",
+        "payment_scope": "限：1.表皮生长因子受体(EGFR)外显 子19缺失或外显子21(L858R)置换突变 的局部晚期或转移性非小细胞肺癌 (NSCLC)成人患者的一线治疗；2.既往 因表皮生长因子受体(EGFR)酪氨酸激 酶抑制剂(TKI)治疗时或治疗后出现疾 病进展，并且经检验确认存在EGFR T790M 突变阳性的局部晚期或转移性 非小细胞肺癌成人患者的治疗。",
+        "price": "*",
+        "effective_date": "2026-01-01",
+        "expire_date": "2027-12-31",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "已进医保",
         "insurance_code": "",
         "payment_scope": "",
@@ -2104,7 +2394,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -2161,6 +2451,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "161",
+        "payment_scope": "限：1.表皮生长因子受体(EGFR)外显 子19缺失或外显子21(L858R)置换突变 的局部晚期或转移性非小细胞肺癌 (NSCLC)成人患者的一线治疗；2.既往 经EGFR酪氨酸激酶抑制剂(TKI)治疗时 或治疗后出现疾病进展，并且经检测 确认存在EGFR T790M突变阳性的局部 晚期或转移性非小细胞肺癌成人患者 的治疗；3.既往接受过手术切除治疗 的II-IIIB期具有表皮生长因子受体 (EGFR)外显子19缺失或外显子 21(L858R)置换突变的成人非小细胞肺 癌(NSCLC)患者的治疗；4.接受含铂放 化疗期间或之后未出现疾病进展，及 具有EGFR外显子19缺失或外显子 21(L858R)置换突变的局部晚期、不可 切除(III期)NSCLC成人患者的治疗。",
+        "price": "*",
+        "effective_date": "2026-01-01",
+        "expire_date": "2026-12-31",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "已进医保",
         "insurance_code": "",
         "payment_scope": "",
@@ -2168,7 +2468,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -2226,6 +2526,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "900",
+        "payment_scope": "限：1.既往接受过手术切除治疗的ⅠB-ⅢA期存在表皮生长因 子受体(EGFR)外显子19缺失或外显子21(L858R)置换突变的非 小细胞肺癌(NSCLC)患者的治疗；2.接受含铂放化疗期间或之 后未出现疾病进展，及具有表皮生长因子受体(EGFR)外显子 19缺失或外显子21(L858R)置换突变的局部晚期、不可切除 (III期)非小细胞肺癌(NSCLC)成人患者的治疗；3.具有表皮 生长因子受体(EGFR)外显子19缺失或外显子21(L858R)置换突 变的局部晚期或转移性非小细胞肺癌(NSCLC)成人患者的一线 治疗；4.既往经EGFR酪氨酸激酶抑制剂(TKI)治疗时或治疗后 出现疾病进展，并且经检测确认存在EGFR T790M突变阳性的 局部晚期或转移性NSCLC成人患者的治疗；5.联合培美曲塞和 铂类化疗药物用于具有表皮生长因子受体(EGFR)外显子19缺 失或外显子21(L858R)置换突变的局部晚期或转移性非小细胞 肺癌(NSCLC)成人患者的一线治疗。",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "已进医保",
         "insurance_code": "",
         "payment_scope": "",
@@ -2233,7 +2543,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -2289,6 +2599,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "897",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "已进医保",
         "insurance_code": "",
         "payment_scope": "",
@@ -2296,7 +2616,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -2349,6 +2669,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "160",
+        "payment_scope": "限：1.表皮生长因子受体(EGFR)基因 具有敏感突变的局部晚期或转移性非 小细胞肺癌(NSCLC)患者的一线治疗； 2.既往接受过至少一个化疗方案失败 后的局部晚期或转移性非小细胞肺癌 (NSCLC)；3.Ⅱ-ⅢA期伴有表皮生长因 子受体(EGFR)基因敏感突变非小细胞 肺癌(NSCLC)术后辅助治疗。",
+        "price": "*",
+        "effective_date": "2026-01-01",
+        "expire_date": "2027-12-31",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "集采",
         "insurance_code": "",
         "payment_scope": "",
@@ -2356,7 +2686,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {
@@ -2410,6 +2740,16 @@
     ],
     "insurance": [
       {
+        "category": "乙类",
+        "insurance_code": "896",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
         "category": "集采",
         "insurance_code": "",
         "payment_scope": "",
@@ -2417,7 +2757,7 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
-        "catalog": "2025版国家医保目录"
+        "catalog": "人工补充记录（2025版）"
       }
     ],
     "extra_data": {

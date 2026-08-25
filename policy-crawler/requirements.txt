@@ -4,6 +4,6 @@
 # lxml                # XPath 选择器（解析器增强）
 # psycopg2-binary     # PostgreSQL 存储（PostgresStore）
 # schedule            # 进程内定时调度（替代 crontab）
-# pdfplumber          # PDF 正文提取（P1，自动尝试链之一）
-# pypdf / PyPDF2      # PDF 提取备选引擎
 # easyocr             # 图片政策 OCR（P1，需模型下载）
+# P2 医保目录 PDF 解析所需（官方目录以 PDF 发布）
+pdfplumber>=0.11

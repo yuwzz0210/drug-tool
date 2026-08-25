@@ -197,6 +197,48 @@ class DrugStore:
             )
         self._conn.commit()
 
+    def replace_catalog_entries(self, catalog_id, rows):
+        """写入某目录版本的完整条目（全量覆盖，用于未匹配品种的留存与后续匹配）。"""
+        self._conn.execute("DELETE FROM insurance_catalog_entry WHERE catalog_id=?", (catalog_id,))
+        for r in rows:
+            self._conn.execute(
+                """INSERT OR IGNORE INTO insurance_catalog_entry
+                   (catalog_id, section, category, code, name, dosage_form,
+                    pay_standard, payment_scope, valid_until)
+                   VALUES (?,?,?,?,?,?,?,?,?)""",
+                (catalog_id, _norm(r.get("section")), _norm(r.get("category")),
+                 _norm(r.get("code")), _norm(r.get("name")), _norm(r.get("dosage_form")),
+                 _norm(r.get("pay_standard")), _norm(r.get("payment_scope")),
+                 _norm(r.get("valid_until"))),
+            )
+        self._conn.commit()
+
+    def set_product_catalog_entries(self, product_id, catalog_id, entries):
+        """把某品种在指定目录版本下的医保条目整体替换（保留其他版本历史）。"""
+        self._conn.execute(
+            "DELETE FROM drug_insurance_entry WHERE product_id=? AND catalog_id=?",
+            (product_id, catalog_id),
+        )
+        for e in entries:
+            self._conn.execute(
+                """INSERT INTO drug_insurance_entry
+                   (product_id, catalog_id, category, insurance_code, payment_scope,
+                    price, effective_date, expire_date, is_current)
+                   VALUES (?,?,?,?,?,?,?,?,1)""",
+                (product_id, catalog_id, _norm(e.get("category")),
+                 _norm(e.get("insurance_code")), _norm(e.get("payment_scope")),
+                 _norm(e.get("price")), _norm(e.get("effective_date")),
+                 _norm(e.get("expire_date"))),
+            )
+        self._conn.commit()
+
+    def reset_catalog_matches(self, catalog_id):
+        """清空某目录版本下的全部品种医保条目（导入时先清后写，保证幂等）。"""
+        self._conn.execute(
+            "DELETE FROM drug_insurance_entry WHERE catalog_id=?", (catalog_id,),
+        )
+        self._conn.commit()
+
     # ---------- 器械域 ----------
 
     def upsert_device(self, device):

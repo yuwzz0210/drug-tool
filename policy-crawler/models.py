@@ -283,6 +283,19 @@ CREATE TABLE IF NOT EXISTS drug_insurance_entry (
     expire_date TEXT DEFAULT '',
     is_current INTEGER DEFAULT 1
 );
+CREATE TABLE IF NOT EXISTS insurance_catalog_entry (
+    entry_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    catalog_id INTEGER NOT NULL REFERENCES insurance_catalog(catalog_id) ON DELETE CASCADE,
+    section TEXT DEFAULT '',
+    category TEXT DEFAULT '',
+    code TEXT DEFAULT '',
+    name TEXT NOT NULL,
+    dosage_form TEXT DEFAULT '',
+    pay_standard TEXT DEFAULT '',
+    payment_scope TEXT DEFAULT '',
+    valid_until TEXT DEFAULT '',
+    UNIQUE (catalog_id, code, name, dosage_form)
+);
 CREATE TABLE IF NOT EXISTS device_product (
     device_id INTEGER PRIMARY KEY AUTOINCREMENT,
     registration_number TEXT UNIQUE NOT NULL,
@@ -412,6 +425,19 @@ CREATE TABLE IF NOT EXISTS drug_insurance_entry (
     effective_date DATE,
     expire_date DATE,
     is_current BOOLEAN DEFAULT TRUE
+);
+CREATE TABLE IF NOT EXISTS insurance_catalog_entry (
+    entry_id BIGSERIAL PRIMARY KEY,
+    catalog_id BIGINT NOT NULL REFERENCES insurance_catalog(catalog_id) ON DELETE CASCADE,
+    section VARCHAR(20) DEFAULT '',
+    category VARCHAR(30) DEFAULT '',
+    code VARCHAR(50) DEFAULT '',
+    name VARCHAR(300) NOT NULL,
+    dosage_form VARCHAR(100) DEFAULT '',
+    pay_standard TEXT DEFAULT '',
+    payment_scope TEXT DEFAULT '',
+    valid_until TEXT DEFAULT '',
+    UNIQUE (catalog_id, code, name, dosage_form)
 );
 CREATE TABLE IF NOT EXISTS device_product (
     device_id BIGSERIAL PRIMARY KEY,
