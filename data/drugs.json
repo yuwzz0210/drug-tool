@@ -1,5 +1,783 @@
 [
   {
+    "product_id": 72,
+    "generic_name": "利格列汀二甲双胍片(Ⅰ)",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "广东东阳光药业股份有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20203437",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:54:41"
+  },
+  {
+    "product_id": 71,
+    "generic_name": "二甲双胍格列吡嗪片",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "北京四环科宝制药股份有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20140028",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:54:41"
+  },
+  {
+    "product_id": 70,
+    "generic_name": "盐酸二甲双胍片",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "上海上药信谊药厂有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H31021130",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:54:41"
+  },
+  {
+    "product_id": 69,
+    "generic_name": "利格列汀二甲双胍片（Ⅱ）",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "广东东阳光药业股份有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20203438",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:54:41"
+  },
+  {
+    "product_id": 68,
+    "generic_name": "西格列汀二甲双胍片（Ⅰ）",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "石家庄市华新药业有限责任公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20264002",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:54:40"
+  },
+  {
+    "product_id": 67,
+    "generic_name": "盐酸二甲双胍缓释片",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "河南羚锐制药股份有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20243635",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:54:40"
+  },
+  {
+    "product_id": 66,
+    "generic_name": "盐酸二甲双胍缓释片",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "乐声药业石家庄有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20233061",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:54:40"
+  },
+  {
+    "product_id": 65,
+    "generic_name": "瑞格列奈二甲双胍片（Ⅱ）",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "成都苑东生物制药股份有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20213825",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:54:40"
+  },
+  {
+    "product_id": 64,
+    "generic_name": "吡格列酮二甲双胍片（15mg/500mg）",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "浙江赛默制药有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20256205",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:54:40"
+  },
+  {
+    "product_id": 63,
+    "generic_name": "盐酸二甲双胍片",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "丹东医创药业有限责任公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H21022377",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:54:40"
+  },
+  {
+    "product_id": 62,
+    "generic_name": "盐酸恩沙替尼胶囊",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "贝达药业股份有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20200010",
+        "status": "有效",
+        "registration_date": ""
+      },
+      {
+        "approval_number": "国药准字H20200009",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:54:02"
+  },
+  {
+    "product_id": 61,
+    "generic_name": "甲磺酸奥希替尼片",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "复星万邦（江苏）医药集团有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20234356",
+        "status": "有效",
+        "registration_date": ""
+      },
+      {
+        "approval_number": "国药准字H20234357",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:53:43"
+  },
+  {
+    "product_id": 60,
+    "generic_name": "吉非替尼片",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "山东鲁抗医药股份有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20254759",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:53:24"
+  },
+  {
+    "product_id": 59,
+    "generic_name": "吉非替尼片",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "江苏天士力帝益药业有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20203704",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:53:24"
+  },
+  {
+    "product_id": 58,
+    "generic_name": "吉非替尼片",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "四川美大康华康药业有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20223589",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:53:24"
+  },
+  {
+    "product_id": 57,
+    "generic_name": "吉非替尼片",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "齐鲁制药(海南)有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20163465",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:53:24"
+  },
+  {
+    "product_id": 56,
+    "generic_name": "吉非替尼片",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "上海创诺制药有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20203359",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:53:24"
+  },
+  {
+    "product_id": 55,
+    "generic_name": "吉非替尼片",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "山东新时代药业有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20243617",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:53:24"
+  },
+  {
+    "product_id": 54,
+    "generic_name": "吉非替尼片",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "湖南科伦制药有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20193362",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:53:24"
+  },
+  {
+    "product_id": 53,
+    "generic_name": "吉非替尼片",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "正大天晴药业集团南京顺欣制药有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20193135",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:53:24"
+  },
+  {
+    "product_id": 52,
+    "generic_name": "吉非替尼片",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "江苏恒瑞医药股份有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20203215",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:53:24"
+  },
+  {
+    "product_id": 51,
+    "generic_name": "吉非替尼片",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "苏州特瑞药业股份有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20213551",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:53:24"
+  },
+  {
+    "product_id": 50,
+    "generic_name": "氨氯地平阿托伐他汀钙片",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "吉林省德商药业股份有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20233415",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:46:17"
+  },
+  {
+    "product_id": 49,
+    "generic_name": "氨氯地平阿托伐他汀钙片",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "苏州东瑞制药有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20233409",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:46:17"
+  },
+  {
+    "product_id": 48,
+    "generic_name": "阿托伐他汀钙片",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "山东新华制药股份有限公司；杭州民生滨江制药有限公司；新华制药（高密）有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20213751",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:46:17"
+  },
+  {
+    "product_id": 47,
+    "generic_name": "依折麦布阿托伐他汀钙片（Ⅰ）",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "江西施美药业股份有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20253268",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:46:17"
+  },
+  {
+    "product_id": 46,
+    "generic_name": "阿托伐他汀钙片",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "宁波美诺华天康药业有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20213622",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:46:17"
+  },
+  {
+    "product_id": 45,
+    "generic_name": "阿托伐他汀钙片",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "北京嘉林药业股份有限公司,北京嘉林药业股份有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H19990258",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:46:17"
+  },
+  {
+    "product_id": 44,
+    "generic_name": "阿托伐他汀钙胶囊",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "天方药业有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20051984",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:46:17"
+  },
+  {
+    "product_id": 43,
+    "generic_name": "氨氯地平阿托伐他汀钙片",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "华润赛科药业有限责任公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20213808",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:46:17"
+  },
+  {
+    "product_id": 42,
+    "generic_name": "阿托伐他汀钙片",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "天地恒一制药股份有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20203358",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:46:17"
+  },
+  {
+    "product_id": 41,
+    "generic_name": "氨氯地平阿托伐他汀钙片",
+    "trade_name": "",
+    "dosage_form": "",
+    "specification": "",
+    "manufacturer": "安徽宏业药业有限公司",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [],
+    "mechanisms": [],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20255241",
+        "status": "有效",
+        "registration_date": ""
+      }
+    ],
+    "insurance": [],
+    "extra_data": {},
+    "updated_at": "2026-08-26 07:46:17"
+  },
+  {
     "product_id": 40,
     "generic_name": "盐酸曲恩汀片",
     "trade_name": "—",

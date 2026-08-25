@@ -113,11 +113,29 @@ class NmpaBrowserCollector:
             raise RuntimeError("未出现搜索结果窗口")
         result_page.wait_for_timeout(6000)
         _kill_intro(result_page)
+        # 等待列表响应；若超时未捕获则重试一次搜索
+        if not any(c["kind"] == "list" for c in self.captured):
+            try:
+                box.press("Enter")
+                result_page.wait_for_timeout(5000)
+            except Exception:
+                pass
+        deadline = time.time() + 15
+        while time.time() < deadline and not any(c["kind"] == "list" for c in self.captured):
+            time.sleep(1)
         # 翻页
         for _ in range(max_pages - 1):
             try:
-                nxt = result_page.locator("button:has-text('下一页')").first
-                if not nxt.is_visible():
+                nxt = None
+                for sel in ("button:has-text('下一页')",
+                            ".el-pagination .btn-next",
+                            ".el-pagination__next",
+                            "button.btn-next"):
+                    loc = result_page.locator(sel)
+                    if loc.count() and loc.first.is_visible():
+                        nxt = loc.first
+                        break
+                if nxt is None:
                     break
                 nxt.click()
                 result_page.wait_for_timeout(2500)
