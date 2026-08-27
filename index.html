@@ -2137,8 +2137,8 @@ function exportAnalysisPDF(){var el=document.getElementById('analysisOut');el.cl
 
 /* ============ 数据管理 ============ */
 function renderManager(){
-  document.getElementById('managerTable').innerHTML='<table><tr><th>通用名</th><th>病种</th><th>世代</th><th>年份</th><th>医保</th><th>类型</th><th>挂网价</th><th>采购价</th><th>操作</th></tr>'+
-  DB.map((d,i)=>'<tr><td>'+d.gn+'</td><td>'+d.disease+'</td><td>'+d.gen+'</td><td>'+d.year+'</td><td>'+insTag(d.ins)+'</td><td>'+(d.dtype?'<span class="tag '+(d.dtype==='创新药'?'blue':d.dtype==='集采药'?'amber':'gray')+'">'+d.dtype+'</span>':'<span class="muted">—</span>')+'</td><td>'+(d.price!=null?'¥'+d.price:'—')+'</td><td style="color:#9d174d">'+(d.pprice!=null?'¥'+d.pprice:'—')+'</td><td><button class="btn gray" onclick="openEditor('+i+')">编辑</button> <button class="btn gray" onclick="delDrug('+i+')">删除</button></td></tr>').join('')+'</table>';
+  document.getElementById('managerTable').innerHTML='<table><tr><th>通用名</th><th>生产企业</th><th>批准文号</th><th>病种</th><th>世代</th><th>年份</th><th>医保</th><th>类型</th><th>挂网价</th><th>采购价</th><th>操作</th></tr>'+
+  DB.map((d,i)=>'<tr><td>'+d.gn+'</td><td style="font-size:12px">'+(d.mfr||'<span class="muted">—</span>')+'</td><td style="font-size:12px">'+(d.appr||'<span class="muted">—</span>')+'</td><td>'+d.disease+'</td><td>'+d.gen+'</td><td>'+d.year+'</td><td>'+insTag(d.ins)+'</td><td>'+(d.dtype?'<span class="tag '+(d.dtype==='创新药'?'blue':d.dtype==='集采药'?'amber':'gray')+'">'+d.dtype+'</span>':'<span class="muted">—</span>')+'</td><td>'+(d.price!=null?'¥'+d.price:'—')+'</td><td style="color:#9d174d">'+(d.pprice!=null?'¥'+d.pprice:'—')+'</td><td><button class="btn gray" onclick="openEditor('+i+')">编辑</button> <button class="btn gray" onclick="delDrug('+i+')">删除</button></td></tr>').join('')+'</table>';
 }
 let editIdx=-1;
 function initAreaSelect(){const sel=document.getElementById('f_area');sel.innerHTML='<option value="">请选择领域</option>'+treeAreas().map(a=>'<option value="'+a+'">'+a+'</option>').join('');}

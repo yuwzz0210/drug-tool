@@ -158,8 +158,15 @@ class NmpaBrowserCollector:
                 n = min(details, links.count())
                 for i in range(n):
                     try:
+                        before = sum(1 for c in self.captured if c["kind"] == "detail")
                         links.nth(i).click()
-                        result_page.wait_for_timeout(2000)
+                        # 等待该条详情响应到达（最多 4 秒），减少固定等待
+                        deadline = time.time() + 4
+                        while time.time() < deadline:
+                            if sum(1 for c in self.captured if c["kind"] == "detail") > before:
+                                break
+                            time.sleep(0.3)
+                        result_page.wait_for_timeout(300)
                         # 详情可能在弹窗/新窗口，关闭返回
                         for pg in list(self._ctx.pages):
                             if pg is not result_page and "search-result" not in pg.url:
@@ -198,7 +205,12 @@ def parse_captured(captured):
         if body.get("code") != 200:
             continue
         data = body.get("data") or {}
-        rows = data.get("list") if item["kind"] == "list" else [data]
+        if item["kind"] == "list":
+            rows = data.get("list") or []
+        else:
+            # queryDetail 响应结构为 data.detail（外层带 isMark）
+            detail = data.get("detail") if isinstance(data, dict) else data
+            rows = detail if isinstance(detail, list) else [detail]
         for row in rows or []:
             if not isinstance(row, dict):
                 continue

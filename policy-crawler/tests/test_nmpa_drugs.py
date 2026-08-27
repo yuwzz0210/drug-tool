@@ -72,9 +72,12 @@ class TestParseCaptured(unittest.TestCase):
                  "f2": "天地恒一制药股份有限公司", "f3": "86900000000001", "f4": "dk1"},
             ]}}},
             {"kind": "detail", "url": "x/queryDetail", "body": {"code": 200, "data": {
-                "f0": "国药准字H20200001", "f1": "阿托伐他汀钙片", "f3": "立普妥",
-                "f4": "片剂", "f5": "20mg", "f6": "某上市许可持有人",
-                "f8": "天地恒一制药股份有限公司", "f9": "2020-01-01", "f11": "化学药品",
+                "isMark": False,
+                "detail": {
+                    "f0": "国药准字H20200001", "f1": "阿托伐他汀钙片", "f3": "立普妥",
+                    "f4": "片剂", "f5": "20mg", "f6": "某上市许可持有人",
+                    "f8": "天地恒一制药股份有限公司", "f9": "2020-01-01", "f11": "化学药品",
+                },
             }}},
         ]
         records = parse_captured(captured)
@@ -85,6 +88,27 @@ class TestParseCaptured(unittest.TestCase):
         self.assertEqual(r["specification"], "20mg")
         self.assertEqual(r["manufacturer"], "天地恒一制药股份有限公司")
         self.assertEqual(r["approval_date"], "2020-01-01")
+
+    def test_parse_detail_wrapped_in_data_detail(self):
+        """queryDetail 真实结构：{code, data:{isMark, detail:{f0..f15}}}。"""
+        captured = [
+            {"kind": "list", "url": "x/search", "body": {"code": 200, "data": {"list": [
+                {"f0": "国药准字H20200001", "f1": "阿托伐他汀钙片", "f2": "某企业",
+                 "f3": "86900000000001", "f4": "dk1"},
+            ]}}},
+            {"kind": "detail", "url": "x/queryDetail", "body": {"code": 200, "data": {
+                "isMark": False,
+                "detail": {"f0": "国药准字H20200001", "f1": "阿托伐他汀钙片",
+                           "f4": "片剂", "f5": "20mg", "f6": "某持有人",
+                           "f8": "某企业", "f9": "2020-01-01", "f11": "化学药品"},
+            }}},
+        ]
+        records = parse_captured(captured)
+        self.assertEqual(len(records), 1)
+        r = records[0]
+        self.assertEqual(r["dosage_form"], "片剂")
+        self.assertEqual(r["specification"], "20mg")
+        self.assertEqual(r["holder"], "某持有人")
 
     def test_skip_bad_records(self):
         captured = [
