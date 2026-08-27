@@ -77,12 +77,22 @@ class NmpaBrowserCollector:
         page.goto(HOME_URL, timeout=60000)
         page.wait_for_timeout(wait_challenge * 1000)
         _kill_intro(page)
+        # 等待搜索框出现（首页可能加载较慢）
         box = None
-        for el in page.locator("input").all():
-            ph = el.get_attribute("placeholder") or ""
-            if el.is_visible() and "请选择" not in ph:
-                box = el
+        deadline = time.time() + 25
+        while time.time() < deadline:
+            _kill_intro(page)
+            for el in page.locator("input").all():
+                try:
+                    ph = el.get_attribute("placeholder") or ""
+                    if el.is_visible() and "请选择" not in ph:
+                        box = el
+                        break
+                except Exception:
+                    continue
+            if box:
                 break
+            time.sleep(1)
         if box is None:
             raise RuntimeError("未找到首页搜索框")
         box.fill(keyword)

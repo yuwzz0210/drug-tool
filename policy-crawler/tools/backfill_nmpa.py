@@ -63,6 +63,9 @@ def main(argv=None):
     parser.add_argument("--details", type=int, default=2)
     parser.add_argument("--out", default=os.path.join(ROOT, "work", "nmpa_captured"))
     parser.add_argument("--headed", action="store_true")
+    parser.add_argument("--retries", type=int, default=2, help="单个关键词失败重试次数")
+    parser.add_argument("--delay", type=float, default=5.0, help="关键词之间间隔秒数")
+    parser.add_argument("--restart-every", type=int, default=10, help="每 N 个关键词重启浏览器，避免被限流")
     args = parser.parse_args(argv)
 
     drugs = DrugStore.from_path(args.db)
@@ -72,36 +75,59 @@ def main(argv=None):
         keywords = load_keywords(drugs, limit=args.limit)
     print("待回填关键词数:", len(keywords), keywords[:20])
 
-    collector = NmpaBrowserCollector(headless=not args.headed)
     report = {"keywords": len(keywords), "ok": 0, "failed": [], "new_records": 0,
-              "new_products": 0, "new_registrations": 0, "elapsed": 0.0}
+              "new_products": 0, "new_registrations": 0, "retries": 0, "elapsed": 0.0}
     start = time.time()
     seen = set()
+    collector = None
+    since_restart = 0
     try:
         for idx, kw in enumerate(keywords, 1):
-            t0 = time.time()
-            try:
-                collector.search(kw, max_pages=args.max_pages, details=args.details,
-                                 wait_challenge=12 if idx == 1 else 0)
-                records = parse_captured(collector.captured)
-                collector.captured = []
-                # 按批准文号去重（跨关键词）
-                fresh = [r for r in records if r.get("approval_number") not in seen]
-                for r in fresh:
-                    seen.add(r["approval_number"])
-                if fresh:
-                    imp = import_registrations(drugs, fresh)
-                    report["new_records"] += len(fresh)
-                    report["new_products"] += imp["products"]
-                    report["new_registrations"] += imp["registrations"]
-                report["ok"] += 1
-                print("[%d/%d] %s → %d 条新记录 (%.1fs)"
-                      % (idx, len(keywords), kw, len(fresh), time.time() - t0))
-            except Exception as exc:
-                report["failed"].append({"keyword": kw, "error": str(exc)[:200]})
-                print("[%d/%d] %s 失败: %s" % (idx, len(keywords), kw, str(exc)[:150]))
+            last_err = None
+            for attempt in range(args.retries + 1):
+                t0 = time.time()
+                try:
+                    if collector is None or since_restart >= args.restart_every:
+                        if collector:
+                            collector.close()
+                        collector = NmpaBrowserCollector(headless=not args.headed)
+                        since_restart = 0
+                        time.sleep(3)
+                    since_restart += 1
+                    collector.search(kw, max_pages=args.max_pages, details=args.details,
+                                     wait_challenge=12 if since_restart == 1 else 0)
+                    records = parse_captured(collector.captured)
+                    collector.captured = []
+                    fresh = [r for r in records if r.get("approval_number") not in seen]
+                    for r in fresh:
+                        seen.add(r["approval_number"])
+                    if fresh:
+                        imp = import_registrations(drugs, fresh)
+                        report["new_records"] += len(fresh)
+                        report["new_products"] += imp["products"]
+                        report["new_registrations"] += imp["registrations"]
+                    report["ok"] += 1
+                    print("[%d/%d] %s → %d 条新记录 (%.1fs)"
+                          % (idx, len(keywords), kw, len(fresh), time.time() - t0), flush=True)
+                    break
+                except Exception as exc:
+                    last_err = str(exc)[:200]
+                    report["retries"] += 1
+                    print("[%d/%d] %s 第%d次失败: %s" % (idx, len(keywords), kw, attempt + 1, last_err[:140]), flush=True)
+                    if collector:
+                        try:
+                            collector.close()
+                        except Exception:
+                            pass
+                        collector = None
+                        since_restart = args.restart_every  # 强制下次重启
+                    time.sleep(6)
+            if last_err is not None and report["ok"] < idx:
+                report["failed"].append({"keyword": kw, "error": last_err})
+            time.sleep(args.delay)
     finally:
-        collector.close()
+        if collector:
+            collector.close()
         drugs.close()
     report["elapsed"] = round(time.time() - start, 1)
     print(json.dumps(report, ensure_ascii=False, indent=2))
