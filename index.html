@@ -918,6 +918,81 @@ function saveDB(){
 }
 function ensurePDB(){if(!PDB.length)PDB=loadPolicyDB();}
 
+/* ============ 官方药品数据接轨（data/drugs.json，localStorage 降级兜底） ============ */
+const DRUGS_JSON_URL='data/drugs.json';
+function mapDrugJson(d){
+  const reg=(d.registrations&&d.registrations[0])||{};
+  const insArr=d.insurance&&d.insurance.length?d.insurance:[];
+  const ins0=insArr[0]||{};
+  return {
+    gn:d.generic_name||'',
+    bn:d.trade_name||'',
+    mfr:d.manufacturer||'',
+    form:d.dosage_form||'',
+    spec:d.specification||'',
+    appr:reg.approval_number||'',
+    adate:reg.registration_date||'',
+    ind:(d.indications||[]).join('；'),
+    ind2:'',
+    mech:(d.mechanisms||[]).join('；'),
+    mech_plain:(d.mechanisms||[]).join('；'),
+    ins:ins0.category||(insArr.length?'已进医保':''),
+    paystd:ins0.payment_scope||'',
+    price:ins0.price!==undefined&&ins0.price!==''?ins0.price:'',
+    ...(d.extra_data&&typeof d.extra_data==='object'?d.extra_data:{}),
+    official:true,
+    drug_id:d.product_id,
+    updated_at:d.updated_at||''
+  };
+}
+function mergeOfficialIntoDb(official,local){
+  const byKey={};
+  official.forEach(o=>{const k=norm(o.gn||'');(byKey[k]=byKey[k]||[]).push(o);});
+  const used={};
+  const merged=local.map(l=>{
+    const k=norm(l.gn||'');
+    const cands=byKey[k]||[];
+    if(!cands.length)return l;
+    let pick=cands[0];
+    if(l.mfr){
+      const hit=cands.find(c=>c.manufacturer&&(c.manufacturer.indexOf(l.mfr)>-1||l.mfr.indexOf(c.manufacturer)>-1));
+      if(hit)pick=hit;
+    }
+    used[k]=used[k]||{};used[k][pick.product_id]=true;
+    const off=mapDrugJson(pick);
+    const m={...off,...l};
+    ['mfr','appr','form','spec','ind','mech','ins','paystd','price'].forEach(f=>{if(off[f])m[f]=off[f];});
+    m.official=true;m.drug_id=pick.product_id;
+    return m;
+  });
+  official.forEach(o=>{
+    const k=norm(o.gn||'');
+    if(!(used[k]&&used[k][o.product_id]))merged.push(mapDrugJson(o));
+  });
+  return merged;
+}
+function refreshAfterHydrate(){
+  try{
+    initAreaSelect();buildAssessTree();buildAssessTags();buildCompeteAreaPick();
+    renderManager();initDecision();loadCCParams();calcColdChain();ptInitCmpArea();
+    if(typeof buildAssessAreaPick==='function')buildAssessAreaPick();
+    if(typeof buildCompeteAreaPick==='function')buildCompeteAreaPick();
+  }catch(e){console.warn('刷新界面失败',e);}
+}
+function hydrateFromDrugsJson(){
+  fetch(DRUGS_JSON_URL,{cache:'no-store'})
+    .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
+    .then(function(arr){
+      if(!Array.isArray(arr)||!arr.length)throw new Error('数据为空');
+      const before=DB.length;
+      DB=mergeOfficialIntoDb(arr,DB);
+      saveDB();
+      refreshAfterHydrate();
+      console.log('官方药品数据同步完成',before,'→',DB.length);
+    })
+    .catch(function(err){console.warn('官方药品数据加载失败，使用本地数据',err);});
+}
+
 /* 年份筛选已移除 — 兼容函数 */
 function getYear(){return 2026;}
 function filterByYear(list){return list;}
@@ -2106,6 +2181,7 @@ loadCCParams();
 calcColdChain();
 ptInitCmpArea();
 showHome();
+hydrateFromDrugsJson();
 
 /* ============ 文档/文本批量导入（R01 智能解析增强） ============ */
 const DOC_FIELDS={
