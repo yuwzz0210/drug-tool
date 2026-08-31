@@ -133,8 +133,12 @@ class NmpaBrowserCollector:
         deadline = time.time() + 15
         while time.time() < deadline and not any(c["kind"] == "list" for c in self.captured):
             time.sleep(1)
-        # 翻页
-        for _ in range(max_pages - 1):
+        # 翻页 + 每页抓详情（先抓当前页详情，再翻下一页）
+        for page_idx in range(max_pages):
+            if details > 0:
+                self._capture_page_details(result_page, details)
+            if page_idx >= max_pages - 1:
+                break
             try:
                 nxt = None
                 for sel in ("button:has-text('下一页')",
@@ -151,35 +155,34 @@ class NmpaBrowserCollector:
                 result_page.wait_for_timeout(2500)
             except Exception:
                 break
-        # 抓详情
-        if details > 0:
-            try:
-                links = result_page.locator("a:has-text('详情'), button:has-text('详情')")
-                n = min(details, links.count())
-                for i in range(n):
-                    try:
-                        before = sum(1 for c in self.captured if c["kind"] == "detail")
-                        links.nth(i).click()
-                        # 等待该条详情响应到达（最多 4 秒），减少固定等待
-                        deadline = time.time() + 4
-                        while time.time() < deadline:
-                            if sum(1 for c in self.captured if c["kind"] == "detail") > before:
-                                break
-                            time.sleep(0.3)
-                        result_page.wait_for_timeout(300)
-                        # 详情可能在弹窗/新窗口，关闭返回
-                        for pg in list(self._ctx.pages):
-                            if pg is not result_page and "search-result" not in pg.url:
-                                pg.close()
-                        try:
-                            result_page.keyboard.press("Escape")
-                        except Exception:
-                            pass
-                    except Exception:
-                        continue
-            except Exception as exc:
-                log.warning("详情抓取异常: %s", exc)
         return result_page
+
+    def _capture_page_details(self, result_page, details):
+        """抓取当前页每行的详情（点击→等待 queryDetail 响应→返回）。"""
+        try:
+            links = result_page.locator("a:has-text('详情'), button:has-text('详情')")
+            n = min(details, links.count())
+            for i in range(n):
+                try:
+                    before = sum(1 for c in self.captured if c["kind"] == "detail")
+                    links.nth(i).click()
+                    deadline = time.time() + 4
+                    while time.time() < deadline:
+                        if sum(1 for c in self.captured if c["kind"] == "detail") > before:
+                            break
+                        time.sleep(0.3)
+                    result_page.wait_for_timeout(300)
+                    for pg in list(self._ctx.pages):
+                        if pg is not result_page and "search-result" not in pg.url:
+                            pg.close()
+                    try:
+                        result_page.keyboard.press("Escape")
+                    except Exception:
+                        pass
+                except Exception:
+                    continue
+        except Exception as exc:
+            log.warning("详情抓取异常: %s", exc)
 
     def save(self, out_dir, keyword):
         os.makedirs(out_dir, exist_ok=True)

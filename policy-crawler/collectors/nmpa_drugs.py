@@ -138,6 +138,7 @@ def import_registrations(drugs, records):
                 product_id=pid,
                 approval_number=r["approval_number"],
                 registration_date=r.get("approval_date", ""),
+                holder=r.get("holder", ""),
                 source_url=DATASEARCH_URL,
             ))
             report["registrations"] += 1

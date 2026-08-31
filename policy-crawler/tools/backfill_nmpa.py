@@ -43,12 +43,17 @@ def _keyword_from_generic(gn):
 
 
 def load_keywords(drugs, limit=0):
-    _, rows = drugs.fetch_products(page=1, size=100000)
     keywords = []
-    for r in rows:
-        kw = _keyword_from_generic(r["generic_name"])
-        if kw and kw not in keywords:
-            keywords.append(kw)
+    page = 1
+    while True:
+        total, rows = drugs.fetch_products(page=page, size=100)
+        for r in rows:
+            kw = _keyword_from_generic(r["generic_name"])
+            if kw and kw not in keywords:
+                keywords.append(kw)
+        if page * 100 >= total:
+            break
+        page += 1
     if limit:
         keywords = keywords[:limit]
     return keywords
