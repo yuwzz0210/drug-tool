@@ -40,6 +40,17 @@ DETAIL_FIELDS = {
 }
 
 
+def page_all_enriched(list_body, skip_ids):
+    """判断列表页中所有批准文号是否都已补全（用于整页跳过详情点击）。"""
+    if not skip_ids:
+        return False
+    data = (list_body or {}).get("data") or {}
+    rows = data.get("list") or []
+    if not rows:
+        return False
+    return all((row.get("f0") or "") in skip_ids for row in rows)
+
+
 def _kill_intro(page):
     page.evaluate("""
       () => {
@@ -59,6 +70,8 @@ class NmpaBrowserCollector:
         self._ctx = self._browser.new_context(
             user_agent=UA, locale="zh-CN", viewport={"width": 1440, "height": 960})
         self.captured = []  # [{kind, url, body}]
+        self._last_list_ids = set()
+        self._last_list_body = None
         self._ctx.on("page", lambda pg: pg.on("response", self._on_response))
 
     def _on_response(self, resp):
@@ -70,9 +83,15 @@ class NmpaBrowserCollector:
                 return
             kind = "detail" if "queryDetail" in url else "list"
             self.captured.append({"kind": kind, "url": url, "body": body})
+            if kind == "list":
+                data = body.get("data") or {}
+                self._last_list_body = body
+                self._last_list_ids = {
+                    (row.get("f0") or "") for row in (data.get("list") or [])
+                }
             log.info("捕获 %s 响应: %s", kind, url[:150])
 
-    def search(self, keyword, max_pages=20, details=0, wait_challenge=12):
+    def search(self, keyword, max_pages=20, details=0, wait_challenge=12, skip_ids=None):
         page = self._ctx.pages[0] if self._ctx.pages else self._ctx.new_page()
         page.goto(HOME_URL, timeout=60000)
         page.wait_for_timeout(wait_challenge * 1000)
@@ -136,7 +155,10 @@ class NmpaBrowserCollector:
         # 翻页 + 每页抓详情（先抓当前页详情，再翻下一页）
         for page_idx in range(max_pages):
             if details > 0:
-                self._capture_page_details(result_page, details)
+                if not (skip_ids and page_all_enriched(self._last_list_body, skip_ids)):
+                    self._capture_page_details(result_page, details)
+                else:
+                    log.info("整页已补全，跳过详情: %s", keyword)
             if page_idx >= max_pages - 1:
                 break
             try:

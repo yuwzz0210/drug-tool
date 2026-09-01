@@ -7,7 +7,7 @@ import unittest
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from collectors.nmpa_drugs import import_registrations, parse_registrations  # noqa: E402
-from collectors.nmpa_browser import parse_captured  # noqa: E402
+from collectors.nmpa_browser import page_all_enriched, parse_captured  # noqa: E402
 from drugstore import DrugStore  # noqa: E402
 from store import SqliteStore  # noqa: E402
 
@@ -65,6 +65,14 @@ class TestImportRegistrations(unittest.TestCase):
 
 
 class TestParseCaptured(unittest.TestCase):
+    def test_page_all_enriched(self):
+        body = {"code": 200, "data": {"list": [
+            {"f0": "国药准字H001"}, {"f0": "国药准字H002"},
+        ]}}
+        self.assertTrue(page_all_enriched(body, {"国药准字H001", "国药准字H002"}))
+        self.assertFalse(page_all_enriched(body, {"国药准字H001"}))
+        self.assertFalse(page_all_enriched(body, set()))
+
     def test_parse_list_and_detail_dedup(self):
         captured = [
             {"kind": "list", "url": "x/search", "body": {"code": 200, "data": {"total": 1, "list": [

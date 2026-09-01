@@ -19,7 +19,7 @@ Set-Location $crawler
 
 # 1) NMPA 官方注册数据增量采集（含详情；失败自动重试）
 Write-Log "步骤1/4 NMPA 增量采集..."
-python -u tools\backfill_nmpa.py --db policy_crawler.db --max-pages 20 --details 50 --retries 2 --delay 3 2>&1 | ForEach-Object { Write-Log $_ }
+python -u tools\backfill_nmpa.py --db policy_crawler.db --incremental --max-pages 20 --details 50 --retries 2 --delay 3 2>&1 | ForEach-Object { Write-Log $_ }
 
 # 2) 医保目录重跑（自动发现最新版目录 PDF）
 Write-Log "步骤2/4 医保目录更新..."

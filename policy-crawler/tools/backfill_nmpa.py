@@ -59,6 +59,38 @@ def load_keywords(drugs, limit=0):
     return keywords
 
 
+def load_skip_ids(drugs):
+    """已补全（有剂型且规格）的批准文号集合，供增量跳过。"""
+    ids = set()
+    rows = drugs._conn.execute(
+        """SELECT r.approval_number FROM drug_registration r
+           JOIN drug_product p ON p.product_id = r.product_id
+           WHERE p.dosage_form != '' AND p.specification != ''"""
+    ).fetchall()
+    for r in rows:
+        ids.add(r[0])
+    return ids
+
+
+def load_missing_keywords(drugs, limit=0):
+    """只取仍缺剂型/规格的品种关键词（增量模式）。"""
+    keywords = []
+    page = 1
+    while True:
+        total, rows = drugs.fetch_products(page=page, size=100)
+        for r in rows:
+            if not r["dosage_form"] or not r["specification"]:
+                kw = _keyword_from_generic(r["generic_name"])
+                if kw and kw not in keywords:
+                    keywords.append(kw)
+        if page * 100 >= total:
+            break
+        page += 1
+    if limit:
+        keywords = keywords[:limit]
+    return keywords
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description="NMPA 官方数据批量回填")
     parser.add_argument("--db", default="policy_crawler.db")
@@ -71,14 +103,21 @@ def main(argv=None):
     parser.add_argument("--retries", type=int, default=2, help="单个关键词失败重试次数")
     parser.add_argument("--delay", type=float, default=5.0, help="关键词之间间隔秒数")
     parser.add_argument("--restart-every", type=int, default=10, help="每 N 个关键词重启浏览器，避免被限流")
+    parser.add_argument("--incremental", action="store_true",
+                        help="增量模式：只抓缺剂型/规格的关键词，已补全文号整页跳过详情")
     args = parser.parse_args(argv)
 
     drugs = DrugStore.from_path(args.db)
     if args.keywords:
         keywords = args.keywords
+    elif args.incremental:
+        keywords = load_missing_keywords(drugs)
     else:
         keywords = load_keywords(drugs, limit=args.limit)
     print("待回填关键词数:", len(keywords), keywords[:20])
+    skip_ids = load_skip_ids(drugs) if args.incremental else set()
+    if args.incremental:
+        print("已补全批准文号数(将跳过):", len(skip_ids))
 
     report = {"keywords": len(keywords), "ok": 0, "failed": [], "new_records": 0,
               "new_products": 0, "new_registrations": 0, "retries": 0, "elapsed": 0.0}
@@ -100,7 +139,8 @@ def main(argv=None):
                         time.sleep(3)
                     since_restart += 1
                     collector.search(kw, max_pages=args.max_pages, details=args.details,
-                                     wait_challenge=12 if since_restart == 1 else 0)
+                                     wait_challenge=12 if since_restart == 1 else 0,
+                                     skip_ids=skip_ids or None)
                     records = parse_captured(collector.captured)
                     collector.captured = []
                     fresh = [r for r in records if r.get("approval_number") not in seen]
