@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>drug-tool 行动步骤 · 数据库搭建与 UI 落地</title>
+<style>
+  body{font-family:"Microsoft YaHei",system-ui,sans-serif;max-width:960px;margin:24px auto;padding:0 20px;color:#1f2937;line-height:1.7;background:#f8fafc}
+  h1{font-size:26px;border-bottom:3px solid #2563eb;padding-bottom:8px}
+  h2{font-size:20px;margin-top:32px;color:#1e40af;border-left:5px solid #2563eb;padding-left:10px}
+  h3{font-size:16px;margin-top:20px;color:#374151}
+  .step{display:flex;gap:10px;align-items:center;background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:10px 14px;margin:10px 0}
+  .badge{flex:0 0 auto;padding:3px 10px;border-radius:999px;font-size:13px;font-weight:bold}
+  .done{background:#dcfce7;color:#166534}
+  .doing{background:#fef9c3;color:#854d0e}
+  .todo{background:#e2e8f0;color:#334155}
+  table{border-collapse:collapse;width:100%;margin:12px 0;background:#fff}
+  th,td{border:1px solid #e2e8f0;padding:8px 10px;font-size:14px;text-align:left;vertical-align:top}
+  th{background:#eff6ff;color:#1e40af}
+  .ok{color:#166534;font-weight:bold}
+  .warn{color:#b45309;font-weight:bold}
+  .note{background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:14px}
+  ul{margin:6px 0}
+  .muted{color:#6b7280;font-size:13px}
+</style>
+</head>
+<body>
+<h1>drug-tool · 行动步骤（数据库搭建 → UI 落地）</h1>
+<p class="muted">整理日期：2026-09-02 ｜ 三步计划：① 搭建基础 UI 逻辑（已完成）→ ② 根据 UI 搭建数据库（进行中）→ ③ 最终优化 UI（待做）</p>
+
+<h2>一、现状盘点（已完成的整合）</h2>
+<table>
+  <tr><th>模块</th><th>状态</th><th>关键成果</th></tr>
+  <tr><td>网站前端</td><td class="ok">✅ 已完成</td><td>一药一页 / 竞争格局 / 政策追踪 / 数据管理；已接轨 data/drugs.json（544→1200 品种上线），localStorage 仅作缓存</td></tr>
+  <tr><td>数据库三层模型</td><td class="ok">✅ 已落地</td><td>drug_molecule（75 分子）→ drug_product（1200）→ drug_registration（881 文号）</td></tr>
+  <tr><td>清洗管道</td><td class="ok">✅ 已落地</td><td>normalize.py：全角/罗马/剂型/盐基/厂家拆分/笔误修正；103 测试全绿</td></tr>
+  <tr><td>医保目录</td><td class="ok">✅ 已落地</td><td>2025 版官方 PDF 全量 3453 条目，版本化导入</td></tr>
+  <tr><td>政策</td><td class="ok">✅ 已落地</td><td>NMPA/NHSA/NHC 59 条，GitHub Actions 每日 2 次</td></tr>
+  <tr><td>NMPA 采集</td><td class="ok">✅ 已落地</td><td>Playwright 过 JS 挑战；增量模式（已补全页面跳过）；Windows 计划任务每日 08:30</td></tr>
+  <tr><td>数据字典</td><td class="ok">✅ 已落地</td><td>schema v1.0 三层字段/枚举/来源/更新方式</td></tr>
+  <tr><td>来源地图评估</td><td class="ok">✅ 已落地</td><td>确认缺口：price_history、drug_market、CDE 采集、政策-品种关联</td></tr>
+  <tr><td>集采情报</td><td class="warn">🔄 规划中</td><td>来源清单已建（易联 60+ 模块/31 省导航）；账号就绪（路线 B）</td></tr>
+</table>
+
+<h2>二、当前阶段：把数据库搭全（进行中）</h2>
+<p>按"性价比 + 网站功能支撑"排序，共 7 步：</p>
+
+<div class="step"><span class="badge doing">进行中</span><b>步骤 1 · 补价格层与市场层 schema</b>
+  <span class="muted">建 price_history（价格时序：挂网/中标/集采/零售）与 drug_market（全国+湖南患者池/确诊率/处方渗透率，带置信度与估算日期）；同时给 molecule 补指南等级/给药/冷链/专利字段</span></div>
+
+<div class="step"><span class="badge todo">待做</span><b>步骤 2 · 分子层重跑医保匹配</b>
+  <span class="muted">75 分子聚合后，3453 条目录重新匹配（阿法替尼等 9 厂家合并后匹配率应大增），解锁"进医保"全覆盖</span></div>
+
+<div class="step"><span class="badge todo">待做</span><b>步骤 3 · CDE 说明书采集器</b>
+  <span class="muted">Playwright 采集说明书：适应症/作用机制/用法用量/贮藏（冷链）——P3 核心，一药一页的"临床信息"全靠它</span></div>
+
+<div class="step"><span class="badge todo">待做</span><b>步骤 4 · CDE 过评名单采集器</b>
+  <span class="muted">过评企业数 → 集采风险自动推导（高/中/低）</span></div>
+
+<div class="step"><span class="badge todo">待做</span><b>步骤 5 · 集采情报</b>
+  <span class="muted">易联招采登录采集（路线 B）+ 第 12 批拟中选 xlsx 结构化 → 中选企业/价格/批次入库并与品种关联</span></div>
+
+<div class="step"><span class="badge todo">待做</span><b>步骤 6 · 政策-品种关联填充</b>
+  <span class="muted">policy_drug_relation（现 0 条）→ 关键词匹配 + 人工确认，支撑"一药一页的政策路径"</span></div>
+
+<div class="step"><span class="badge todo">待做</span><b>步骤 7 · 人工字段分批</b>
+  <span class="muted">先肿瘤领域：指南推荐等级 + 湖南患者池估算试点（最大人工瓶颈，按病种推进）</span></div>
+
+<h2>三、最终阶段：UI 优化（第三步）</h2>
+<p>目标：清晰、便捷、横纵向对比、药品-政策关联。数据库搭全后逐项落地：</p>
+<ul>
+  <li><b>一药一页升级</b>：接 molecule 层——一个品种页聚合 多厂家/文号/规格（横向卡片）+ 医保/集采/政策时间线（纵向）</li>
+  <li><b>同病种横向对比</b>：分子层为基，按 疾病领域/病种 聚合，对比 医保状态/挂网价/厂家数/是否独家/指南等级</li>
+  <li><b>政策关联视图</b>：政策卡片挂接品种（国谈/目录/集采/双通道），品种页反向展示"政策路径"</li>
+  <li><b>集采情报页</b>：批次 × 品种 × 中选企业 × 价格，新批次提醒</li>
+  <li><b>数据标注</b>：官方数据 / 人工核验 / 估算 三色标注，来源+更新时间可见</li>
+</ul>
+
+<h2>四、"数据准确是死线"的保障机制</h2>
+<ul>
+  <li>唯一主库：git 内 data/drugs.json + SQLite 三层约束（已具备）</li>
+  <li>清洗规则全测试防回退（103 测试，进 CI）</li>
+  <li>每个字段带 来源 URL + 核查日期；超期（180 天）进核查提醒队列（待加 reviewed_at）</li>
+  <li>人工估算（市场层）强制带 置信度 + 口径；前端区分 官方/核验/估算</li>
+  <li>集采/医保多源交叉验证（易联 + 联采办 + 各省平台）</li>
+</ul>
+
+<div class="note">📌 <b>下一步行动：</b>开始步骤 1——建 <code>price_history</code> + <code>drug_market</code> schema（SQLite/Postgres DDL + 录入入口 + 测试），把评估确认的缺口补上，然后按序推进。</div>
+</body>
+</html>
