@@ -9,7 +9,14 @@
 import json
 import sqlite3
 
-from models import DRUG_SCHEMA, DrugMolecule, DrugProduct, DrugRegistration
+from models import (  # noqa: E402
+    DRUG_SCHEMA,
+    DrugMarket,
+    DrugMolecule,
+    DrugProduct,
+    DrugRegistration,
+    PriceRecord,
+)
 
 
 def _norm(text):
@@ -42,6 +49,20 @@ class DrugStore:
             self._conn.execute(
                 "ALTER TABLE drug_product ADD COLUMN molecule_id INTEGER "
                 "REFERENCES drug_molecule(molecule_id)")
+        mcols = [r[1] for r in self._conn.execute("PRAGMA table_info(drug_molecule)").fetchall()]
+        for col, ddl in (
+            ("guideline_level", "TEXT DEFAULT ''"),
+            ("route", "TEXT DEFAULT ''"),
+            ("cold_chain", "TEXT DEFAULT ''"),
+            ("patent_expiry", "TEXT DEFAULT ''"),
+            ("iteration_chain", "TEXT DEFAULT ''"),
+            ("generation", "TEXT DEFAULT ''"),
+            ("extra_indications", "TEXT DEFAULT ''"),
+            ("reviewed_at", "TEXT DEFAULT ''"),
+        ):
+            if col not in mcols:
+                self._conn.execute(
+                    "ALTER TABLE drug_molecule ADD COLUMN %s %s" % (col, ddl))
 
     @classmethod
     def from_path(cls, db_path=":memory:"):
@@ -72,18 +93,30 @@ class DrugStore:
             mid = row["molecule_id"]
             self._conn.execute(
                 """UPDATE drug_molecule SET atc_code=?, drug_type=?, mechanism_summary=?,
-                   is_verified=?, updated_at=datetime('now','localtime')
+                   is_verified=?, guideline_level=?, route=?, cold_chain=?,
+                   patent_expiry=?, iteration_chain=?, generation=?,
+                   extra_indications=?, reviewed_at=?, updated_at=datetime('now','localtime')
                    WHERE molecule_id=?""",
                 (_norm(molecule.atc_code), _norm(molecule.drug_type),
-                 _norm(molecule.mechanism_summary), int(bool(molecule.is_verified)), mid),
+                 _norm(molecule.mechanism_summary), int(bool(molecule.is_verified)),
+                 _norm(molecule.guideline_level), _norm(molecule.route),
+                 _norm(molecule.cold_chain), _norm(molecule.patent_expiry),
+                 _norm(molecule.iteration_chain), _norm(molecule.generation),
+                 _norm(molecule.extra_indications), _norm(molecule.reviewed_at), mid),
             )
         else:
             cur = self._conn.execute(
                 """INSERT INTO drug_molecule
-                   (generic_name, atc_code, drug_type, mechanism_summary, is_verified)
-                   VALUES (?,?,?,?,?)""",
+                   (generic_name, atc_code, drug_type, mechanism_summary, is_verified,
+                    guideline_level, route, cold_chain, patent_expiry, iteration_chain,
+                    generation, extra_indications, reviewed_at)
+                   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                 (name, _norm(molecule.atc_code), _norm(molecule.drug_type),
-                 _norm(molecule.mechanism_summary), int(bool(molecule.is_verified))),
+                 _norm(molecule.mechanism_summary), int(bool(molecule.is_verified)),
+                 _norm(molecule.guideline_level), _norm(molecule.route),
+                 _norm(molecule.cold_chain), _norm(molecule.patent_expiry),
+                 _norm(molecule.iteration_chain), _norm(molecule.generation),
+                 _norm(molecule.extra_indications), _norm(molecule.reviewed_at)),
             )
             mid = cur.lastrowid
         self._conn.commit()
@@ -95,6 +128,81 @@ class DrugStore:
             (molecule_id, product_id),
         )
         self._conn.commit()
+
+    # ---------- 价格时序 ----------
+
+    def upsert_price(self, rec):
+        """价格记录：按 (product_id, price_type, effective_date, price) 幂等。"""
+        self._conn.execute(
+            """INSERT OR IGNORE INTO price_history
+               (product_id, price_type, price, unit, effective_date, expire_date,
+                source_url, reviewed_at, reviewed_by, notes)
+               VALUES (?,?,?,?,?,?,?,?,?,?)""",
+            (rec.product_id, _norm(rec.price_type) or "挂网", float(rec.price),
+             _norm(rec.unit), _norm(rec.effective_date), _norm(rec.expire_date),
+             _norm(rec.source_url), _norm(rec.reviewed_at), _norm(rec.reviewed_by),
+             _norm(rec.notes)),
+        )
+        self._conn.commit()
+        row = self._conn.execute(
+            """SELECT price_id FROM price_history WHERE product_id=? AND price_type=?
+               AND effective_date=? AND price=?""",
+            (rec.product_id, _norm(rec.price_type) or "挂网", _norm(rec.effective_date),
+             float(rec.price)),
+        ).fetchone()
+        return row["price_id"] if row else None
+
+    def get_price_history(self, product_id):
+        rows = self._conn.execute(
+            """SELECT * FROM price_history WHERE product_id=?
+               ORDER BY effective_date DESC, price_id DESC""",
+            (product_id,),
+        ).fetchall()
+        return [dict(r) for r in rows]
+
+    # ---------- 市场层 ----------
+
+    def upsert_market(self, rec):
+        """市场记录：按 (molecule_id, region, sales_year) 幂等。"""
+        row = self._conn.execute(
+            """SELECT market_id FROM drug_market
+               WHERE molecule_id=? AND region=? AND sales_year=?""",
+            (rec.molecule_id, _norm(rec.region) or "全国", rec.sales_year or 0),
+        ).fetchone()
+        if row:
+            self._conn.execute(
+                """UPDATE drug_market SET patient_count=?, diagnosis_rate=?,
+                   prescription_penetration=?, annual_sales=?, formula=?,
+                   confidence=?, source=?, estimated_date=?, reviewed_at=?
+                   WHERE market_id=?""",
+                (rec.patient_count or 0, rec.diagnosis_rate or 0,
+                 rec.prescription_penetration or 0, _norm(rec.annual_sales),
+                 _norm(rec.formula), _norm(rec.confidence) or "中", _norm(rec.source),
+                 _norm(rec.estimated_date), _norm(rec.reviewed_at), row["market_id"]),
+            )
+            return row["market_id"]
+        cur = self._conn.execute(
+            """INSERT INTO drug_market
+               (molecule_id, region, sales_year, patient_count, diagnosis_rate,
+                prescription_penetration, annual_sales, formula, confidence,
+                source, estimated_date, reviewed_at)
+               VALUES (?,?,?,?,?,?,?,?,?,?,?,?)""",
+            (rec.molecule_id, _norm(rec.region) or "全国", rec.sales_year or 0,
+             rec.patient_count or 0, rec.diagnosis_rate or 0,
+             rec.prescription_penetration or 0, _norm(rec.annual_sales),
+             _norm(rec.formula), _norm(rec.confidence) or "中", _norm(rec.source),
+             _norm(rec.estimated_date), _norm(rec.reviewed_at)),
+        )
+        self._conn.commit()
+        return cur.lastrowid
+
+    def fetch_market(self, molecule_id):
+        rows = self._conn.execute(
+            """SELECT * FROM drug_market WHERE molecule_id=?
+               ORDER BY sales_year DESC, region""",
+            (molecule_id,),
+        ).fetchall()
+        return [dict(r) for r in rows]
 
     def upsert_product(self, product):
         key = product_key(product)

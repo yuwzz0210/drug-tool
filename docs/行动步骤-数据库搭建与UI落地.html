@@ -45,8 +45,8 @@
 <h2>二、当前阶段：把数据库搭全（进行中）</h2>
 <p>按"性价比 + 网站功能支撑"排序，共 7 步：</p>
 
-<div class="step"><span class="badge doing">进行中</span><b>步骤 1 · 补价格层与市场层 schema</b>
-  <span class="muted">建 price_history（价格时序：挂网/中标/集采/零售）与 drug_market（全国+湖南患者池/确诊率/处方渗透率，带置信度与估算日期）；同时给 molecule 补指南等级/给药/冷链/专利字段</span></div>
+<div class="step"><span class="badge done">已完成</span><b>步骤 1 · 补价格层与市场层 schema</b>
+  <span class="muted">✅ 2026-09-02 落地：price_history + drug_market 表（SQLite/PG DDL）、molecule 补 8 个评分字段、录入工具 import_price_market.py、107 测试全绿</span></div>
 
 <div class="step"><span class="badge todo">待做</span><b>步骤 2 · 分子层重跑医保匹配</b>
   <span class="muted">75 分子聚合后，3453 条目录重新匹配（阿法替尼等 9 厂家合并后匹配率应大增），解锁"进医保"全覆盖</span></div>

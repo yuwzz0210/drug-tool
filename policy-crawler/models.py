@@ -46,6 +46,46 @@ class DrugMolecule:
     drug_type: str = ""
     mechanism_summary: str = ""
     is_verified: bool = False
+    guideline_level: str = ""      # 指南推荐等级：1类/2A/2B/不推荐/未收录
+    route: str = ""                # 给药途径：口服/注射/外用/吸入
+    cold_chain: str = ""           # 冷链：常温/2-8℃冷藏/冷冻
+    patent_expiry: str = ""
+    iteration_chain: str = ""
+    generation: str = ""
+    extra_indications: str = ""
+    reviewed_at: str = ""
+
+
+@dataclass
+class PriceRecord:
+    """价格时序记录：1 次价格 = 1 行（挂网/中标/集采中选/零售）。"""
+    product_id: int
+    price: float
+    price_type: str = "挂网"
+    unit: str = ""
+    effective_date: str = ""
+    expire_date: str = ""
+    source_url: str = ""
+    reviewed_at: str = ""
+    reviewed_by: str = ""
+    notes: str = ""
+
+
+@dataclass
+class DrugMarket:
+    """市场层：患者池/确诊率/处方渗透率/年销售额（估算，带置信度与口径）。"""
+    molecule_id: int
+    region: str = "全国"
+    sales_year: int = 0
+    patient_count: float = 0
+    diagnosis_rate: float = 0
+    prescription_penetration: float = 0
+    annual_sales: str = ""
+    formula: str = ""
+    confidence: str = "中"
+    source: str = ""
+    estimated_date: str = ""
+    reviewed_at: str = ""
 
 
 @dataclass
@@ -248,8 +288,48 @@ CREATE TABLE IF NOT EXISTS drug_molecule (
     drug_type TEXT DEFAULT '',
     mechanism_summary TEXT DEFAULT '',
     is_verified INTEGER DEFAULT 0,
+    guideline_level TEXT DEFAULT '',
+    route TEXT DEFAULT '',
+    cold_chain TEXT DEFAULT '',
+    patent_expiry TEXT DEFAULT '',
+    iteration_chain TEXT DEFAULT '',
+    generation TEXT DEFAULT '',
+    extra_indications TEXT DEFAULT '',
+    reviewed_at TEXT DEFAULT '',
     created_at TEXT DEFAULT (datetime('now','localtime')),
     updated_at TEXT DEFAULT (datetime('now','localtime'))
+);
+CREATE TABLE IF NOT EXISTS price_history (
+    price_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER NOT NULL REFERENCES drug_product(product_id) ON DELETE CASCADE,
+    price_type TEXT NOT NULL DEFAULT '挂网',
+    price REAL NOT NULL,
+    unit TEXT DEFAULT '',
+    effective_date TEXT DEFAULT '',
+    expire_date TEXT DEFAULT '',
+    source_url TEXT DEFAULT '',
+    reviewed_at TEXT DEFAULT '',
+    reviewed_by TEXT DEFAULT '',
+    notes TEXT DEFAULT '',
+    created_at TEXT DEFAULT (datetime('now','localtime')),
+    UNIQUE (product_id, price_type, effective_date, price)
+);
+CREATE TABLE IF NOT EXISTS drug_market (
+    market_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    molecule_id INTEGER NOT NULL REFERENCES drug_molecule(molecule_id) ON DELETE CASCADE,
+    region TEXT NOT NULL DEFAULT '全国',
+    sales_year INTEGER,
+    patient_count REAL DEFAULT 0,
+    diagnosis_rate REAL DEFAULT 0,
+    prescription_penetration REAL DEFAULT 0,
+    annual_sales TEXT DEFAULT '',
+    formula TEXT DEFAULT '',
+    confidence TEXT DEFAULT '中',
+    source TEXT DEFAULT '',
+    estimated_date TEXT DEFAULT '',
+    reviewed_at TEXT DEFAULT '',
+    created_at TEXT DEFAULT (datetime('now','localtime')),
+    UNIQUE (molecule_id, region, sales_year)
 );
 CREATE TABLE IF NOT EXISTS drug_registration (
     registration_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -402,8 +482,48 @@ CREATE TABLE IF NOT EXISTS drug_molecule (
     drug_type VARCHAR(50) DEFAULT '',
     mechanism_summary TEXT DEFAULT '',
     is_verified BOOLEAN DEFAULT FALSE,
+    guideline_level VARCHAR(20) DEFAULT '',
+    route VARCHAR(20) DEFAULT '',
+    cold_chain VARCHAR(20) DEFAULT '',
+    patent_expiry DATE,
+    iteration_chain VARCHAR(200) DEFAULT '',
+    generation VARCHAR(50) DEFAULT '',
+    extra_indications TEXT DEFAULT '',
+    reviewed_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+CREATE TABLE IF NOT EXISTS price_history (
+    price_id BIGSERIAL PRIMARY KEY,
+    product_id BIGINT NOT NULL REFERENCES drug_product(product_id) ON DELETE CASCADE,
+    price_type VARCHAR(20) NOT NULL DEFAULT '挂网',
+    price NUMERIC(12,4) NOT NULL,
+    unit VARCHAR(20) DEFAULT '',
+    effective_date DATE,
+    expire_date DATE,
+    source_url TEXT DEFAULT '',
+    reviewed_at TIMESTAMPTZ,
+    reviewed_by VARCHAR(100) DEFAULT '',
+    notes TEXT DEFAULT '',
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    UNIQUE (product_id, price_type, effective_date, price)
+);
+CREATE TABLE IF NOT EXISTS drug_market (
+    market_id BIGSERIAL PRIMARY KEY,
+    molecule_id BIGINT NOT NULL REFERENCES drug_molecule(molecule_id) ON DELETE CASCADE,
+    region VARCHAR(20) NOT NULL DEFAULT '全国',
+    sales_year INTEGER,
+    patient_count NUMERIC(14,2) DEFAULT 0,
+    diagnosis_rate NUMERIC(8,4) DEFAULT 0,
+    prescription_penetration NUMERIC(8,4) DEFAULT 0,
+    annual_sales TEXT DEFAULT '',
+    formula TEXT DEFAULT '',
+    confidence VARCHAR(10) DEFAULT '中',
+    source TEXT DEFAULT '',
+    estimated_date DATE,
+    reviewed_at TIMESTAMPTZ,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    UNIQUE (molecule_id, region, sales_year)
 );
 CREATE TABLE IF NOT EXISTS drug_registration (
     registration_id BIGSERIAL PRIMARY KEY,

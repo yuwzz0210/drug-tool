@@ -62,3 +62,36 @@ drug_molecule（品种/分子层）── 主键：规范通用名（清洗后�
     → 前端展示（localStorage 仅作缓存）
 ```
 人工网页编辑：导出 JSON → tools/import_drugs.py 合并回库 → 提交仓库（写回机制，待做提交接口）。
+
+## 7. 价格层 price_history（2026-09-02 新增）
+
+| 字段 | 定义 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| product_id | 关联注册产品 | 是 | 价格挂在 product（厂家×规格）层 |
+| price_type | 价格类型 | 是 | 枚举：挂网/中标/集采中选/零售 |
+| price | 价格 | 是 | 数值 |
+| unit | 计价单位 | 否 | 如 元/盒、元/支 |
+| effective_date / expire_date | 生效/失效 | 否 | 支持价格时间线 |
+| source_url / reviewed_at / reviewed_by | 来源与核查 | 否 | 留痕 |
+
+唯一键：`(product_id, price_type, effective_date, price)`；录入入口：tools/import_price_market.py。
+
+## 8. 市场层 drug_market（2026-09-02 新增）
+
+| 字段 | 定义 | 说明 |
+| --- | --- | --- |
+| molecule_id | 关联品种分子 | 市场按品种聚合 |
+| region | 区域 | 全国 / 湖南… |
+| sales_year | 年份 | 唯一键之一 |
+| patient_count / diagnosis_rate / prescription_penetration | 患者池/确诊率/处方渗透率 | 估算输入 |
+| annual_sales | 年销售额 | 文本（亿元/口径） |
+| formula | 计算公式/口径 | 留痕可追溯 |
+| confidence | 置信度 | 枚举：高/中/低 |
+| source / estimated_date / reviewed_at | 来源与估算时间 | 人工估算强制标注 |
+
+唯一键：`(molecule_id, region, sales_year)`；录入入口：tools/import_price_market.py。
+
+## 9. molecule 层新增评分字段（2026-09-02）
+guideline_level（指南推荐等级）、route（给药途径）、cold_chain（冷链）、
+patent_expiry（专利到期日）、iteration_chain（迭代链）、generation（代次）、
+extra_indications（拓展适应症）、reviewed_at（核查时间）。
