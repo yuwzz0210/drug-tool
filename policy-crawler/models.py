@@ -39,6 +39,16 @@ class DrugProduct:
 
 
 @dataclass
+class DrugMolecule:
+    """品种聚合层（molecule）：规范通用名，聚合多厂家/文号/规格的注册记录。"""
+    generic_name: str
+    atc_code: str = ""
+    drug_type: str = ""
+    mechanism_summary: str = ""
+    is_verified: bool = False
+
+
+@dataclass
 class DrugRegistration:
     product_id: int
     approval_number: str = ""
@@ -214,6 +224,7 @@ CREATE TABLE IF NOT EXISTS crawler_logs (
 DRUG_SCHEMA = """
 CREATE TABLE IF NOT EXISTS drug_product (
     product_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    molecule_id INTEGER REFERENCES drug_molecule(molecule_id),
     generic_name TEXT NOT NULL,
     dosage_form TEXT DEFAULT '',
     specification TEXT DEFAULT '',
@@ -229,6 +240,16 @@ CREATE TABLE IF NOT EXISTS drug_product (
     created_at TEXT DEFAULT (datetime('now','localtime')),
     updated_at TEXT DEFAULT (datetime('now','localtime')),
     UNIQUE (generic_name, dosage_form, specification, manufacturer_norm)
+);
+CREATE TABLE IF NOT EXISTS drug_molecule (
+    molecule_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    generic_name TEXT NOT NULL UNIQUE,
+    atc_code TEXT DEFAULT '',
+    drug_type TEXT DEFAULT '',
+    mechanism_summary TEXT DEFAULT '',
+    is_verified INTEGER DEFAULT 0,
+    created_at TEXT DEFAULT (datetime('now','localtime')),
+    updated_at TEXT DEFAULT (datetime('now','localtime'))
 );
 CREATE TABLE IF NOT EXISTS drug_registration (
     registration_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -357,6 +378,7 @@ CREATE TABLE IF NOT EXISTS drug_change_history (
 DRUG_POSTGRES_DDL = """
 CREATE TABLE IF NOT EXISTS drug_product (
     product_id BIGSERIAL PRIMARY KEY,
+    molecule_id BIGINT REFERENCES drug_molecule(molecule_id),
     generic_name VARCHAR(200) NOT NULL,
     dosage_form VARCHAR(100) DEFAULT '',
     specification VARCHAR(200) DEFAULT '',
@@ -372,6 +394,16 @@ CREATE TABLE IF NOT EXISTS drug_product (
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW(),
     UNIQUE (generic_name, dosage_form, specification, manufacturer_norm)
+);
+CREATE TABLE IF NOT EXISTS drug_molecule (
+    molecule_id BIGSERIAL PRIMARY KEY,
+    generic_name VARCHAR(200) UNIQUE NOT NULL,
+    atc_code VARCHAR(20) DEFAULT '',
+    drug_type VARCHAR(50) DEFAULT '',
+    mechanism_summary TEXT DEFAULT '',
+    is_verified BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 CREATE TABLE IF NOT EXISTS drug_registration (
     registration_id BIGSERIAL PRIMARY KEY,

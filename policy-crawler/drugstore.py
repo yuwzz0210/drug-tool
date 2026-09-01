@@ -9,7 +9,7 @@
 import json
 import sqlite3
 
-from models import DRUG_SCHEMA, DrugProduct, DrugRegistration
+from models import DRUG_SCHEMA, DrugMolecule, DrugProduct, DrugRegistration
 
 
 def _norm(text):
@@ -32,7 +32,16 @@ class DrugStore:
     def __init__(self, conn):
         self._conn = conn
         self._conn.executescript(DRUG_SCHEMA)
+        self._migrate()
         self._conn.commit()
+
+    def _migrate(self):
+        """老库迁移：drug_product 补 molecule_id 列（幂等）。"""
+        cols = [r[1] for r in self._conn.execute("PRAGMA table_info(drug_product)").fetchall()]
+        if "molecule_id" not in cols:
+            self._conn.execute(
+                "ALTER TABLE drug_product ADD COLUMN molecule_id INTEGER "
+                "REFERENCES drug_molecule(molecule_id)")
 
     @classmethod
     def from_path(cls, db_path=":memory:"):
@@ -51,6 +60,41 @@ class DrugStore:
         self._conn.close()
 
     # ---------- 品种层 ----------
+
+    def upsert_molecule(self, molecule):
+        name = _norm(molecule.generic_name)
+        if not name:
+            raise ValueError("品种规范通用名不能为空")
+        row = self._conn.execute(
+            "SELECT molecule_id FROM drug_molecule WHERE generic_name=?", (name,),
+        ).fetchone()
+        if row:
+            mid = row["molecule_id"]
+            self._conn.execute(
+                """UPDATE drug_molecule SET atc_code=?, drug_type=?, mechanism_summary=?,
+                   is_verified=?, updated_at=datetime('now','localtime')
+                   WHERE molecule_id=?""",
+                (_norm(molecule.atc_code), _norm(molecule.drug_type),
+                 _norm(molecule.mechanism_summary), int(bool(molecule.is_verified)), mid),
+            )
+        else:
+            cur = self._conn.execute(
+                """INSERT INTO drug_molecule
+                   (generic_name, atc_code, drug_type, mechanism_summary, is_verified)
+                   VALUES (?,?,?,?,?)""",
+                (name, _norm(molecule.atc_code), _norm(molecule.drug_type),
+                 _norm(molecule.mechanism_summary), int(bool(molecule.is_verified))),
+            )
+            mid = cur.lastrowid
+        self._conn.commit()
+        return mid
+
+    def set_product_molecule(self, product_id, molecule_id):
+        self._conn.execute(
+            "UPDATE drug_product SET molecule_id=? WHERE product_id=?",
+            (molecule_id, product_id),
+        )
+        self._conn.commit()
 
     def upsert_product(self, product):
         key = product_key(product)
