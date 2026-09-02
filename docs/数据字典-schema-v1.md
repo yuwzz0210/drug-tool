@@ -95,3 +95,21 @@ drug_molecule（品种/分子层）── 主键：规范通用名（清洗后�
 guideline_level（指南推荐等级）、route（给药途径）、cold_chain（冷链）、
 patent_expiry（专利到期日）、iteration_chain（迭代链）、generation（代次）、
 extra_indications（拓展适应症）、reviewed_at（核查时间）。
+
+## 10. 说明书层 drug_leaflet（2026-09-03 新增，步骤3）
+一批准文号（CDE 化学药品目录集记录）一条说明书解析结果，PDF 原文 + 关键节落库，便于复核与"一药一页"临床信息展示。
+
+| 字段 | 说明 |
+| :--- | :--- |
+| product_id | 关联 drug_product（经 drug_registration.approval_number 匹配） |
+| approval_number | 批准文号/注册证号（与 CDE 目录集一致） |
+| catalog_rid | CDE 目录集记录 idCode（详情页） |
+| pdf_url / source_url | CDE 说明书附件直链 / 目录集详情页（溯源） |
+| route | 给药途径归一（口服/注射/外用/吸入） |
+| storage / cold_chain | 【贮藏】原文 → 冷链归一（常温/阴凉(≤20℃)/冷藏(2~8℃)/冷冻） |
+| usage_dosage / indications | 【用法用量】【适应症】原文 |
+| leaflet_date | 说明书核准/修订日期（ISO） |
+| sections_json / raw_text | 其余关键节 JSON / PDF 全文 |
+| fetched_at / updated_at | 采集/更新时间 |
+
+来源：CDE 化学药品目录集（主动公开）；采集器 collectors/cde_leaflets.py，入库 tools/import_cde_leaflets.py。口径：目录集主要收录过评/参比制剂类药品，原研/进口/生物制品缺口由后续"上市药品信息（受理号）"通道补齐。
