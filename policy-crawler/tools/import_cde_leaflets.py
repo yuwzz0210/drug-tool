@@ -196,7 +196,7 @@ def import_results(results_path, db_path, dry_run=False, limit=None):
     if not dry_run:
         db.executescript(DRUG_SCHEMA)
     stats = {"ok_records": 0, "imported": 0, "unlinked": 0,
-             "missing_pdf": 0, "errors": 0}
+             "missing_pdf": 0, "needs_ocr": 0, "errors": 0}
     unlinked = []
     with open(results_path, "r", encoding="utf-8") as fh:
         lines = [l for l in fh if l.strip()]
@@ -218,6 +218,11 @@ def import_results(results_path, db_path, dry_run=False, limit=None):
             stats["missing_pdf"] += 1
             log.warning("pdf missing/unparsed for %s (%s)",
                         rec.get("pzwh"), dest)
+            continue
+        if not (parsed.get("text") or "").strip():
+            stats["needs_ocr"] += 1
+            log.warning("pdf has no extractable text (needs OCR): %s",
+                        rec.get("pzwh"))
             continue
         try:
             payload = leaflet_payload(rec, parsed)
