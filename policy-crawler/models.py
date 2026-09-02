@@ -451,6 +451,26 @@ CREATE TABLE IF NOT EXISTS drug_change_history (
     source_url TEXT DEFAULT '',
     created_at TEXT DEFAULT (datetime('now','localtime'))
 );
+CREATE TABLE IF NOT EXISTS drug_leaflet (
+    leaflet_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER NOT NULL REFERENCES drug_product(product_id) ON DELETE CASCADE,
+    approval_number TEXT DEFAULT '',
+    catalog_rid TEXT DEFAULT '',
+    pdf_url TEXT DEFAULT '',
+    source_url TEXT DEFAULT '',
+    filename TEXT DEFAULT '',
+    route TEXT DEFAULT '',
+    storage TEXT DEFAULT '',
+    cold_chain TEXT DEFAULT '',
+    usage_dosage TEXT DEFAULT '',
+    indications TEXT DEFAULT '',
+    leaflet_date TEXT DEFAULT '',
+    sections_json TEXT DEFAULT '{}',
+    raw_text TEXT DEFAULT '',
+    fetched_at TEXT DEFAULT (datetime('now','localtime')),
+    updated_at TEXT DEFAULT (datetime('now','localtime')),
+    UNIQUE (approval_number, catalog_rid)
+);
 """
 
 
@@ -644,5 +664,25 @@ CREATE TABLE IF NOT EXISTS drug_change_history (
     description TEXT DEFAULT '',
     source_url TEXT DEFAULT '',
     created_at TIMESTAMPTZ DEFAULT NOW()
+);
+CREATE TABLE IF NOT EXISTS drug_leaflet (
+    leaflet_id BIGSERIAL PRIMARY KEY,
+    product_id BIGINT NOT NULL REFERENCES drug_product(product_id) ON DELETE CASCADE,
+    approval_number VARCHAR(40) DEFAULT '',
+    catalog_rid VARCHAR(80) DEFAULT '',
+    pdf_url VARCHAR(500) DEFAULT '',
+    source_url VARCHAR(500) DEFAULT '',
+    filename VARCHAR(300) DEFAULT '',
+    route VARCHAR(20) DEFAULT '',
+    storage TEXT DEFAULT '',
+    cold_chain VARCHAR(20) DEFAULT '',
+    usage_dosage TEXT DEFAULT '',
+    indications TEXT DEFAULT '',
+    leaflet_date DATE,
+    sections_json JSONB DEFAULT '{}'::jsonb,
+    raw_text TEXT DEFAULT '',
+    fetched_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW(),
+    UNIQUE (approval_number, catalog_rid)
 );
 """
