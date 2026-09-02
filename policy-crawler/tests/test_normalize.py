@@ -45,6 +45,11 @@ class TestNormalize(unittest.TestCase):
         self.assertEqual(molecule_key("甲磺酸阿美替尼片"), "阿美替尼")
         self.assertEqual(molecule_key("二甲双胍恩格列净片（Ⅰ）"), "二甲双胍恩格列净")
         self.assertEqual(molecule_key("司美格鲁肽(口服)"), "司美格鲁肽")
+        self.assertEqual(molecule_key("阿托伐他汀钙"), "阿托伐他汀")
+        self.assertEqual(molecule_key("二甲双胍缓释片"), "二甲双胍")
+        self.assertEqual(molecule_key("注射用甲氨蝶呤"), "甲氨蝶呤")
+        self.assertEqual(molecule_key("西格列汀二甲双胍Ⅱ"), "西格列汀二甲双胍")
+        self.assertEqual(molecule_key("阿托伐他汀钙分散片"), "阿托伐他汀")
 
     def test_split_manufacturers(self):
         self.assertEqual(

@@ -87,10 +87,18 @@ def strip_salt(name):
 
 
 def molecule_key(generic_name):
-    """品种聚合键：全角→半角、罗马归一、去括号标识、去剂型、去盐基。"""
+    """品种聚合键：全角→半角、罗马归一、去括号标识、去剂型/修饰词/盐基/盐离子。
+
+    覆盖 利拉鲁肽（H）注射液、二甲双胍恩格列净片（Ⅰ）、阿托伐他汀钙、
+    马来酸阿法替尼片、注射用甲氨蝶呤、二甲双胍缓释 等写法归一。
+    """
     name = strip_class_markers(generic_name)
+    name = re.sub(r"[IVX]+$", "", name)                      # 尾部罗马数字 ASCII
+    name = re.sub(r"(缓释|控释|肠溶|分散|泡腾|咀嚼|长效|速释)", "", name)  # 剂型修饰词
+    name = re.sub(r"^注射用", "", name)                       # 注射用前缀
     name = strip_dosage_form(name)
     name = strip_salt(name)
+    name = re.sub(r"(钙|钠|钾|镁|锌|铁|锂|锰|铜)$", "", name)  # 盐离子后缀
     return name.strip()
 
 
