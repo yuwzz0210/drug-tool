@@ -294,6 +294,8 @@ class CdePostmarketCollector:
         os.makedirs(out_dir, exist_ok=True)
         self.delay = float(delay)
         self._ready = False
+        self._search_cache = {}
+        self.last_cache_hit = False
 
     def close(self):
         try:
@@ -353,6 +355,17 @@ class CdePostmarketCollector:
                     return rows
                 time.sleep(0.25)
         return []
+
+    def search_by_name_cached(self, name):
+        """Same-name products (roman/paren variants normalized) share one query."""
+        key = norm_roman(to_half_width(name or "")) or (name or "")
+        if key in self._search_cache:
+            self.last_cache_hit = True
+            return self._search_cache[key]
+        self.last_cache_hit = False
+        rows = self.search_by_name(name)
+        self._search_cache[key] = rows
+        return rows
 
     def open_detail(self, acceptcode):
         self.detail_page.goto(DETAIL_URL.format(acceptcode),
@@ -477,7 +490,7 @@ def run_batch(targets, out_dir, delay=4.0, headless=True, results_path=None,
             rec["channel"] = "postmarket"
             rec["status"] = "pending"
             try:
-                records = col.search_by_name(tgt.get("name") or "")
+                records = col.search_by_name_cached(tgt.get("name") or "")
                 if not records:
                     rec.update(status="not_found",
                                note="postmarket no record for name")
@@ -515,7 +528,9 @@ def run_batch(targets, out_dir, delay=4.0, headless=True, results_path=None,
             stats["processed"] += 1
             if live_state_path and (i % 10 == 0 or rec.get("status") == "ok"):
                 write_live_stats(live_state_path, stats)
-            if i < total:
+            did_network = (not col.last_cache_hit
+                           or rec.get("status") != "not_found")
+            if i < total and did_network:
                 col.polite_pause()
     finally:
         if live_state_path:
