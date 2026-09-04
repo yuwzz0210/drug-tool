@@ -53,7 +53,7 @@ def load_targets(db_path, limit=None):
     db = sqlite3.connect(db_path)
     rows = db.execute("""
         SELECT p.product_id, p.generic_name, p.manufacturer_norm,
-               r.approval_number, r.holder, m.generic_name
+               p.trade_name, r.approval_number, r.holder, m.generic_name
         FROM drug_product p
         LEFT JOIN drug_registration r ON r.product_id = p.product_id
         LEFT JOIN drug_molecule m ON m.molecule_id = p.molecule_id
@@ -61,20 +61,24 @@ def load_targets(db_path, limit=None):
         ORDER BY p.product_id
     """).fetchall()
     db.close()
-    out = []
-    seen = set()
+    by_pid = {}
     for r in rows:
         pid = r[0]
-        if pid in seen:
-            continue
-        seen.add(pid)
-        out.append({
+        item = by_pid.setdefault(pid, {
             "product_id": pid,
-            "name": r[1] or r[5] or "",
+            "name": r[1] or r[6] or "",
             "manufacturer": r[2] or "",
-            "approval_number": r[3] or "",
-            "holder": r[4] or "",
+            "trade_name": r[3] or "",
+            "approval_number": r[4] or "",
+            "holder": r[5] or "",
+            "approval_numbers": [],
         })
+        if r[4]:
+            item["approval_numbers"].append(r[4])
+    out = []
+    for item in by_pid.values():
+        item["approval_numbers"] = sorted(set(item["approval_numbers"]))
+        out.append(item)
     if limit:
         out = out[:limit]
     return out
@@ -100,6 +104,43 @@ def search_name_variants(name):
         if v and v not in out:
             out.append(v)
     return out
+
+
+def extract_approval_codes(text):
+    """All 国药准字/注册证号 codes mentioned in a leaflet PDF text."""
+    found = re.findall(r"国药准字\s*[HSZJ]\s*\d+", text or "")
+    return {re.sub(r"\s+", "", m) for m in found}
+
+
+def extract_trade_name(text):
+    """商品名称 from the official insert header block, if present."""
+    for line in (text or "").splitlines():
+        line = line.strip()
+        m = re.match(r"商品名称\s*[:：]\s*(.+)", line)
+        if m:
+            name = m.group(1).strip()
+            if name and name not in ("-", "—", "——", "无"):
+                return name
+    m = re.search(r"商品名称\s*[:：]\s*([^\n\r]{1,60})", text or "")
+    return m.group(1).strip() if m else ""
+
+
+def match_leaflet_text_to_product(text, product):
+    """Try to lock an ambiguous leaflet to our product.
+
+    Uses the strongest official keys inside the insert itself: 【批准文号】
+    (approval-code level, exact) then 【商品名称】(trade-name level).
+    """
+    codes = extract_approval_codes(text)
+    mine = set(product.get("approval_numbers") or [])
+    hit = codes & mine
+    if hit:
+        return "approval_code", sorted(hit)
+    trade = extract_trade_name(text)
+    mine_trade = (product.get("trade_name") or "").strip()
+    if mine_trade and trade and (mine_trade in trade or trade in mine_trade):
+        return "trade_name", trade
+    return None
 
 
 def company_matches(company_a, company_b):
@@ -346,6 +387,36 @@ class CdePostmarketCollector:
         time.sleep(self.delay + random.uniform(0, 1.0))
 
 
+def try_resolve_ambiguous(col, product, records, out_dir):
+    """Multi-owner records: download each owner's newest insert and lock the
+    match by the 【批准文号】/【商品名称】 printed inside the PDF itself."""
+    groups = group_by_owner(records)
+    reps = []
+    for g in groups:
+        g.sort(key=lambda r: r.get("createddate") or "")
+        reps.append(g[-1])
+    for a in reps[:6]:
+        try:
+            anchors = col.open_detail(a.get("acceptidCODE") or "")
+            leaf = [x for x in anchors
+                    if "说明书" in (x.get("filename") or "")]
+            if not leaf:
+                continue
+            x = leaf[-1]
+            dest = os.path.join(out_dir,
+                                "_resolve_%s.pdf" % (a.get("acceptid") or "x"))
+            col.download_pdf(x["fileid"], x["acceptid"], dest)
+            parsed = parse_leaflet_sections(dest)
+            hit = match_leaflet_text_to_product(
+                parsed.get("text", ""), product)
+            if hit:
+                return a, x, dest, parsed, hit[0]
+        except Exception as exc:
+            log.warning("resolve attempt %s failed: %s",
+                        a.get("acceptid"), exc)
+    return None
+
+
 def run_batch(targets, out_dir, delay=4.0, headless=True, results_path=None,
               live_import=False, db_path=None, live_state_path=None):
     col = CdePostmarketCollector(out_dir, headless=headless, delay=delay)
@@ -354,6 +425,50 @@ def run_batch(targets, out_dir, delay=4.0, headless=True, results_path=None,
     stats = {"processed": 0, "ok": 0, "imported_ok": 0, "qc_pass": 0,
              "qc_review": 0, "ambiguous": 0, "not_found": 0,
              "no_leaflet": 0, "errors": 0}
+
+    def commit_ok(rec, a, x, dest, parsed):
+        size = os.path.getsize(dest) if os.path.exists(dest) else 0
+        rec.update(
+            status="ok", acceptid=a.get("acceptid"),
+            acceptcode=a.get("acceptidCODE"),
+            drgnamecn=a.get("drgnamecn"),
+            createddate=a.get("createddate"),
+            companys=a.get("companys"),
+            file_id=x["fileid"], filename=x["filename"],
+            catalog_rid=a.get("acceptidCODE") or "",
+            pdf_url=DOWNLOAD_URL.format(x["fileid"], x["acceptid"]),
+            source_url=DETAIL_URL.format(a.get("acceptidCODE") or ""),
+            dest=dest, size=size,
+            section_keys=list(parsed["sections"].keys()),
+            parse_error=parsed.get("error"))
+        stats["ok"] += 1
+        if live_import and db_path:
+            li = live_import_record(db_path, rec, parsed)
+            rec.update({k: v for k, v in li.items()})
+            if li.get("live_import", "").startswith("leaflet"):
+                stats["imported_ok"] += 1
+            if li.get("qc") == "pass":
+                stats["qc_pass"] += 1
+            else:
+                stats["qc_review"] += 1
+
+    def handle_acceptance(rec, tgt, a):
+        anchors = col.open_detail(a.get("acceptidCODE") or "")
+        leaf = [x for x in anchors
+                if "说明书" in (x.get("filename") or "")]
+        if not leaf:
+            rec.update(status="no_leaflet",
+                       note="detail has no insert attachment")
+            stats["no_leaflet"] += 1
+            return
+        x = leaf[-1]
+        safe = re.sub(r"[\\/:*?\"<>|]", "_",
+                      x["filename"] or a.get("acceptid"))
+        dest = os.path.join(out_dir, safe)
+        col.download_pdf(x["fileid"], x["acceptid"], dest)
+        parsed = parse_leaflet_sections(dest)
+        commit_ok(rec, a, x, dest, parsed)
+
     try:
         col.open_list()
         total = len(targets)
@@ -371,55 +486,22 @@ def run_batch(targets, out_dir, delay=4.0, headless=True, results_path=None,
                     picks, how = decide_acceptance(tgt, records)
                     rec["accepts"] = records
                     rec["match"] = how
-                    if not picks:
-                        rec.update(status="ambiguous",
-                                   note="no safe acceptance match")
-                        stats["ambiguous"] += 1
-                    else:
-                        # prefer newest createddate
+                    if picks:
                         picks.sort(key=lambda r: r.get("createddate") or "")
-                        a = picks[-1]
-                        anchors = col.open_detail(a.get("acceptidCODE") or "")
-                        leaf = [x for x in anchors
-                                if "说明书" in (x.get("filename") or "")]
-                        if not leaf:
-                            rec.update(status="no_leaflet",
-                                       note="detail has no insert attachment")
-                            stats["no_leaflet"] += 1
+                        handle_acceptance(rec, tgt, picks[-1])
+                    else:
+                        # auto-resolve by approval code / trade name in PDF
+                        resolved = try_resolve_ambiguous(
+                            col, tgt, records, out_dir)
+                        if resolved:
+                            a, x, dest, parsed, how2 = resolved
+                            rec["match"] = "auto:" + how2
+                            commit_ok(rec, a, x, dest, parsed)
                         else:
-                            x = leaf[-1]
-                            safe = re.sub(r"[\\/:*?\"<>|]", "_",
-                                          x["filename"] or a.get("acceptid"))
-                            dest = os.path.join(out_dir, safe)
-                            size = col.download_pdf(x["fileid"],
-                                                    x["acceptid"], dest)
-                            parsed = parse_leaflet_sections(dest)
                             rec.update(
-                                status="ok", acceptid=a.get("acceptid"),
-                                acceptcode=a.get("acceptidCODE"),
-                                drgnamecn=a.get("drgnamecn"),
-                                createddate=a.get("createddate"),
-                                companys=a.get("companys"),
-                                file_id=x["fileid"], filename=x["filename"],
-                                catalog_rid=a.get("acceptidCODE") or "",
-                                pdf_url=DOWNLOAD_URL.format(
-                                    x["fileid"], x["acceptid"]),
-                                source_url=DETAIL_URL.format(
-                                    a.get("acceptidCODE") or ""),
-                                dest=dest, size=size,
-                                section_keys=list(parsed["sections"].keys()),
-                                parse_error=parsed.get("error"))
-                            stats["ok"] += 1
-                            if live_import and db_path:
-                                li = live_import_record(db_path, rec, parsed)
-                                rec.update({k: v for k, v in li.items()})
-                                if li.get("live_import", "").startswith(
-                                        "leaflet"):
-                                    stats["imported_ok"] += 1
-                                if li.get("qc") == "pass":
-                                    stats["qc_pass"] += 1
-                                else:
-                                    stats["qc_review"] += 1
+                                status="ambiguous",
+                                note="no auto-match (manual review needed)")
+                            stats["ambiguous"] += 1
             except Exception as exc:
                 log.exception("product %s failed", tgt.get("product_id"))
                 rec.update(status="error", error=repr(exc))
@@ -470,7 +552,9 @@ def main():
                     rec = json.loads(line)
                 except Exception:
                     continue
-                if rec.get("status") in ("ok", "not_found", "ambiguous") and \
+                # ambiguous rows are re-processed now that auto-resolution by
+                # approval code / trade name is part of the crawl
+                if rec.get("status") in ("ok", "not_found") and \
                         rec.get("product_id"):
                     done.add(rec["product_id"])
     targets = [t for t in targets if t["product_id"] not in done]

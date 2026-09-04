@@ -18,6 +18,9 @@ from collectors.cde_postmarket import (  # noqa: E402
     company_matches,
     company_token_set,
     decide_acceptance,
+    extract_approval_codes,
+    extract_trade_name,
+    match_leaflet_text_to_product,
     name_matches,
 )
 from models import DRUG_SCHEMA  # noqa: E402
@@ -163,6 +166,31 @@ class TestLeafletImport(unittest.TestCase):
 
 
 class TestPostmarketMatch(unittest.TestCase):
+    def test_extract_approval_codes(self):
+        text = ("【批准文号】国药准字H20230015\n"
+                "国药准字H20230015 25mg/50mg\n")
+        self.assertEqual(extract_approval_codes(text), {"国药准字H20230015"})
+
+    def test_extract_trade_name(self):
+        text = "商品名称：赛美纳\n英文名称：Befotertinib Mesylate Capsules"
+        self.assertEqual(extract_trade_name(text), "赛美纳")
+
+    def test_match_leaflet_text_to_product(self):
+        product = {"approval_numbers": ["国药准字H20230015"],
+                   "trade_name": "赛美纳"}
+        text = "商品名称：赛美纳\n【批准文号】国药准字H20230015"
+        hit = match_leaflet_text_to_product(text, product)
+        self.assertEqual(hit[0], "approval_code")
+
+        product2 = {"approval_numbers": ["国药准字H99999999"],
+                    "trade_name": "赛美纳"}
+        hit2 = match_leaflet_text_to_product(text, product2)
+        self.assertEqual(hit2[0], "trade_name")
+
+        product3 = {"approval_numbers": ["国药准字H99999999"],
+                    "trade_name": ""}
+        self.assertIsNone(match_leaflet_text_to_product(text, product3))
+
     def test_name_match(self):
         self.assertTrue(name_matches("贝福替尼", "甲磺酸贝福替尼胶囊"))
         self.assertTrue(name_matches("二甲双胍", "盐酸二甲双胍片"))
