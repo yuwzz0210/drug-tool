@@ -51,10 +51,9 @@
 <div class="step"><span class="badge done">已完成</span><b>步骤 2 · 分子层重跑医保匹配</b>
   <span class="muted">✅ 2026-09-03 落地：清洗规则补罗马尾部/盐离子/剂型修饰词/注射用；医保覆盖 74→1141 个品种（94.9%）；110 测试全绿</span></div>
 
-<div class="step"><span class="badge doing">进行中</span><b>步骤 3 · CDE 说明书采集器</b>
-  <span class="muted">✅ 2026-09-03 代码就绪：collectors/cde_leaflets.py（目录集按批准文号检索→详情→PDF→关键节解析）+ drug_leaflet 表 + 入库工具 import_cde_leaflets.py；118 测试全绿。<br>
-  ⏳ 全量回填（834 文号）留待晚间执行：python -m collectors.cde_leaflets --db policy_crawler.db --out work\cde_pi --delay 4 --results logs\cde_full.jsonl，随后 import_cde_leaflets.py 入库。<br>
-  ⚠️ 实测口径：化学药品目录集主要收录"过评/参比制剂"类，原研/进口/生物制品查无记录——说明书缺口由步骤后续的 CDE 上市药品信息（受理号）通道补。</span></div>
+<div class="step"><span class="badge done">已完成</span><b>步骤 3 · CDE 说明书采集器（第一通道）</b>
+  <span class="muted">✅ 2026-09-04 落地：881 个批准文号全量回填完成 → 34 份官方说明书 PDF 入库（drug_leaflet 34 条、product 说明书链接 34 个、适应症 30 条、机制 86 条、快照 drugs.json 已带 package_insert_url/leaflet_date/冷链）。118 测试全绿。<br>
+  ⚠️ 覆盖口径：目录集仅对"通过一致性评价"品种附说明书（34/34 均为此类）；按新注册分类仿制药 556 + 目录未收录 239 + 无附件 12 需下一通道（CDE 上市药品信息/受理号）补齐，清单见 logs/cde_coverage_report.txt。</span></div>
 
 <div class="step"><span class="badge todo">待做</span><b>步骤 4 · CDE 过评名单采集器</b>
   <span class="muted">过评企业数 → 集采风险自动推导（高/中/低）</span></div>

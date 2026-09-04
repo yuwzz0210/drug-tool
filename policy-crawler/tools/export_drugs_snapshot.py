@@ -19,11 +19,28 @@ from drugstore import DrugStore  # noqa: E402
 def export_snapshot(db_path, out_path):
     drugs = DrugStore.from_path(db_path)
     out = []
+    # load leaflet rows once: product-level summary + per-approval links
+    leaflet_rows = drugs._conn.execute("""
+        SELECT product_id, approval_number, pdf_url, source_url,
+               leaflet_date, cold_chain, route
+        FROM drug_leaflet
+        ORDER BY leaflet_id
+    """).fetchall()
+    by_product = {}
+    by_approval = {}
+    for (pid, pzwh, pdf, src, ldate, cold, route) in leaflet_rows:
+        by_product.setdefault(pid, []).append(
+            {"pdf_url": pdf, "source_url": src, "leaflet_date": ldate or "",
+             "cold_chain": cold or "", "route": route or ""})
+        by_approval[pzwh] = {"pdf_url": pdf, "source_url": src,
+                             "leaflet_date": ldate or ""}
     page = 1
     while True:
         total, rows = drugs.fetch_products(page=page, size=100)
         for r in rows:
             d = drug_detail(drugs, r["product_id"])
+            leaflets = by_product.get(d["product_id"], [])
+            summary = leaflets[0] if leaflets else {}
             out.append({
                 "product_id": d["product_id"],
                 "generic_name": d["generic_name"],
@@ -39,10 +56,20 @@ def export_snapshot(db_path, out_path):
                 "ingredients": d["ingredients"],
                 "registrations": [
                     {"approval_number": x["approval_number"], "status": x["status"],
-                     "registration_date": x["registration_date"], "holder": x.get("holder", "")}
+                     "registration_date": x["registration_date"],
+                     "holder": x.get("holder", ""),
+                     "leaflet_pdf_url": by_approval.get(
+                         x["approval_number"], {}).get("pdf_url", ""),
+                     "leaflet_date": by_approval.get(
+                         x["approval_number"], {}).get("leaflet_date", "")}
                     for x in d["registrations"]
                 ],
                 "insurance": d["insurance"],
+                "package_insert_url": summary.get("pdf_url", ""),
+                "leaflet_source_url": summary.get("source_url", ""),
+                "leaflet_date": summary.get("leaflet_date", ""),
+                "cold_chain": summary.get("cold_chain", ""),
+                "route": summary.get("route", ""),
                 "extra_data": json.loads(d["extra_data"] or "{}"),
                 "updated_at": d["updated_at"],
             })
