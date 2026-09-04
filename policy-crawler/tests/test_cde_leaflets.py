@@ -14,6 +14,12 @@ from collectors.cde_leaflets import (  # noqa: E402
     classify_storage,
     extract_leaflet_date,
 )
+from collectors.cde_postmarket import (  # noqa: E402
+    company_matches,
+    company_token_set,
+    decide_acceptance,
+    name_matches,
+)
 from models import DRUG_SCHEMA  # noqa: E402
 from tools.import_cde_leaflets import import_one, leaflet_payload  # noqa: E402
 
@@ -154,6 +160,116 @@ class TestLeafletImport(unittest.TestCase):
         self.assertEqual(secs["适应症"], "用于治疗多发性骨髓瘤。")
         self.assertEqual(secs["药理毒理"], "本品为免疫调节剂。")
         self.assertEqual(p["leaflet_date"], "2021-05-06")
+
+
+class TestPostmarketMatch(unittest.TestCase):
+    def test_name_match(self):
+        self.assertTrue(name_matches("贝福替尼", "甲磺酸贝福替尼胶囊"))
+        self.assertTrue(name_matches("二甲双胍", "盐酸二甲双胍片"))
+        self.assertTrue(name_matches("阿法替尼", "马来酸阿法替尼片"))
+        self.assertFalse(name_matches("阿法替尼", "吉非替尼片"))
+
+    def test_company_match(self):
+        self.assertTrue(company_matches(
+            "贝达药业股份有限公司;贝达药业股份有限公司", "贝达药业"))
+        self.assertFalse(company_matches("阿斯利康", "齐鲁制药"))
+
+    def test_decide(self):
+        recs = [
+            {"acceptid": "CXHS2300015", "drgnamecn": "甲磺酸贝福替尼胶囊",
+             "companys": "贝达药业股份有限公司", "createddate": "2023-01-20",
+             "acceptidCODE": "aaa"},
+            {"acceptid": "CXHS2100008", "drgnamecn": "甲磺酸贝福替尼胶囊",
+             "companys": "贝达药业股份有限公司", "createddate": "2021-03-04",
+             "acceptidCODE": "bbb"},
+        ]
+        prod = {"name": "贝福替尼", "holder": "贝达药业", "manufacturer": ""}
+        picks, how = decide_acceptance(prod, recs)
+        self.assertEqual(how, "unique")
+        self.assertEqual(len(picks), 2)
+
+        # same company expressed with repeated ; segments stays unique
+        recs2 = [
+            {"acceptid": "A1", "drgnamecn": "甲磺酸贝福替尼胶囊",
+             "companys": "贝达药业股份有限公司", "createddate": "2021-01-01"},
+            {"acceptid": "A2", "drgnamecn": "甲磺酸贝福替尼胶囊",
+             "companys": "贝达药业股份有限公司;贝达药业股份有限公司",
+             "createddate": "2023-01-01"},
+        ]
+        _, how2 = decide_acceptance(
+            {"name": "贝福替尼", "holder": "贝达药业", "manufacturer": ""},
+            recs2)
+        self.assertEqual(how2, "unique")
+        self.assertEqual(
+            company_token_set("贝达药业股份有限公司;贝达药业股份有限公司"),
+            company_token_set("贝达药业股份有限公司"))
+
+        prod2 = {"name": "贝福替尼", "holder": "", "manufacturer": ""}
+        _, how3 = decide_acceptance(prod2, [recs[0]])
+        self.assertEqual(how3, "unique")
+
+        other = {"acceptid": "CXHS2300016", "drgnamecn": "甲磺酸贝福替尼胶囊",
+                 "companys": "其他药业", "createddate": "2023-02-01",
+                 "acceptidCODE": "ccc"}
+        picks3, how4 = decide_acceptance(
+            {"name": "贝福替尼", "holder": "贝达药业", "manufacturer": ""},
+            [recs[0], other])
+        self.assertEqual(how4, "company_match")
+        self.assertEqual([r["acceptid"] for r in picks3], ["CXHS2300015"])
+
+
+class TestLeafletImportByProductId(unittest.TestCase):
+    def _db(self):
+        tmp = tempfile.NamedTemporaryFile(suffix=".db", delete=False)
+        tmp.close()
+        db = sqlite3.connect(tmp.name)
+        db.executescript(DRUG_SCHEMA)
+        db.execute(
+            "INSERT INTO drug_molecule (molecule_id, generic_name) "
+            "VALUES (1, '甲磺酸贝福替尼')")
+        db.execute(
+            """INSERT INTO drug_product
+               (product_id, molecule_id, generic_name, dosage_form,
+                specification, manufacturer_norm)
+               VALUES (10, 1, '甲磺酸贝福替尼胶囊', '胶囊剂', '25mg', '贝达药业')""")
+        db.execute(
+            """INSERT INTO drug_registration
+               (registration_id, product_id, approval_number, status, holder)
+               VALUES (100, 10, '国药准字H20230015', '有效', '贝达药业')""")
+        db.commit()
+        self._tmp = tmp.name
+        return db
+
+    def test_import_via_product_id(self):
+        db = self._db()
+        payload = {
+            "approval_number": "国药准字H20230015",
+            "product_id": 10,
+            "catalog_rid": "CXHS2300015",
+            "pdf_url": "https://www.cde.org.cn/main/xxgk/PostMarketDownload"
+                       "?attidCODE=x&tableid=CXHS2300015",
+            "source_url": "https://www.cde.org.cn/main/xxgk/postmarketpage"
+                          "?acceptidCODE=CXHS2300015",
+            "filename": "说明书.pdf",
+            "route": "",
+            "storage": "密封保存",
+            "cold_chain": "常温",
+            "usage_dosage": "每日一次",
+            "indications": "适用于 EGFR 突变的 NSCLC。",
+            "leaflet_date": "2023-06-01",
+            "sections_json": json.dumps(
+                {"药理毒理": "本品为 EGFR-TKI。"}, ensure_ascii=False),
+            "raw_text": "【适应症】适用于 EGFR 突变的 NSCLC。",
+        }
+        eff = import_one(db, payload)
+        db.commit()
+        self.assertIn("leaflet", eff["effects"])
+        row = db.execute(
+            "SELECT catalog_rid, pdf_url FROM drug_leaflet").fetchone()
+        self.assertEqual(row[0], "CXHS2300015")
+        self.assertIn("PostMarketDownload", row[1])
+        db.close()
+        os.unlink(self._tmp)
 
 
 if __name__ == "__main__":

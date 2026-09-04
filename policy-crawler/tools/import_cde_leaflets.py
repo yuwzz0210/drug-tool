@@ -56,12 +56,15 @@ def leaflet_payload(rec, parsed):
     detail = rec.get("detail") or {}
     row = (rec.get("rows") or [{}])[0]
     sections = parsed.get("sections") or {}
-    rid = (row.get("idCode") or detail.get("idCode")
-           or (row.get("href") or "").rsplit("/", 1)[-1])
-    pdf_url = DOWNLOAD_URL.format(rec.get("file_id") or "")
-    source_url = DETAIL_URL.format(rid)
+    rid = (rec.get("catalog_rid") or row.get("idCode") or detail.get("idCode")
+           or (row.get("href") or "").rsplit("/", 1)[-1]
+           or rec.get("acceptcode") or "")
+    pdf_url = (rec.get("pdf_url")
+               or DOWNLOAD_URL.format(rec.get("file_id") or ""))
+    source_url = (rec.get("source_url") or DETAIL_URL.format(rid))
     return {
-        "approval_number": rec.get("pzwh", ""),
+        "approval_number": rec.get("approval_number") or rec.get("pzwh", ""),
+        "product_id": rec.get("product_id"),
         "catalog_rid": rid,
         "pdf_url": pdf_url,
         "source_url": source_url,
@@ -90,11 +93,16 @@ def import_one(db, payload, dry_run=False, now=None):
         out["effects"].append("skip:missing-key")
         return out
 
-    prod = db.execute(
-        """SELECT p.product_id, p.molecule_id
-           FROM drug_registration r
-           JOIN drug_product p ON p.product_id = r.product_id
-           WHERE r.approval_number = ?""", (pzwh,)).fetchone()
+    if payload.get("product_id"):
+        prod = db.execute(
+            "SELECT product_id, molecule_id FROM drug_product "
+            "WHERE product_id=?", (payload["product_id"],)).fetchone()
+    else:
+        prod = db.execute(
+            """SELECT p.product_id, p.molecule_id
+               FROM drug_registration r
+               JOIN drug_product p ON p.product_id = r.product_id
+               WHERE r.approval_number = ?""", (pzwh,)).fetchone()
     if not prod:
         out["effects"].append("unlinked:no-registration")
         return out

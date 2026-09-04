@@ -1,5 +1,502 @@
 [
   {
+    "product_id": 7,
+    "generic_name": "贝福替尼",
+    "trade_name": "赛美纳",
+    "dosage_form": "片剂",
+    "specification": "25mg",
+    "manufacturer": "贝达药业",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "EGFR",
+      "T790M突变NSCLC",
+      "本品适用于：\n具有表皮生长因子受体（EGFR）外显子 19 缺失或外显子 21（L858R）置换突变\n的局部晚期或转移性非小细胞肺癌（NSCLC）成人患者的一线治疗。\n1 / 20\n既往经EGFR酪氨酸激酶抑制剂（TKI）治疗时或治疗后出现疾病进展，并且经检\n测确认存在EGFR T790M 突变阳性的局部晚期或转移性 NSCLC成人患者的治疗。"
+    ],
+    "mechanisms": [
+      "EGFR",
+      "T790M抑制剂",
+      "药理作用\n贝福替尼是 EGFR 激酶抑制剂，对 EGFR 耐药或激活突变体（如 EGFR T790M、\nL858R和外显子19缺失）具有不可逆的抑制作用，IC 约为1 nM。贝福替尼对上述突\n50\n变 EGFR 的抑制作用较野生型 EGFR 强，对于携带上述相关突变的肿瘤细胞抑制作用\n亦强于野生型肿瘤细胞。\n毒理研究\n遗传毒性\n甲磺酸贝福替尼 Ames试验、人外周血淋巴细胞染色体畸变试验和大鼠骨髓微核\n试验结果均为阴性。\n生殖毒性\n尚未开展甲磺酸贝福替尼生育力试验。大鼠 4 周重复给药毒性试验中，雌、雄大\n鼠每天1次，连续4周经口给予甲磺酸贝福替尼，给药剂量≥50 mg/kg（以AUC计，雌\n鼠、雄鼠暴露量约为人推荐剂量 100 mg/天的 1.3 倍和 2.6 倍；以体表面积计，约为人\n推荐剂量100 mg/天的4.8倍）时，可见阴道上皮细胞粘液样变；给药剂量为150 mg/kg\n（以AUC计，雌鼠、雄鼠暴露量约为人推荐剂量 100 mg/天的 6.5倍和3.6倍；以体表\n面积计，约为人推荐剂量100 mg/天的14.5倍）时，可见精囊腺上皮空泡变、子宫颈上\n皮粘液样变、卵巢黄体细胞空泡变、子宫和阴道萎缩。\n大鼠胚胎-胎仔发育毒性试验中，妊娠大鼠于妊娠第6~20天，每天1次，经口给予\n甲磺酸贝福替尼10、30、75 mg/kg。给药剂量≥ 30 mg/kg (以AUC计，约为人推荐剂量\n100 mg/天的0.9倍；以体表面积计，约为人推荐剂量100 mg/天的2.9倍) 时，可见母体\n毒性，包括竖毛、体重降低和摄食量减少。 给药剂量为30 mg/kg时，可见胎仔体重明\n显降低。给药剂量为75 mg/kg（以AUC计，约为人推荐剂量100 mg/天的2.0倍；以体\n表面积计，约为人推荐剂量 100 mg/天的 7.3 倍）时，可见子宫连胎重、胎仔体重和冠\n臀长明显降低；可见胎仔外观异常和骨骼异常，包括前掌过度屈曲、头盖骨缺失、胸\n骨节骨化异常（骨化不全、未骨化、双向骨化、分叉、单侧骨化、线性不正/缺失/裂\n18 / 20\n缝）、胸椎体双向骨化、胸椎弓裂缝、波状肋、肋骨短、肋软骨融合、肋骨缺失。给\n药剂量为10 mg/kg（以AUC计，约为人推荐剂量100 mg/天的0.3倍；以体表面积计，\n约为人推荐剂量 100 mg/天的 0.97 倍）时，未见母体毒性，未见对胚胎-胎仔发育产生\n不良影响。胎仔匀浆中可检测到一定水平甲磺酸贝福替尼，甲磺酸贝福替尼可通过胎\n盘屏障。\n致癌性\n尚未进行甲磺酸贝福替尼的致癌性研究。\n其他毒性研究\n未见光毒性反应。"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20230015",
+        "status": "有效",
+        "registration_date": "2023-05",
+        "holder": "",
+        "leaflet_pdf_url": "https://www.cde.org.cn/main/xxgk/PostMarketDownload?attidCODE=b2612e2ff7a8cb85459bddf6cf31c3c8&tableid=CXHS2300016",
+        "leaflet_date": ""
+      }
+    ],
+    "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "194",
+        "payment_scope": "限：1.表皮生长因子受体(EGFR)外显 子19缺失或外显子21(L858R)置换突变 的局部晚期或转移性非小细胞肺癌 (NSCLC)成人患者的一线治疗；2.既往 经表皮生长因子受体(EGFR)酪氨酸激 酶抑制剂(TKI)治疗时或治疗后出现疾 病进展，并且经检测确认存在EGFR T790M突变阳性的局部晚期或转移性非 小细胞肺癌(NSCLC)成人患者。",
+        "price": "*",
+        "effective_date": "2026-01-01",
+        "expire_date": "2027-12-31",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "人工补充记录（2025版）"
+      }
+    ],
+    "package_insert_url": "https://www.cde.org.cn/main/xxgk/PostMarketDownload?attidCODE=b2612e2ff7a8cb85459bddf6cf31c3c8&tableid=CXHS2300016",
+    "leaflet_source_url": "https://www.cde.org.cn/main/xxgk/postmarketpage?acceptidCODE=40f344dc9a81581662636668ec8da87e",
+    "leaflet_date": "",
+    "cold_chain": "常温",
+    "route": "",
+    "extra_data": {
+      "area": "肿瘤",
+      "disease": "非小细胞肺癌",
+      "gen": "第3代EGFR-TKI(国产)",
+      "year": 2023,
+      "origin": "国产",
+      "excl": "是",
+      "cls": "化学药1类",
+      "cold": "常温",
+      "insyear": 2023,
+      "dual": "是",
+      "vbp": "低",
+      "gl": "CSCO推荐",
+      "route": "口服",
+      "prob": 0.9,
+      "prov": "湖南",
+      "patent": "2036-12-01",
+      "followers": 2,
+      "nt": "—",
+      "note": "最新获批3代TKI"
+    },
+    "updated_at": "2026-09-04 23:19:57"
+  },
+  {
+    "product_id": 6,
+    "generic_name": "伏美替尼",
+    "trade_name": "艾弗沙",
+    "dosage_form": "片剂",
+    "specification": "40mg",
+    "manufacturer": "艾力斯",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "EGFR",
+      "T790M突变NSCLC",
+      "一线EGFR突变",
+      "本品适用于：\n具有表皮生长因子受体（EGFR）外显子19缺失或外显子21（L858R）置\n换突变的局部晚期或转移性非小细胞肺癌（NSCLC）成人患者的一线治疗。\n既往经 EGFR 酪氨酸激酶抑制剂（TKI）治疗时或治疗后出现疾病进展，\n并且经检测确认存在 EGFR T790M 突变阳性的局部晚期或转移性 NSCLC 成\n人患者的治疗。"
+    ],
+    "mechanisms": [
+      "EGFR",
+      "T790M抑制剂",
+      "药理作用\n伏美替尼是表皮生长因子受体（EGFR）激酶抑制剂，对EGFR耐药或激活\n突变（T790M、L858R和 Del 19）具有不可逆抑制作用，IC 约为1nM左右。\n50\n伏美替尼对上述突变 EGFR 抑制的 IC 较野生型 EGFR 低，对于携带上述相关\n50\n突变的肿瘤细胞抑制作用强于野生型肿瘤细胞。伏美替尼在体内的主要活性代谢\n产物为 AST5902，暴露量达原型药物暴露量的50%~100%，其活性和选择性与原\n型药物基本一致。\n毒理研究\n遗传毒性：\n伏美替尼及其代谢产物 AST5902 的 Ames 试验和小鼠骨髓微核试验结果均\n14\n为阴性。伏美替尼中国仓鼠肺成纤维（CHL）细胞染色体畸变试验结果为可疑阳\n性，AST5902 CHL细胞染色体畸变试验结果为阴性。\n生殖毒性：\n大鼠生育力和早期胚胎发育毒性试验中，雌雄大鼠经口给予甲磺酸伏美替尼\n5、15和30mg/kg。给药剂量为30mg/kg [以药物暴露量（AUC）计，约为人推荐\n剂量 80mg/天的 2.89 倍；以体表面积计，约为人推荐剂量 80mg/天的 3.67 倍）\n时，雌鼠可见平均妊娠黄体数减少，雄鼠生育力未见不良影响。给药剂量≥15\nmg/kg（以 AUC计，约为人推荐剂量80mg/天的1.54倍 ；以体表面积计，约为\n人推荐剂量80mg/天的1.83倍）时，可见活胎减少。给药剂量为5mg/kg（以 AUC\n计， 约为人推荐剂量80mg/天的0.48倍；以体表面积计，约为人推荐剂量80mg/\n天的0.61倍）时，早期胚胎发育未见不良影响。\n大鼠胚胎-胎仔发育毒性试验中，妊娠大鼠经口给予甲磺酸伏美替尼 5、15、\n45mg/kg。给药剂量为 45mg/kg (以体表面积计，约为人推荐剂量 80mg/天的 5.5\n倍) 时，可见母体毒性，体重增长缓慢，耗食量下降，净体重下降；可见活胎数\n减少，早期吸收胎增加，着床后丢失增加，有吸收胎或全吸收的窝数增加；可见\n胎盘和胎仔重量减轻，胎仔顶臀长变短。给药剂量≤15mg/kg (以体表面积计，约\n为人推荐剂量 80mg/天的 1.83 倍) 时，未见母体毒性，胚胎-胎仔发育未见不良\n影响。\n围产期发育毒性试验中，大鼠在妊娠第 6 天至分娩第 21 天经口给予甲磺酸\n伏美替尼 3、7.5 和 15mg/kg。给药剂量≥7.5mg/kg（按体表面积计，约为人推荐\n剂量 80mg/天的 0.9 倍）时，F0 代雌鼠可见死亡、分娩异常（难产、死产）、哺\n乳异常（不带仔）以及妊娠期和哺乳期体重增长和食量减少；F1 代动物可见离\n乳前的体重、离乳后至交配前的体重增长和食量减少，完成性别分化当天的体重\n减少，F1 代仔鼠的出生成活率降低，可见部分身体/反射发育指标的达标日龄轻\n微延长。给药剂量为 3mg/kg（按体表面积计，约为人推荐剂量 80mg/天的 0.36\n倍）时，F0代雌鼠的分娩和哺乳，F1代的生长发育均未见不良影响。给药剂量\n为15mg/kg（按体表面积计，约为人推荐剂量80mg/天的1.83倍）时，F1代的神\n经行为发育和生殖能力未见不良影响。给药剂量≥3mg/kg（按体表面积计， 约为\n人推荐剂量 80mg/天的 0.36 倍）时，F1 代的外观畸形率、性别比均未见统计学\n15\n意义改变；F2代出生存活率、出生当天体重、性别比均未见统计学意义改变，F2\n代出生当天均未见外观畸形。母鼠乳汁中可检到一定水平伏美替尼及其代谢产物\nAST5902。\n致癌性：\n尚未进行伏美替尼的致癌性研究。"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20210028",
+        "status": "有效",
+        "registration_date": "2021-03",
+        "holder": "",
+        "leaflet_pdf_url": "https://www.cde.org.cn/main/xxgk/PostMarketDownload?attidCODE=2c5e847d10eb3d47aecd782c9a62869e&tableid=CXHS2101055",
+        "leaflet_date": ""
+      }
+    ],
+    "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "190",
+        "payment_scope": "限：1.表皮生长因子受体(EGFR)外显 子19缺失或外显子21(L858R)置换突变 的局部晚期或转移性非小细胞肺癌 (NSCLC)成人患者的一线治疗；2.既往 因表皮生长因子受体(EGFR)酪氨酸激 酶抑制剂(TKI)治疗时或治疗后出现疾 病进展，并且经检验确认存在EGFR T790M 突变阳性的局部晚期或转移性 非小细胞肺癌成人患者的治疗。",
+        "price": "*",
+        "effective_date": "2026-01-01",
+        "expire_date": "2027-12-31",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "1908",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "人工补充记录（2025版）"
+      }
+    ],
+    "package_insert_url": "https://www.cde.org.cn/main/xxgk/PostMarketDownload?attidCODE=2c5e847d10eb3d47aecd782c9a62869e&tableid=CXHS2101055",
+    "leaflet_source_url": "https://www.cde.org.cn/main/xxgk/postmarketpage?acceptidCODE=b7c644b0568b4a716e63326a555e4963",
+    "leaflet_date": "",
+    "cold_chain": "常温",
+    "route": "",
+    "extra_data": {
+      "area": "肿瘤",
+      "disease": "非小细胞肺癌",
+      "gen": "第3代EGFR-TKI(国产)",
+      "year": 2021,
+      "origin": "国产",
+      "excl": "是",
+      "cls": "化学药1类",
+      "cold": "常温",
+      "annual": 22896,
+      "insyear": 2021,
+      "dual": "是",
+      "vbp": "低",
+      "gl": "CSCO推荐",
+      "route": "口服",
+      "sales": 25,
+      "prob": 0.95,
+      "prov": "湖南",
+      "patent": "2035-08-22",
+      "followers": 4,
+      "nt": "FURLONG研究",
+      "note": "国产3代TKI，市场增速快"
+    },
+    "updated_at": "2026-09-04 23:19:55"
+  },
+  {
+    "product_id": 5,
+    "generic_name": "阿美替尼",
+    "trade_name": "阿美乐",
+    "dosage_form": "片剂",
+    "specification": "55mg",
+    "manufacturer": "翰森制药",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "EGFR",
+      "T790M突变NSCLC",
+      "一线EGFR突变",
+      "本品单药适用于：\n用于 II-IIIB 期具有表皮生长因子受体（EGFR）外显子 19 缺失或外显子 21（L858R）\n置换突变的成人非小细胞肺癌（NSCLC）患者的治疗，患者须既往接受过手术切除治疗，\n并由医生决定接受或不接受辅助化疗。\n接受含铂放化疗期间或之后未出现疾病进展，及具有 EGFR 外显子 19 缺失或外显子\n21（L858R）置换突变的局部晚期、不可切除（III期）NSCLC 成人患者的治疗。\n具有EGFR外显子19缺失或外显子21（L858R）置换突变的局部晚期或转移性NSCLC\n成人患者的一线治疗。\n既往经 EGFR 酪氨酸激酶抑制剂（TKI）治疗时或治疗后出现疾病进展，并且经检测\n确认存在EGFR T790M 突变阳性的局部晚期或转移性 NSCLC 成人患者的治疗。\n本品联合培美曲塞和铂类化疗药物适用于：\n具有EGFR外显子 19缺失或外显子21（L858R）置换突变的局部晚期或转移性 NSCLC\n成人患者的一线治疗。"
+    ],
+    "mechanisms": [
+      "EGFR",
+      "T790M抑制剂",
+      "药理作用\n阿美替尼是EGFR 激酶抑制剂，对EGFR 耐药或激活突变（T790M、L858R 和外显子\n19 缺失）产生不可逆抑制的半数抑制浓度（IC50）较野生型低约 10 倍。在体外细胞增殖\n和体内动物肿瘤移植瘤模型中，阿美替尼对携带 EGFR 突变（T790M 合并 L858R 突变；\n外显子19缺失）的NSCLC 细胞株具有抗肿瘤作用，对野生型 EGFR 抑制作用较弱。\n毒理研究\n一般毒性\n大鼠经口给药13 周和26周，主要毒性反应为肝脏损伤、肺部炎症、皮肤反应、胃肠\n道毒性和眼部检查异常等，最大耐受剂量分别为 60 mg/kg 和30 mg/kg（以暴露量计，约为\n人推荐剂量 110 mg 的 0.4~1.9 倍）；犬经口给药 13 周和 39 周，最高非严重毒性反应剂量\n为10 mg/kg（以暴露量计，约为人推荐剂量 110 mg 的4.5倍），主要毒性反应为皮肤反应、\n口腔粘膜炎症、黏膜增生和眼部检查异常。\n遗传毒性\n23 / 25\n阿美替尼 Ames 试验、中国仓鼠肺成纤维细胞染色体畸变试验和小鼠微核试验结果均\n为阴性。\n生殖毒性\n阿美替尼给药剂量达 100 mg/kg（以体表面积剂量计，约为人推荐剂量 110 mg 的 6.6\n倍），对雄性大鼠生育力未见明显不良影响；可影响雌性大鼠早期胚胎发育，引起妊娠黄体\n数、着床数和活胎数降低，以及着床后丢失率和吸收胎率升高。未见毒性反应剂量为 30\nmg/kg（以体表面积剂量计，约为人推荐剂量 110 mg 的2倍）。\n妊娠大鼠于胚胎着床前至硬腭闭合（妊娠期第 6~16天）经口给予阿美替尼，最高剂量\n达100 mg/kg（以暴露量计，约为人推荐剂量 110 mg 的3倍），未见大鼠胚胎-胎仔发育异\n常。新西兰兔生殖毒性试验中，雌性新西兰妊娠兔（妊娠期第 6~19 天）经口给予阿美替\n尼，最高剂量达30 mg/kg。给药剂量≥15mg/kg（以暴露量计，约为人推荐剂量 110 mg 的\n0.1倍）时可引起流产、早产和因母体毒性而导致的胎仔发育迟缓，未见致畸作用。\n大鼠围产期毒性试验中，大鼠于妊娠第 6 天至哺乳期第 21 天经口给予阿美替尼 10、\n30、100 mg/kg。给药剂量为 100 mg/kg（以暴露量计，约为人推荐剂量 110 mg 时的2.3 倍）\n时，母体动物（F0代）可见弓背或肛周污秽、软便和被毛蓬松，体重和体重增长降低，摄\n食量减少，子代动物（F1代）可见出生存活率、出生成活率、体重和摄食量降低，身体发\n育指标（耳廓分离、出毛、睾丸下降、包皮分离）和反射发育指标（触须定位、平面翻正、\n向前爬行）的达标日龄延长。本品可透过大鼠血乳屏障进入乳汁。母体和子代发育的未见\n不良影响剂量为30 mg/kg（以暴露量计，约为人推荐剂量 110 mg 的0.8倍）。\n致癌性\nrasH2 转基因小鼠 26 周致癌性试验中，连续 6 个月经口给予阿美替尼 15、45、150\nmg/kg。给药剂量150 mg/kg（以暴露量计，约为人推荐剂量 110 mg 的8.8倍）的雄性动物\n和给药剂量≥15 mg/kg（以暴露量计，约为人推荐剂量 110 mg 的 0.7 倍）的雌性动物可见\n哈德氏腺腺瘤发生率增加；给药剂量 150 mg/kg 的雄性动物和给药剂量≥45 mg/kg（以暴露\n量计，约为人推荐剂量 110 mg 的2.4倍）的雌性动物可见肺脏和支气管的细支气管肺泡腺\n瘤/微小腺瘤发生率增加；给药剂量 150 mg/kg 的雌性动物可见脾脏血管肉瘤发生率增加。"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20200025",
+        "status": "有效",
+        "registration_date": "2020-03",
+        "holder": "",
+        "leaflet_pdf_url": "https://www.cde.org.cn/main/xxgk/PostMarketDownload?attidCODE=3e326052f41bb34b98177b371b986350&tableid=CXHS2400127",
+        "leaflet_date": "2020-03-17"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "161",
+        "payment_scope": "限：1.表皮生长因子受体(EGFR)外显 子19缺失或外显子21(L858R)置换突变 的局部晚期或转移性非小细胞肺癌 (NSCLC)成人患者的一线治疗；2.既往 经EGFR酪氨酸激酶抑制剂(TKI)治疗时 或治疗后出现疾病进展，并且经检测 确认存在EGFR T790M突变阳性的局部 晚期或转移性非小细胞肺癌成人患者 的治疗；3.既往接受过手术切除治疗 的II-IIIB期具有表皮生长因子受体 (EGFR)外显子19缺失或外显子 21(L858R)置换突变的成人非小细胞肺 癌(NSCLC)患者的治疗；4.接受含铂放 化疗期间或之后未出现疾病进展，及 具有EGFR外显子19缺失或外显子 21(L858R)置换突变的局部晚期、不可 切除(III期)NSCLC成人患者的治疗。",
+        "price": "*",
+        "effective_date": "2026-01-01",
+        "expire_date": "2026-12-31",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "1760",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "人工补充记录（2025版）"
+      }
+    ],
+    "package_insert_url": "https://www.cde.org.cn/main/xxgk/PostMarketDownload?attidCODE=3e326052f41bb34b98177b371b986350&tableid=CXHS2400127",
+    "leaflet_source_url": "https://www.cde.org.cn/main/xxgk/postmarketpage?acceptidCODE=6342cdd351dce6f3779439bf1bbe2db5",
+    "leaflet_date": "2020-03-17",
+    "cold_chain": "常温",
+    "route": "",
+    "extra_data": {
+      "area": "肿瘤",
+      "disease": "非小细胞肺癌",
+      "gen": "第3代EGFR-TKI(国产)",
+      "year": 2020,
+      "origin": "国产",
+      "excl": "否",
+      "cls": "化学药1类",
+      "cold": "常温",
+      "annual": 21120,
+      "insyear": 2020,
+      "dual": "是",
+      "vbp": "中",
+      "gl": "CSCO推荐",
+      "route": "口服",
+      "sales": 30,
+      "prob": 0.95,
+      "prov": "湖南",
+      "patent": "2034-11-09",
+      "followers": 7,
+      "nt": "APOLLO研究",
+      "note": "国产3代TKI主力"
+    },
+    "updated_at": "2026-09-04 23:19:54"
+  },
+  {
+    "product_id": 4,
+    "generic_name": "奥希替尼",
+    "trade_name": "泰瑞沙",
+    "dosage_form": "片剂",
+    "specification": "80mg",
+    "manufacturer": "阿斯利康",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "EGFR",
+      "T790M突变NSCLC",
+      "一线EGFR突变",
+      "辅助治疗",
+      "本品单药适用于：\n用于 IB-IIIA期存在表皮生长因子受体(EGFR)外显子 19缺失或外显子 21(L858R)置\n换突变的非小细胞肺癌(NSCLC)患者的治疗，患者须既往接受过手术切除治疗，并由医\n生决定接受或不接受辅助化疗。\n用于接受含铂放化疗期间或之后未出现疾病进展，及具有表皮生长因子受体(EGFR)\n外显子19缺失或外显子21(L858R)置换突变的局部晚期、不可切除(III期)非小细胞肺癌\n(NSCLC)成人患者的治疗。\n具有表皮生长因子受体(EGFR)外显子 19 缺失或外显子 21(L858R)置换突变的局部\n晚期或转移性非小细胞肺癌(NSCLC)成人患者的一线治疗。\n既往经 EGFR 酪氨酸激酶抑制剂(TKI)治疗时或治疗后出现疾病进展，并且经检测\n确认存在EGFR T790M突变阳性的局部晚期或转移性NSCLC成人患者的治疗。\n第2页，共49页\n本品联合培美曲塞和铂类化疗药物适用于：\n具有表皮生长因子受体(EGFR)外显子 19 缺失或外显子 21(L858R)置换突变的局部\n晚期或转移性非小细胞肺癌(NSCLC)成人患者的一线治疗。"
+    ],
+    "mechanisms": [
+      "EGFR",
+      "T790M抑制剂",
+      "相关内容。\n心电生理\n在AURA2中210例接受80 mg/天奥希替尼治疗的患者中评估了本品导致QTc间期\n延长的可能性。在单次给药及达到稳态后进行连续 ECG 检查以评价本品对 QTc 间期的\n影响。一项药代动力学/药效学分析预测，本品 80 mg时药物相关的 QTc间期延长达 14\nmsec，上限为16 msec(90% CI)。\n药代动力学\n本品的药代动力学参数在健康受试者和 NSCLC 患者中进行了鉴定。依据群体药代\n动力学分析，本品的血浆表观清除率为 14.3L/h，表观分布容积为 918L，终末半衰期约\n为 44 小时。接受奥希替尼与培美曲塞和铂类化疗药物联合治疗的患者与接受奥希替尼\n单药治疗的患者的药代动力学相似。在20至240mg的剂量范围内，本品的AUC和C\nmax\n与剂量成正比。奥希替尼每日一次口服 15 天后达到稳态，暴露蓄积量约为 3 倍。稳态\n时，循环血浆浓度在24小时的给药间期内通常会保持在1.6倍的范围之内。\n吸收\n口服奥希替尼后，奥希替尼的血浆峰浓度在中位 t (最小值-最大值)6(3-24)小时达\nmax\n到，部分患者在给药后的首个 24 小时内会出现数个峰值。未对奥希替尼的绝对生物利\n用度进行测定。基于一项以 80mg 剂量在患者中进行的临床药代动力学研究，食物不会\n对本品的生物利用度产生临床显著性影响(AUC增加了6%(90% CI-5，19)，而C 下降\nmax\n了7%(90% CI-19，6)。健康受试者服用奥美拉唑5天，胃内pH值升高后给予本品80mg\n第44页，共49页\n片剂，本品暴露量并未受到明显影响(AUC 和 C 分别增加了 7%和 2%)，且暴露量比\nmax\n值的90% CI也在80-125%的限值之内。\n分布\n经群体药代动力学模型估计，奥希替尼的平均稳态分布容积(V /F)为 918L，提示\nss\n药物在组织内有广泛分布。本品体外血浆蛋白结合率为 94.7%(游离型 5.3%)。研究证实，\n本品还可以与大鼠和人的血浆蛋白、人血清白蛋白及大鼠和人的肝细胞共价结合。\n生物转化\n体外研究提示，奥希替尼主要通过 CYP3A4 和 CYP3A5 代谢。其中 CYP3A4 介导\n的代谢可能为次要途径。此外，还可能存在体外研究并未完全明确的其它代谢途径，\n随后，在临床前样本以及口服奥希替尼的人血浆中检出了两种具有药理学活性的代谢\n产物(AZ7550和AZ5104)；AZ7550和奥希替尼具有相似的药理学性质，而AZ5104对突\n变型和野生型EGFR均有更强的效力。服用本品后，上述两种代谢产物在血浆中缓慢出\n现，其中位 t (最小值-最大值)分别为 24(4-72)和 24(6-72)小时。在人血浆中，奥希替\nmax\n尼原型药物占总放射性活度的0.8%，上述两种代谢产物分占0.08%和0.07%，而大多数\n放射性活度均与血浆蛋白呈共价结合。根据 AUC，AZ5104 和 AZ7550 暴露量的几何均\n值分别约为稳态条件下奥希替尼的暴露量的10%。\n奥希替尼的主要代谢通路为氧化和脱烷基化。在人体的尿液和粪便的汇总样品中\n共检出了至少12种成份，其中有5种成份所占总剂量的比例超过1%，在这些成份中，\n本品原型、AZ5104和AZ7550分别约占给药剂量的1.9%、6.6%和2.7%，而一种半胱氨\n酸加合物(M21)和一种未知代谢产物(M25)则分别约占1.5%和1.9%。\n体外研究显示，奥希替尼是一种 CYP3A4/5的竞争性抑制剂，但在具有临床意义的\n浓度下不是 CYP1A2、2A6、2B6、2C8、2C9、2C19、2D6和 2E1的竞争性抑制剂。根\n据体外研究，在具有临床意义的浓度下，在肝脏本品并不是 UGT1A1 和 UGT2B7 的抑\n制剂。本品还可能对肠道内的 UGT1A1 产生抑制作用，但是否具有临床相关性影响尚\n属未知。\n消除\n本品以 20mg 的剂量单次口服给药后，截止第 84 天收集样品结束时，从粪便中收\n集的剂量占总剂量的 67.8%(1.2%为原型药物)，从尿液中收集的剂量占总剂量的\n14.2%(0.8%为原型药物)。奥希替尼原型约占消除总量的 2%，其中经尿液和粪便消除的\n分别占0.8%和1.2%。\n第45页，共49页\n与转运蛋白的相互作用\n体外研究显示，奥希替尼不是 OATP1B1 和 OATP1B3 的底物。同时体外研究也显\n示，在有临床意义的浓度条件下，本品不会对OAT1、OAT3、OATP1B1、OATP1B3、\nMATE1、OCT2和MATE2K产生抑制作用。\n奥希替尼对P-gp和BCRP的影响\n体外研究显示，奥希替尼是 P-糖蛋白和乳腺癌耐药蛋白(BCRP)的底物，但是在临\n床剂量下，奥希替尼不太可能会与相关的活性物质产生有临床意义的药物相互作用。\n根据体外研究的数据，奥希替尼是一种 BCRP 和 P-gp 的抑制剂。但是，尚未对除\nCYP3A4之外的PXR调控的酶相互作用进行过研究(见"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字J20171015",
+        "status": "有效",
+        "registration_date": "2017-03",
+        "holder": "",
+        "leaflet_pdf_url": "https://www.cde.org.cn/main/xxgk/PostMarketDownload?attidCODE=96bbec8d837cce7d71c48ea4be39c5a9&tableid=JXHS2400042",
+        "leaflet_date": "2017-03-22"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "900",
+        "payment_scope": "限：1.既往接受过手术切除治疗的ⅠB-ⅢA期存在表皮生长因 子受体(EGFR)外显子19缺失或外显子21(L858R)置换突变的非 小细胞肺癌(NSCLC)患者的治疗；2.接受含铂放化疗期间或之 后未出现疾病进展，及具有表皮生长因子受体(EGFR)外显子 19缺失或外显子21(L858R)置换突变的局部晚期、不可切除 (III期)非小细胞肺癌(NSCLC)成人患者的治疗；3.具有表皮 生长因子受体(EGFR)外显子19缺失或外显子21(L858R)置换突 变的局部晚期或转移性非小细胞肺癌(NSCLC)成人患者的一线 治疗；4.既往经EGFR酪氨酸激酶抑制剂(TKI)治疗时或治疗后 出现疾病进展，并且经检测确认存在EGFR T790M突变阳性的 局部晚期或转移性NSCLC成人患者的治疗；5.联合培美曲塞和 铂类化疗药物用于具有表皮生长因子受体(EGFR)外显子19缺 失或外显子21(L858R)置换突变的局部晚期或转移性非小细胞 肺癌(NSCLC)成人患者的一线治疗。",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "5580",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "人工补充记录（2025版）"
+      }
+    ],
+    "package_insert_url": "https://www.cde.org.cn/main/xxgk/PostMarketDownload?attidCODE=96bbec8d837cce7d71c48ea4be39c5a9&tableid=JXHS2400042",
+    "leaflet_source_url": "https://www.cde.org.cn/main/xxgk/postmarketpage?acceptidCODE=2a30a48245f6d6998711537af4d98ec7",
+    "leaflet_date": "2017-03-22",
+    "cold_chain": "常温",
+    "route": "",
+    "extra_data": {
+      "area": "肿瘤",
+      "disease": "非小细胞肺癌",
+      "gen": "第3代EGFR-TKI",
+      "year": 2017,
+      "origin": "进口",
+      "excl": "否",
+      "cls": "化学药",
+      "cold": "常温",
+      "annual": 66960,
+      "insyear": 2018,
+      "dual": "是",
+      "vbp": "中",
+      "gl": "CSCO I级推荐",
+      "route": "口服",
+      "sales": 60,
+      "prob": 0.95,
+      "prov": "湖南",
+      "patent": "2032-07-03",
+      "followers": 15,
+      "nt": "ADAURA研究",
+      "note": "3代TKI金标准，专利保护期长"
+    },
+    "updated_at": "2026-09-04 23:19:52"
+  },
+  {
+    "product_id": 3,
+    "generic_name": "阿法替尼",
+    "trade_name": "吉泰瑞",
+    "dosage_form": "片剂",
+    "specification": "40mg",
+    "manufacturer": "勃林格殷格翰",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "EGFR突变阳性NSCLC一线",
+      "鳞癌二线",
+      "本品适用于以下患者治疗：\n1.具有表皮生长因子受体（EGFR）基因敏感突变的局部晚期或转移性非小细胞肺癌\n(NSCLC)，既往未接受过EGFR酪氨酸激酶抑制剂（TKI）治疗。\n2.含铂化疗期间或化疗后疾病进展的局部晚期或转移性鳞状组织学类型的非小细胞\n肺癌(NSCLC)"
+    ],
+    "mechanisms": [
+      "不可逆EGFR",
+      "HER2抑制剂",
+      "药理作用\n阿法替尼与EGFR(ErbB1)，HER2(ErbB2)和HER4(ErbB4)的激酶区域共价结合，不\n可逆地抑制酪氨酸激酶自磷酸化，导致ErbB信号下调。\n在患者达到浓度下阿法替尼抑制自体磷酸化，对部分细胞系的体外增殖表现出抑制\n作用，这些细胞系表达野生型 EGFR、或表达选择性 EGFR 外显子 19 缺失突变或外显\n子 21 L858R 突变（包括某些表达继发 T790M 突变的细胞系）。此外阿法替尼还抑制\n第17页/共22页\nHER2过表达细胞系的体外增殖。荷瘤裸鼠给予阿法替尼，肿瘤生长受到抑制，这些肿\n瘤模型有的过量表达野生型EGFR或HER2，有的具有EGFR L858R/7790M双突变。\n毒理研究\n重复给药毒性试验：在经口重复给药毒性试验（大鼠给药达26周，小型猪给药达\n52周）中，主要毒性靶器官为皮肤（大鼠真皮变化、上皮萎缩以及毛囊炎）、胃肠道（大\n鼠和小型猪腹泻、胃糜烂、上皮萎缩）和肾脏（大鼠肾乳头坏死）。上述变化可发生在\n临床治疗相关暴露量之下、范围内或之上。在两个动物种属中均可见多器官发生药理作\n用介导的上皮萎缩。\n遗传毒性：阿法替尼在Ames试验中有1个细菌实验株中出现了反应范围上限的阳\n性反应；阿法替尼在非细胞毒性浓度下的体外染色体畸变试验、体内骨髓微核试验、体\n内彗星试验以及 MutaTM小鼠经口给药4周的致突变试验中结果均为阴性。\n生殖毒性：在一项生育力试验中，雌雄大鼠每日经口给予阿法替尼4、6或8mg/kg。\n雄性大鼠在6mg/kg（约为推荐人用剂量每日40mg时的AUC水平）或更高剂量下，精\n子数减少或无精子的发生率升高，但总体生育力未见影响；一般毒理试验可见睾丸细胞\n凋亡以及精囊和前列腺萎缩发生率增高，支持上述精子计数降低的结果。8mg/kg（约为\n推荐人用剂量每日40mg时 AUC的0.63倍）剂量组雌性动物的黄体数轻度升高，并伴\n有因早期吸收而着床后丢失的轻度升高。在一项重复给药4周毒性试验中，各给药组雌\n性大鼠卵巢重量降低，2周恢复期结束尚未完全恢复。\n兔胚胎-胎仔发育毒性试验中，妊娠兔给予阿法替尼 5mg/kg（约为推荐人用剂量每\n日40mg时AUC的0.2倍）或更高剂量，可见着床后丢失增加，出现母体毒性的动物中\n可见妊娠晚期流产。给药剂量为10mg/kg（约为推荐人用剂量每日40mg时 AUC的0.7\n倍）时，可见胎仔体重减轻，胎仔短小、内脏和皮肤变异的发生率增加。大鼠胚胎-胎\n仔发育毒性试验中，16mg/kg剂量（约为推荐人用剂量每日40mg时AUC的2倍）可见\n骨骼变异（包括骨化不完全或骨化延迟）和胎仔体重减轻。\n大鼠放射性研究结果显示，阿法替尼可进入乳汁，药后1h和6h时，乳汁中的平均\n浓度大约是相应血浆浓度的80倍和150倍。\n致癌性：尚未进行致癌性试验。\n光毒性：体外3T3光毒性检测提示阿法替尼具有光毒性。"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字J20170029",
+        "status": "有效",
+        "registration_date": "2017-02",
+        "holder": "",
+        "leaflet_pdf_url": "https://www.cde.org.cn/main/xxgk/PostMarketDownload?attidCODE=5338a6afaa44e67cb1e98ac91ed6586d&tableid=JXHS1600011",
+        "leaflet_date": ""
+      }
+    ],
+    "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "897",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "140",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "人工补充记录（2025版）"
+      }
+    ],
+    "package_insert_url": "https://www.cde.org.cn/main/xxgk/PostMarketDownload?attidCODE=5338a6afaa44e67cb1e98ac91ed6586d&tableid=JXHS1600011",
+    "leaflet_source_url": "https://www.cde.org.cn/main/xxgk/postmarketpage?acceptidCODE=7647d8396eb5fcb8584514bff622f73a",
+    "leaflet_date": "",
+    "cold_chain": "常温",
+    "route": "",
+    "extra_data": {
+      "area": "肿瘤",
+      "disease": "非小细胞肺癌",
+      "gen": "第2代EGFR-TKI",
+      "year": 2017,
+      "origin": "进口",
+      "excl": "否",
+      "cls": "化学药",
+      "cold": "常温",
+      "annual": 16800,
+      "insyear": 2018,
+      "dual": "否",
+      "vbp": "中",
+      "gl": "CSCO推荐",
+      "route": "口服",
+      "prob": 0.9,
+      "prov": "湖南",
+      "patent": "2025-08-14",
+      "followers": 5,
+      "nt": "—",
+      "note": "2代TKI，专利即将到期"
+    },
+    "updated_at": "2026-09-04 23:19:47"
+  },
+  {
+    "product_id": 2,
+    "generic_name": "埃克替尼",
+    "trade_name": "凯美纳",
+    "dosage_form": "片剂",
+    "specification": "125mg",
+    "manufacturer": "贝达药业",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "EGFR突变阳性晚期NSCLC",
+      "本品单药适用于治疗表皮生长因子受体（EGFR)基因具有敏感突变的局部晚期或转\n移性非小细胞肺癌（NSCLC）患者的一线治疗。（见"
+    ],
+    "mechanisms": [
+      "EGFR酪氨酸激酶抑制剂",
+      "药理作用\n埃克替尼是一种选择性表皮生长因子受体（EGFR）酪氨酸激酶抑制剂。埃克替尼\n抑制EGFR酪氨酸激酶活性的半数有效浓度（IC50）为5nM，在所测试的88种激酶中，\n500nM浓度的埃克替尼只对EGFR野生型及其突变型有明显的抑制作用，对其它激酶均\n没有抑制作用，提示埃克替尼是一个高选择性的EGFR激酶抑制剂。体外研究和动物实\n验表明埃克替尼可抑制多种人肿瘤细胞株的增殖。\n毒理研究\n一般毒性\n临床前研究资料表明，埃克替尼安全性良好，仅在犬连续多次给药 270 天时，在\n60mg/kg给药剂量组见氨基转移酶偏高等可逆性毒性反应。\n遗传毒性\n埃克替尼 Ames 试验、CHL 染色体畸变试验和大鼠体内骨髓微核试验结果均为阴\n性。\n生殖毒性\n16\n埃克替尼对雄性小鼠生殖功能及生殖系统无明显影响，对 Wistar 大鼠无致畸胎作\n用。埃克替尼对妊娠鼠生殖功能及胚胎生长发育有抑制作用，在高剂量（300mg/kg）时，\n可使活胎率和胎重显著下降，部分胎鼠颈背部或眼周淤血，但未见外观、内脏畸形及骨\n化率异常。\n致癌性\n目前尚未开展致癌性研究。"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字H20110027",
+        "status": "有效",
+        "registration_date": "2011-06",
+        "holder": "",
+        "leaflet_pdf_url": "https://www.cde.org.cn/main/xxgk/PostMarketDownload?attidCODE=4ee8ee8522c191af00420167c39cb996&tableid=CXHS2000030",
+        "leaflet_date": "2011-06-07"
+      }
+    ],
+    "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "160",
+        "payment_scope": "限：1.表皮生长因子受体(EGFR)基因 具有敏感突变的局部晚期或转移性非 小细胞肺癌(NSCLC)患者的一线治疗； 2.既往接受过至少一个化疗方案失败 后的局部晚期或转移性非小细胞肺癌 (NSCLC)；3.Ⅱ-ⅢA期伴有表皮生长因 子受体(EGFR)基因敏感突变非小细胞 肺癌(NSCLC)术后辅助治疗。",
+        "price": "*",
+        "effective_date": "2026-01-01",
+        "expire_date": "2027-12-31",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
+        "category": "集采",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "155",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "人工补充记录（2025版）"
+      }
+    ],
+    "package_insert_url": "https://www.cde.org.cn/main/xxgk/PostMarketDownload?attidCODE=4ee8ee8522c191af00420167c39cb996&tableid=CXHS2000030",
+    "leaflet_source_url": "https://www.cde.org.cn/main/xxgk/postmarketpage?acceptidCODE=5f81a704523f5c87e15a7ea4edac5ec9",
+    "leaflet_date": "2011-06-07",
+    "cold_chain": "常温",
+    "route": "",
+    "extra_data": {
+      "area": "肿瘤",
+      "disease": "非小细胞肺癌",
+      "gen": "第1代EGFR-TKI(国产)",
+      "year": 2011,
+      "origin": "国产",
+      "excl": "否",
+      "cls": "化学药1类",
+      "cold": "常温",
+      "annual": 18600,
+      "insyear": 2019,
+      "dual": "否",
+      "vbp": "高(已集采)",
+      "gl": "CSCO推荐",
+      "route": "口服",
+      "sales": 12,
+      "prob": 0.99,
+      "prov": "湖南",
+      "patent": "2023-05-12",
+      "followers": 8,
+      "nt": "—",
+      "note": "国产首个EGFR-TKI，专利已到期"
+    },
+    "updated_at": "2026-09-04 23:19:46"
+  },
+  {
     "product_id": 1197,
     "generic_name": "盐酸二甲双胍片",
     "trade_name": "————",
@@ -55049,491 +55546,6 @@
       "followers": 6,
       "nt": "PROFILE研究",
       "note": "首个ALK靶向药，专利临近到期"
-    },
-    "updated_at": "2026-08-25 07:49:46"
-  },
-  {
-    "product_id": 7,
-    "generic_name": "贝福替尼",
-    "trade_name": "赛美纳",
-    "dosage_form": "片剂",
-    "specification": "25mg",
-    "manufacturer": "贝达药业",
-    "atc_code": "",
-    "drug_type": "",
-    "is_verified": false,
-    "indications": [
-      "EGFR",
-      "T790M突变NSCLC"
-    ],
-    "mechanisms": [
-      "EGFR",
-      "T790M抑制剂"
-    ],
-    "ingredients": [],
-    "registrations": [
-      {
-        "approval_number": "国药准字H20230015",
-        "status": "有效",
-        "registration_date": "2023-05",
-        "holder": "",
-        "leaflet_pdf_url": "",
-        "leaflet_date": ""
-      }
-    ],
-    "insurance": [
-      {
-        "category": "乙类",
-        "insurance_code": "194",
-        "payment_scope": "限：1.表皮生长因子受体(EGFR)外显 子19缺失或外显子21(L858R)置换突变 的局部晚期或转移性非小细胞肺癌 (NSCLC)成人患者的一线治疗；2.既往 经表皮生长因子受体(EGFR)酪氨酸激 酶抑制剂(TKI)治疗时或治疗后出现疾 病进展，并且经检测确认存在EGFR T790M突变阳性的局部晚期或转移性非 小细胞肺癌(NSCLC)成人患者。",
-        "price": "*",
-        "effective_date": "2026-01-01",
-        "expire_date": "2027-12-31",
-        "is_current": 1,
-        "catalog": "国家医保药品目录（2025年）"
-      },
-      {
-        "category": "已进医保",
-        "insurance_code": "",
-        "payment_scope": "",
-        "price": "",
-        "effective_date": "",
-        "expire_date": "",
-        "is_current": 1,
-        "catalog": "人工补充记录（2025版）"
-      }
-    ],
-    "package_insert_url": "",
-    "leaflet_source_url": "",
-    "leaflet_date": "",
-    "cold_chain": "",
-    "route": "",
-    "extra_data": {
-      "area": "肿瘤",
-      "disease": "非小细胞肺癌",
-      "gen": "第3代EGFR-TKI(国产)",
-      "year": 2023,
-      "origin": "国产",
-      "excl": "是",
-      "cls": "化学药1类",
-      "cold": "常温",
-      "insyear": 2023,
-      "dual": "是",
-      "vbp": "低",
-      "gl": "CSCO推荐",
-      "route": "口服",
-      "prob": 0.9,
-      "prov": "湖南",
-      "patent": "2036-12-01",
-      "followers": 2,
-      "nt": "—",
-      "note": "最新获批3代TKI"
-    },
-    "updated_at": "2026-08-25 07:49:46"
-  },
-  {
-    "product_id": 6,
-    "generic_name": "伏美替尼",
-    "trade_name": "艾弗沙",
-    "dosage_form": "片剂",
-    "specification": "40mg",
-    "manufacturer": "艾力斯",
-    "atc_code": "",
-    "drug_type": "",
-    "is_verified": false,
-    "indications": [
-      "EGFR",
-      "T790M突变NSCLC",
-      "一线EGFR突变"
-    ],
-    "mechanisms": [
-      "EGFR",
-      "T790M抑制剂"
-    ],
-    "ingredients": [],
-    "registrations": [
-      {
-        "approval_number": "国药准字H20210028",
-        "status": "有效",
-        "registration_date": "2021-03",
-        "holder": "",
-        "leaflet_pdf_url": "",
-        "leaflet_date": ""
-      }
-    ],
-    "insurance": [
-      {
-        "category": "乙类",
-        "insurance_code": "190",
-        "payment_scope": "限：1.表皮生长因子受体(EGFR)外显 子19缺失或外显子21(L858R)置换突变 的局部晚期或转移性非小细胞肺癌 (NSCLC)成人患者的一线治疗；2.既往 因表皮生长因子受体(EGFR)酪氨酸激 酶抑制剂(TKI)治疗时或治疗后出现疾 病进展，并且经检验确认存在EGFR T790M 突变阳性的局部晚期或转移性 非小细胞肺癌成人患者的治疗。",
-        "price": "*",
-        "effective_date": "2026-01-01",
-        "expire_date": "2027-12-31",
-        "is_current": 1,
-        "catalog": "国家医保药品目录（2025年）"
-      },
-      {
-        "category": "已进医保",
-        "insurance_code": "",
-        "payment_scope": "",
-        "price": "1908",
-        "effective_date": "",
-        "expire_date": "",
-        "is_current": 1,
-        "catalog": "人工补充记录（2025版）"
-      }
-    ],
-    "package_insert_url": "",
-    "leaflet_source_url": "",
-    "leaflet_date": "",
-    "cold_chain": "",
-    "route": "",
-    "extra_data": {
-      "area": "肿瘤",
-      "disease": "非小细胞肺癌",
-      "gen": "第3代EGFR-TKI(国产)",
-      "year": 2021,
-      "origin": "国产",
-      "excl": "是",
-      "cls": "化学药1类",
-      "cold": "常温",
-      "annual": 22896,
-      "insyear": 2021,
-      "dual": "是",
-      "vbp": "低",
-      "gl": "CSCO推荐",
-      "route": "口服",
-      "sales": 25,
-      "prob": 0.95,
-      "prov": "湖南",
-      "patent": "2035-08-22",
-      "followers": 4,
-      "nt": "FURLONG研究",
-      "note": "国产3代TKI，市场增速快"
-    },
-    "updated_at": "2026-08-25 07:49:46"
-  },
-  {
-    "product_id": 5,
-    "generic_name": "阿美替尼",
-    "trade_name": "阿美乐",
-    "dosage_form": "片剂",
-    "specification": "55mg",
-    "manufacturer": "翰森制药",
-    "atc_code": "",
-    "drug_type": "",
-    "is_verified": false,
-    "indications": [
-      "EGFR",
-      "T790M突变NSCLC",
-      "一线EGFR突变"
-    ],
-    "mechanisms": [
-      "EGFR",
-      "T790M抑制剂"
-    ],
-    "ingredients": [],
-    "registrations": [
-      {
-        "approval_number": "国药准字H20200025",
-        "status": "有效",
-        "registration_date": "2020-03",
-        "holder": "",
-        "leaflet_pdf_url": "",
-        "leaflet_date": ""
-      }
-    ],
-    "insurance": [
-      {
-        "category": "乙类",
-        "insurance_code": "161",
-        "payment_scope": "限：1.表皮生长因子受体(EGFR)外显 子19缺失或外显子21(L858R)置换突变 的局部晚期或转移性非小细胞肺癌 (NSCLC)成人患者的一线治疗；2.既往 经EGFR酪氨酸激酶抑制剂(TKI)治疗时 或治疗后出现疾病进展，并且经检测 确认存在EGFR T790M突变阳性的局部 晚期或转移性非小细胞肺癌成人患者 的治疗；3.既往接受过手术切除治疗 的II-IIIB期具有表皮生长因子受体 (EGFR)外显子19缺失或外显子 21(L858R)置换突变的成人非小细胞肺 癌(NSCLC)患者的治疗；4.接受含铂放 化疗期间或之后未出现疾病进展，及 具有EGFR外显子19缺失或外显子 21(L858R)置换突变的局部晚期、不可 切除(III期)NSCLC成人患者的治疗。",
-        "price": "*",
-        "effective_date": "2026-01-01",
-        "expire_date": "2026-12-31",
-        "is_current": 1,
-        "catalog": "国家医保药品目录（2025年）"
-      },
-      {
-        "category": "已进医保",
-        "insurance_code": "",
-        "payment_scope": "",
-        "price": "1760",
-        "effective_date": "",
-        "expire_date": "",
-        "is_current": 1,
-        "catalog": "人工补充记录（2025版）"
-      }
-    ],
-    "package_insert_url": "",
-    "leaflet_source_url": "",
-    "leaflet_date": "",
-    "cold_chain": "",
-    "route": "",
-    "extra_data": {
-      "area": "肿瘤",
-      "disease": "非小细胞肺癌",
-      "gen": "第3代EGFR-TKI(国产)",
-      "year": 2020,
-      "origin": "国产",
-      "excl": "否",
-      "cls": "化学药1类",
-      "cold": "常温",
-      "annual": 21120,
-      "insyear": 2020,
-      "dual": "是",
-      "vbp": "中",
-      "gl": "CSCO推荐",
-      "route": "口服",
-      "sales": 30,
-      "prob": 0.95,
-      "prov": "湖南",
-      "patent": "2034-11-09",
-      "followers": 7,
-      "nt": "APOLLO研究",
-      "note": "国产3代TKI主力"
-    },
-    "updated_at": "2026-08-25 07:49:46"
-  },
-  {
-    "product_id": 4,
-    "generic_name": "奥希替尼",
-    "trade_name": "泰瑞沙",
-    "dosage_form": "片剂",
-    "specification": "80mg",
-    "manufacturer": "阿斯利康",
-    "atc_code": "",
-    "drug_type": "",
-    "is_verified": false,
-    "indications": [
-      "EGFR",
-      "T790M突变NSCLC",
-      "一线EGFR突变",
-      "辅助治疗"
-    ],
-    "mechanisms": [
-      "EGFR",
-      "T790M抑制剂"
-    ],
-    "ingredients": [],
-    "registrations": [
-      {
-        "approval_number": "国药准字J20171015",
-        "status": "有效",
-        "registration_date": "2017-03",
-        "holder": "",
-        "leaflet_pdf_url": "",
-        "leaflet_date": ""
-      }
-    ],
-    "insurance": [
-      {
-        "category": "乙类",
-        "insurance_code": "900",
-        "payment_scope": "限：1.既往接受过手术切除治疗的ⅠB-ⅢA期存在表皮生长因 子受体(EGFR)外显子19缺失或外显子21(L858R)置换突变的非 小细胞肺癌(NSCLC)患者的治疗；2.接受含铂放化疗期间或之 后未出现疾病进展，及具有表皮生长因子受体(EGFR)外显子 19缺失或外显子21(L858R)置换突变的局部晚期、不可切除 (III期)非小细胞肺癌(NSCLC)成人患者的治疗；3.具有表皮 生长因子受体(EGFR)外显子19缺失或外显子21(L858R)置换突 变的局部晚期或转移性非小细胞肺癌(NSCLC)成人患者的一线 治疗；4.既往经EGFR酪氨酸激酶抑制剂(TKI)治疗时或治疗后 出现疾病进展，并且经检测确认存在EGFR T790M突变阳性的 局部晚期或转移性NSCLC成人患者的治疗；5.联合培美曲塞和 铂类化疗药物用于具有表皮生长因子受体(EGFR)外显子19缺 失或外显子21(L858R)置换突变的局部晚期或转移性非小细胞 肺癌(NSCLC)成人患者的一线治疗。",
-        "price": "",
-        "effective_date": "",
-        "expire_date": "",
-        "is_current": 1,
-        "catalog": "国家医保药品目录（2025年）"
-      },
-      {
-        "category": "已进医保",
-        "insurance_code": "",
-        "payment_scope": "",
-        "price": "5580",
-        "effective_date": "",
-        "expire_date": "",
-        "is_current": 1,
-        "catalog": "人工补充记录（2025版）"
-      }
-    ],
-    "package_insert_url": "",
-    "leaflet_source_url": "",
-    "leaflet_date": "",
-    "cold_chain": "",
-    "route": "",
-    "extra_data": {
-      "area": "肿瘤",
-      "disease": "非小细胞肺癌",
-      "gen": "第3代EGFR-TKI",
-      "year": 2017,
-      "origin": "进口",
-      "excl": "否",
-      "cls": "化学药",
-      "cold": "常温",
-      "annual": 66960,
-      "insyear": 2018,
-      "dual": "是",
-      "vbp": "中",
-      "gl": "CSCO I级推荐",
-      "route": "口服",
-      "sales": 60,
-      "prob": 0.95,
-      "prov": "湖南",
-      "patent": "2032-07-03",
-      "followers": 15,
-      "nt": "ADAURA研究",
-      "note": "3代TKI金标准，专利保护期长"
-    },
-    "updated_at": "2026-08-25 07:49:46"
-  },
-  {
-    "product_id": 3,
-    "generic_name": "阿法替尼",
-    "trade_name": "吉泰瑞",
-    "dosage_form": "片剂",
-    "specification": "40mg",
-    "manufacturer": "勃林格殷格翰",
-    "atc_code": "",
-    "drug_type": "",
-    "is_verified": false,
-    "indications": [
-      "EGFR突变阳性NSCLC一线",
-      "鳞癌二线"
-    ],
-    "mechanisms": [
-      "不可逆EGFR",
-      "HER2抑制剂"
-    ],
-    "ingredients": [],
-    "registrations": [
-      {
-        "approval_number": "国药准字J20170029",
-        "status": "有效",
-        "registration_date": "2017-02",
-        "holder": "",
-        "leaflet_pdf_url": "",
-        "leaflet_date": ""
-      }
-    ],
-    "insurance": [
-      {
-        "category": "乙类",
-        "insurance_code": "897",
-        "payment_scope": "",
-        "price": "",
-        "effective_date": "",
-        "expire_date": "",
-        "is_current": 1,
-        "catalog": "国家医保药品目录（2025年）"
-      },
-      {
-        "category": "已进医保",
-        "insurance_code": "",
-        "payment_scope": "",
-        "price": "140",
-        "effective_date": "",
-        "expire_date": "",
-        "is_current": 1,
-        "catalog": "人工补充记录（2025版）"
-      }
-    ],
-    "package_insert_url": "",
-    "leaflet_source_url": "",
-    "leaflet_date": "",
-    "cold_chain": "",
-    "route": "",
-    "extra_data": {
-      "area": "肿瘤",
-      "disease": "非小细胞肺癌",
-      "gen": "第2代EGFR-TKI",
-      "year": 2017,
-      "origin": "进口",
-      "excl": "否",
-      "cls": "化学药",
-      "cold": "常温",
-      "annual": 16800,
-      "insyear": 2018,
-      "dual": "否",
-      "vbp": "中",
-      "gl": "CSCO推荐",
-      "route": "口服",
-      "prob": 0.9,
-      "prov": "湖南",
-      "patent": "2025-08-14",
-      "followers": 5,
-      "nt": "—",
-      "note": "2代TKI，专利即将到期"
-    },
-    "updated_at": "2026-08-25 07:49:46"
-  },
-  {
-    "product_id": 2,
-    "generic_name": "埃克替尼",
-    "trade_name": "凯美纳",
-    "dosage_form": "片剂",
-    "specification": "125mg",
-    "manufacturer": "贝达药业",
-    "atc_code": "",
-    "drug_type": "",
-    "is_verified": false,
-    "indications": [
-      "EGFR突变阳性晚期NSCLC"
-    ],
-    "mechanisms": [
-      "EGFR酪氨酸激酶抑制剂"
-    ],
-    "ingredients": [],
-    "registrations": [
-      {
-        "approval_number": "国药准字H20110027",
-        "status": "有效",
-        "registration_date": "2011-06",
-        "holder": "",
-        "leaflet_pdf_url": "",
-        "leaflet_date": ""
-      }
-    ],
-    "insurance": [
-      {
-        "category": "乙类",
-        "insurance_code": "160",
-        "payment_scope": "限：1.表皮生长因子受体(EGFR)基因 具有敏感突变的局部晚期或转移性非 小细胞肺癌(NSCLC)患者的一线治疗； 2.既往接受过至少一个化疗方案失败 后的局部晚期或转移性非小细胞肺癌 (NSCLC)；3.Ⅱ-ⅢA期伴有表皮生长因 子受体(EGFR)基因敏感突变非小细胞 肺癌(NSCLC)术后辅助治疗。",
-        "price": "*",
-        "effective_date": "2026-01-01",
-        "expire_date": "2027-12-31",
-        "is_current": 1,
-        "catalog": "国家医保药品目录（2025年）"
-      },
-      {
-        "category": "集采",
-        "insurance_code": "",
-        "payment_scope": "",
-        "price": "155",
-        "effective_date": "",
-        "expire_date": "",
-        "is_current": 1,
-        "catalog": "人工补充记录（2025版）"
-      }
-    ],
-    "package_insert_url": "",
-    "leaflet_source_url": "",
-    "leaflet_date": "",
-    "cold_chain": "",
-    "route": "",
-    "extra_data": {
-      "area": "肿瘤",
-      "disease": "非小细胞肺癌",
-      "gen": "第1代EGFR-TKI(国产)",
-      "year": 2011,
-      "origin": "国产",
-      "excl": "否",
-      "cls": "化学药1类",
-      "cold": "常温",
-      "annual": 18600,
-      "insyear": 2019,
-      "dual": "否",
-      "vbp": "高(已集采)",
-      "gl": "CSCO推荐",
-      "route": "口服",
-      "sales": 12,
-      "prob": 0.99,
-      "prov": "湖南",
-      "patent": "2023-05-12",
-      "followers": 8,
-      "nt": "—",
-      "note": "国产首个EGFR-TKI，专利已到期"
     },
     "updated_at": "2026-08-25 07:49:46"
   },
