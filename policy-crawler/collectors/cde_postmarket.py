@@ -153,6 +153,76 @@ def decide_acceptance(product, records):
     return [], "company_no_match"
 
 
+def write_live_stats(path, stats):
+    """Atomically persist a small progress/QC snapshot for mid-run checks."""
+    try:
+        with open(path + ".tmp", "w", encoding="utf-8") as fh:
+            json.dump(stats, fh, ensure_ascii=False, indent=1)
+        os.replace(path + ".tmp", path)
+    except Exception as exc:
+        log.warning("live stats write failed: %s", exc)
+
+
+def qc_imported_leaflet(db, rec, payload):
+    """Verify one imported leaflet row: linkage + content completeness."""
+    issues = []
+    row = db.execute(
+        """SELECT l.pdf_url, l.source_url, l.indications, l.cold_chain,
+                  l.raw_text, p.product_id, p.package_insert_url
+           FROM drug_leaflet l
+           JOIN drug_product p ON p.product_id = l.product_id
+           WHERE l.approval_number=? AND l.catalog_rid=?""",
+        (payload["approval_number"], payload["catalog_rid"])).fetchone()
+    if not row:
+        return "fail", ["no db row"]
+    if not (row[0] or "").startswith("https://"):
+        issues.append("pdf_url")
+    if not (row[1] or "").startswith("https://"):
+        issues.append("source_url")
+    if not (row[2] or "").strip():
+        issues.append("indications_empty")
+    if not (row[3] or "").strip():
+        issues.append("cold_chain_empty")
+    if len(row[4] or "") < 300:
+        issues.append("raw_text_short")
+    if row[6] != row[0]:
+        issues.append("product_url_mismatch")
+    if not row[5]:
+        issues.append("no_product_id")
+    return ("pass" if not issues else "review", issues)
+
+
+def live_import_record(db_path, rec, parsed=None):
+    """Import one already-downloaded record and QC it; returns (stats, qc)."""
+    dest = rec.get("dest") or ""
+    parsed = parsed or (parse_leaflet_sections(dest) if dest else None)
+    if parsed is None or not parsed.get("ok"):
+        return {"live_import": "skip_no_pdf"}, {"status": "fail",
+                                               "issues": ["pdf_missing"]}
+    if not (parsed.get("text") or "").strip():
+        return {"live_import": "skip_needs_ocr"}, {"status": "fail",
+                                                   "issues": ["needs_ocr"]}
+    db = sqlite3.connect(db_path)
+    try:
+        from models import DRUG_SCHEMA
+        db.executescript(DRUG_SCHEMA)
+        from tools.import_cde_leaflets import import_one, leaflet_payload
+        payload = leaflet_payload(rec, parsed)
+        eff = import_one(db, payload)
+        db.commit()
+        status, issues = qc_imported_leaflet(db, rec, payload)
+        db.close()
+        return {"live_import": ",".join(eff["effects"]),
+                "qc": status, "qc_issues": issues}
+    except Exception as exc:
+        try:
+            db.close()
+        except Exception:
+            pass
+        return {"live_import": "error", "qc": "fail",
+                "qc_issues": [repr(exc)[:200]]}
+
+
 class CdePostmarketCollector:
     def __init__(self, out_dir, headless=True, delay=4.0):
         from playwright.sync_api import sync_playwright
@@ -260,10 +330,14 @@ class CdePostmarketCollector:
         time.sleep(self.delay + random.uniform(0, 1.0))
 
 
-def run_batch(targets, out_dir, delay=4.0, headless=True, results_path=None):
+def run_batch(targets, out_dir, delay=4.0, headless=True, results_path=None,
+              live_import=False, db_path=None, live_state_path=None):
     col = CdePostmarketCollector(out_dir, headless=headless, delay=delay)
     results = []
     rf = open(results_path, "a", encoding="utf-8") if results_path else None
+    stats = {"processed": 0, "ok": 0, "imported_ok": 0, "qc_pass": 0,
+             "qc_review": 0, "ambiguous": 0, "not_found": 0,
+             "no_leaflet": 0, "errors": 0}
     try:
         col.open_list()
         total = len(targets)
@@ -276,6 +350,7 @@ def run_batch(targets, out_dir, delay=4.0, headless=True, results_path=None):
                 if not records:
                     rec.update(status="not_found",
                                note="postmarket no record for name")
+                    stats["not_found"] += 1
                 else:
                     picks, how = decide_acceptance(tgt, records)
                     rec["accepts"] = records
@@ -283,6 +358,7 @@ def run_batch(targets, out_dir, delay=4.0, headless=True, results_path=None):
                     if not picks:
                         rec.update(status="ambiguous",
                                    note="no safe acceptance match")
+                        stats["ambiguous"] += 1
                     else:
                         # prefer newest createddate
                         picks.sort(key=lambda r: r.get("createddate") or "")
@@ -293,6 +369,7 @@ def run_batch(targets, out_dir, delay=4.0, headless=True, results_path=None):
                         if not leaf:
                             rec.update(status="no_leaflet",
                                        note="detail has no insert attachment")
+                            stats["no_leaflet"] += 1
                         else:
                             x = leaf[-1]
                             safe = re.sub(r"[\\/:*?\"<>|]", "_",
@@ -316,18 +393,35 @@ def run_batch(targets, out_dir, delay=4.0, headless=True, results_path=None):
                                 dest=dest, size=size,
                                 section_keys=list(parsed["sections"].keys()),
                                 parse_error=parsed.get("error"))
+                            stats["ok"] += 1
+                            if live_import and db_path:
+                                li = live_import_record(db_path, rec, parsed)
+                                rec.update({k: v for k, v in li.items()})
+                                if li.get("live_import", "").startswith(
+                                        "leaflet"):
+                                    stats["imported_ok"] += 1
+                                if li.get("qc") == "pass":
+                                    stats["qc_pass"] += 1
+                                else:
+                                    stats["qc_review"] += 1
             except Exception as exc:
                 log.exception("product %s failed", tgt.get("product_id"))
                 rec.update(status="error", error=repr(exc))
+                stats["errors"] += 1
             results.append(rec)
             if rf:
                 rf.write(json.dumps(rec, ensure_ascii=False) + "\n")
                 rf.flush()
             log.info("[%d/%d] product=%s name=%s status=%s", i, total,
                      tgt.get("product_id"), tgt.get("name"), rec.get("status"))
+            stats["processed"] += 1
+            if live_state_path and (i % 10 == 0 or rec.get("status") == "ok"):
+                write_live_stats(live_state_path, stats)
             if i < total:
                 col.polite_pause()
     finally:
+        if live_state_path:
+            write_live_stats(live_state_path, stats)
         if rf:
             rf.close()
         col.close()
@@ -341,13 +435,37 @@ def main():
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--delay", type=float, default=4.0)
     ap.add_argument("--results", default=None)
+    ap.add_argument("--live-import", action="store_true",
+                    help="import + QC each downloaded leaflet immediately")
+    ap.add_argument("--live-state", default=None,
+                    help="JSON file for realtime progress/QC stats")
     args = ap.parse_args()
     logging.basicConfig(level=logging.INFO,
                         format="%(asctime)s %(levelname)s %(message)s")
     targets = load_targets(args.db, limit=args.limit)
-    print("TARGETS", len(targets))
+    done = set()
+    if args.results and os.path.exists(args.results):
+        with open(args.results, "r", encoding="utf-8") as fh:
+            for line in fh:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    rec = json.loads(line)
+                except Exception:
+                    continue
+                if rec.get("status") in ("ok", "not_found", "ambiguous") and \
+                        rec.get("product_id"):
+                    done.add(rec["product_id"])
+    targets = [t for t in targets if t["product_id"] not in done]
+    print("TARGETS_REMAINING", len(targets))
     results = run_batch(targets, args.out, delay=args.delay,
-                        results_path=args.results)
+                        results_path=args.results,
+                        live_import=args.live_import,
+                        db_path=args.db,
+                        live_state_path=args.live_state
+                        or (args.results + ".live.json" if args.results
+                            else None))
     from collections import Counter
     st = Counter(r.get("status") for r in results)
     print("SUMMARY", json.dumps(st, ensure_ascii=False))
