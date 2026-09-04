@@ -29,6 +29,7 @@ if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
 
 from collectors.cde_leaflets import parse_leaflet_sections  # noqa: E402
+from normalize import norm_roman, to_half_width  # noqa: E402
 
 try:
     sys.stdout.reconfigure(encoding="utf-8")
@@ -87,6 +88,18 @@ def name_matches(product_name, drgnamecn):
     if not p or not d:
         return False
     return p in d or d in p
+
+
+def search_name_variants(name):
+    """Candidate search terms: original, normalized, without trailing roman."""
+    hw = norm_roman(to_half_width(name or ""))
+    core = re.sub(r"[（(][IⅠVⅣXⅩ1-9]{1,4}[）)]\s*$", "", hw or "")
+    core = core.strip()
+    out = []
+    for v in (name, hw, core):
+        if v and v not in out:
+            out.append(v)
+    return out
 
 
 def company_matches(company_a, company_b):
@@ -282,20 +295,23 @@ class CdePostmarketCollector:
           });
           return rows;
         }"""
-        before = self.page.evaluate(
-            "(document.getElementById('listDrugInfoTbody')||{innerText:''}).innerText")
-        self.page.fill("#drugname2", name)
-        self.page.evaluate("defaultObj.methods.getListDrugInfoList()")
-        deadline = time.time() + 25
-        rows = []
-        while time.time() < deadline:
-            now = self.page.evaluate(
-                "(document.getElementById('listDrugInfoTbody')||{innerText:''}).innerText")
-            if now != before:
+        for variant in search_name_variants(name):
+            # clear previous results first so an empty table = no match (fast)
+            self.page.evaluate("""() => {
+              const t = document.getElementById('listDrugInfoTbody');
+              if (t) t.innerHTML = '';
+              const p = document.getElementById('listDrugInfoPage');
+              if (p) p.innerHTML = '';
+            }""")
+            self.page.fill("#drugname2", variant)
+            self.page.evaluate("defaultObj.methods.getListDrugInfoList()")
+            deadline = time.time() + 5
+            while time.time() < deadline:
                 rows = self.page.evaluate(parse_js)
-                break
-            time.sleep(0.4)
-        return rows
+                if rows:
+                    return rows
+                time.sleep(0.25)
+        return []
 
     def open_detail(self, acceptcode):
         self.detail_page.goto(DETAIL_URL.format(acceptcode),
