@@ -271,7 +271,7 @@ class TestLeafletImportByProductId(unittest.TestCase):
     def test_import_via_product_id(self):
         db = self._db()
         payload = {
-            "approval_number": "国药准字H20230015",
+            "approval_number": "",
             "product_id": 10,
             "catalog_rid": "CXHS2300015",
             "pdf_url": "https://www.cde.org.cn/main/xxgk/PostMarketDownload"
@@ -293,8 +293,10 @@ class TestLeafletImportByProductId(unittest.TestCase):
         db.commit()
         self.assertIn("leaflet", eff["effects"])
         row = db.execute(
-            "SELECT catalog_rid, pdf_url FROM drug_leaflet").fetchone()
+            "SELECT catalog_rid, pdf_url, approval_number "
+            "FROM drug_leaflet").fetchone()
         self.assertEqual(row[0], "CXHS2300015")
+        self.assertEqual(row[2], "国药准字H20230015")
         self.assertIn("PostMarketDownload", row[1])
         db.close()
         os.unlink(self._tmp)

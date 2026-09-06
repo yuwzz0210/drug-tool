@@ -89,7 +89,7 @@ def import_one(db, payload, dry_run=False, now=None):
     now = now or datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     out = {"approval_number": payload["approval_number"], "effects": []}
     pzwh = payload["approval_number"]
-    if not pzwh or not payload["catalog_rid"]:
+    if not payload.get("catalog_rid"):
         out["effects"].append("skip:missing-key")
         return out
 
@@ -98,6 +98,9 @@ def import_one(db, payload, dry_run=False, now=None):
             "SELECT product_id, molecule_id FROM drug_product "
             "WHERE product_id=?", (payload["product_id"],)).fetchone()
     else:
+        if not pzwh:
+            out["effects"].append("skip:missing-key")
+            return out
         prod = db.execute(
             """SELECT p.product_id, p.molecule_id
                FROM drug_registration r
@@ -107,6 +110,23 @@ def import_one(db, payload, dry_run=False, now=None):
         out["effects"].append("unlinked:no-registration")
         return out
     product_id, molecule_id = prod
+    if not pzwh:
+        # product-linkage mode: fill the real approval number from the DB when
+        # the source record did not carry one; if the same acceptance maps to
+        # several unnumbered products, fall back to a stable per-product key
+        row = db.execute(
+            "SELECT approval_number FROM drug_registration "
+            "WHERE product_id=? AND approval_number != '' LIMIT 1",
+            (product_id,)).fetchone()
+        pzwh = row[0] if row else ""
+        if not pzwh:
+            clash = db.execute(
+                "SELECT product_id FROM drug_leaflet "
+                "WHERE approval_number='' AND catalog_rid=?",
+                (payload["catalog_rid"],)).fetchone()
+            if clash and clash[0] != product_id:
+                pzwh = "PM:%07d" % product_id
+        payload["approval_number"] = pzwh
 
     def run(sql, params):
         if not dry_run:
@@ -197,12 +217,17 @@ def import_one(db, payload, dry_run=False, now=None):
     return out
 
 
-def import_results(results_path, db_path, dry_run=False, limit=None):
+def import_results(results_path, db_path, dry_run=False, limit=None,
+                   only_missing=False):
     """Read collector JSONL and write all 'ok' records into the DB."""
     db = sqlite3.connect(db_path)
     db.execute("PRAGMA foreign_keys=ON")
     if not dry_run:
         db.executescript(DRUG_SCHEMA)
+    existing = set()
+    if only_missing:
+        existing = {r[0] for r in db.execute(
+            "SELECT DISTINCT product_id FROM drug_leaflet")}
     stats = {"ok_records": 0, "imported": 0, "unlinked": 0,
              "missing_pdf": 0, "needs_ocr": 0, "errors": 0}
     unlinked = []
@@ -218,6 +243,8 @@ def import_results(results_path, db_path, dry_run=False, limit=None):
         if rec.get("status") != "ok":
             continue
         stats["ok_records"] += 1
+        if only_missing and rec.get("product_id") in existing:
+            continue
         dest = rec.get("dest") or ""
         parsed = None
         if dest and os.path.exists(dest):
@@ -242,7 +269,9 @@ def import_results(results_path, db_path, dry_run=False, limit=None):
                 unlinked.append(rec.get("pzwh"))
             elif "leaflet" in eff["effects"]:
                 stats["imported"] += 1
-            log.info("%s -> %s", rec.get("pzwh"),
+            log.info("%s -> %s",
+                     rec.get("approval_number") or rec.get("pzwh")
+                     or rec.get("product_id"),
                      ",".join(eff["effects"]))
         except Exception as exc:
             stats["errors"] += 1
@@ -257,11 +286,14 @@ def main():
     ap.add_argument("--results", required=True)
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--limit", type=int, default=None)
+    ap.add_argument("--only-missing", action="store_true",
+                    help="import only ok records whose product has no leaflet yet")
     args = ap.parse_args()
     logging.basicConfig(level=logging.INFO,
                         format="%(asctime)s %(levelname)s %(message)s")
     stats, unlinked = import_results(args.results, args.db,
-                                     dry_run=args.dry_run, limit=args.limit)
+                                     dry_run=args.dry_run, limit=args.limit,
+                                     only_missing=args.only_missing)
     print("STATS", json.dumps(stats, ensure_ascii=False))
     if unlinked:
         print("UNLINKED_COUNT", len(unlinked))
