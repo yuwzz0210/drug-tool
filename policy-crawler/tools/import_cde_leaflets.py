@@ -140,6 +140,7 @@ def import_one(db, payload, dry_run=False, now=None):
             leaflet_date, sections_json, raw_text, fetched_at, updated_at)
         VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
         ON CONFLICT(approval_number, catalog_rid) DO UPDATE SET
+            product_id=excluded.product_id,
             pdf_url=excluded.pdf_url, source_url=excluded.source_url,
             filename=excluded.filename, route=excluded.route,
             storage=excluded.storage, cold_chain=excluded.cold_chain,
