@@ -51,9 +51,10 @@
 <div class="step"><span class="badge done">已完成</span><b>步骤 2 · 分子层重跑医保匹配</b>
   <span class="muted">✅ 2026-09-03 落地：清洗规则补罗马尾部/盐离子/剂型修饰词/注射用；医保覆盖 74→1141 个品种（94.9%）；110 测试全绿</span></div>
 
-<div class="step"><span class="badge done">已完成</span><b>步骤 3 · CDE 说明书采集器（第一通道）</b>
-  <span class="muted">✅ 2026-09-04 落地：881 个批准文号全量回填完成 → 34 份官方说明书 PDF 入库（drug_leaflet 34 条、product 说明书链接 34 个、适应症 30 条、机制 86 条、快照 drugs.json 已带 package_insert_url/leaflet_date/冷链）。118 测试全绿。<br>
-  ⚠️ 覆盖口径：目录集仅对"通过一致性评价"品种附说明书（34/34 均为此类）；按新注册分类仿制药 556 + 目录未收录 239 + 无附件 12 需下一通道（CDE 上市药品信息/受理号）补齐，清单见 logs/cde_coverage_report.txt。</span></div>
+<div class="step"><span class="badge done">已完成</span><b>步骤 3 · CDE 说明书采集器（两通道合计 496/1206 品种）</b>
+  <span class="muted">✅ 第一通道（化学药品目录集）34 份 + 第二通道（上市药品信息/受理号）462 份，合计 496 个品种带官方说明书 PDF；入库 drug_leaflet 496 条、适应症/机制/冷链字段已回填、逐条质检通过；快照 drugs.json 带 package_insert_url/leaflet_date/冷链/文号级链接。<br>
+  ✅ 数据层修复：drug_leaflet 唯一键改为 (product_id, catalog_rid)，approval_number 仅存真实文号（曾用 PM: 合成键的 139 条已清理，迁移脚本 tools/migrate_leaflet_key.py）。125+ 测试全绿。<br>
+  ⚠️ 剩余缺口：去重后 60 个唯一药名不在两通道收录窗口（多为 2019 前老药，待第三通道）；14 组歧义药名待人工/半自动确认（清单 logs/cde_pm_ambiguous_review.txt）。</span></div>
 
 <div class="step"><span class="badge todo">待做</span><b>步骤 4 · CDE 过评名单采集器</b>
   <span class="muted">过评企业数 → 集采风险自动推导（高/中/低）</span></div>

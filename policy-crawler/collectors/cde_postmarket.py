@@ -472,7 +472,7 @@ def run_batch(targets, out_dir, delay=4.0, headless=True, results_path=None,
     rf = open(results_path, "a", encoding="utf-8") if results_path else None
     stats = {"processed": 0, "ok": 0, "imported_ok": 0, "qc_pass": 0,
              "qc_review": 0, "ambiguous": 0, "not_found": 0,
-             "no_leaflet": 0, "errors": 0}
+             "no_leaflet": 0, "errors": 0, "skipped_import": 0}
 
     def commit_ok(rec, a, x, dest, parsed):
         size = os.path.getsize(dest) if os.path.exists(dest) else 0
@@ -495,10 +495,14 @@ def run_batch(targets, out_dir, delay=4.0, headless=True, results_path=None,
             rec.update({k: v for k, v in li.items()})
             if li.get("live_import", "").startswith("leaflet"):
                 stats["imported_ok"] += 1
-            if li.get("qc") == "pass":
-                stats["qc_pass"] += 1
+                if li.get("qc") == "pass":
+                    stats["qc_pass"] += 1
+                else:
+                    stats["qc_review"] += 1
+            elif li.get("live_import") == "error":
+                stats["errors"] += 1
             else:
-                stats["qc_review"] += 1
+                stats["skipped_import"] += 1
 
     def handle_acceptance(rec, tgt, a):
         anchors = col.open_detail(a.get("acceptidCODE") or "")
