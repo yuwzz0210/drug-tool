@@ -112,20 +112,13 @@ def import_one(db, payload, dry_run=False, now=None):
     product_id, molecule_id = prod
     if not pzwh:
         # product-linkage mode: fill the real approval number from the DB when
-        # the source record did not carry one; if the same acceptance maps to
-        # several unnumbered products, fall back to a stable per-product key
+        # the source record did not carry one (may stay '' if none exists;
+        # uniqueness is handled by product_id + catalog_rid)
         row = db.execute(
             "SELECT approval_number FROM drug_registration "
             "WHERE product_id=? AND approval_number != '' LIMIT 1",
             (product_id,)).fetchone()
         pzwh = row[0] if row else ""
-        if not pzwh:
-            clash = db.execute(
-                "SELECT product_id FROM drug_leaflet "
-                "WHERE approval_number='' AND catalog_rid=?",
-                (payload["catalog_rid"],)).fetchone()
-            if clash and clash[0] != product_id:
-                pzwh = "PM:%07d" % product_id
         payload["approval_number"] = pzwh
 
     def run(sql, params):
@@ -139,7 +132,7 @@ def import_one(db, payload, dry_run=False, now=None):
             filename, route, storage, cold_chain, usage_dosage, indications,
             leaflet_date, sections_json, raw_text, fetched_at, updated_at)
         VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
-        ON CONFLICT(approval_number, catalog_rid) DO UPDATE SET
+        ON CONFLICT(product_id, catalog_rid) DO UPDATE SET
             product_id=excluded.product_id,
             pdf_url=excluded.pdf_url, source_url=excluded.source_url,
             filename=excluded.filename, route=excluded.route,

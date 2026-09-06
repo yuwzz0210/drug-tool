@@ -469,7 +469,7 @@ CREATE TABLE IF NOT EXISTS drug_leaflet (
     raw_text TEXT DEFAULT '',
     fetched_at TEXT DEFAULT (datetime('now','localtime')),
     updated_at TEXT DEFAULT (datetime('now','localtime')),
-    UNIQUE (approval_number, catalog_rid)
+    UNIQUE (product_id, catalog_rid)
 );
 """
 
@@ -683,6 +683,6 @@ CREATE TABLE IF NOT EXISTS drug_leaflet (
     raw_text TEXT DEFAULT '',
     fetched_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW(),
-    UNIQUE (approval_number, catalog_rid)
+    UNIQUE (product_id, catalog_rid)
 );
 """

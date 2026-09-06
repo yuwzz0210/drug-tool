@@ -113,3 +113,7 @@ extra_indications（拓展适应症）、reviewed_at（核查时间）。
 | fetched_at / updated_at | 采集/更新时间 |
 
 来源：CDE 化学药品目录集（主动公开）；采集器 collectors/cde_leaflets.py，入库 tools/import_cde_leaflets.py。口径：目录集主要收录过评/参比制剂类药品，原研/进口/生物制品缺口由后续"上市药品信息（受理号）"通道补齐。
+
+> 2026-09-06 修订：第二通道（上市药品信息）已上线，drug_leaflet 唯一键为
+> `(product_id, catalog_rid)`；`approval_number` 仅存真实国药准字/注册证号，
+> 无文号记录留空（不再使用 PM: 合成键）。迁移脚本：tools/migrate_leaflet_key.py。
