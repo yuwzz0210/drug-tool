@@ -1,5 +1,133 @@
 [
   {
+    "product_id": 559,
+    "generic_name": "利拉鲁肽注射液",
+    "trade_name": "利鲁平",
+    "dosage_form": "注射剂",
+    "specification": "3ml:18mg（笔芯）",
+    "manufacturer": "杭州九源基因生物医药股份有限公司",
+    "atc_code": "",
+    "drug_type": "生物制品",
+    "is_verified": false,
+    "indications": [
+      "本品适用于成人2型糖尿病患者控制血糖：\n适用于单用二甲双胍或磺脲类药物最大可耐受剂量治疗后血糖仍控制不佳的患者，与\n二甲双胍或磺脲类药物联合应用。\n适用于降低伴有心血管疾病的2型糖尿病成人患者的主要心血管不良事件（心血管死亡、\n非致死性心肌梗死或非致死性卒中）风险。"
+    ],
+    "mechanisms": [
+      "药理作用\n利拉鲁肽是一种酰化人胰高糖素样肽-1（GLP-1）受体激动剂，其97％的氨基酸序\n列与内源性人 GLP-1（7-37）同源。GLP-1（7-37）占血液中所有内源性 GLP-1 的 20%\n以下。与 GLP-1（7-37）相似，利拉鲁肽可活化 GLP-1 受体，GLP-1 受体是一类膜结合\n细胞表面受体，在胰腺β细胞中通过刺激性 G 蛋白 Gs，与腺苷酸环化酶偶联。当葡萄\n糖浓度升高时，利拉鲁肽可以增加细胞内环磷腺苷（cAMP），从而导致胰岛素释放。当\n血糖浓度下降并趋于正常时，胰岛素分泌减少。利拉鲁肽还可以葡萄糖依赖性地减少\n胰高糖素分泌。血糖水平降低的机制还涉及胃排空延迟。\n毒理研究\n遗传毒性\n利拉鲁肽 Ames 试验、人外周血淋巴细胞染色体畸变试验、大鼠微核试验结果均为\n阴性。\n生殖毒性\n雄性大鼠在交配前4周和交配期间，皮下注射利拉鲁肽0.1、0.25和1.0 mg/kg/d，\n在1.0 mg/kg/d 剂量下，雄性动物生育力未受到直接的不良影响，根据血浆AUC计算，\n该剂量产生的全身暴露约为最大推荐人用剂量（MRHD）下人暴露的11倍。\n第18页/共 23页\n雌性大鼠交配前2周至妊娠第17天，皮下注射利拉鲁肽0.1、0.25和1.0 mg/kg/d，\n根据血浆 AUC 计算，3 个剂量产生的全身暴露约分别为 MRHD 下人暴露的 0.8、3 和 11\n倍。在 1 mg/kg/d 剂量组中，早期胚胎死亡数略有增加。所有剂量下均可见胎仔异常\n以及肾脏和血管变异、颅骨不规则骨化和骨化过度完全状态。在 1.0 mg/kg/d 剂量下\n可见花斑状肝脏和轻微的肋骨扭结。发生率超过同期和历史对照的胎仔畸形为：0.1\nmg/kg/d剂量下口咽部畸形和/或喉开口处狭窄，0.1和0.25 mg/kg/d剂量下脐疝。\n兔妊娠第6天至第18天，皮下注射利拉鲁肽0.01、0.025和0.05 mg/kg/d，根据\n血浆 AUC 计算，妊娠兔的全身暴露小于 MRHD 时的人暴露。在所有剂量下，胎仔体重降\n低，严重胎仔异常的总发生率呈剂量依赖性增加。在0.01 mg/kg/d（肾脏、肩胛骨）、\n≥0.01 mg/kg/d（眼、前肢）、0.025 mg/kg/d（脑、尾和骶椎、大血管和心脏、脐）、\n≥0.025 mg/kg/d（胸骨）和 0.05 mg/kg/d（顶骨、大血管）剂量下，畸形的发生率超\n过同期和历史对照。不规则骨化和/或骨骼异常见于颅骨和颌骨、椎骨和肋骨、胸骨、\n骨盆、尾骨和肩胛骨；还可见剂量依赖性轻微骨骼变异。内脏异常见于血管、肺、肝\n脏和食管。所有给药组可见胆囊双叶或分叉，但对照组未见类似情况。\n雌性大鼠在妊娠第 6 天至断乳或第 24 天终止哺乳期间，皮下注射利拉鲁肽 0.1、\n0.25和1.0 mg/kg/d，根据血浆AUC计算，全身暴露约分别为MRHD时人暴露的0.8、3\n和 11 倍。大多数给药组动物分娩期轻微延迟。给药组新生幼仔的组平均体重小于对照\n组。1.0 mg/kg/d 剂量组分娩的雌性大鼠出现血痂和激动行为。给药组 F2 子代大鼠出\n生至出生后第14天的平均体重低于对照组，但各组差异均未达到统计学意义。\n致癌性\nCD-1 小鼠 104 周致癌性试验中，皮下注射给予利拉鲁肽 0.03、0.2、1.0 和 3.0\nmg/kg/d，根据血浆AUC计算，全身暴露量分别为MRHD时人暴露量的 0.2、2、10和45\n倍。1.0 和 3.0 mg/kg/d 剂量组可见良性甲状腺 C 细胞腺瘤，发生率呈剂量依赖性增\n加，雄性小鼠发生率分别为 13%和 19%，雌性小鼠分别为 6%和 20%。对照组或 0.03 和\n0.2 mg/kg/d剂量组未见上述C细胞腺瘤。3.0 mg/kg/d剂量组3%的雌性动物出现给药\n相关的恶性C细胞癌。在小鼠致癌性试验中甲状腺C细胞肿瘤为罕见。3.0 mg/kg/d剂\n量组雄性动物给药部位皮肤和皮下组织出现给药相关的纤维肉瘤发生率增加。这些纤\n维肉瘤为注射部位药物局部浓度过高所致；临床使用的制剂中利拉鲁肽浓度（6 mg/mL）\n为上述3.0 mg/kg/d剂量组给药所用制剂浓度（0.6 mg/mL）的10倍。\nSD大鼠104周致癌性试验中，皮下注射给药利拉鲁肽0.075、0.25和0.75 mg/kg/d，\n根据血浆AUC计算，全身暴露量分别为MRHD时人暴露量的0.5、2和8倍。雄性大鼠给\n予利拉鲁肽0.25和0.75 mg/kg/d，良性甲状腺C细胞腺瘤发生率增加，与给药相关；\n第19页/共 23页\n各组雄性动物发生率分别为12%、16%、42%和46%。雌性动物发生率分别为10%、27%、\n33%和 56%。利拉鲁肽各给药组雄性动物中，可见恶性甲状腺 C 细胞癌发生率增加，各\n组发生率分别为 2%、8%、6%和14%；0.25和0.75 mg/kg/d剂量组雌性动物也可见发生\n率增加，分别为4%和6%。在大鼠致癌性试验中甲状腺C细胞癌为罕见。\n小鼠试验结果显示，利拉鲁肽引起的C细胞增生依赖于GLP-1受体，未激活甲状腺\nC细胞的原癌基因转染重排（RET）。\n小鼠和大鼠中甲状腺 C 细胞肿瘤与人类的相关性尚未明确，尚无法通过临床研究\n或非临床研究确定。"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字S20233110",
+        "status": "有效",
+        "registration_date": "2023-06-30",
+        "holder": "",
+        "leaflet_pdf_url": "https://www.cde.org.cn/main/xxgk/PostMarketDownload?attidCODE=997c8f3345507749b5e463334d52f385&tableid=CXSS2101025",
+        "leaflet_date": ""
+      }
+    ],
+    "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "168",
+        "payment_scope": "限2型糖尿病。",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      }
+    ],
+    "package_insert_url": "https://www.cde.org.cn/main/xxgk/PostMarketDownload?attidCODE=997c8f3345507749b5e463334d52f385&tableid=CXSS2101025",
+    "leaflet_source_url": "https://www.cde.org.cn/main/xxgk/postmarketpage?acceptidCODE=7162140387ef67cebc26bb38334ff904",
+    "leaflet_date": "",
+    "cold_chain": "冷冻",
+    "route": "",
+    "extra_data": {},
+    "updated_at": "2026-09-06 22:27:22"
+  },
+  {
+    "product_id": 27,
+    "generic_name": "托珠单抗",
+    "trade_name": "雅美罗",
+    "dosage_form": "注射液",
+    "specification": "400mg",
+    "manufacturer": "罗氏",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "RA中重度活动性",
+      "全身型JIA",
+      "类风湿关节炎（RA）\n皮下给药：本品用于治疗对改善病情的抗风湿药物（DMARDs）治疗应答不足的中到\n重度活动性类风湿关节炎的成年患者。托珠单抗与甲氨蝶呤（MTX）或其它 DMARDs 联\n用。"
+    ],
+    "mechanisms": [
+      "IL-6受体单抗",
+      "药理作用\n托珠单抗是免疫球蛋白 IgG1 亚型的重组人源化抗人白介素 6（IL-6）受体单克隆抗体。\n托珠单抗结合可溶性及膜结合的IL-6受体（sIL-6R和mIL-6R），并抑制sIL-6R和mIL-6R\n介导的信号传导。IL-6 是一个多功能促炎性细胞因子，由 T 细胞、B 细胞、淋巴细胞、单\n核细胞及成纤维细胞等多种类型的细胞产生，IL-6 参与多种生理过程，如激活 T 细胞、诱\n导分泌免疫球蛋白、启动肝脏急性期蛋白合成，以及刺激造血前体细胞的增殖及分化。\n毒理研究\n重复给药毒性\n食蟹猴连续4周，每天1次静脉注射托珠单抗50mg/kg，或者连续6个月，每周1次静\n脉注射 100mg/kg，临床病理学或组织病理学结果未见明显异常。食蟹猴体内托珠单抗的稳\n态暴露量约为临床试验中人体最大暴露量的8~10倍。\n遗传毒性\n托珠单抗在体外Ames试验、人外周血淋巴细胞染色体畸变试验中均为阴性。\n生殖毒性\n17\n小鼠每3天1次静脉注射托珠单抗鼠源类似物50mg/kg，对雄性和雌性小鼠的生育力及\n生殖能力未见明显影响。在小鼠产前及产后发育研究中，妊娠小鼠于妊娠第 6 天至产后 21\n天离乳期，每3天1次静脉注射托珠单抗鼠源类似物50mg/kg，对子代发育、行为、学习能\n力、免疫功能及生育力未见明显影响。已发现鼠源性托珠单抗类似物可转移到泌乳小鼠的\n乳汁中。\n在食蟹猴胚胎-胎仔发育研究中，妊娠食蟹猴于器官形成期（GD20~50）静脉注射托珠\n单抗 2、10、50mg/kg/d，未产生致畸作用，但在 10、50mg/kg/d 剂量下（相当于最大人体\n推荐剂量每2~4周8mg/kg的1.25倍或更高），可见流产/胚胎-胎仔死亡率升高。\n致癌性\n尚未在动物中开展托珠单抗的长期致癌性研究。"
+    ],
+    "ingredients": [],
+    "registrations": [
+      {
+        "approval_number": "国药准字S20130006",
+        "status": "有效",
+        "registration_date": "2013-03",
+        "holder": "",
+        "leaflet_pdf_url": "https://www.cde.org.cn/main/xxgk/PostMarketDownload?attidCODE=296ba80dc6f07d0c88a50983a322c2a4&tableid=JXSS2000026",
+        "leaflet_date": ""
+      }
+    ],
+    "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "980",
+        "payment_scope": "限：1.全身型幼年特发性关节炎的二线治疗；2.限诊断明确 的类风湿关节炎经传统DMARDs治疗3-6个月疾病活动度下降低 于50%者。",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
+        "category": "已进医保",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "1800",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "人工补充记录（2025版）"
+      }
+    ],
+    "package_insert_url": "https://www.cde.org.cn/main/xxgk/PostMarketDownload?attidCODE=296ba80dc6f07d0c88a50983a322c2a4&tableid=JXSS2000026",
+    "leaflet_source_url": "https://www.cde.org.cn/main/xxgk/postmarketpage?acceptidCODE=fd5202110b382284274ade7c671bfc5b",
+    "leaflet_date": "",
+    "cold_chain": "冷冻",
+    "route": "",
+    "extra_data": {
+      "area": "自免疫",
+      "disease": "类风湿关节炎",
+      "gen": "第1代生物制剂(IL-6R)",
+      "year": 2013,
+      "origin": "进口",
+      "excl": "否",
+      "cls": "治疗用生物制品",
+      "cold": "2-8℃冷藏",
+      "annual": 64800,
+      "insyear": 2019,
+      "dual": "是",
+      "vbp": "中",
+      "gl": "指南推荐",
+      "route": "注射",
+      "prob": 0.92,
+      "prov": "湖南",
+      "patent": "2028-05-10",
+      "followers": 6,
+      "nt": "—",
+      "note": "经典IL-6R单抗"
+    },
+    "updated_at": "2026-09-06 22:16:43"
+  },
+  {
     "product_id": 26,
     "generic_name": "甲氨蝶呤",
     "trade_name": "—",
@@ -41012,49 +41140,6 @@
     "updated_at": "2026-08-28 07:53:45"
   },
   {
-    "product_id": 559,
-    "generic_name": "利拉鲁肽注射液",
-    "trade_name": "利鲁平",
-    "dosage_form": "注射剂",
-    "specification": "3ml:18mg（笔芯）",
-    "manufacturer": "杭州九源基因生物医药股份有限公司",
-    "atc_code": "",
-    "drug_type": "生物制品",
-    "is_verified": false,
-    "indications": [],
-    "mechanisms": [],
-    "ingredients": [],
-    "registrations": [
-      {
-        "approval_number": "国药准字S20233110",
-        "status": "有效",
-        "registration_date": "2023-06-30",
-        "holder": "",
-        "leaflet_pdf_url": "",
-        "leaflet_date": ""
-      }
-    ],
-    "insurance": [
-      {
-        "category": "乙类",
-        "insurance_code": "168",
-        "payment_scope": "限2型糖尿病。",
-        "price": "",
-        "effective_date": "",
-        "expire_date": "",
-        "is_current": 1,
-        "catalog": "国家医保药品目录（2025年）"
-      }
-    ],
-    "package_insert_url": "",
-    "leaflet_source_url": "",
-    "leaflet_date": "",
-    "cold_chain": "",
-    "route": "",
-    "extra_data": {},
-    "updated_at": "2026-08-28 07:53:45"
-  },
-  {
     "product_id": 558,
     "generic_name": "瑞拉芙普α注射液",
     "trade_name": "艾泽利",
@@ -56465,85 +56550,6 @@
       "followers": 2,
       "nt": "—",
       "note": "IL-23抑制剂，给药频率更低"
-    },
-    "updated_at": "2026-08-25 07:49:46"
-  },
-  {
-    "product_id": 27,
-    "generic_name": "托珠单抗",
-    "trade_name": "雅美罗",
-    "dosage_form": "注射液",
-    "specification": "400mg",
-    "manufacturer": "罗氏",
-    "atc_code": "",
-    "drug_type": "",
-    "is_verified": false,
-    "indications": [
-      "RA中重度活动性",
-      "全身型JIA"
-    ],
-    "mechanisms": [
-      "IL-6受体单抗"
-    ],
-    "ingredients": [],
-    "registrations": [
-      {
-        "approval_number": "国药准字S20130006",
-        "status": "有效",
-        "registration_date": "2013-03",
-        "holder": "",
-        "leaflet_pdf_url": "",
-        "leaflet_date": ""
-      }
-    ],
-    "insurance": [
-      {
-        "category": "乙类",
-        "insurance_code": "980",
-        "payment_scope": "限：1.全身型幼年特发性关节炎的二线治疗；2.限诊断明确 的类风湿关节炎经传统DMARDs治疗3-6个月疾病活动度下降低 于50%者。",
-        "price": "",
-        "effective_date": "",
-        "expire_date": "",
-        "is_current": 1,
-        "catalog": "国家医保药品目录（2025年）"
-      },
-      {
-        "category": "已进医保",
-        "insurance_code": "",
-        "payment_scope": "",
-        "price": "1800",
-        "effective_date": "",
-        "expire_date": "",
-        "is_current": 1,
-        "catalog": "人工补充记录（2025版）"
-      }
-    ],
-    "package_insert_url": "",
-    "leaflet_source_url": "",
-    "leaflet_date": "",
-    "cold_chain": "",
-    "route": "",
-    "extra_data": {
-      "area": "自免疫",
-      "disease": "类风湿关节炎",
-      "gen": "第1代生物制剂(IL-6R)",
-      "year": 2013,
-      "origin": "进口",
-      "excl": "否",
-      "cls": "治疗用生物制品",
-      "cold": "2-8℃冷藏",
-      "annual": 64800,
-      "insyear": 2019,
-      "dual": "是",
-      "vbp": "中",
-      "gl": "指南推荐",
-      "route": "注射",
-      "prob": 0.92,
-      "prov": "湖南",
-      "patent": "2028-05-10",
-      "followers": 6,
-      "nt": "—",
-      "note": "经典IL-6R单抗"
     },
     "updated_at": "2026-08-25 07:49:46"
   },

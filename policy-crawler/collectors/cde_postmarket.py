@@ -29,7 +29,12 @@ if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
 
 from collectors.cde_leaflets import parse_leaflet_sections  # noqa: E402
-from normalize import norm_roman, to_half_width  # noqa: E402
+from normalize import (  # noqa: E402
+    norm_roman,
+    strip_dosage_form,
+    strip_salt,
+    to_half_width,
+)
 
 try:
     sys.stdout.reconfigure(encoding="utf-8")
@@ -104,6 +109,19 @@ def search_name_variants(name):
         if v and v not in out:
             out.append(v)
     return out
+
+
+def drug_core(name):
+    """Normalized molecule/drug core (salt & dosage form stripped)."""
+    core = norm_roman(to_half_width(name or ""))
+    core = re.sub(r"[（(][IⅠVⅣXⅩ1-9]{1,4}[）)]\s*$", "", core)
+    return strip_salt(strip_dosage_form(core)).strip()
+
+
+def candidate_matches(product, drgnamecn):
+    """Candidate belongs to the same product core (no combo/other drug)."""
+    a, b = drug_core(product.get("name") or ""), drug_core(drgnamecn or "")
+    return bool(a) and a == b
 
 
 def extract_approval_codes(text):
@@ -438,12 +456,45 @@ class CdePostmarketCollector:
 def try_resolve_ambiguous(col, product, records, out_dir):
     """Multi-owner records: download each owner's newest insert and lock the
     match by the 【批准文号】/【商品名称】 printed inside the PDF itself."""
-    groups = group_by_owner(records)
-    reps = []
+    matched = [r for r in records
+               if candidate_matches(product, r.get("drgnamecn"))]
+    if not matched:
+        return None
+    # no key in our DB to lock against -> downloads cannot resolve it
+    if not (product.get("approval_numbers")
+            or (product.get("trade_name") or "").strip()
+            or (product.get("holder") or "").strip()
+            or (product.get("manufacturer") or "").strip()):
+        return None
+    groups = group_by_owner(matched)
+    our_tokens = company_token_set(
+        product.get("holder") or product.get("manufacturer") or "")
     for g in groups:
         g.sort(key=lambda r: r.get("createddate") or "")
-        reps.append(g[-1])
-    for a in reps[:6]:
+    # owner groups matching our company first; newest acceptance within each
+    ranked = []
+    for g in groups:
+        rank = 0 if (our_tokens and token_sets_overlap(
+            company_token_set(g[0].get("companys", "")), our_tokens)) else 1
+        ranked.append((rank, g[-1].get("createddate") or "", g))
+    ranked.sort(key=lambda t: t[0])
+    groups0 = [t[2] for t in ranked if t[0] == 0]
+    groups1 = [t[2] for t in ranked if t[0] == 1]
+    groups0.sort(key=lambda g: g[-1].get("createddate") or "", reverse=True)
+    groups1.sort(key=lambda g: g[-1].get("createddate") or "", reverse=True)
+    reps = []
+    seen = set()
+    for g in (groups0 + groups1):
+        for r in reversed(g):  # newest first inside each owner group
+            key = (r.get("acceptid") or r.get("acceptidCODE"))
+            if key and key not in seen:
+                seen.add(key)
+                reps.append(r)
+            if len(reps) >= 12:
+                break
+        if len(reps) >= 12:
+            break
+    for a in reps:
         try:
             anchors = col.open_detail(a.get("acceptidCODE") or "")
             leaf = [x for x in anchors
