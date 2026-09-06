@@ -1,5 +1,76 @@
 [
   {
+    "product_id": 26,
+    "generic_name": "甲氨蝶呤",
+    "trade_name": "—",
+    "dosage_form": "片剂",
+    "specification": "2.5mg",
+    "manufacturer": "多家",
+    "atc_code": "",
+    "drug_type": "",
+    "is_verified": false,
+    "indications": [
+      "类风湿关节炎一线",
+      "用于治疗：\n（1）对其他治疗方法（光疗法、PUVA和维A酸）无充分治疗反应的成人\n严重、顽固、致残性银屑病。\n（2）成人活动性类风湿关节炎。"
+    ],
+    "mechanisms": [
+      "二氢叶酸还原酶抑制剂",
+      "药理作用\n甲氨蝶呤的主要作用机理是竞争性抑制叶酸还原酶。在DNA合成和细胞复\n制的过程中叶酸必须被此酶还原成四氢叶酸。甲氨蝶呤抑制叶酸的还原，并且干\n扰了组织细胞的复制。甲氨蝶呤是一种细胞周期特异性药物，它主要作用于DNA\n合成期的细胞。增殖活跃的组织如恶性肿瘤细胞、骨髓、胚胎细胞、皮肤上皮细\n胞、口腔和肠粘膜以及膀胱细胞通常对甲氨蝶呤作用更敏感。银屑病时皮肤上皮\n细胞的增殖能力远强于正常皮肤。增殖率的差别正是使用甲氨蝶呤来控制银屑病\n进展的基础。\n毒理研究\n遗传毒性：体外，甲氨蝶呤引起中国仓鼠A(T1) C1-3细胞的染色体畸变，诱\n导小鼠C3H/10T1/2克隆8细胞的形态改变以及与小鼠淋巴瘤细胞L5178Y/tk±的tk\n基因突变率的增加有关。在体内，甲氨蝶呤引起小鼠体内多染性红细胞比率增加\n第 17 页/共 20 页\n以及人类骨髓细胞中染色体畸变数暂时的、可逆性的升高。这些发现的临床意义\n尚未明确。\n生殖毒性：甲氨蝶呤可引起人类胚胎毒性、流产和胎儿畸形。也有报道在用\n药期间和停药后短时间内甲氨蝶呤会引起人类生育能力的损伤、少精液症和月经\n失调。\n致癌性：没有关于甲氨蝶呤致癌风险的人类数据。一些评估甲氨蝶呤潜在致\n癌性的动物研究目前尚无确定性结果。在甲氨蝶呤单独或与其他药物联合使用前，\n尤其是用于儿童和青年人，应该权衡获益与潜在风险。"
+    ],
+    "ingredients": [],
+    "registrations": [],
+    "insurance": [
+      {
+        "category": "甲类",
+        "insurance_code": "850",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家医保药品目录（2025年）"
+      },
+      {
+        "category": "集采",
+        "insurance_code": "",
+        "payment_scope": "",
+        "price": "0.5",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "人工补充记录（2025版）"
+      }
+    ],
+    "package_insert_url": "https://www.cde.org.cn/main/xxgk/PostMarketDownload?attidCODE=c1a553627d00b7202ea3df07f3409a42&tableid=JXHS2300119",
+    "leaflet_source_url": "https://www.cde.org.cn/main/xxgk/postmarketpage?acceptidCODE=1190ce6fb0d19bac7f8775973b887ae9",
+    "leaflet_date": "2023-03-24",
+    "cold_chain": "常温",
+    "route": "",
+    "extra_data": {
+      "area": "自免疫",
+      "disease": "类风湿关节炎",
+      "gen": "基础用药(DMARD)",
+      "year": 1999,
+      "origin": "国产",
+      "excl": "否",
+      "cls": "化学药",
+      "cold": "常温",
+      "annual": 182,
+      "insyear": 2020,
+      "dual": "否",
+      "vbp": "高(已集采)",
+      "gl": "指南金标准",
+      "route": "口服",
+      "prob": 0.99,
+      "prov": "湖南",
+      "patent": "已过期",
+      "followers": 100,
+      "nt": "—",
+      "note": "RA基础用药"
+    },
+    "updated_at": "2026-09-06 22:02:34"
+  },
+  {
     "product_id": 1206,
     "generic_name": "枸橼酸托法替布缓释片",
     "trade_name": "",
@@ -19697,77 +19768,6 @@
       "note": "JAK抑制剂"
     },
     "updated_at": "2026-09-06 19:03:08"
-  },
-  {
-    "product_id": 26,
-    "generic_name": "甲氨蝶呤",
-    "trade_name": "—",
-    "dosage_form": "片剂",
-    "specification": "2.5mg",
-    "manufacturer": "多家",
-    "atc_code": "",
-    "drug_type": "",
-    "is_verified": false,
-    "indications": [
-      "类风湿关节炎一线",
-      "用于治疗：\n（1）对其他治疗方法（光疗法、PUVA和维A酸）无充分治疗反应的成人\n严重、顽固、致残性银屑病。\n（2）成人活动性类风湿关节炎。"
-    ],
-    "mechanisms": [
-      "二氢叶酸还原酶抑制剂",
-      "药理作用\n甲氨蝶呤的主要作用机理是竞争性抑制叶酸还原酶。在DNA合成和细胞复\n制的过程中叶酸必须被此酶还原成四氢叶酸。甲氨蝶呤抑制叶酸的还原，并且干\n扰了组织细胞的复制。甲氨蝶呤是一种细胞周期特异性药物，它主要作用于DNA\n合成期的细胞。增殖活跃的组织如恶性肿瘤细胞、骨髓、胚胎细胞、皮肤上皮细\n胞、口腔和肠粘膜以及膀胱细胞通常对甲氨蝶呤作用更敏感。银屑病时皮肤上皮\n细胞的增殖能力远强于正常皮肤。增殖率的差别正是使用甲氨蝶呤来控制银屑病\n进展的基础。\n毒理研究\n遗传毒性：体外，甲氨蝶呤引起中国仓鼠A(T1) C1-3细胞的染色体畸变，诱\n导小鼠C3H/10T1/2克隆8细胞的形态改变以及与小鼠淋巴瘤细胞L5178Y/tk±的tk\n基因突变率的增加有关。在体内，甲氨蝶呤引起小鼠体内多染性红细胞比率增加\n第 17 页/共 20 页\n以及人类骨髓细胞中染色体畸变数暂时的、可逆性的升高。这些发现的临床意义\n尚未明确。\n生殖毒性：甲氨蝶呤可引起人类胚胎毒性、流产和胎儿畸形。也有报道在用\n药期间和停药后短时间内甲氨蝶呤会引起人类生育能力的损伤、少精液症和月经\n失调。\n致癌性：没有关于甲氨蝶呤致癌风险的人类数据。一些评估甲氨蝶呤潜在致\n癌性的动物研究目前尚无确定性结果。在甲氨蝶呤单独或与其他药物联合使用前，\n尤其是用于儿童和青年人，应该权衡获益与潜在风险。"
-    ],
-    "ingredients": [],
-    "registrations": [],
-    "insurance": [
-      {
-        "category": "甲类",
-        "insurance_code": "850",
-        "payment_scope": "",
-        "price": "",
-        "effective_date": "",
-        "expire_date": "",
-        "is_current": 1,
-        "catalog": "国家医保药品目录（2025年）"
-      },
-      {
-        "category": "集采",
-        "insurance_code": "",
-        "payment_scope": "",
-        "price": "0.5",
-        "effective_date": "",
-        "expire_date": "",
-        "is_current": 1,
-        "catalog": "人工补充记录（2025版）"
-      }
-    ],
-    "package_insert_url": "https://www.cde.org.cn/main/xxgk/PostMarketDownload?attidCODE=c1a553627d00b7202ea3df07f3409a42&tableid=JXHS2300119",
-    "leaflet_source_url": "https://www.cde.org.cn/main/xxgk/postmarketpage?acceptidCODE=1190ce6fb0d19bac7f8775973b887ae9",
-    "leaflet_date": "2023-03-24",
-    "cold_chain": "常温",
-    "route": "",
-    "extra_data": {
-      "area": "自免疫",
-      "disease": "类风湿关节炎",
-      "gen": "基础用药(DMARD)",
-      "year": 1999,
-      "origin": "国产",
-      "excl": "否",
-      "cls": "化学药",
-      "cold": "常温",
-      "annual": 182,
-      "insyear": 2020,
-      "dual": "否",
-      "vbp": "高(已集采)",
-      "gl": "指南金标准",
-      "route": "口服",
-      "prob": 0.99,
-      "prov": "湖南",
-      "patent": "已过期",
-      "followers": 100,
-      "nt": "—",
-      "note": "RA基础用药"
-    },
-    "updated_at": "2026-09-06 19:03:06"
   },
   {
     "product_id": 25,
