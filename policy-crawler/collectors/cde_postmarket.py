@@ -295,6 +295,7 @@ class CdePostmarketCollector:
         self.delay = float(delay)
         self._ready = False
         self._search_cache = {}
+        self._detail_cache = {}
         self.last_cache_hit = False
 
     def close(self):
@@ -368,33 +369,67 @@ class CdePostmarketCollector:
         return rows
 
     def open_detail(self, acceptcode):
-        self.detail_page.goto(DETAIL_URL.format(acceptcode),
-                              wait_until="domcontentloaded", timeout=60000)
-        try:
-            self.detail_page.wait_for_function(
-                "document.body.innerText.includes('相关附件信息') || "
-                "document.body.innerText.includes('受理号')", timeout=25000)
-        except Exception:
-            pass
-        time.sleep(0.8)
-        anchors = self.detail_page.eval_on_selector_all(
-            "a.textLink[data-fileid]",
-            """els => els.map(e => ({
-                fileid: e.getAttribute('data-fileid'),
-                acceptid: e.getAttribute('data-acceptid'),
-                filename: e.getAttribute('data-filename')
-            }))""")
-        return anchors
+        if acceptcode in self._detail_cache:
+            return self._detail_cache[acceptcode]
+        last_err = None
+        for attempt in range(1, 4):
+            try:
+                self.detail_page.goto(DETAIL_URL.format(acceptcode),
+                                      wait_until="domcontentloaded",
+                                      timeout=60000)
+                try:
+                    self.detail_page.wait_for_function(
+                        "document.body.innerText.includes('相关附件信息') || "
+                        "document.body.innerText.includes('受理号')",
+                        timeout=25000)
+                except Exception:
+                    pass
+                time.sleep(0.8)
+                anchors = self.detail_page.eval_on_selector_all(
+                    "a.textLink[data-fileid]",
+                    """els => els.map(e => ({
+                        fileid: e.getAttribute('data-fileid'),
+                        acceptid: e.getAttribute('data-acceptid'),
+                        filename: e.getAttribute('data-filename')
+                    }))""")
+                self._detail_cache[acceptcode] = anchors
+                return anchors
+            except Exception as exc:
+                last_err = exc
+                msg = repr(exc)
+                if attempt < 3 and ("ERR_NETWORK_CHANGED" in msg
+                                    or "Timeout" in msg or "net::" in msg):
+                    log.warning("detail %s attempt %d failed, retry: %s",
+                                acceptcode, attempt, msg[:120])
+                    time.sleep(8)
+                    continue
+                break
+        raise last_err if last_err else RuntimeError("open_detail failed")
 
     def download_pdf(self, fileid, acceptid, dest):
-        resp = self._ctx.request.get(
-            DOWNLOAD_URL.format(fileid, acceptid), timeout=120000)
-        if resp.status != 200:
-            raise RuntimeError("download HTTP %s" % resp.status)
-        data = resp.body()
-        with open(dest, "wb") as fh:
-            fh.write(data)
-        return len(data)
+        last_err = None
+        for attempt in range(1, 4):
+            try:
+                resp = self._ctx.request.get(
+                    DOWNLOAD_URL.format(fileid, acceptid), timeout=120000)
+                if resp.status != 200:
+                    raise RuntimeError("download HTTP %s" % resp.status)
+                data = resp.body()
+                with open(dest, "wb") as fh:
+                    fh.write(data)
+                return len(data)
+            except Exception as exc:
+                last_err = exc
+                msg = repr(exc)
+                if attempt < 3 and ("ERR_NETWORK_CHANGED" in msg
+                                    or "Timeout" in msg or "net::" in msg
+                                    or "HTTP" in msg):
+                    log.warning("download %s attempt %d failed, retry: %s",
+                                acceptid, attempt, msg[:120])
+                    time.sleep(8)
+                    continue
+                break
+        raise last_err if last_err else RuntimeError("download failed")
 
     def polite_pause(self):
         time.sleep(self.delay + random.uniform(0, 1.0))
