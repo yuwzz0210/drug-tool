@@ -58,6 +58,23 @@ PRICE_KEYS = ["中选价格", "挂网价格", "价格", "支付标准"]
 UNIT_KEYS = ["计价单位", "单位"]
 
 
+def identity_card(rec):
+    """每个品种/规格的“身份牌”。
+
+    入库前必须先取得、且只能由官方数据给出：
+      - 第1层：批准文号/注册证号（每规格唯一硬标识）
+      - 第2层：规范通用名 + 剂型 + 规格 + 厂家（业务键，防止同名错配）
+    两者任一缺失即视为“无身份牌”，整行拒绝，禁止用推断值顶替。
+    """
+    return {
+        "approval_number": (rec.get("approval_number") or "").strip(),
+        "generic_name": (rec.get("generic_name") or "").strip(),
+        "dosage_form": (rec.get("dosage_form") or "").strip(),
+        "specification": (rec.get("specification") or "").strip(),
+        "manufacturer": (rec.get("manufacturer") or "").strip(),
+    }
+
+
 def _first(row, keys):
     for k in keys:
         for ck in (k, k.lower()):
@@ -68,12 +85,15 @@ def _first(row, keys):
 
 def validate_registry_record(rec):
     """严格校验：缺批准文号或药品名称的行整行拒绝（不许臆造/半截入库）。"""
-    if not rec.get("approval_number"):
+    card = identity_card(rec)
+    if not card["approval_number"]:
         return False, "missing approval_number"
-    if not APPROVAL_RE.match(rec["approval_number"]):
-        return False, "approval_number malformed: %s" % rec["approval_number"]
-    if not rec.get("generic_name"):
-        return False, "missing generic_name"
+    if not APPROVAL_RE.match(card["approval_number"]):
+        return False, "approval_number malformed: %s" % card["approval_number"]
+    missing = [k for k, v in card.items()
+               if k != "approval_number" and not v]
+    if missing:
+        return False, "identity card incomplete: %s" % ",".join(missing)
     return True, ""
 
 

@@ -20,7 +20,8 @@ from models import DRUG_SCHEMA  # noqa: E402
 class TestStrictValidation(unittest.TestCase):
     def test_accept_official_row(self):
         rec = {"approval_number": "国药准字H20230015",
-               "generic_name": "甲磺酸贝福替尼胶囊"}
+               "generic_name": "甲磺酸贝福替尼胶囊", "dosage_form": "胶囊剂",
+               "specification": "25mg", "manufacturer": "贝达药业"}
         ok, why = validate_registry_record(rec)
         self.assertTrue(ok, why)
 
@@ -31,6 +32,10 @@ class TestStrictValidation(unittest.TestCase):
             {"approval_number": "随便编的号", "generic_name": "x"})[0])
         self.assertFalse(validate_registry_record(
             {"approval_number": "国药准字H20230015", "generic_name": ""})[0])
+        # 缺身份牌第2层字段 -> 拒绝，不许半截入库
+        self.assertFalse(validate_registry_record(
+            {"approval_number": "国药准字H20230015",
+             "generic_name": "甲磺酸贝福替尼胶囊"})[0])
 
     def test_normalize_chinese_row(self):
         rec = normalize_payload_row({
