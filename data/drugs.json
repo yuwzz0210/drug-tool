@@ -35,6 +35,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "168",
+        "payment_scope": "限2型糖尿病。",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -77,6 +87,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "980",
+        "payment_scope": "限：1.全身型幼年特发性关节炎的二线治疗；2.限诊断明确 的类风湿关节炎经传统DMARDs治疗3-6个月疾病活动度下降低 于50%者。",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "980",
@@ -156,6 +176,26 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "甲类",
+        "insurance_code": "850",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "甲类",
+        "insurance_code": "850",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       },
       {
@@ -225,7 +265,18 @@
         "leaflet_date": "2021-09-07"
       }
     ],
-    "insurance": [],
+    "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "987",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      }
+    ],
     "package_insert_url": "https://www.cde.org.cn/main/xxgk/PostMarketDownload?attidCODE=c5ef1ade5209e3ca85f97044e761c2a5&tableid=JXHS2200037",
     "leaflet_source_url": "https://www.cde.org.cn/main/xxgk/postmarketpage?acceptidCODE=b5a4f5038c023d130d2ed2d6c6b9ae40",
     "leaflet_date": "2021-09-07",
@@ -261,7 +312,18 @@
         "leaflet_date": "2021-09-07"
       }
     ],
-    "insurance": [],
+    "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "987",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      }
+    ],
     "package_insert_url": "https://www.cde.org.cn/main/xxgk/PostMarketDownload?attidCODE=c5ef1ade5209e3ca85f97044e761c2a5&tableid=JXHS2200037",
     "leaflet_source_url": "https://www.cde.org.cn/main/xxgk/postmarketpage?acceptidCODE=b5a4f5038c023d130d2ed2d6c6b9ae40",
     "leaflet_date": "2021-09-07",
@@ -297,7 +359,18 @@
         "leaflet_date": "2021-09-07"
       }
     ],
-    "insurance": [],
+    "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "987",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      }
+    ],
     "package_insert_url": "https://www.cde.org.cn/main/xxgk/PostMarketDownload?attidCODE=c5ef1ade5209e3ca85f97044e761c2a5&tableid=JXHS2200037",
     "leaflet_source_url": "https://www.cde.org.cn/main/xxgk/postmarketpage?acceptidCODE=b5a4f5038c023d130d2ed2d6c6b9ae40",
     "leaflet_date": "2021-09-07",
@@ -333,7 +406,18 @@
         "leaflet_date": "2019-12-26"
       }
     ],
-    "insurance": [],
+    "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "233",
+        "payment_scope": "限：1.PD-L1高表达的含铂化疗失败包括新辅助或辅助 化疗12个月内进展的局部晚期或转移性尿路上皮癌的治 疗；2.联合紫杉醇和卡铂或注射用紫杉醇(白蛋白结合 型)和卡铂用于不可手术切除的局部晚期或转移性鳞状 非小细胞肺癌的一线治疗；3.联合培美曲塞和铂类化疗 用于表皮生长因子受体(EGFR)基因突变阴性和间变性淋 巴瘤激酶(ALK)阴性、不可手术切除的局部晚期或转移 性非鳞状非小细胞肺癌的一线治疗；4.用于表皮生长因 子受体(EGFR)基因突变阴性和间变性淋巴瘤激酶(ALK) 阴性、既往接受过含铂方案化疗后疾病进展或不可耐受 的局部晚期或转移性非鳞状非小细胞肺癌(NSCLC)成人 患者，以及EGFR和ALK阴性或未知的，既往接受过含铂 方案化疗后疾病进展或不可耐受的局部晚期或转移性鳞 状NSCLC成人患者；5.联合含铂化疗新辅助治疗，并在 手术后继续单药辅助治疗，用于可切除的II期或IIIA期 非小细胞肺癌患者的治疗；6.联合依托泊苷和铂类化疗 用于广泛期小细胞肺癌(ES-SCLC)的一线治疗；7.不可 切除或转移性肝细胞癌患者的一线治疗；8.既往接受过 索拉非尼或仑伐替尼或含奥沙利铂全身化疗的晚期肝细 胞癌患者的治疗；9.不可切除或转移性微卫星高度不稳 定型(MSI-H)或错配修复基因缺陷型(dMMR)的成人晚期 实体瘤患者：既往经过氟尿嘧啶类、奥沙利铂和伊立替 康治疗后出现疾病进展的晚期结直肠癌患者；既往治疗 后出现疾病进展且无满意替代治疗方案的其他晚期实体 瘤患者；10.联合紫杉醇和铂类药物或含氟尿嘧啶类和 铂类药物用于不可切除的局部晚期、复发或转移性食管 鳞状细胞癌的一线治疗；11.既往接受过一线标准化疗 后进展或不可耐受的局部晚期或转移性食管鳞状细胞癌 的治疗；12.联合吉西他滨和顺铂用于复发或转移性鼻 咽癌的一线治疗；13.联合氟尿嘧啶类和铂类药物化疗 用于局部晚期不可切除的或转移性的胃或胃食管结合部 腺癌的一线治疗。",
+        "price": "*",
+        "effective_date": "2026-01-01",
+        "expire_date": "2027-12-31",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      }
+    ],
     "package_insert_url": "https://www.cde.org.cn/main/xxgk/PostMarketDownload?attidCODE=0f4e4729972dba9352a911e565278e1c&tableid=CXSS2400013",
     "leaflet_source_url": "https://www.cde.org.cn/main/xxgk/postmarketpage?acceptidCODE=05bf7925bdf6ae3f5440cf606f05512a",
     "leaflet_date": "2019-12-26",
@@ -366,6 +450,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -409,6 +503,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -536,6 +640,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "987",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       },
       {
@@ -585,6 +699,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "987",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "987",
@@ -650,6 +774,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "987",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       },
       {
@@ -699,6 +833,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "987",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "987",
@@ -764,6 +908,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "987",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       },
       {
@@ -812,6 +966,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "987",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       },
       {
@@ -852,6 +1016,16 @@
     "ingredients": [],
     "registrations": [],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "987",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "987",
@@ -917,6 +1091,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "142",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -956,6 +1140,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "142",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "142",
@@ -1011,6 +1205,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "142",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -1050,6 +1254,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "165",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "165",
@@ -1105,6 +1319,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "165",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -1144,6 +1368,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "165",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "165",
@@ -1199,6 +1433,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "165",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -1238,6 +1482,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "918",
+        "payment_scope": "限以下情况方可支付，且支付不超过12个月：1.HER2阳性的 局部晚期、炎性或早期乳腺癌患者的新辅助治疗；2.具有高 复发风险HER2阳性早期乳腺癌患者的辅助治疗。",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "918",
@@ -1293,6 +1547,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "918",
+        "payment_scope": "限以下情况方可支付，且支付不超过12个月：1.HER2阳性的 局部晚期、炎性或早期乳腺癌患者的新辅助治疗；2.具有高 复发风险HER2阳性早期乳腺癌患者的辅助治疗。",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -1332,6 +1596,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "187",
+        "payment_scope": "限：1.表皮生长因子受体2(HER2)阳性 的复发或转移性乳腺癌患者；2.表皮 生长因子受体2(HER2)阳性早期或局部 晚期乳腺癌患者的新辅助治疗。",
+        "price": "*",
+        "effective_date": "2026-01-01",
+        "expire_date": "2027-12-31",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "187",
@@ -1387,6 +1661,16 @@
         "effective_date": "2026-01-01",
         "expire_date": "2027-12-31",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "187",
+        "payment_scope": "限：1.表皮生长因子受体2(HER2)阳性 的复发或转移性乳腺癌患者；2.表皮 生长因子受体2(HER2)阳性早期或局部 晚期乳腺癌患者的新辅助治疗。",
+        "price": "*",
+        "effective_date": "2026-01-01",
+        "expire_date": "2027-12-31",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -1417,6 +1701,16 @@
     "ingredients": [],
     "registrations": [],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "252",
+        "payment_scope": "限：1.既往至少接受过2种系统治疗 (其中至少1种治疗针对晚期或转移性 阶段)的不可切除的局部晚期或转移性 三阴性乳腺癌成人患者；2.经表皮生 长因子受体(EGFR)酪氨酸激酶抑制剂 (TKI)和含铂化疗治疗后进展的EGFR基 因突变阳性的局部晚期或转移性非鳞 状非小细胞肺癌(NSCLC)成人患者。",
+        "price": "*",
+        "effective_date": "2026-01-01",
+        "expire_date": "2027-12-31",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "252",
@@ -1463,6 +1757,16 @@
         "effective_date": "2026-01-01",
         "expire_date": "2027-12-31",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "252",
+        "payment_scope": "限：1.既往至少接受过2种系统治疗 (其中至少1种治疗针对晚期或转移性 阶段)的不可切除的局部晚期或转移性 三阴性乳腺癌成人患者；2.经表皮生 长因子受体(EGFR)酪氨酸激酶抑制剂 (TKI)和含铂化疗治疗后进展的EGFR基 因突变阳性的局部晚期或转移性非鳞 状非小细胞肺癌(NSCLC)成人患者。",
+        "price": "*",
+        "effective_date": "2026-01-01",
+        "expire_date": "2027-12-31",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -1493,6 +1797,16 @@
     "ingredients": [],
     "registrations": [],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "248",
+        "payment_scope": "限：1.既往接受含铂化疗治疗失败的 复发或转移性宫颈癌患者的治疗；2. 联合紫杉醇和铂类化疗药物联合或不 联合贝伐珠单抗用于持续、复发或转 移性宫颈癌的一线治疗；3.联合含氟 尿嘧啶类和铂类药物化疗用于局部晚 期不可切除或转移性胃或胃食管结合 部腺癌患者的一线治疗。",
+        "price": "*",
+        "effective_date": "2026-01-01",
+        "expire_date": "2026-12-31",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "248",
@@ -1548,6 +1862,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "487",
+        "payment_scope": "限：1.他汀类药物单药治疗LDL-C无法达标的成人原发性(杂 合子型家族性或非家族性)高胆固醇血症或混合性高脂血症患 者；2.降低纯合子型家族性高胆固醇血症(HoFH)患者的TC和 LDL-C水平。",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -1587,6 +1911,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "487",
+        "payment_scope": "限：1.他汀类药物单药治疗LDL-C无法达标的成人原发性(杂 合子型家族性或非家族性)高胆固醇血症或混合性高脂血症患 者；2.降低纯合子型家族性高胆固醇血症(HoFH)患者的TC和 LDL-C水平。",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "487",
@@ -1642,6 +1976,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "487",
+        "payment_scope": "限：1.他汀类药物单药治疗LDL-C无法达标的成人原发性(杂 合子型家族性或非家族性)高胆固醇血症或混合性高脂血症患 者；2.降低纯合子型家族性高胆固醇血症(HoFH)患者的TC和 LDL-C水平。",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -1681,6 +2025,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "487",
+        "payment_scope": "限：1.他汀类药物单药治疗LDL-C无法达标的成人原发性(杂 合子型家族性或非家族性)高胆固醇血症或混合性高脂血症患 者；2.降低纯合子型家族性高胆固醇血症(HoFH)患者的TC和 LDL-C水平。",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "487",
@@ -1736,6 +2090,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "487",
+        "payment_scope": "限：1.他汀类药物单药治疗LDL-C无法达标的成人原发性(杂 合子型家族性或非家族性)高胆固醇血症或混合性高脂血症患 者；2.降低纯合子型家族性高胆固醇血症(HoFH)患者的TC和 LDL-C水平。",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -1775,6 +2139,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "487",
+        "payment_scope": "限：1.他汀类药物单药治疗LDL-C无法达标的成人原发性(杂 合子型家族性或非家族性)高胆固醇血症或混合性高脂血症患 者；2.降低纯合子型家族性高胆固醇血症(HoFH)患者的TC和 LDL-C水平。",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "487",
@@ -1830,6 +2204,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "487",
+        "payment_scope": "限：1.他汀类药物单药治疗LDL-C无法达标的成人原发性(杂 合子型家族性或非家族性)高胆固醇血症或混合性高脂血症患 者；2.降低纯合子型家族性高胆固醇血症(HoFH)患者的TC和 LDL-C水平。",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -1865,6 +2249,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -1916,6 +2310,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -1951,6 +2355,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -2002,6 +2416,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -2037,6 +2461,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -2088,6 +2522,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -2123,6 +2567,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -2174,6 +2628,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -2209,6 +2673,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -2260,6 +2734,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -2295,6 +2779,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -2346,6 +2840,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -2381,6 +2885,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -2432,6 +2946,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -2467,6 +2991,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -2518,6 +3052,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -2553,6 +3097,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -2604,6 +3158,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -2639,6 +3203,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -2690,6 +3264,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -2725,6 +3309,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -2776,6 +3370,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -2811,6 +3415,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -2862,6 +3476,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -2897,6 +3521,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -2948,6 +3582,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -2991,6 +3635,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -3017,6 +3671,16 @@
     "ingredients": [],
     "registrations": [],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -3068,6 +3732,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -3103,6 +3777,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -3154,6 +3838,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -3189,6 +3883,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -3240,6 +3944,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -3275,6 +3989,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -3326,6 +4050,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -3352,6 +4086,16 @@
     "ingredients": [],
     "registrations": [],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -3403,6 +4147,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -3438,6 +4192,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -3489,6 +4253,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -3524,6 +4298,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -3575,6 +4359,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -3610,6 +4404,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -3661,6 +4465,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -3696,6 +4510,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -3747,6 +4571,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -3782,6 +4616,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -3833,6 +4677,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -3868,6 +4722,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -3919,6 +4783,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -3954,6 +4828,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -4005,6 +4889,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -4040,6 +4934,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -4091,6 +4995,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -4126,6 +5040,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -4177,6 +5101,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -4212,6 +5146,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -4263,6 +5207,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -4298,6 +5252,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -4349,6 +5313,16 @@
         "effective_date": "",
         "expire_date": "",
         "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
         "catalog": "国家医保药品目录（2025年）"
       }
     ],
@@ -4384,6 +5358,16 @@
       }
     ],
     "insurance": [
+      {
+        "category": "乙类",
+        "insurance_code": "162",
+        "payment_scope": "",
+        "price": "",
+        "effective_date": "",
+        "expire_date": "",
+        "is_current": 1,
+        "catalog": "国家基本医疗保险、生育保险和工伤保险药品目录（2025年）"
+      },
       {
         "category": "乙类",
         "insurance_code": "162",
@@ -10361,7 +11345,21 @@
     "leaflet_date": "2019-06-24",
     "cold_chain": "常温",
     "route": "",
-    "extra_data": {},
+    "extra_data": {
+      "procurement": [
+        {
+          "batch": "GY-YD2026-1",
+          "seq": "1",
+          "variety": "巴瑞替尼口服常释剂型★",
+          "generic_name": "巴瑞替尼片",
+          "dosage_form": "片剂",
+          "spec_pack": "2mg*7片/板，4板/盒",
+          "packaging": "聚酰胺/铝/聚氯乙烯冷冲压成型固体药用复合硬片和药用铝箔",
+          "supplier": "广州绿十字制药股份有限公司",
+          "source": "第12批供应清单(官方PDF)"
+        }
+      ]
+    },
     "updated_at": "2026-09-06 19:13:05"
   },
   {
@@ -10399,7 +11397,21 @@
     "leaflet_date": "2019-06-24",
     "cold_chain": "常温",
     "route": "",
-    "extra_data": {},
+    "extra_data": {
+      "procurement": [
+        {
+          "batch": "GY-YD2026-1",
+          "seq": "1",
+          "variety": "巴瑞替尼口服常释剂型★",
+          "generic_name": "巴瑞替尼片",
+          "dosage_form": "片剂",
+          "spec_pack": "2mg*14片/板，2板/盒",
+          "packaging": "聚氯乙烯/聚乙烯/聚偏二氯乙烯固体药用复合硬片，药用铝箔包装。",
+          "supplier": "南京海纳制药有限公司",
+          "source": "第12批供应清单(官方PDF)"
+        }
+      ]
+    },
     "updated_at": "2026-09-06 19:13:03"
   },
   {
@@ -10437,7 +11449,21 @@
     "leaflet_date": "2019-06-24",
     "cold_chain": "常温",
     "route": "",
-    "extra_data": {},
+    "extra_data": {
+      "procurement": [
+        {
+          "batch": "GY-YD2026-1",
+          "seq": "1",
+          "variety": "巴瑞替尼口服常释剂型★",
+          "generic_name": "巴瑞替尼片",
+          "dosage_form": "片剂",
+          "spec_pack": "2mg*28片/瓶",
+          "packaging": "口服固体药用高密度聚乙烯瓶和药用聚酯/铝/聚乙烯封口垫片",
+          "supplier": "杭州民生药业股份有限公司",
+          "source": "第12批供应清单(官方PDF)"
+        }
+      ]
+    },
     "updated_at": "2026-09-06 19:13:01"
   },
   {
@@ -10513,7 +11539,21 @@
     "leaflet_date": "2019-06-24",
     "cold_chain": "常温",
     "route": "",
-    "extra_data": {},
+    "extra_data": {
+      "procurement": [
+        {
+          "batch": "GY-YD2026-1",
+          "seq": "1",
+          "variety": "巴瑞替尼口服常释剂型★",
+          "generic_name": "巴瑞替尼片",
+          "dosage_form": "片剂",
+          "spec_pack": "4mg*7片/板，4板/盒",
+          "packaging": "聚酰胺/铝/聚氯乙烯冷冲压成型固体药用复合硬片和药用铝箔",
+          "supplier": "广州绿十字制药股份有限公司",
+          "source": "第12批供应清单(官方PDF)"
+        }
+      ]
+    },
     "updated_at": "2026-09-06 19:12:56"
   },
   {
@@ -25243,7 +26283,21 @@
     "leaflet_date": "",
     "cold_chain": "",
     "route": "",
-    "extra_data": {},
+    "extra_data": {
+      "procurement": [
+        {
+          "batch": "GY-YD2026-1",
+          "seq": "31",
+          "variety": "西格列汀二甲双胍缓释控释剂型",
+          "generic_name": "西格列汀二甲双胍缓释片",
+          "dosage_form": "片剂",
+          "spec_pack": "磷酸西格列汀50mg和盐酸二甲双胍500mg*30片/瓶",
+          "packaging": "口服固体药用高密度聚乙烯瓶，口服固体药用聚丙烯儿童安全盖，口服固体药用高密度聚乙烯干燥剂罐",
+          "supplier": "南通联亚药业股份有限公司",
+          "source": "第12批供应清单(官方PDF)"
+        }
+      ]
+    },
     "updated_at": "2026-09-02 07:16:15"
   },
   {
@@ -27765,7 +28819,21 @@
     "leaflet_date": "",
     "cold_chain": "",
     "route": "",
-    "extra_data": {},
+    "extra_data": {
+      "procurement": [
+        {
+          "batch": "GY-YD2026-1",
+          "seq": "31",
+          "variety": "西格列汀二甲双胍缓释控释剂型",
+          "generic_name": "西格列汀二甲双胍缓释片",
+          "dosage_form": "片剂",
+          "spec_pack": "磷酸西格列汀100mg和盐酸二甲双胍1000mg*15片/瓶",
+          "packaging": "口服固体药用高密度聚乙烯瓶、固体药用聚乙烯瓶装硅胶干燥剂包装",
+          "supplier": "南京正大天晴制药有限公司",
+          "source": "第12批供应清单(官方PDF)"
+        }
+      ]
+    },
     "updated_at": "2026-09-02 07:09:42"
   },
   {
@@ -27977,7 +29045,21 @@
     "leaflet_date": "",
     "cold_chain": "",
     "route": "",
-    "extra_data": {},
+    "extra_data": {
+      "procurement": [
+        {
+          "batch": "GY-YD2026-1",
+          "seq": "31",
+          "variety": "西格列汀二甲双胍缓释控释剂型",
+          "generic_name": "西格列汀二甲双胍缓释片",
+          "dosage_form": "片剂",
+          "spec_pack": "磷酸西格列汀100mg和盐酸二甲双胍1000mg*30片/瓶",
+          "packaging": "口服固体药用高密度聚乙烯瓶、固体药用纸袋装硅胶干燥剂包装",
+          "supplier": "江苏德源药业股份有限公司",
+          "source": "第12批供应清单(官方PDF)"
+        }
+      ]
+    },
     "updated_at": "2026-09-02 07:09:42"
   },
   {
@@ -34277,7 +35359,21 @@
     "leaflet_date": "",
     "cold_chain": "",
     "route": "",
-    "extra_data": {},
+    "extra_data": {
+      "procurement": [
+        {
+          "batch": "GY-YD2026-1",
+          "seq": "31",
+          "variety": "西格列汀二甲双胍缓释控释剂型",
+          "generic_name": "西格列汀二甲双胍缓释片",
+          "dosage_form": "片剂",
+          "spec_pack": "磷酸西格列汀50mg和盐酸二甲双胍500mg*30片/瓶",
+          "packaging": "口服固体药用高密度聚乙烯含热封垫片瓶包装，内置固体药用纸袋装硅胶干燥剂。",
+          "supplier": "浙江赛默制药有限公司",
+          "source": "第12批供应清单(官方PDF)"
+        }
+      ]
+    },
     "updated_at": "2026-09-01 22:54:57"
   },
   {
@@ -35309,7 +36405,21 @@
     "leaflet_date": "",
     "cold_chain": "",
     "route": "",
-    "extra_data": {},
+    "extra_data": {
+      "procurement": [
+        {
+          "batch": "GY-YD2026-1",
+          "seq": "31",
+          "variety": "西格列汀二甲双胍缓释控释剂型",
+          "generic_name": "西格列汀二甲双胍缓释片",
+          "dosage_form": "片剂",
+          "spec_pack": "磷酸西格列汀50mg和盐酸二甲双胍500mg*30片/瓶",
+          "packaging": "口服固体药用高密度聚乙烯瓶包装,内置固体药用纸袋装硅胶干燥剂",
+          "supplier": "浙江昂利康制药股份有限公司",
+          "source": "第12批供应清单(官方PDF)"
+        }
+      ]
+    },
     "updated_at": "2026-09-01 22:54:56"
   },
   {

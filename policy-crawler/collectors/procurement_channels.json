@@ -1,0 +1,46 @@
+{
+  "_note": "易联招采 Member 入口与官方可替代源映射（L0 优先官方；Member 需登录+条款授权）",
+  "members_base": "https://yp.eliancloud.cn",
+  "channels": {
+    "药品基础库_境内": {
+      "member": "/Member/DataQuery/DomesticList?ChannelID=e759afea-713a-4439-8cf4-0ffad89578a3",
+      "official": "NMPA 数据查询-境内生产药品",
+      "status": "official L0 crawler in progress"
+    },
+    "药品基础库_境外": {
+      "member": "/Member/DataQuery/ImportList?ChannelID=9e253ffe-8827-4876-91d4-dba8721a65d9",
+      "official": "NMPA 数据查询-境外生产药品",
+      "status": "official L0 crawler in progress"
+    },
+    "医保药品分类代码": {
+      "member": null,
+      "official": "http://code.nhsa.gov.cn:8000 (国家医保局分类代码库)",
+      "status": "official L0 candidate"
+    },
+    "一致性评价": {
+      "member": "/Member/IndustryDatabase/ConsistencyEvaluationList?ChannelID=f4f720b6-df9d-43c8-a032-8472ef1d3e66",
+      "official": "CDE 一致性评价/化学药品目录集",
+      "status": "official covered(部分)"
+    },
+    "国家集采_中选项目": {
+      "member": "/Member/DataQuery/WinBidProjectList?ChannelID=35fab088-65f0-4438-ae59-aa0d3ed3864f",
+      "official": "国家联采办/上海阳光医药采购网公告",
+      "status": "need official URL batch confirm"
+    },
+    "国家集采_中选价": {
+      "member": "/Member/DataQuery/CountryBidPriceListCP?ChannelID=057282dd-a8e3-40dc-9071-6467fac93565",
+      "official": "国家联采办中选结果附件(Excel/PDF)",
+      "status": "import-file ready when file provided"
+    },
+    "国家集采_调整价格项目": {
+      "member": "/Member/DataQuery/AdjustPriceProjectList?ChannelID=cc006ea4-b4c7-4e2b-abd7-0a7cc083f394",
+      "official": "医保局/联采办价格调整公告",
+      "status": "pending"
+    },
+    "省级集采/挂网": {
+      "member": "/Member/BiddingArea/Information?ChannelID=51733db6-fd53-4386-b044-dc90d7f13f98 等",
+      "official": "各省医保/招采平台公开公告",
+      "status": "pending (湖南源已在计划)"
+    }
+  }
+}
