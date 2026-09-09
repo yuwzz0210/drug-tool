@@ -142,6 +142,12 @@ def insert_registry_record(db, rec, source_name, audit_rows, dry_run=False):
                                        rec["specification"], rec["manufacturer"]]})
             return "conflict_skip"
     if dry_run:
+        audit_rows.append({"action": "dry_run",
+                           "approval_number": appr,
+                           "generic_name": rec["generic_name"],
+                           "dosage_form": rec.get("dosage_form", ""),
+                           "specification": rec.get("specification", ""),
+                           "manufacturer": rec.get("manufacturer", "")})
         return "dry_run"
     pid = None
     key = (rec["generic_name"], rec["dosage_form"], rec["specification"],
@@ -319,6 +325,165 @@ def crawl_nmpa(db, dataset, max_pages, delay, audit_path, dry_run=False,
     return len(audit_rows)
 
 
+def member_channel_url(dataset):
+    """Resolve eliancloud member URL for a dataset from procurement_channels.json."""
+    here = os.path.dirname(os.path.abspath(__file__))
+    cfg = json.load(open(os.path.join(here, "procurement_channels.json"),
+                         encoding="utf-8"))
+    base = cfg["members_base"].rstrip("/")
+    key = "药品基础库_境内" if dataset == "domestic" else "药品基础库_境外"
+    path = cfg["channels"][key]["member"]
+    return base + path
+
+
+def _read_table(page):
+    """Generic table read: return (headers, [row_dicts]) from the active page."""
+    script = """() => {
+      const tables = [...document.querySelectorAll('table')];
+      let target = null;
+      for (const t of tables) {
+        const ths = [...t.querySelectorAll('thead th')]
+            .map(e => (e.innerText||'').trim());
+        const joined = ths.join('|');
+        if (joined.includes('批准文号') && joined.includes('产品名称')) {
+          target = t;
+          break;
+        }
+      }
+      if (!target) return {heads: [], rows: []};
+      let heads = [...target.querySelectorAll('thead th')]
+          .map(e => (e.innerText||'').trim());
+      const apprIdx = heads.findIndex(h => h.includes('批准文号'));
+      const allTrs = [...document.querySelectorAll('table tbody tr')];
+      const rows = [];
+      allTrs.forEach(tr => {
+        const tds = [...tr.querySelectorAll('td')].map(td =>
+            (td.innerText||'').trim());
+        if (!tds.join('')) return;
+        if (apprIdx >= 0 && !/^国药准字/.test(tds[apprIdx] || '')) return;
+        const o = {};
+        tds.forEach((v,i)=>{ if (heads[i]) o[heads[i]] = v; });
+        rows.push(o);
+      });
+      return {heads, rows};
+    }"""
+    return page.evaluate(script)
+
+
+def crawl_member_table(db, start_url, cookie_file, max_pages, delay,
+                       audit_path, dry_run=False):
+    """Crawl an eliancloud member data page (authorized session only)."""
+    from playwright.sync_api import sync_playwright
+    audit_rows = []
+    rf = open(audit_path, "a", encoding="utf-8") if audit_path else None
+    try:
+        with sync_playwright() as pw:
+            browser = pw.chromium.launch(
+                headless=True,
+                args=["--disable-blink-features=AutomationControlled"])
+            ctx = browser.new_context(user_agent=NMPA_UA, locale="zh-CN",
+                                      viewport={"width": 1600, "height": 1000})
+            if not cookie_file or not os.path.exists(cookie_file):
+                raise SystemExit("elian mode requires --cookie-file "
+                                 "(run tools/elian_login_save_cookies.py first)")
+            ctx.add_cookies(json.load(open(cookie_file, encoding="utf-8")))
+            page = ctx.new_page()
+            page.goto(start_url, wait_until="domcontentloaded", timeout=90000)
+            page.wait_for_timeout(6000)
+            # the data table lives in an inner iframe whose url matches the
+            # DataQuery page
+            data_frame = None
+            for f in page.frames:
+                url_path = f.url.split("?")[0]
+                if ("/Member/DataQuery/DomesticList" in url_path
+                        or "/Member/DataQuery/ImportList" in url_path):
+                    data_frame = f
+                    break
+            if data_frame is None:
+                data_frame = page
+            log.info("data frame: %s", data_frame.url)
+            page_no = 0
+            while page_no < max_pages:
+                data = _read_table(data_frame)
+                log.info("page %d headers=%s rows=%d", page_no + 1,
+                         data["heads"][:12], len(data["rows"]))
+                for row in data["rows"]:
+                    rec = normalize_payload_row(row)
+                    if page_no == 0 and not rec.get("approval_number"):
+                        log.info("sample row keys=%s values=%s",
+                                 list(row.keys())[:6],
+                                 list(row.values())[:6])
+                    if not rec.get("approval_number") and not rec.get(
+                            "generic_name"):
+                        audit_rows.append({
+                            "action": "reject:unmapped_fields",
+                            "row_keys": list(row.keys())[:14],
+                            "row_values": list(row.values())[:5]})
+                        continue
+                    insert_registry_record(db, rec, "elian:" + start_url,
+                                           audit_rows, dry_run=dry_run)
+                page_no += 1
+                if rf:
+                    for a in audit_rows:
+                        rf.write(json.dumps(a, ensure_ascii=False) + "\n")
+                    audit_rows.clear()
+                    rf.flush()
+                if page_no >= max_pages:
+                    break
+                clicked = False
+                selectors = [
+                    "button:has-text('下一页')",
+                    "li[title*='下一页']",
+                    ".ant-pagination-next",
+                    ".el-pagination__next",
+                    ".pagination .next",
+                    "a.next",
+                ]
+                for sel in selectors:
+                    try:
+                        loc = data_frame.locator(sel).first
+                        if loc.is_visible():
+                            loc.click(timeout=3000)
+                            clicked = True
+                            break
+                    except Exception:
+                        continue
+                if not clicked:
+                    for txt in ("下一页", "下页", "next", ">", "»"):
+                        try:
+                            loc = data_frame.get_by_text(
+                                txt, exact=False).first
+                            if loc.is_visible() and loc.count():
+                                loc.click(timeout=3000)
+                                clicked = True
+                                break
+                        except Exception:
+                            continue
+                if not clicked:
+                    # numeric page link "2"
+                    try:
+                        for num in ("2", "下一页"):
+                            loc = data_frame.locator(
+                                "text=%s" % num).first
+                            if loc.is_visible():
+                                loc.click(timeout=2000)
+                                clicked = True
+                                break
+                    except Exception:
+                        clicked = False
+                if not clicked:
+                    log.info("no next page; stop")
+                    break
+                page.wait_for_timeout(
+                    int((delay + random.uniform(0, 1)) * 1000))
+                data_frame.wait_for_timeout(2000)
+            browser.close()
+    finally:
+        if rf:
+            rf.close()
+    return len(audit_rows)
+
+
 def import_file(db, path, source_name, audit_path, dry_run=False):
     """导入官方目录/集采文件（csv/xlsx/json）。行校验失败整行拒绝。"""
     audit_rows = []
@@ -385,7 +550,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--db", default="policy_crawler.db")
     ap.add_argument("--mode", required=True,
-                    choices=["nmpa", "insurance", "import-file"])
+                    choices=["nmpa", "insurance", "import-file", "elian"])
     ap.add_argument("--dataset", default="domestic",
                     choices=["domestic", "imported"])
     ap.add_argument("--max-pages", type=int, default=100)
@@ -410,6 +575,15 @@ def main():
                        args.audit, dry_run=args.dry_run,
                        cookie_file=args.cookie_file)
         print("NMPA_PAGES_DONE", args.max_pages, "| remaining_audit", n)
+    elif args.mode == "elian":
+        if not args.cookie_file:
+            raise SystemExit("--cookie-file required for elian mode")
+        url = member_channel_url(args.dataset)
+        print("ELIAN_URL", url)
+        n = crawl_member_table(db, url, args.cookie_file, args.max_pages,
+                               args.delay, args.audit,
+                               dry_run=args.dry_run)
+        print("ELIAN_PAGES_DONE", args.max_pages, "| remaining_audit", n)
     else:
         if not args.file:
             raise SystemExit("--file required for import-file mode")
