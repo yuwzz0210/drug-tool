@@ -117,3 +117,12 @@ extra_indications（拓展适应症）、reviewed_at（核查时间）。
 > 2026-09-06 修订：第二通道（上市药品信息）已上线，drug_leaflet 唯一键为
 > `(product_id, catalog_rid)`；`approval_number` 仅存真实国药准字/注册证号，
 > 无文号记录留空（不再使用 PM: 合成键）。迁移脚本：tools/migrate_leaflet_key.py。
+
+## 11. 价格/集采层扩展（2026-09-14，步骤2）
+- `price_history` 扩展为多维度：新增 `region`（省份）/`batch`（批次）/`price_flag`（红标/黄标），
+  唯一键改为 `(product_id, price_type, region, batch, effective_date)`；
+  价格永远按“地区×批次×时间”一行一价，不覆盖历史。
+- 新增 `procurement_result`（集采结果/供应表）：以 `batch + 序号 + 通用名 + 规格包装 + 企业`
+  幂等；`product_id` 可空——先存原始身份字段，注册库补齐后按身份牌回挂，避免无牌入库。
+  首个数据集：第 12 批 GY-YD2026-1（752 行；11 已挂，741 待回挂；官方文件无价格→不写价格）。
+- 迁移脚本：tools/migrate_price_procurement.py（自动先备份数据库）。

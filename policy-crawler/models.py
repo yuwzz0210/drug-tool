@@ -305,6 +305,9 @@ CREATE TABLE IF NOT EXISTS price_history (
     price_type TEXT NOT NULL DEFAULT '挂网',
     price REAL NOT NULL,
     unit TEXT DEFAULT '',
+    region TEXT DEFAULT '',
+    batch TEXT DEFAULT '',
+    price_flag TEXT DEFAULT '',
     effective_date TEXT DEFAULT '',
     expire_date TEXT DEFAULT '',
     source_url TEXT DEFAULT '',
@@ -312,7 +315,26 @@ CREATE TABLE IF NOT EXISTS price_history (
     reviewed_by TEXT DEFAULT '',
     notes TEXT DEFAULT '',
     created_at TEXT DEFAULT (datetime('now','localtime')),
-    UNIQUE (product_id, price_type, effective_date, price)
+    UNIQUE (product_id, price_type, region, batch, effective_date)
+);
+CREATE TABLE IF NOT EXISTS procurement_result (
+    result_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    batch TEXT NOT NULL,
+    batch_seq TEXT DEFAULT '',
+    variety_name TEXT DEFAULT '',
+    generic_name TEXT NOT NULL,
+    dosage_form TEXT DEFAULT '',
+    spec_pack TEXT DEFAULT '',
+    packaging TEXT DEFAULT '',
+    supplier TEXT NOT NULL,
+    product_id INTEGER REFERENCES drug_product(product_id) ON DELETE SET NULL,
+    price REAL,
+    price_unit TEXT DEFAULT '',
+    source TEXT DEFAULT '',
+    source_url TEXT DEFAULT '',
+    created_at TEXT DEFAULT (datetime('now','localtime')),
+    updated_at TEXT DEFAULT (datetime('now','localtime')),
+    UNIQUE (batch, batch_seq, generic_name, spec_pack, supplier)
 );
 CREATE TABLE IF NOT EXISTS drug_market (
     market_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -519,6 +541,9 @@ CREATE TABLE IF NOT EXISTS price_history (
     price_type VARCHAR(20) NOT NULL DEFAULT '挂网',
     price NUMERIC(12,4) NOT NULL,
     unit VARCHAR(20) DEFAULT '',
+    region VARCHAR(40) DEFAULT '',
+    batch VARCHAR(60) DEFAULT '',
+    price_flag VARCHAR(10) DEFAULT '',
     effective_date DATE,
     expire_date DATE,
     source_url TEXT DEFAULT '',
@@ -526,7 +551,26 @@ CREATE TABLE IF NOT EXISTS price_history (
     reviewed_by VARCHAR(100) DEFAULT '',
     notes TEXT DEFAULT '',
     created_at TIMESTAMPTZ DEFAULT NOW(),
-    UNIQUE (product_id, price_type, effective_date, price)
+    UNIQUE (product_id, price_type, region, batch, effective_date)
+);
+CREATE TABLE IF NOT EXISTS procurement_result (
+    result_id BIGSERIAL PRIMARY KEY,
+    batch VARCHAR(60) NOT NULL,
+    batch_seq VARCHAR(20) DEFAULT '',
+    variety_name VARCHAR(200) DEFAULT '',
+    generic_name VARCHAR(200) NOT NULL,
+    dosage_form VARCHAR(60) DEFAULT '',
+    spec_pack VARCHAR(200) DEFAULT '',
+    packaging TEXT DEFAULT '',
+    supplier VARCHAR(300) NOT NULL,
+    product_id BIGINT REFERENCES drug_product(product_id) ON DELETE SET NULL,
+    price NUMERIC(12,4),
+    price_unit VARCHAR(40) DEFAULT '',
+    source VARCHAR(200) DEFAULT '',
+    source_url VARCHAR(500) DEFAULT '',
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW(),
+    UNIQUE (batch, batch_seq, generic_name, spec_pack, supplier)
 );
 CREATE TABLE IF NOT EXISTS drug_market (
     market_id BIGSERIAL PRIMARY KEY,

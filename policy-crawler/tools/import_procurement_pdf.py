@@ -87,6 +87,33 @@ def find_product(products, generic, dosage, spec_pack, company):
     return best[1] if best[0] >= 1 else None
 
 
+def insert_procurement_result(db, row, product_id=None):
+    """Idempotent insert of one supply-list row (product_id may be NULL)."""
+    db.execute(
+        """INSERT INTO procurement_result
+           (batch, batch_seq, variety_name, generic_name, dosage_form,
+            spec_pack, packaging, supplier, product_id, price, price_unit,
+            source, source_url, updated_at)
+           VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,datetime('now','localtime'))
+           ON CONFLICT(batch, batch_seq, generic_name, spec_pack, supplier)
+           DO UPDATE SET
+             variety_name=excluded.variety_name,
+             dosage_form=excluded.dosage_form,
+             packaging=excluded.packaging,
+             product_id=excluded.product_id,
+             price=excluded.price,
+             price_unit=excluded.price_unit,
+             source=excluded.source,
+             source_url=excluded.source_url,
+             updated_at=excluded.updated_at""",
+        (row["batch"], row["batch_seq"], row["variety_name"],
+         row["generic_name"], row["dosage_form"], row["spec_pack"],
+         row["packaging"], row["supplier"], product_id, row.get("price"),
+         row.get("price_unit", ""), row.get("source", ""),
+         row.get("source_url", "")))
+    db.commit()
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--db", default="policy_crawler.db")
@@ -107,42 +134,30 @@ def main():
             continue
         seq, variety, generic, dosage, spec_pack, pack_way, company = r[:7]
         prod = find_product(products, generic, dosage, spec_pack, company)
-        if not prod:
-            audit.append({"action": "unlinked",
-                          "generic": generic, "dosage": dosage,
-                          "spec_pack": spec_pack, "company": company,
-                          "seq": seq})
-            continue
         payload = {
-            "batch": BATCH, "seq": seq, "variety": variety,
+            "batch": BATCH, "batch_seq": seq, "variety_name": variety,
             "generic_name": generic, "dosage_form": dosage,
             "spec_pack": spec_pack, "packaging": pack_way,
-            "supplier": company, "source": "第12批供应清单(官方PDF)"}
+            "supplier": company, "price": None, "price_unit": "",
+            "source": "第12批供应清单(官方PDF)"}
         if not args.dry_run:
-            ex = db.execute(
-                "SELECT extra_data FROM drug_product WHERE product_id=?",
-                (prod[0],)).fetchone()
-            extra = {}
-            try:
-                extra = json.loads(ex[0] or "{}")
-            except Exception:
-                extra = {}
-            items = extra.setdefault("procurement", [])
-            if not any(x.get("batch") == BATCH and x.get("seq") == seq
-                       for x in items):
-                items.append(payload)
-            db.execute("UPDATE drug_product SET extra_data=? WHERE product_id=?",
-                       (json.dumps(extra, ensure_ascii=False), prod[0]))
-            db.commit()
-        linked += 1
-        audit.append({"action": "linked", "product_id": prod[0],
-                      "generic": generic, "spec_pack": spec_pack})
+            insert_procurement_result(db, payload,
+                                      prod[0] if prod else None)
+        if prod:
+            linked += 1
+            audit.append({"action": "linked", "product_id": prod[0],
+                          "generic": generic, "spec_pack": spec_pack})
+        else:
+            audit.append({"action": "stored_unlinked",
+                          "generic": generic, "spec_pack": spec_pack,
+                          "company": company, "seq": seq})
 
     # result-table stats only (no dosage/spec -> not linked)
     seqs = {r[0] for r in result_rows if r[0].isdigit()}
     companies = {main_company(r[2]) for r in result_rows if len(r) >= 3}
     stats = {"supply_rows": len(supply_rows), "linked": linked,
-             "unlinked": sum(1 for a in audit if a["action"] == "unlinked"),
+             "stored_unlinked":
+                 sum(1 for a in audit if a["action"] == "stored_unlinked"),
              "result_varieties": len(seqs),
              "result_companies": len(companies)}
     print("STATS", json.dumps(stats, ensure_ascii=False))
@@ -150,7 +165,7 @@ def main():
         print("unlinked samples:")
         n = 0
         for a in audit:
-            if a["action"] == "unlinked":
+            if a["action"] == "stored_unlinked":
                 print(" ", a)
                 n += 1
                 if n >= 8:
