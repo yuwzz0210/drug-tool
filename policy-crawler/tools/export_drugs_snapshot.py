@@ -1,82 +1,120 @@
 # -*- coding: utf-8 -*-
-"""导出站点快照 data/drugs.json（分页取全量品种，含注册/医保/适应症/机制）。
+"""导出站点快照 data/drugs.json（v1：直接消费 drug_profile 视图）。
+
+视图负责“最新值”口径；数组类字段（适应症/机制/文号/医保/集采/政策）在导出时
+按 product_id 聚合组装。保留旧字段（indications/mechanisms/insurance/registrations
+/package_insert_url…）以兼容现有前端。
 
 用法（policy-crawler 目录下）：
-    python tools/export_drugs_snapshot.py --db policy_crawler.db --out ../data/drugs.json
+    python tools/export_drugs_snapshot.py --db policy_crawler.db --out ../../repo/data/drugs.json
 """
 import argparse
 import json
 import os
+import sqlite3
 import sys
 
-ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
 
-from drug_queries import drug_detail  # noqa: E402
-from drugstore import DrugStore  # noqa: E402
+
+def _rows_by(db, sql, key=0):
+    out = {}
+    for r in db.execute(sql):
+        out.setdefault(r[key], []).append(r)
+    return out
 
 
 def export_snapshot(db_path, out_path):
-    drugs = DrugStore.from_path(db_path)
+    db = sqlite3.connect(db_path)
+    db.row_factory = sqlite3.Row
+    view_rows = db.execute("SELECT * FROM drug_profile ORDER BY product_id"
+                           ).fetchall()
+
+    indications = _rows_by(
+        db, "SELECT product_id, indication_text FROM drug_indication")
+    mechanisms = _rows_by(
+        db, "SELECT product_id, mechanism_text FROM drug_mechanism")
+    ingredients = _rows_by(
+        db, "SELECT product_id, ingredient_name, strength, unit "
+            "FROM drug_ingredient")
+    regs = _rows_by(
+        db, "SELECT product_id, approval_number, status, registration_date, "
+            "holder, source_url FROM drug_registration")
+    leaflet_by_approval = {}
+    for r in db.execute("SELECT approval_number, pdf_url, source_url, "
+                        "leaflet_date FROM drug_leaflet"):
+        if r["approval_number"]:
+            leaflet_by_approval[r["approval_number"]] = dict(r)
+    insurance = _rows_by(db, """
+        SELECT e.product_id, e.region, e.category, e.insurance_code,
+               e.payment_scope, e.reimbursement_ratio, e.supplement_status,
+               e.price, e.effective_date, e.is_current, c.version_name
+        FROM drug_insurance_entry e
+        LEFT JOIN insurance_catalog c ON c.catalog_id=e.catalog_id""")
+    vbp = _rows_by(db, """
+        SELECT product_id, batch, batch_seq, variety_name, spec_pack,
+               supplier, price, price_unit, source
+        FROM procurement_result WHERE product_id IS NOT NULL""")
+    policies = _rows_by(db, """
+        SELECT r.product_id, p.id, p.title, p.publish_date, p.source_url,
+               p.issuing_authority
+        FROM policy_drug_relation r JOIN policies p ON p.id=r.policy_id""")
+    extra = {r[0]: r[1] for r in db.execute(
+        "SELECT product_id, extra_data FROM drug_product")}
+
     out = []
-    # load leaflet rows once: product-level summary + per-approval links
-    leaflet_rows = drugs._conn.execute("""
-        SELECT product_id, approval_number, pdf_url, source_url,
-               leaflet_date, cold_chain, route
-        FROM drug_leaflet
-        ORDER BY leaflet_id
-    """).fetchall()
-    by_product = {}
-    by_approval = {}
-    for (pid, pzwh, pdf, src, ldate, cold, route) in leaflet_rows:
-        by_product.setdefault(pid, []).append(
-            {"pdf_url": pdf, "source_url": src, "leaflet_date": ldate or "",
-             "cold_chain": cold or "", "route": route or ""})
-        by_approval[pzwh] = {"pdf_url": pdf, "source_url": src,
-                             "leaflet_date": ldate or ""}
-    page = 1
-    while True:
-        total, rows = drugs.fetch_products(page=page, size=100)
-        for r in rows:
-            d = drug_detail(drugs, r["product_id"])
-            leaflets = by_product.get(d["product_id"], [])
-            summary = leaflets[0] if leaflets else {}
-            out.append({
-                "product_id": d["product_id"],
-                "generic_name": d["generic_name"],
-                "trade_name": d["trade_name"],
-                "dosage_form": d["dosage_form"],
-                "specification": d["specification"],
-                "manufacturer": d["manufacturer_norm"],
-                "atc_code": d["atc_code"],
-                "drug_type": d["drug_type"],
-                "is_verified": bool(d["is_verified"]),
-                "indications": [i["indication_text"] for i in d["indications"]],
-                "mechanisms": [m["mechanism_text"] for m in d["mechanisms"]],
-                "ingredients": d["ingredients"],
-                "registrations": [
-                    {"approval_number": x["approval_number"], "status": x["status"],
-                     "registration_date": x["registration_date"],
-                     "holder": x.get("holder", ""),
-                     "leaflet_pdf_url": by_approval.get(
-                         x["approval_number"], {}).get("pdf_url", ""),
-                     "leaflet_date": by_approval.get(
-                         x["approval_number"], {}).get("leaflet_date", "")}
-                    for x in d["registrations"]
-                ],
-                "insurance": d["insurance"],
-                "package_insert_url": summary.get("pdf_url", ""),
-                "leaflet_source_url": summary.get("source_url", ""),
-                "leaflet_date": summary.get("leaflet_date", ""),
-                "cold_chain": summary.get("cold_chain", ""),
-                "route": summary.get("route", ""),
-                "extra_data": json.loads(d["extra_data"] or "{}"),
-                "updated_at": d["updated_at"],
+    for v in view_rows:
+        pid = v["product_id"]
+        reg_list = []
+        for r in regs.get(pid, []):
+            leaf = leaflet_by_approval.get(r["approval_number"], {})
+            reg_list.append({
+                "approval_number": r["approval_number"],
+                "status": r["status"], "registration_date": r["registration_date"],
+                "holder": r["holder"],
+                "leaflet_pdf_url": leaf.get("pdf_url", ""),
+                "leaflet_date": leaf.get("leaflet_date", ""),
             })
-        if page * 100 >= total:
-            break
-        page += 1
-    drugs.close()
+        rec = dict(v)
+        rec.update({
+            "is_verified": False,
+            "indications": [r["indication_text"] for r in indications.get(pid, [])],
+            "mechanisms": [r["mechanism_text"] for r in mechanisms.get(pid, [])],
+            "ingredients": [
+                {"name": r["ingredient_name"], "strength": r["strength"],
+                 "unit": r["unit"]} for r in ingredients.get(pid, [])],
+            "registrations": reg_list,
+            "insurance": [
+                {"region": r["region"], "category": r["category"],
+                 "insurance_code": r["insurance_code"],
+                 "payment_scope": r["payment_scope"],
+                 "reimbursement_ratio": r["reimbursement_ratio"],
+                 "supplement_status": r["supplement_status"],
+                 "price": r["price"], "effective_date": r["effective_date"],
+                 "is_current": r["is_current"],
+                 "catalog_version": r["version_name"]}
+                for r in insurance.get(pid, [])],
+            "vbp_events": [
+                {"batch": r["batch"], "seq": r["batch_seq"],
+                 "variety_name": r["variety_name"], "spec_pack": r["spec_pack"],
+                 "supplier": r["supplier"], "price": r["price"],
+                 "price_unit": r["price_unit"], "source": r["source"]}
+                for r in vbp.get(pid, [])],
+            "policy_links": [
+                {"id": r["id"], "title": r["title"],
+                 "publish_date": r["publish_date"],
+                 "source_url": r["source_url"],
+                 "issuing_authority": r["issuing_authority"]}
+                for r in policies.get(pid, [])],
+            "package_insert_url": v["leaflet_url"] or "",
+            "leaflet_source_url": v["source_url"] or "",
+            "extra_data": json.loads(extra.get(pid) or "{}"),
+        })
+        out.append(rec)
+    db.close()
     os.makedirs(os.path.dirname(os.path.abspath(out_path)), exist_ok=True)
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=2)
@@ -86,7 +124,9 @@ def export_snapshot(db_path, out_path):
 def main(argv=None):
     parser = argparse.ArgumentParser(description="导出 data/drugs.json 站点快照")
     parser.add_argument("--db", default="policy_crawler.db")
-    parser.add_argument("--out", default=os.path.join(ROOT, "repo", "data", "drugs.json"))
+    parser.add_argument("--out", default=os.path.join(
+        os.path.dirname(os.path.dirname(os.path.dirname(
+            os.path.abspath(__file__)))), "repo", "data", "drugs.json"))
     args = parser.parse_args(argv)
     n = export_snapshot(args.db, args.out)
     print("drugs.json 已导出:", n, "条 →", args.out)

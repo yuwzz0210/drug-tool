@@ -134,3 +134,14 @@ extra_indications（拓展适应症）、reviewed_at（核查时间）。
 - 幂等性由导入器“先删后插”保证；查询索引 `(product_id, catalog_id, region, insurance_code)`，
   允许多个目录条目共享同一医保编码（如不同剂型）；
 - 迁移脚本：tools/migrate_insurance_dimensions.py（自动备份，含重复行清理报告）。
+
+## 13. drug_profile v1 视图（2026-09-14）
+- 粒度：**一行 = 一个批准文号**（无文号品种 approval_number 为空），业务键 approval_number、
+  物理键 product_id（见 docs/drug_profile字段表-v1.md）。
+- 视图统一“最新值”口径：最新说明书(updated_at)、最新挂网价(effective_date)、
+  当前医保目录/编码/类别、集采批次计数与聚合、政策关联计数；含派生字段
+  origin_type（国产/进口）、followers_count（同分子厂家数）、is_exclusive。
+- 数组字段（适应症/机制/文号列表/医保明细/集采事件/政策链接）由快照导出器组装，
+  前端只需消费 `data/drugs.json` 一个契约。
+- 脚本：tools/migrate_drug_profile_view.py（重建视图）；导出：tools/export_drugs_snapshot.py。
+- 注意：快照行数由“品种数”变为“文号粒度”（当前 1273 行），前端列表口径需在 UI 优化阶段适配。

@@ -218,6 +218,120 @@ CREATE TABLE IF NOT EXISTS crawler_logs (
 );
 """
 
+# drug_profile v1：一行 = 一个批准文号（无文号品种 approval_number 为空），
+# “最新值”统一在此定义，前端/快照不再各自取数。
+DRUG_PROFILE_VIEW_SQL = """
+CREATE VIEW IF NOT EXISTS drug_profile AS
+SELECT
+    p.product_id,
+    r.approval_number,
+    p.generic_name,
+    p.trade_name,
+    p.manufacturer_norm AS manufacturer,
+    r.holder,
+    p.dosage_form,
+    p.specification,
+    r.registration_date AS approval_date,
+    CASE WHEN COALESCE(r.approval_number,'') LIKE '国药准字J%'
+         THEN '进口' ELSE '国产' END AS origin_type,
+    p.molecule_id,
+    m.generic_name AS molecule_name,
+    m.atc_code,
+    m.mechanism_summary,
+    m.route,
+    m.cold_chain,
+    m.generation,
+    m.iteration_chain,
+    m.guideline_level,
+    m.extra_indications,
+    p.package_insert_url AS leaflet_url,
+    p.source_url,
+    (SELECT l.leaflet_date FROM drug_leaflet l
+      WHERE l.product_id=p.product_id
+      ORDER BY l.updated_at DESC, l.leaflet_id DESC LIMIT 1) AS leaflet_date,
+    (SELECT l.usage_dosage FROM drug_leaflet l
+      WHERE l.product_id=p.product_id
+      ORDER BY l.updated_at DESC, l.leaflet_id DESC LIMIT 1) AS usage_dosage,
+    (SELECT l.storage FROM drug_leaflet l
+      WHERE l.product_id=p.product_id
+      ORDER BY l.updated_at DESC, l.leaflet_id DESC LIMIT 1) AS storage,
+    (SELECT GROUP_CONCAT(di.indication_text, '；')
+       FROM drug_indication di WHERE di.product_id=p.product_id)
+        AS indications_text,
+    (SELECT COUNT(*) FROM drug_indication di
+      WHERE di.product_id=p.product_id) AS indication_count,
+    (SELECT COUNT(DISTINCT p2.manufacturer_norm) FROM drug_product p2
+      WHERE p2.molecule_id=p.molecule_id AND p2.molecule_id IS NOT NULL)
+        AS followers_count,
+    CASE WHEN m.molecule_id IS NOT NULL AND
+         (SELECT COUNT(DISTINCT p2.manufacturer_norm) FROM drug_product p2
+           WHERE p2.molecule_id=p.molecule_id)=1
+         THEN 1 ELSE 0 END AS is_exclusive,
+    (SELECT ie.category FROM drug_insurance_entry ie
+      WHERE ie.product_id=p.product_id AND ie.is_current=1
+      ORDER BY ie.catalog_id DESC, ie.entry_id DESC LIMIT 1)
+        AS insurance_category,
+    (SELECT ie.insurance_code FROM drug_insurance_entry ie
+      WHERE ie.product_id=p.product_id AND ie.is_current=1
+      ORDER BY ie.catalog_id DESC, ie.entry_id DESC LIMIT 1)
+        AS insurance_code,
+    (SELECT ie.region FROM drug_insurance_entry ie
+      WHERE ie.product_id=p.product_id AND ie.is_current=1
+      ORDER BY ie.catalog_id DESC, ie.entry_id DESC LIMIT 1)
+        AS insurance_region,
+    (SELECT ie.reimbursement_ratio FROM drug_insurance_entry ie
+      WHERE ie.product_id=p.product_id AND ie.is_current=1
+      ORDER BY ie.catalog_id DESC, ie.entry_id DESC LIMIT 1)
+        AS reimbursement_ratio,
+    (SELECT ie.payment_scope FROM drug_insurance_entry ie
+      WHERE ie.product_id=p.product_id AND ie.is_current=1
+      ORDER BY ie.catalog_id DESC, ie.entry_id DESC LIMIT 1)
+        AS payment_scope,
+    (SELECT ie.supplement_status FROM drug_insurance_entry ie
+      WHERE ie.product_id=p.product_id AND ie.is_current=1
+      ORDER BY ie.catalog_id DESC, ie.entry_id DESC LIMIT 1)
+        AS supplement_status,
+    (SELECT ic.version_name FROM drug_insurance_entry ie
+       JOIN insurance_catalog ic ON ic.catalog_id=ie.catalog_id
+      WHERE ie.product_id=p.product_id AND ie.is_current=1
+      ORDER BY ic.catalog_id DESC LIMIT 1)
+        AS insurance_catalog_version,
+    (SELECT MIN(ic.publish_date) FROM drug_insurance_entry ie
+       JOIN insurance_catalog ic ON ic.catalog_id=ie.catalog_id
+      WHERE ie.product_id=p.product_id AND ic.publish_date IS NOT NULL
+        AND ic.publish_date != '')
+        AS insurance_since_date,
+    (SELECT ph.price FROM price_history ph
+      WHERE ph.product_id=p.product_id AND ph.price_type='挂网'
+      ORDER BY ph.effective_date DESC, ph.price_id DESC LIMIT 1)
+        AS latest_listed_price,
+    (SELECT ph.region FROM price_history ph
+      WHERE ph.product_id=p.product_id AND ph.price_type='挂网'
+      ORDER BY ph.effective_date DESC, ph.price_id DESC LIMIT 1)
+        AS listed_price_region,
+    (SELECT ph.effective_date FROM price_history ph
+      WHERE ph.product_id=p.product_id AND ph.price_type='挂网'
+      ORDER BY ph.effective_date DESC, ph.price_id DESC LIMIT 1)
+        AS listed_price_date,
+    (SELECT pr.price FROM procurement_result pr
+      WHERE pr.product_id=p.product_id AND pr.price IS NOT NULL
+      ORDER BY pr.updated_at DESC, pr.result_id DESC LIMIT 1)
+        AS latest_vbp_price,
+    (SELECT pr.batch FROM procurement_result pr
+      WHERE pr.product_id=p.product_id
+      ORDER BY pr.updated_at DESC, pr.result_id DESC LIMIT 1)
+        AS latest_vbp_batch,
+    (SELECT COUNT(*) FROM procurement_result pr
+      WHERE pr.product_id=p.product_id) AS vbp_event_count,
+    (SELECT GROUP_CONCAT(DISTINCT pr.batch) FROM procurement_result pr
+      WHERE pr.product_id=p.product_id) AS vbp_batches,
+    (SELECT COUNT(*) FROM policy_drug_relation pdr
+      WHERE pdr.product_id=p.product_id) AS policy_count,
+    datetime('now','localtime') AS generated_at
+FROM drug_product p
+LEFT JOIN drug_registration r ON r.product_id = p.product_id
+LEFT JOIN drug_molecule m ON m.molecule_id = p.molecule_id;
+"""
 
 POSTGRES_DDL = """
 CREATE TABLE IF NOT EXISTS policies (
@@ -501,6 +615,9 @@ CREATE TABLE IF NOT EXISTS drug_leaflet (
     UNIQUE (product_id, catalog_rid)
 );
 """
+
+# 视图在 DRUG_SCHEMA 定义完成后追加，供 DrugStore 初始化与迁移脚本共用
+DRUG_SCHEMA = DRUG_SCHEMA + "\n" + DRUG_PROFILE_VIEW_SQL
 
 
 # PostgreSQL 药品/器械域 DDL（路线 A：迁移到 Supabase/Neon 时直接执行）
