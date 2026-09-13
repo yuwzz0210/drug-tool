@@ -391,6 +391,8 @@ CREATE TABLE IF NOT EXISTS insurance_catalog (
     catalog_id INTEGER PRIMARY KEY AUTOINCREMENT,
     version_name TEXT UNIQUE,
     publish_date TEXT DEFAULT '',
+    region TEXT DEFAULT '国家',
+    catalog_type TEXT DEFAULT '国家医保药品目录',
     source_url TEXT DEFAULT '',
     notes TEXT DEFAULT ''
 );
@@ -398,13 +400,18 @@ CREATE TABLE IF NOT EXISTS drug_insurance_entry (
     entry_id INTEGER PRIMARY KEY AUTOINCREMENT,
     product_id INTEGER NOT NULL REFERENCES drug_product(product_id) ON DELETE CASCADE,
     catalog_id INTEGER REFERENCES insurance_catalog(catalog_id),
+    region TEXT DEFAULT '国家',
     category TEXT DEFAULT '',
     insurance_code TEXT DEFAULT '',
     payment_scope TEXT DEFAULT '',
+    reimbursement_ratio TEXT DEFAULT '',
+    supplement_status TEXT DEFAULT '',
     price TEXT DEFAULT '',
     effective_date TEXT DEFAULT '',
     expire_date TEXT DEFAULT '',
-    is_current INTEGER DEFAULT 1
+    is_current INTEGER DEFAULT 1,
+    source_url TEXT DEFAULT '',
+    notes TEXT DEFAULT ''
 );
 CREATE TABLE IF NOT EXISTS insurance_catalog_entry (
     entry_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -627,6 +634,8 @@ CREATE TABLE IF NOT EXISTS insurance_catalog (
     catalog_id BIGSERIAL PRIMARY KEY,
     version_name VARCHAR(100) UNIQUE,
     publish_date DATE,
+    region VARCHAR(40) DEFAULT '国家',
+    catalog_type VARCHAR(60) DEFAULT '国家医保药品目录',
     source_url TEXT DEFAULT '',
     notes TEXT DEFAULT ''
 );
@@ -634,13 +643,18 @@ CREATE TABLE IF NOT EXISTS drug_insurance_entry (
     entry_id BIGSERIAL PRIMARY KEY,
     product_id BIGINT NOT NULL REFERENCES drug_product(product_id) ON DELETE CASCADE,
     catalog_id BIGINT REFERENCES insurance_catalog(catalog_id),
+    region VARCHAR(40) DEFAULT '国家',
     category VARCHAR(30) DEFAULT '',
     insurance_code VARCHAR(50) DEFAULT '',
     payment_scope TEXT DEFAULT '',
+    reimbursement_ratio VARCHAR(100) DEFAULT '',
+    supplement_status VARCHAR(60) DEFAULT '',
     price TEXT DEFAULT '',
     effective_date DATE,
     expire_date DATE,
-    is_current BOOLEAN DEFAULT TRUE
+    is_current BOOLEAN DEFAULT TRUE,
+    source_url VARCHAR(500) DEFAULT '',
+    notes TEXT DEFAULT ''
 );
 CREATE TABLE IF NOT EXISTS insurance_catalog_entry (
     entry_id BIGSERIAL PRIMARY KEY,

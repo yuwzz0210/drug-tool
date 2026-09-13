@@ -126,3 +126,11 @@ extra_indications（拓展适应症）、reviewed_at（核查时间）。
   幂等；`product_id` 可空——先存原始身份字段，注册库补齐后按身份牌回挂，避免无牌入库。
   首个数据集：第 12 批 GY-YD2026-1（752 行；11 已挂，741 待回挂；官方文件无价格→不写价格）。
 - 迁移脚本：tools/migrate_price_procurement.py（自动先备份数据库）。
+
+## 12. 医保层维度扩展（2026-09-14，步骤3）
+- `insurance_catalog` 新增 `region`（国家/省）与 `catalog_type`（国家医保药品目录/基药目录/地方目录…）；
+- `drug_insurance_entry` 新增 `region`（地区）、`reimbursement_ratio`（报销比例/自付规则）、
+  `supplement_status`（国家/省级增补状态）、`source_url`、`notes`；
+- 幂等性由导入器“先删后插”保证；查询索引 `(product_id, catalog_id, region, insurance_code)`，
+  允许多个目录条目共享同一医保编码（如不同剂型）；
+- 迁移脚本：tools/migrate_insurance_dimensions.py（自动备份，含重复行清理报告）。
