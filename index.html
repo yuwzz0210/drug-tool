@@ -1201,11 +1201,13 @@ function openDrugDetail(gn){
       bars.map(s=>'<div style="margin-top:8px"><div style="display:flex;justify-content:space-between;font-size:13px"><span>'+s.k+'</span><span>'+s.v+'分 × '+s.w+'%</span></div><div class="scorebar"><i style="width:'+Math.min(100,Math.round(s.v*s.w/100))+'%"></i></div></div>').join('')+
       '<div style="margin-top:12px"><button class="btn alt" onclick="openWeightEditor()">调整权重</button></div>'+
     '</div>'+
-    /* ⑤ 竞争格局 */
-    '<div class="card"><h3>竞争格局 · 同病种（'+peers.length+'个品种）</h3>'+
-      '<div style="font-size:14px;font-weight:700;margin:10px 0 4px">代际演进时间轴</div>'+lineageTimeline(peers,d)+
+    /* ⑤ 竞争格局（简版：头对头 + 走势摘要；完整版见「竞争格局」模块） */
+    '<div class="card"><h3>头对头对比（'+peers.length+'个同类品种）</h3>'+
+      compactCompareTable(peers,d)+
       replacementHint(d,peers)+
-      '<div style="font-size:14px;font-weight:700;margin:12px 0 4px">同病种横向对比</div>'+competeTable(peers,'detailContent')+
+      '<div style="font-size:14px;font-weight:700;margin:10px 0 4px">同类走势推演（摘要）</div>'+
+      trendHTML(peers,d,2)+
+      '<div class="row" style="margin-top:10px"><button class="btn alt" onclick="openCompetitionFor(\''+d.gn.replace(/'/g,"\\'")+'\')">查看完整竞争格局 →</button></div>'+
     '</div>'+
     /* ⑥ 政策关联 */
     '<div class="card"><h3>政策关联</h3>'+
@@ -1243,6 +1245,82 @@ function replacementHint(d,peers){
   const growth=peers.filter(p=>p!==d&&(p.year||0)>(d.year||0)&&(getLifecycle(p)==='成长'||getLifecycle(p)==='新兴'));
   if(!growth.length)return'';
   return '<div class="note" style="margin:8px 0"><b>⚠️ 替代窗口：</b>'+growth.map(p=>p.gn).join('、')+'处于成长/新兴期，已构成替代压力，建议关注其市场放量节奏。</div>';
+}
+/* 头对头：优先同代际，其次上市年最接近，最多 2 个对手 */
+function headToHeadPeers(peers,d,n){
+  const limit=n||2;
+  return peers.filter(p=>p!==d).map(p=>{
+    let score=0;
+    if((p.gen||'')===(d.gen||''))score+=10;
+    if((p.disease||'')===(d.disease||''))score+=5;
+    if(p.year&&d.year)score+=Math.max(0,5-Math.abs(p.year-d.year)/2);
+    return {p,score};
+  }).sort((a,b)=>b.score-a.score).slice(0,limit).map(x=>x.p);
+}
+function compactCompareTable(peers,d){
+  const rows=[d].concat(headToHeadPeers(peers,d,2));
+  let html='<table><tr><th>品种</th><th>商品名</th><th>厂家</th><th>世代</th><th>上市年</th><th>医保</th><th>挂网价</th><th>年化费用</th><th>青睐度</th></tr>';
+  rows.forEach(p=>{html+='<tr'+(p===d?' style="background:#fef3c7;font-weight:600"':'')+'>'+
+    '<td>'+p.gn+'</td><td>'+(p.bn||'—')+'</td><td>'+(p.mfr||'—')+'</td><td>'+(p.gen||'—')+'</td>'+
+    '<td>'+(p.year||'—')+'</td><td>'+insTag(p.ins)+'</td>'+
+    '<td>'+(p.price!=null?'¥'+p.price:'—')+'</td><td>'+(p.annual!=null?'¥'+Number(p.annual).toLocaleString():'—')+'</td>'+
+    '<td>'+calcFavor(p)+'</td></tr>';});
+  return html+'</table>';
+}
+/* 同类走势推演：基于系统内同类样本的医保/集采/价格/市场/代际规律推演 */
+function classTrendAnalysis(peers,d){
+  const list=peers.length?peers:(d?[d]:[]);
+  const cur=d||(list.length?list[list.length-1]:{});
+  const n=list.length,out=[];
+  const insGaps=list.filter(p=>p.year&&p.insyear).map(p=>p.insyear-p.year).filter(x=>x>=0);
+  const insured=list.filter(p=>p.ins&&(p.ins.indexOf('医保')>=0||p.ins.indexOf('国谈')>=0||p.ins.indexOf('集采')>=0)).length;
+  if(insGaps.length){
+    const avg=Math.round(insGaps.reduce((a,b)=>a+b,0)/insGaps.length*10)/10;
+    out.push('医保路径：同类样本 '+insGaps.length+' 个，上市→进入医保平均 '+avg+' 年；推算新品种预计上市后 '+Math.max(1,Math.round(avg-1))+'–'+Math.ceil(avg+1)+' 年进入医保窗口。');
+  }else{
+    out.push('医保路径：样本缺少“上市年/进医保年”数据，暂无法推演（需补医保准入年份）。');
+  }
+  const vbpCount=list.filter(p=>p.vbp&&(p.vbp.indexOf('集采')>=0||p.vbp.indexOf('高')>=0)).length;
+  if(vbpCount){
+    out.push('集采风险：同类 '+vbpCount+'/'+n+' 已纳入/高风险集采；当过评厂家≥3家且上市≥4年时触发集采概率显著上升（规则估算）。');
+  }
+  const annuals=list.map(p=>p.annual).filter(v=>typeof v==='number'&&v>0);
+  if(annuals.length){
+    annuals.sort((a,b)=>a-b);
+    const mid=annuals[Math.floor(annuals.length/2)];
+    out.push('价格与费用：同类年化费用中位数约 ¥'+Number(mid).toLocaleString()+'；参照国谈/集采常态，进入目录或集采后通常降至原价的 30%–60%（规则估算，历史价格补齐后可精确）。');
+  }
+  const salesList=list.map(p=>p.sales).filter(v=>typeof v==='number'&&v>0);
+  if(salesList.length){
+    const avgSales=Math.round(salesList.reduce((a,b)=>a+b,0)/salesList.length*10)/10;
+    out.push('市场走势：样本中 '+salesList.length+' 个披露销售额，均值约 '+avgSales+' 亿元；医保覆盖提升与双通道落地后，通常 1–3 年内出现放量峰值。');
+  }else{
+    out.push('市场走势：样本缺少销售额数据（需补市场/销售来源），暂以医保与集采节奏定性判断。');
+  }
+  const years=list.map(p=>p.year).filter(Boolean).sort((a,b)=>a-b);
+  if(years.length>=3){
+    const gaps=[];for(let i=1;i<years.length;i++){if(years[i]-years[i-1]>0)gaps.push(years[i]-years[i-1]);}
+    if(gaps.length){
+      const g=Math.round(gaps.reduce((a,b)=>a+b,0)/gaps.length*10)/10;
+      out.push('迭代趋势：同类平均约 '+g+' 年出现一次更新；当前品种处于“'+(cur.gen||'—')+'”，需关注新一代在疗效/给药便利上的差异化。');
+    }
+  }
+  return out;
+}
+function trendHTML(peers,d,limit){
+  const arr=classTrendAnalysis(peers,d);
+  const show=limit?arr.slice(0,limit):arr;
+  return '<div class="muted" style="line-height:1.9">'+show.map(x=>'• '+x).join('<br>')+
+    '<br><span style="color:var(--sub);font-size:12px">注：以上为基于系统内同类样本的规则推演，非真实世界预测；样本补全后可提高置信度。</span></div>';
+}
+function openCompetitionFor(gn){
+  const d=findDrug(gn);if(!d)return;
+  showSection('competeSection');
+  if(d.area&&d.disease){competeShowDisease(d.area,d.disease);}
+  else{
+    document.getElementById('competeContent').innerHTML='<div class="card"><div class="note">该品种暂缺「治疗领域/病种」分类（待 v2 数据补充），无法自动匹配同类品种。请在下方选择领域/病种浏览竞争格局。</div></div>';
+    buildCompeteAreaPick();
+  }
 }
 function priceHistoryHTML(d){
   let h='<div style="margin-top:12px"><b>价格历史时间线</b>';
@@ -1771,20 +1849,11 @@ function genFullBrief(idx){
   /* ④ 竞争格局分析 */
   L.push('<h2>四、竞争格局分析</h2>');
   if(peers.length>1){
-    L.push('<h3>同类品种对比（'+d.disease+'）</h3>');
-    L.push('<table style="margin-top:6px"><tr><th>药品名</th><th>商品名</th><th>厂家</th><th>世代</th><th>上市年</th><th>医保</th><th>挂网价</th><th>年化费用</th><th>青睐度</th></tr>');
-    peers.forEach(function(p){
-      L.push('<tr'+(p===d?' style="background:#fef3c7;font-weight:600"':'')+'><td>'+p.gn+'</td><td>'+(p.bn||'—')+'</td><td>'+(p.mfr||'—')+'</td><td>'+(p.gen||'—')+'</td><td>'+(p.year||'—')+'</td><td>'+insTag2(p.ins)+'</td><td>'+(p.price!=null?'¥'+p.price:'—')+'</td><td>'+(p.annual!=null?'¥'+Number(p.annual).toLocaleString():'—')+'</td><td>'+calcFavor(p)+'</td></tr>');
-    });
-    L.push('</table>');
-    var drugIdx=peers.indexOf(d);
-    if(drugIdx===0){
-      L.push('<div class="note" style="margin-top:8px">该品种为'+d.disease+'领域最早上市的品种之一，具有先发优势。需关注后续迭代品种的竞争压力。</div>');
-    }else if(drugIdx===peers.length-1){
-      L.push('<div class="note" style="margin-top:8px">该品种为'+d.disease+'领域最新上市品种，需关注与先发品种的差异化定位。'+(d.gen?'定位：'+d.gen:'')+'</div>');
-    }else{
-      L.push('<div class="note" style="margin-top:8px">该品种处于'+d.disease+'领域第'+(drugIdx+1)+'代位置，前有'+peers[0].gn+'等先发品种，后有迭代产品。需明确差异化竞争优势。</div>');
-    }
+    /* 简报只保留“头对头例子 + 走势结论”，完整对比放竞争格局模块 */
+    L.push('<h3>头对头对比例子（'+d.disease+'）</h3>');
+    L.push(compactCompareTable(peers,d));
+    L.push('<div class="note" style="margin-top:8px">'+classTrendAnalysis(peers,d).slice(0,2).join(' ')+'</div>');
+    L.push('<div class="muted" style="margin-top:6px">完整代际时间轴与全量横向对比请见系统「竞争格局」模块（本页保留结论与代表品种对比）。</div>');
   }else{
     L.push('<div class="note">当前'+(d.disease||'该领域')+'仅有1个品种收录，竞争格局数据待补充。建议手动调研同类品种后录入系统。</div>');
   }
@@ -1928,6 +1997,7 @@ function competeShowDisease(area,disease){
     '<h3 style="margin:0">'+area+' / '+disease+' ('+peers.length+'个品种)</h3>'+
     '<button class="btn gray" onclick="buildCompeteAreaPick()">← 返回领域选择</button></div></div>'+
     '<div class="card"><h3>迭代时间线</h3>'+lineageTimeline(peers)+'</div>'+
+    '<div class="card"><h3>同类走势推演（医保 / 集采 / 价格 / 市场 / 迭代）</h3>'+trendHTML(peers,null)+'</div>'+
     '<div class="card"><h3>横向对比</h3>'+competeTable(peers,'competeContent')+'</div>';
 }
 function competeTable(peers,container){
