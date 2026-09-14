@@ -307,11 +307,6 @@ a{color:var(--brand)}
 
 <!-- 首页 -->
 <div id="entryView" class="wrap home-hero">
-  <div class="home-card home-card-slim">
-    <h2>药品信息一站查</h2>
-    <p class="muted">在顶部搜索框输入药品名（支持拼音/商品名），一页获取市场、准入、竞争与政策完整信息</p>
-    <button class="btn home-cta" onclick="focusGlobalSearch()">🔍 去顶部搜索</button>
-  </div>
   <div class="home-grid">
     <div class="home-block" onclick="showSection('competeSection')">
       <div class="hb-icon">⚔️</div><div class="hb-title">竞争格局</div><div class="hb-desc">同病种横向对比 · 迭代趋势</div>
@@ -910,93 +905,56 @@ function saveDB(){
   try{
     const cur=localStorage.getItem(LS_KEY);
     if(cur)localStorage.setItem(LS_BACKUP_KEY,cur);
-    localStorage.setItem(LS_KEY,JSON.stringify(DB));
+    /* 官方快照每次加载都重新拉取，不入 localStorage（避免超限）；只持久化人工数据 */
+    localStorage.setItem(LS_KEY,JSON.stringify(DB.filter(d=>!d.official)));
   }catch(e){console.warn('药品数据保存失败',e);}
 }
 function ensurePDB(){if(!PDB.length)PDB=loadPolicyDB();}
 
 /* ============ 官方药品数据接轨（data/drugs.json，localStorage 降级兜底） ============ */
 const DRUGS_JSON_URL='data/drugs.json';
-function uniqList(a){const s={},o=[];(a||[]).forEach(v=>{const k=String(v);if(!s[k]){s[k]=1;o.push(v);}});return o;}
-/* drug_profile 快照是“按文号”一行；前端按分子（molecule_name/generic_name）聚合后展示 */
-function pickRep(rows){
-  return rows.find(r=>r.package_insert_url)
-      || rows.find(r=>(r.vbp_events||[]).length)
-      || rows.find(r=>r.latest_listed_price!==null&&r.latest_listed_price!==undefined)
-      || rows[0];
-}
-function mapProfileGroup(rows){
-  const rep=pickRep(rows);
-  const names=uniqList(rows.map(r=>r.molecule_name||r.generic_name).filter(Boolean));
-  const approvals=uniqList(rows.map(r=>r.approval_number).filter(Boolean));
-  const mfrs=uniqList(rows.map(r=>r.manufacturer).filter(Boolean));
-  const indications=uniqList([].concat.apply([],rows.map(r=>r.indications||[])));
-  const mechanisms=uniqList([].concat.apply([],rows.map(r=>r.mechanisms||[])));
-  const insMap={},insurance=[];
-  rows.forEach(r=>(r.insurance||[]).forEach(x=>{const k=[x.region,x.catalog_version,x.insurance_code].join('|');
-    if(!insMap[k]){insMap[k]=1;insurance.push(x);}}));
-  const vbpMap={},vbp=[];
-  rows.forEach(r=>(r.vbp_events||[]).forEach(x=>{const k=[x.batch,x.supplier,x.spec_pack].join('|');
-    if(!vbpMap[k]){vbpMap[k]=1;vbp.push(x);}}));
-  const polMap={},policy=[];
-  rows.forEach(r=>(r.policy_links||[]).forEach(x=>{if(!polMap[x.id]){polMap[x.id]=1;policy.push(x);}}));
-  const ins0=insurance.find(x=>x.is_current)||insurance[0]||{};
-  const listedPrice=(rows.map(r=>r.latest_listed_price).filter(v=>v!==null&&v!==undefined&&v!=='')[0]);
-  const vbpPrice=(rows.map(r=>r.latest_vbp_price).filter(v=>v!==null&&v!==undefined&&v!=='')[0]);
-  const followers=typeof rep.followers_count==='number'?rep.followers_count:undefined;
-  const apprText=approvals.length>3?(approvals.slice(0,3).join(' / ')+' 等'+approvals.length+'个')
-                                   :(approvals.join(' / ')||'');
-  const insLabel=ins0.category?('医保('+ins0.category+')'):(insurance.length?'已进医保':'');
+/* 官方快照是“一条批准文号 = 一条记录”；前端严格按此呈现（同名不同厂家/规格各占一条） */
+function mapProfileRow(r){
+  const insArr=r.insurance||[];
+  const ins0=insArr.find(x=>x.is_current)||insArr[0]||{};
+  const insLabel=ins0.category?('医保('+ins0.category+')'):(insArr.length?'已进医保':'');
+  const vbp=r.vbp_events||[];
   return {
-    gn:names[0]||'', bn:(rows.find(r=>r.trade_name)||{}).trade_name||'',
-    mfr:mfrs.length?(mfrs[0]+(mfrs.length>1?(' 等'+mfrs.length+'家'):'')):'',
-    form:rep.dosage_form||'', spec:rep.specification||'',
-    appr:apprText, adate:rep.approval_date||'', cls:rep.registration_class||'',
-    origin_type:rep.origin_type||'',
-    ind:indications.join('；'), ind2:'',
-    mech:mechanisms.join('；')||rep.mechanism_summary||'',
+    gn:r.molecule_name||r.generic_name||'', bn:r.trade_name||'',
+    mfr:r.manufacturer||'', form:r.dosage_form||'', spec:r.specification||'',
+    appr:r.approval_number||'', approval_number:r.approval_number||'',
+    adate:r.approval_date||'', cls:r.registration_class||'',
+    origin_type:r.origin_type||'',
+    ind:(r.indications||[]).join('；'), ind2:'',
+    mech:(r.mechanisms||[]).join('；')||r.mechanism_summary||'',
     ins:insLabel, paystd:ins0.payment_scope||'',
-    price:listedPrice!==undefined?listedPrice:'',
-    latest_vbp_price:vbpPrice!==undefined?vbpPrice:'',
-    route:rep.route||'', cold:rep.cold_chain||'',
-    gl:rep.guideline_level||'', gen:rep.generation||'',
-    patent:rep.patent_expiry||'',
-    followers:followers, excl:(rep.is_exclusive===1?'是':'否'),
+    price:(r.latest_listed_price!==null&&r.latest_listed_price!==undefined)?r.latest_listed_price:'',
+    latest_vbp_price:(r.latest_vbp_price!==null&&r.latest_vbp_price!==undefined)?r.latest_vbp_price:'',
+    route:r.route||'', cold:r.cold_chain||'',
+    gl:r.guideline_level||'', gen:r.generation||'', patent:r.patent_expiry||'',
+    followers:(typeof r.followers_count==='number'?r.followers_count:undefined),
+    excl:(r.is_exclusive===1?'是':'否'),
     vbp:vbp.length?('已集采('+vbp[0].batch+')'):'',
-    year:rep.approval_date?parseInt(String(rep.approval_date).slice(0,4),10)||undefined:undefined,
-    leaflet_url:rep.package_insert_url||'', usage_dosage:rep.usage_dosage||'',
-    insurance_details:insurance, vbp_events:vbp, policy_links:policy,
-    approvals:approvals, variants_count:rows.length,
-    ...(rep.extra_data&&typeof rep.extra_data==='object'?rep.extra_data:{}),
-    official:true, drug_id:rep.molecule_id||rep.product_id,
-    updated_at:rep.generated_at||rep.updated_at||''
+    year:r.approval_date?parseInt(String(r.approval_date).slice(0,4),10)||undefined:undefined,
+    leaflet_url:r.package_insert_url||'', usage_dosage:r.usage_dosage||'',
+    insurance_details:insArr, vbp_events:vbp, policy_links:r.policy_links||[],
+    product_id:r.product_id, molecule_id:r.molecule_id,
+    molecule_name:r.molecule_name||'',
+    variants_count:1,
+    ...(r.extra_data&&typeof r.extra_data==='object'?r.extra_data:{}),
+    official:true, updated_at:r.generated_at||r.updated_at||''
   };
 }
-function aggregateOfficialProfiles(arr){
-  const byKey={};
-  arr.forEach(r=>{const k=norm(r.molecule_name||r.generic_name||'');if(!k)return;
-    (byKey[k]=byKey[k]||[]).push(r);});
-  return Object.keys(byKey).map(k=>mapProfileGroup(byKey[k]));
+function profileKey(d){
+  const ap=d.approval_number||d.appr;
+  return ap?('AP:'+ap)
+    :('PM:'+norm(d.gn)+'|'+norm(d.mfr)+'|'+norm(d.spec)+'|'+norm(d.form));
 }
-function mergeOfficialIntoDb(official,local){
+function mergeProfileRows(rows,local){
   const byKey={};
-  official.forEach(o=>{const k=norm(o.gn||'');(byKey[k]=byKey[k]||[]).push(o);});
-  const OVERRIDE=['mfr','appr','form','spec','ind','mech','ins','paystd','price',
-    'cold','route','adate','year','leaflet_url','usage_dosage','insurance_details',
-    'vbp_events','policy_links','approvals','followers','excl','vbp','origin_type',
-    'variants_count','drug_id','updated_at','latest_vbp_price'];
-  const merged=local.map(l=>{
-    const cands=byKey[norm(l.gn||'')]||[];
-    if(!cands.length)return l;
-    let pick=cands[0];
-    if(l.mfr){const hit=cands.find(c=>c.mfr&&(c.mfr.indexOf(l.mfr)>-1||l.mfr.indexOf(c.mfr)>-1));if(hit)pick=hit;}
-    const m={...pick,...l};
-    OVERRIDE.forEach(f=>{if(pick[f]!==undefined&&pick[f]!=='')m[f]=pick[f];});
-    m.official=true;return m;
-  });
-  const localKeys={};local.forEach(l=>{localKeys[norm(l.gn||'')]=1;});
-  official.forEach(o=>{if(!localKeys[norm(o.gn||'')])merged.push(o);});
-  return merged;
+  local.forEach(d=>{byKey[profileKey(d)]=d;});
+  rows.forEach(r=>{const k=profileKey(r);byKey[k]={...(byKey[k]||{}),...r};});
+  return Object.keys(byKey).map(k=>byKey[k]);
 }
 function refreshAfterHydrate(){
   try{
@@ -1012,12 +970,12 @@ function hydrateFromDrugsJson(){
     .then(function(arr){
       if(!Array.isArray(arr)||!arr.length)throw new Error('数据为空');
       const before=DB.length;
-      const profiles=aggregateOfficialProfiles(arr);
-      DB=mergeOfficialIntoDb(profiles,DB);
+      const rows=arr.map(mapProfileRow);
+      DB=mergeProfileRows(rows,DB);
       saveDB();
       refreshAfterHydrate();
-      console.log('官方药品数据同步完成（按分子聚合）',before,'→',DB.length,
-                  '| 快照行数',arr.length,'| 聚合品种',profiles.length);
+      console.log('官方药品数据同步完成（按批准文号）',before,'→',DB.length,
+                  '| 快照行数',arr.length);
     })
     .catch(function(err){console.warn('官方药品数据加载失败，使用本地数据',err);});
 }
@@ -1113,14 +1071,15 @@ function acSearch(inputId,boxId){
     return;
   }
   box.innerHTML='<div class="ac-list">'+hits.map(d=>{
+    const idx=DB.indexOf(d);
     const sc=scoreDetail(d),rec=getRecommendation(sc.total);
-    return '<div class="ac-item" onmousedown="pickDrug(\''+d.gn.replace(/'/g,"\\'")+'\',\''+inputId+'\',\''+boxId+'\')">'+
-      '<b>'+d.gn+'</b>'+(d.bn?'<span class="sub">'+d.bn+'</span>':'')+
-      '<span class="sub"> · '+(d.disease||'')+'</span> '+
+    return '<div class="ac-item" onmousedown="pickDrugIdx('+idx+',\''+inputId+'\',\''+boxId+'\')">'+
+      '<b>'+d.gn+'</b>'+(d.bn?'<span class="sub">（'+d.bn+'）</span>':'')+
+      (d.mfr?'<span class="sub"> · '+d.mfr+'</span>':'')+
+      (d.spec?'<span class="sub"> · '+d.spec+'</span>':'')+
+      (d.appr?'<span class="sub"> · '+d.appr+'</span>':'')+
       '<span class="tag '+(rec.level==='A'?'green':rec.level==='B'?'amber':'red')+'" style="margin-left:4px">'+rec.level+'级 '+sc.total+'分</span>'+
       insTag(d.ins)+
-      (d.dual==='是'?'<span class="tag blue">双通道</span>':'')+
-      (d.cold&&d.cold.indexOf('冷藏')>=0?'<span class="tag blue">冷链</span>':'')+
       '</div>';
   }).join('')+'</div>';
   box.style.display='block';
@@ -1143,6 +1102,13 @@ function pickDrug(gn,inputId,boxId){
   document.getElementById(boxId).style.display='none';
   openDrugDetail(gn);
 }
+function pickDrugIdx(idx,inputId,boxId){
+  const d=DB[idx];if(!d)return;
+  document.getElementById(inputId).value=d.gn;
+  document.getElementById(boxId).style.display='none';
+  openDrugDetailObj(d);
+}
+function openDrugDetailByIdx(idx){const d=DB[idx];if(d)openDrugDetailObj(d);}
 function globalPick(gn){pickDrug(gn,'globalQ','globalAC');}
 function homePick(gn){pickDrug(gn,'homeQ','homeAC');}
 
@@ -1151,6 +1117,10 @@ let _curDetailGn='';
 function openDrugDetail(gn){
   const d=findDrug(gn);
   if(!d){alert('未找到「'+gn+'」');return;}
+  openDrugDetailObj(d);
+}
+function openDrugDetailObj(d){
+  if(!d)return;
   _curDetailGn=d.gn;
   showSection('detailSection');
   const sc=scoreDetail(d);
@@ -1173,7 +1143,7 @@ function openDrugDetail(gn){
     (d.vbp?'<span class="tag amber">集采风险：'+(d.vbp||'')+'</span>':'')+
     (d.cold&&d.cold.indexOf('冷藏')>=0?'<span class="tag blue">冷链：'+d.cold+'</span>':'')+
     (d.patent&&d.patent!=='—'&&d.patent!=='已过期'?'<span class="tag amber">专利至 '+d.patent+'</span>':'');
-  const conclusion=d.gn+'是'+(d.mfr||'')+'开发的'+(d.mech||'')+'，'+(d.ins||'未进医保')+(d.dual==='是'?'（已纳入双通道）':'')+'，医院青睐度'+favor+'分，准入综合评分'+sc.total+'分（'+rec.level+'级 '+rec.label+'）。'+(d.note||'');
+  const conclusion=shortConclusion(d);
   const html=
     '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">'+
       '<button class="btn gray" onclick="backToEntry()">← 返回</button>'+
@@ -1566,6 +1536,13 @@ function favorLabel(score){
   if(score>=55)return{label:'中',color:'#b45309'};
   return{label:'低',color:'#b91c1c'};
 }
+/* 一句话结论：限 40 字，只保留“品种：等级 · 医保 · 青睐度” */
+function shortConclusion(d){
+  const sc=scoreDetail(d),rec=getRecommendation(sc.total),favor=calcFavor(d);
+  const ins=(d.ins||'未进医保').replace('医保(','').replace(')','');
+  let s=(d.gn||'')+'：'+rec.level+'级 · '+ins+' · 青睐'+favor+'分';
+  return s.length>40?s.slice(0,39)+'…':s;
+}
 
 /* ============ 迭代路径可视化 ============ */
 function initIterPath(){
@@ -1747,8 +1724,8 @@ function renderDrugDetail(d){
   const idx=DB.indexOf(d);
   return'<div class="drug-detail"><div class="row">'+
     field('通用名',d.gn)+field('商品名',d.bn)+field('厂家',d.mfr)+field('批准文号',d.appr)+
-    field('注册分类',d.cls)+field('获批日期',d.adate)+field('剂型/规格',(d.form||'—')+' / '+(d.spec||'—'))+
-    field('上市许可持有人',d.holder||'—')+field('国产/进口',d.origin_type||'—')+
+    field('注册分类',d.cls)+field('获批日期',d.adate)+field('剂型',d.form)+field('规格',d.spec)+
+    field('国产/进口',d.origin_type||'—')+
     field('是否独家',d.excl||(d.followers===0?'是':'—'))+
     field('同分子厂家数',d.followers!=null?(d.followers+'家'):'—')+
     field('作用机制',d.mech)+field('冷链',d.cold)+field('挂网价',d.price!=null?'¥'+d.price:'—')+
@@ -2005,7 +1982,7 @@ function competeTable(peers,container){
   let html='<table><tr><th><input type="checkbox" onclick="toggleCmpBox(this,\''+cid+'\')"></th><th>通用名</th><th>商品名</th><th>厂家</th><th>世代</th><th>上市年</th><th>医保</th><th>挂网价</th><th>年化费用</th><th>青睐度</th><th>集采</th><th>给药</th><th>冷链</th></tr>';
   peers.forEach(p=>{const idx=DB.indexOf(p);
     html+='<tr><td><input type="checkbox" class="cmpChk" value="'+idx+'"></td>'+
-      '<td><a href="javascript:void(0)" onclick="openDrugDetail(\''+p.gn.replace(/'/g,"\\'")+'\')" style="color:var(--accent);font-weight:600">'+p.gn+'</a></td><td>'+(p.bn||'—')+'</td><td>'+(p.mfr||'—')+'</td>'+
+      '<td><a href="javascript:void(0)" onclick="openDrugDetailByIdx('+idx+')" style="color:var(--accent);font-weight:600">'+p.gn+'</a></td><td>'+(p.bn||'—')+'</td><td>'+(p.mfr||'—')+'</td>'+
       '<td>'+(p.gen||'—')+'</td><td>'+(p.year||'—')+'</td><td>'+insTag(p.ins)+'</td>'+
       '<td>'+(p.price!=null?'¥'+p.price:'—')+'</td>'+
       '<td>'+(p.annual!=null?'¥'+Number(p.annual).toLocaleString():'—')+'</td>'+
@@ -2038,7 +2015,7 @@ function genClinicalBrief(){
     '<h2>'+d.gn+(d.bn?'（'+d.bn+'）':'')+'</h2>'+
     '<div class="muted" style="margin-bottom:14px">'+(d.area||'')+' · '+(d.disease||'')+' · '+(d.gen||'')+' · '+(d.mfr||'')+'</div>'+
     '<div class="sales-section" style="background:#f0f7ff;border-left:4px solid #3b82f6"><div style="font-size:14px;font-weight:700;margin-bottom:8px">📌 一句话结论</div>'+
-    '<div style="font-size:14.5px;line-height:1.8">'+d.gn+'是'+(d.mfr||'')+'开发的'+(d.mech||'')+'，'+(d.ins||'未进医保')+'，医院青睐度'+sc.total+'分。'+(d.note||'')+'</div></div>'+
+    '<div style="font-size:14.5px;line-height:1.8">'+shortConclusion(d)+'</div></div>'+
     (d.talking_points?'<div class="sales-section" style="background:#fffbeb;border-left:4px solid #f59e0b"><div style="font-size:14px;font-weight:700;margin-bottom:8px">⭐ 沟通要点</div><div style="font-size:14.5px;line-height:1.8;white-space:pre-line">'+d.talking_points+'</div></div>':'')+
     '<div class="sales-section" style="background:#f0fdf4;border-left:4px solid #22c55e"><div style="font-size:14px;font-weight:700;margin-bottom:8px">🏥 适用人群</div>'+
     '<div style="font-size:14.5px;line-height:1.8">'+(d.ind_plain||d.ind||d.disease||'暂无')+'</div>'+
@@ -2069,7 +2046,7 @@ function copyClinicalBrief(){
   const L=[];
   L.push('【'+d.gn+(d.bn?'（'+d.bn+'）':'')+'】临床简报');L.push('');
   L.push('领域：'+(d.area||'—')+' ｜ 病种：'+(d.disease||'—')+' ｜ 世代：'+(d.gen||'—'));L.push('厂家：'+(d.mfr||'—'));L.push('');
-  L.push('■ 一句话结论');L.push(d.gn+'是'+(d.mfr||'')+'开发的'+(d.mech||'')+'，'+(d.ins||'未进医保'));L.push('');
+  L.push('■ 一句话结论');L.push(shortConclusion(d));L.push('');
   if(d.talking_points){L.push('■ 沟通要点');L.push(d.talking_points);L.push('');}
   L.push('■ 适用人群');L.push(d.ind_plain||d.ind||d.disease||'暂无');
   if(d.mech_plain)L.push('作用机制：'+d.mech_plain);L.push('');
