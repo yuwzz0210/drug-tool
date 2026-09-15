@@ -64,6 +64,20 @@ def export_snapshot(db_path, out_path):
         FROM policy_drug_relation r JOIN policies p ON p.id=r.policy_id""")
     extra = {r[0]: r[1] for r in db.execute(
         "SELECT product_id, extra_data FROM drug_product")}
+    # Wave-1 新增：按品种（molecule）维度聚合的国谈与双通道，
+    # 供前端在「一药一页」里展示谈判/双通道/挂网价信息。
+    negotiation = _rows_by(db, """
+        SELECT molecule_id, drug_name, category, pay_standard,
+               agreement_period, batch_year, source_url
+        FROM negotiation_result WHERE molecule_id IS NOT NULL""")
+    dual_channel = _rows_by(db, """
+        SELECT molecule_id, region, drug_name, dosage_form, specification,
+               status, effective_date, batch, source_url
+        FROM dual_channel WHERE molecule_id IS NOT NULL""")
+    prices = _rows_by(db, """
+        SELECT product_id, price_type, price, unit, region, batch,
+               effective_date, source_url, notes
+        FROM price_history""")
 
     out = []
     for v in view_rows:
@@ -109,6 +123,28 @@ def export_snapshot(db_path, out_path):
                  "source_url": r["source_url"],
                  "issuing_authority": r["issuing_authority"]}
                 for r in policies.get(pid, [])],
+            "negotiation": [
+                {"drug_name": r["drug_name"], "category": r["category"],
+                 "pay_standard": r["pay_standard"],
+                 "agreement_period": r["agreement_period"],
+                 "batch_year": r["batch_year"],
+                 "source_url": r["source_url"]}
+                for r in negotiation.get(v["molecule_id"], [])],
+            "dual_channel": [
+                {"region": r["region"], "drug_name": r["drug_name"],
+                 "dosage_form": r["dosage_form"],
+                 "specification": r["specification"],
+                 "status": r["status"],
+                 "effective_date": r["effective_date"],
+                 "batch": r["batch"], "source_url": r["source_url"]}
+                for r in dual_channel.get(v["molecule_id"], [])],
+            "prices": [
+                {"price_type": r["price_type"], "price": r["price"],
+                 "unit": r["unit"], "region": r["region"],
+                 "batch": r["batch"],
+                 "effective_date": r["effective_date"],
+                 "source_url": r["source_url"], "notes": r["notes"]}
+                for r in prices.get(pid, [])],
             "package_insert_url": v["leaflet_url"] or "",
             "leaflet_source_url": v["source_url"] or "",
             "extra_data": json.loads(extra.get(pid) or "{}"),

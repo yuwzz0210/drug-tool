@@ -861,12 +861,14 @@ const DISEASE_TREE = [
   // === 代谢 ===
   {area:"代谢",disease:"2型糖尿病",priority:2,sub_disease:["GLP-1受体激动剂适用","SGLT-2抑制剂适用","胰岛素依赖型"]},
   {area:"代谢",disease:"肥胖症",priority:2,sub_disease:["单纯性肥胖","伴代谢综合征"]},
-  {area:"代谢",disease:"高血压",priority:2,sub_disease:["原发性高血压","难治性高血压"]},
-  {area:"代谢",disease:"冠心病",priority:2,sub_disease:["稳定性心绞痛","急性冠脉综合征"]},
-  {area:"代谢",disease:"心力衰竭",priority:2,sub_disease:["HFrEF","HFpEF"]},
   {area:"代谢",disease:"慢性肾脏病",priority:2,sub_disease:["糖尿病肾病","高血压肾病","IgA肾病"]},
   {area:"代谢",disease:"高尿酸血症/痛风",priority:3,sub_disease:["急性发作期","慢性期"]},
   {area:"代谢",disease:"骨质疏松",priority:3,sub_disease:["绝经后骨质疏松","老年性骨质疏松"]},
+  // === 心血管 ===
+  {area:"心血管",disease:"高胆固醇血症",priority:2,sub_disease:["家族性高胆固醇血症","混合型高脂血症"]},
+  {area:"心血管",disease:"高血压",priority:2,sub_disease:["原发性高血压","难治性高血压"]},
+  {area:"心血管",disease:"冠心病",priority:2,sub_disease:["稳定性心绞痛","急性冠脉综合征"]},
+  {area:"心血管",disease:"心力衰竭",priority:2,sub_disease:["HFrEF","HFpEF"]},
   // === 自免疫 ===
   {area:"自免疫",disease:"类风湿关节炎",priority:3,sub_disease:["中重度活动性"]},
   {area:"自免疫",disease:"银屑病",priority:3,sub_disease:["中重度斑块状银屑病","关节病型银屑病"]},
@@ -919,6 +921,20 @@ function mapProfileRow(r){
   const ins0=insArr.find(x=>x.is_current)||insArr[0]||{};
   const insLabel=ins0.category?('医保('+ins0.category+')'):(insArr.length?'已进医保':'');
   const vbp=r.vbp_events||[];
+  const neg=r.negotiation||[], dual=r.dual_channel||[], opx=r.prices||[];
+  const dualRegions=[...new Set(dual.filter(x=>x.status==='纳入').map(x=>x.region))];
+  const officialPrice=(type,region)=>{
+    const hit=opx.find(x=>x.price_type===type&&(!region||x.region===region));
+    return hit||null;
+  };
+  const listedPriceHL=officialPrice('挂网','湖南');
+  const payStdSH=officialPrice('医保支付标准','上海');
+  /* 官方病种/领域分类（分类器产出）只在有值时覆盖，避免清空人工录入 */
+  const offClass={};
+  if(r.therapeutic_area)offClass.area=r.therapeutic_area;
+  if(r.disease)offClass.disease=r.disease;
+  if(r.sub_disease)offClass.subDisease=r.sub_disease;
+  if(r.classification_confidence)offClass.areaConfidence=r.classification_confidence;
   return {
     gn:r.molecule_name||r.generic_name||'', bn:r.trade_name||'',
     mfr:r.manufacturer||'', form:r.dosage_form||'', spec:r.specification||'',
@@ -940,7 +956,17 @@ function mapProfileRow(r){
     insurance_details:insArr, vbp_events:vbp, policy_links:r.policy_links||[],
     product_id:r.product_id, molecule_id:r.molecule_id,
     molecule_name:r.molecule_name||'',
+    negotiation:neg, negotiationStatus:(neg[0]&&neg[0].category)||'',
+    negotiationPayStd:(neg[0]&&neg[0].pay_standard)||'',
+    negotiationPeriod:(neg[0]&&neg[0].agreement_period)||'',
+    dualChannel:dual, dualRegions:dualRegions,
+    listedPriceHL:listedPriceHL?{price:listedPriceHL.price,unit:listedPriceHL.unit,
+      batch:listedPriceHL.batch,notes:listedPriceHL.notes,source:listedPriceHL.source_url}:null,
+    payStdSH:payStdSH?{price:payStdSH.price,unit:payStdSH.unit,
+      batch:payStdSH.batch,notes:payStdSH.notes,source:payStdSH.source_url}:null,
+    officialPrices:opx,
     variants_count:1,
+    ...offClass,
     ...(r.extra_data&&typeof r.extra_data==='object'?r.extra_data:{}),
     official:true, updated_at:r.generated_at||r.updated_at||''
   };
@@ -1139,6 +1165,9 @@ function openDrugDetailObj(d){
   const tags='<span class="tag" style="background:'+rec.color+'22;color:'+rec.color+'">'+rec.level+'级 · '+rec.label+' · '+sc.total+'分</span>'+
     '<span class="tag" style="background:#f1f5f9;color:#334155">医院青睐度 '+favor+'</span>'+
     insTag(d.ins)+
+    (d.negotiationStatus?'<span class="tag amber">国家'+d.negotiationStatus+'</span>':'')+
+    ((d.dualRegions&&d.dualRegions.length)?'<span class="tag blue">双通道：'+d.dualRegions.join('/')+'</span>':'')+
+    (d.subDisease?'<span class="tag gray">'+d.disease+' · '+d.subDisease+'</span>':'')+
     (d.dual==='是'?'<span class="tag blue">双通道</span>':'')+
     (d.vbp?'<span class="tag amber">集采风险：'+(d.vbp||'')+'</span>':'')+
     (d.cold&&d.cold.indexOf('冷藏')>=0?'<span class="tag blue">冷链：'+d.cold+'</span>':'')+
@@ -1158,7 +1187,9 @@ function openDrugDetailObj(d){
     '<div class="card"><h3>基本信息</h3>'+renderDrugDetail(d)+'</div>'+
     /* ③ 市场与价格 */
     '<div class="card"><h3>市场与价格</h3><div class="info-grid">'+
-      field('挂网价',d.price!=null?'¥'+d.price:'—')+
+      field('挂网价（湖南·官方）',d.listedPriceHL?('¥'+d.listedPriceHL.price+(d.listedPriceHL.unit?(' / '+d.listedPriceHL.unit):'')):'—')+
+      field('医保支付标准（上海·官方）',d.payStdSH?('¥'+d.payStdSH.price+(d.payStdSH.unit?(' / '+d.payStdSH.unit):'')):'—')+
+      field('挂网价（本库记录）',d.price!=null?'¥'+d.price:'—')+
       field('年化费用',d.annual!=null?'¥'+Number(d.annual).toLocaleString():'—')+
       field('采购价(内部)',d.pprice!=null?'¥'+d.pprice:'—')+
       field('给药途径',d.route||'—')+
@@ -1294,6 +1325,14 @@ function openCompetitionFor(gn){
 }
 function priceHistoryHTML(d){
   let h='<div style="margin-top:12px"><b>价格历史时间线</b>';
+  const opx=Array.isArray(d.officialPrices)?d.officialPrices:[];
+  opx.forEach(x=>{
+    const val='¥'+Number(x.price).toLocaleString()+(x.unit?(' / '+x.unit):'');
+    h+='<div class="pt-event"><div class="date">'+(x.batch||'官方来源')+' · '+(x.region||'')+'</div>'+
+       '<div class="price">'+val+'</div>'+
+       '<div class="src">'+(x.price_type||'')+(x.notes?(' · '+String(x.notes).slice(0,60)):'')+
+       (x.source_url?(' · <a href="'+x.source_url+'" target="_blank" rel="noopener">原始文件</a>'):'')+'</div></div>';
+  });
   h+='<div class="pt-event"><div class="date">当前价格</div><div class="price" style="color:var(--red)">'+(d.price!=null?'¥'+d.price.toLocaleString():'未录入')+'</div><div class="src">挂网价/中标价</div></div>';
   if(d.price_history&&d.price_history.length){
     d.price_history.slice().reverse().forEach(x=>{

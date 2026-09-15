@@ -244,6 +244,10 @@ SELECT
     m.iteration_chain,
     m.guideline_level,
     m.extra_indications,
+    m.therapeutic_area,
+    m.disease,
+    m.sub_disease,
+    m.classification_confidence,
     p.package_insert_url AS leaflet_url,
     p.source_url,
     (SELECT l.leaflet_date FROM drug_leaflet l
@@ -327,6 +331,25 @@ SELECT
       WHERE pr.product_id=p.product_id) AS vbp_batches,
     (SELECT COUNT(*) FROM policy_drug_relation pdr
       WHERE pdr.product_id=p.product_id) AS policy_count,
+    (SELECT nr.category FROM negotiation_result nr
+      WHERE nr.molecule_id=m.molecule_id
+      ORDER BY nr.negotiation_id DESC LIMIT 1) AS negotiation_status,
+    (SELECT nr.pay_standard FROM negotiation_result nr
+      WHERE nr.molecule_id=m.molecule_id
+      ORDER BY nr.negotiation_id DESC LIMIT 1) AS negotiation_pay_standard,
+    (SELECT nr.agreement_period FROM negotiation_result nr
+      WHERE nr.molecule_id=m.molecule_id
+      ORDER BY nr.negotiation_id DESC LIMIT 1) AS negotiation_period,
+    (SELECT nr.batch_year FROM negotiation_result nr
+      WHERE nr.molecule_id=m.molecule_id
+      ORDER BY nr.negotiation_id DESC LIMIT 1) AS negotiation_batch_year,
+    (SELECT COUNT(*) FROM negotiation_result nr
+      WHERE nr.molecule_id=m.molecule_id) AS negotiation_event_count,
+    (SELECT GROUP_CONCAT(DISTINCT dc.region) FROM dual_channel dc
+      WHERE dc.molecule_id=m.molecule_id AND dc.status='纳入')
+        AS dual_channel_regions,
+    (SELECT COUNT(DISTINCT dc.region) FROM dual_channel dc
+      WHERE dc.molecule_id=m.molecule_id) AS dual_channel_region_count,
     datetime('now','localtime') AS generated_at
 FROM drug_product p
 LEFT JOIN drug_registration r ON r.product_id = p.product_id
@@ -409,9 +432,47 @@ CREATE TABLE IF NOT EXISTS drug_molecule (
     iteration_chain TEXT DEFAULT '',
     generation TEXT DEFAULT '',
     extra_indications TEXT DEFAULT '',
+    therapeutic_area TEXT DEFAULT '',
+    disease TEXT DEFAULT '',
+    sub_disease TEXT DEFAULT '',
+    classification_source TEXT DEFAULT '',
+    classification_confidence TEXT DEFAULT '',
     reviewed_at TEXT DEFAULT '',
     created_at TEXT DEFAULT (datetime('now','localtime')),
     updated_at TEXT DEFAULT (datetime('now','localtime'))
+);
+CREATE TABLE IF NOT EXISTS negotiation_result (
+    negotiation_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    molecule_id INTEGER REFERENCES drug_molecule(molecule_id) ON DELETE SET NULL,
+    product_id INTEGER REFERENCES drug_product(product_id) ON DELETE SET NULL,
+    catalog_id INTEGER REFERENCES insurance_catalog(catalog_id),
+    catalog_entry_id INTEGER,
+    batch_year TEXT DEFAULT '',
+    drug_name TEXT NOT NULL,
+    dosage_form TEXT DEFAULT '',
+    category TEXT DEFAULT '',
+    pay_standard TEXT DEFAULT '',
+    agreement_period TEXT DEFAULT '',
+    source_url TEXT DEFAULT '',
+    notes TEXT DEFAULT '',
+    created_at TEXT DEFAULT (datetime('now','localtime')),
+    UNIQUE (catalog_entry_id)
+);
+CREATE TABLE IF NOT EXISTS dual_channel (
+    dual_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    molecule_id INTEGER REFERENCES drug_molecule(molecule_id) ON DELETE SET NULL,
+    product_id INTEGER REFERENCES drug_product(product_id) ON DELETE SET NULL,
+    region TEXT NOT NULL DEFAULT '国家',
+    drug_name TEXT NOT NULL,
+    dosage_form TEXT DEFAULT '',
+    specification TEXT DEFAULT '',
+    status TEXT DEFAULT '纳入',
+    effective_date TEXT DEFAULT '',
+    batch TEXT DEFAULT '',
+    source_url TEXT DEFAULT '',
+    notes TEXT DEFAULT '',
+    created_at TEXT DEFAULT (datetime('now','localtime')),
+    UNIQUE (region, drug_name, dosage_form, specification)
 );
 CREATE TABLE IF NOT EXISTS price_history (
     price_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -655,6 +716,11 @@ CREATE TABLE IF NOT EXISTS drug_molecule (
     iteration_chain VARCHAR(200) DEFAULT '',
     generation VARCHAR(50) DEFAULT '',
     extra_indications TEXT DEFAULT '',
+    therapeutic_area VARCHAR(100) DEFAULT '',
+    disease VARCHAR(200) DEFAULT '',
+    sub_disease VARCHAR(200) DEFAULT '',
+    classification_source VARCHAR(200) DEFAULT '',
+    classification_confidence VARCHAR(10) DEFAULT '',
     reviewed_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
@@ -712,6 +778,41 @@ CREATE TABLE IF NOT EXISTS drug_market (
     reviewed_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     UNIQUE (molecule_id, region, sales_year)
+);
+-- 国谈/竞价结果（来源：国家医保目录谈判与竞价条目）
+CREATE TABLE IF NOT EXISTS negotiation_result (
+    negotiation_id BIGSERIAL PRIMARY KEY,
+    molecule_id BIGINT REFERENCES drug_molecule(molecule_id) ON DELETE SET NULL,
+    product_id BIGINT REFERENCES drug_product(product_id) ON DELETE SET NULL,
+    catalog_id BIGINT REFERENCES insurance_catalog(catalog_id),
+    catalog_entry_id BIGINT,
+    batch_year VARCHAR(20) DEFAULT '',
+    drug_name VARCHAR(300) NOT NULL,
+    dosage_form VARCHAR(100) DEFAULT '',
+    category VARCHAR(30) DEFAULT '',
+    pay_standard TEXT DEFAULT '',
+    agreement_period TEXT DEFAULT '',
+    source_url TEXT DEFAULT '',
+    notes TEXT DEFAULT '',
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    UNIQUE (catalog_entry_id)
+);
+-- 双通道（谈判药品定点医疗机构/定点零售药店）名单
+CREATE TABLE IF NOT EXISTS dual_channel (
+    dual_id BIGSERIAL PRIMARY KEY,
+    molecule_id BIGINT REFERENCES drug_molecule(molecule_id) ON DELETE SET NULL,
+    product_id BIGINT REFERENCES drug_product(product_id) ON DELETE SET NULL,
+    region VARCHAR(40) NOT NULL DEFAULT '国家',
+    drug_name VARCHAR(300) NOT NULL,
+    dosage_form VARCHAR(100) DEFAULT '',
+    specification VARCHAR(200) DEFAULT '',
+    status VARCHAR(20) DEFAULT '纳入',
+    effective_date DATE,
+    batch VARCHAR(60) DEFAULT '',
+    source_url TEXT DEFAULT '',
+    notes TEXT DEFAULT '',
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    UNIQUE (region, drug_name, dosage_form, specification)
 );
 CREATE TABLE IF NOT EXISTS drug_registration (
     registration_id BIGSERIAL PRIMARY KEY,
