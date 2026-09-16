@@ -27,7 +27,33 @@ def _rows_by(db, sql, key=0):
     return out
 
 
-def export_snapshot(db_path, out_path):
+def is_focus(rec):
+    """网站快照收录口径（保持站点轻量）：
+
+    收录有「准入类」事实的品种——医保 / 国谈 / 集采 / 双通道 / 政策关联，
+    或带适应症说明书（可读的一药一页）。
+    仅有一条省级挂网价的普通品种不进快照（这类在库里已有 2.4 万条，
+    属于"库内资产"，需要时再按需查询，避免站点 JSON 膨胀）。
+    """
+    return bool(rec.get("insurance_details") or rec.get("vbp_events")
+                or rec.get("negotiation") or rec.get("dual_channel")
+                or rec.get("policy_links")
+                or rec.get("indications") or rec.get("usage_dosage"))
+
+
+def focus_rank(rec):
+    """截断时的优先级：国谈/医保/集采/双通道/政策 逐级下降。"""
+    return (
+        1 if rec.get("negotiation") else 0,
+        1 if rec.get("insurance_details") else 0,
+        1 if rec.get("vbp_events") else 0,
+        1 if rec.get("dual_channel") else 0,
+        1 if rec.get("policy_links") else 0,
+        1 if rec.get("indications") else 0,
+    )
+
+
+def export_snapshot(db_path, out_path, mode="focus", max_rows=8000):
     db = sqlite3.connect(db_path)
     db.row_factory = sqlite3.Row
     view_rows = db.execute("SELECT * FROM drug_profile ORDER BY product_id"
@@ -80,6 +106,7 @@ def export_snapshot(db_path, out_path):
         FROM price_history""")
 
     out = []
+    _skipped = []
     for v in view_rows:
         pid = v["product_id"]
         reg_list = []
@@ -149,12 +176,18 @@ def export_snapshot(db_path, out_path):
             "leaflet_source_url": v["source_url"] or "",
             "extra_data": json.loads(extra.get(pid) or "{}"),
         })
-        out.append(rec)
+        if mode == "full" or is_focus(rec):
+            out.append(rec)
+        else:
+            _skipped.append(pid)
+    if max_rows and len(out) > max_rows:
+        out.sort(key=focus_rank, reverse=True)
+        out = out[:max_rows]
     db.close()
     os.makedirs(os.path.dirname(os.path.abspath(out_path)), exist_ok=True)
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=2)
-    return len(out)
+    return len(out), len(_skipped)
 
 
 def main(argv=None):
@@ -163,9 +196,16 @@ def main(argv=None):
     parser.add_argument("--out", default=os.path.join(
         os.path.dirname(os.path.dirname(os.path.dirname(
             os.path.abspath(__file__)))), "repo", "data", "drugs.json"))
+    parser.add_argument("--mode", choices=("focus", "full"), default="focus",
+                        help="focus=仅导出有政策/价格/医保/集采关联的品种（默认）")
+    parser.add_argument("--max-rows", type=int, default=8000,
+                        help="快照行数上限，0 表示不限制")
     args = parser.parse_args(argv)
-    n = export_snapshot(args.db, args.out)
-    print("drugs.json 已导出:", n, "条 →", args.out)
+    n, skipped = export_snapshot(args.db, args.out, mode=args.mode,
+                                 max_rows=args.max_rows)
+    print("drugs.json 已导出:", n, "条 →", args.out,
+          "| 过滤掉（无关联品种）:", skipped)
+    print("文件大小: %.1f MB" % (os.path.getsize(args.out) / 1048576.0))
     return 0
 
 

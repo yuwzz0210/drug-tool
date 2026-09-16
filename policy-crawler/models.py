@@ -220,7 +220,8 @@ CREATE TABLE IF NOT EXISTS crawler_logs (
 
 # drug_profile v1：一行 = 一个批准文号（无文号品种 approval_number 为空），
 # “最新值”统一在此定义，前端/快照不再各自取数。
-DRUG_PROFILE_VIEW_SQL = """
+# v1（保留备查）：逐行相关子查询，品种库过万后导出过慢 → 见 drug_profile_view.py v2
+DRUG_PROFILE_VIEW_SQL_V1 = """
 CREATE VIEW IF NOT EXISTS drug_profile AS
 SELECT
     p.product_id,
@@ -678,6 +679,13 @@ CREATE TABLE IF NOT EXISTS drug_leaflet (
 """
 
 # 视图在 DRUG_SCHEMA 定义完成后追加，供 DrugStore 初始化与迁移脚本共用
+# v2：预聚合 CTE 版本（性能），列名与 v1 完全一致
+from drug_profile_view import (  # noqa: E402
+    DRUG_PROFILE_INDEXES,
+    DRUG_PROFILE_VIEW_SQL_V2,
+)
+
+DRUG_PROFILE_VIEW_SQL = DRUG_PROFILE_VIEW_SQL_V2
 DRUG_SCHEMA = DRUG_SCHEMA + "\n" + DRUG_PROFILE_VIEW_SQL
 
 
