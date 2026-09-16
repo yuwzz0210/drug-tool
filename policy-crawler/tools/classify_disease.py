@@ -28,6 +28,7 @@ if ROOT not in sys.path:
 
 from disease_rules import (  # noqa: E402
     RULES_VERSION,
+    area_from_drug_code,
     classify,
     classify_by_name,
     is_clean_text,
@@ -58,6 +59,32 @@ INDICATION_SQL = """
 
 def _texts(db, sql, molecule_id):
     return [r[0] for r in db.execute(sql, (molecule_id,)) if r[0]]
+
+
+_ATC_CACHE = {}
+
+
+def _atc_index(db):
+    """molecule_id → 医保药品统一编码（取自 drug_product.extra_data，一次构建后缓存）。"""
+    key = id(db)
+    if key in _ATC_CACHE:
+        return _ATC_CACHE[key]
+    index = {}
+    for mid, extra in db.execute(
+            "SELECT molecule_id, extra_data FROM drug_product "
+            "WHERE molecule_id IS NOT NULL AND extra_data IS NOT NULL "
+            "AND extra_data <> ''"):
+        if mid in index:
+            continue
+        try:
+            payload = json.loads(extra)
+        except (TypeError, ValueError):
+            continue
+        code = (payload or {}).get("drug_code") or ""
+        if code:
+            index[mid] = code
+    _ATC_CACHE[key] = index
+    return index
 
 
 def classify_molecule(db, molecule_id, generic_name="", extra_indications=""):
@@ -91,6 +118,13 @@ def classify_molecule(db, molecule_id, generic_name="", extra_indications=""):
     if fallback["area"]:
         fallback["source_level"] = "fallback"
         return fallback
+
+    # 医保编码内嵌 ATC 推定（低置信度，来源标记 atc_code）
+    area, atc = area_from_drug_code(_atc_index(db).get(molecule_id, ""))
+    if area:
+        return {"area": area, "disease": "", "sub_disease": "",
+                "confidence": "低", "hits": [atc or ""],
+                "version": RULES_VERSION, "source_level": "atc_code"}
 
     # 药名词干推定（低置信度，来源标记 inn_stem）
     by_name = classify_by_name(generic_name)
