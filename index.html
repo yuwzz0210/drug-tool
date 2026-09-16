@@ -869,6 +869,42 @@ const DISEASE_TREE = [
   {area:"心血管",disease:"高血压",priority:2,sub_disease:["原发性高血压","难治性高血压"]},
   {area:"心血管",disease:"冠心病",priority:2,sub_disease:["稳定性心绞痛","急性冠脉综合征"]},
   {area:"心血管",disease:"心力衰竭",priority:2,sub_disease:["HFrEF","HFpEF"]},
+  // === 感染 ===
+  {area:"感染",disease:"细菌感染",priority:2,sub_disease:["革兰阳性菌","革兰阴性菌","耐药菌"]},
+  {area:"感染",disease:"病毒感染",priority:2,sub_disease:["乙型肝炎","丙型肝炎","流感","新冠"]},
+  {area:"感染",disease:"真菌感染",priority:3,sub_disease:["念珠菌","曲霉"]},
+  {area:"感染",disease:"COVID-19",priority:3,sub_disease:["轻型/普通型","重型"]},
+  // === 消化 ===
+  {area:"消化",disease:"消化性溃疡",priority:2,sub_disease:["胃溃疡","十二指肠溃疡"]},
+  {area:"消化",disease:"胃食管反流病",priority:2,sub_disease:["糜烂性食管炎","非糜烂性"]},
+  {area:"消化",disease:"幽门螺杆菌感染",priority:2,sub_disease:["一线根除","补救治疗"]},
+  // === 呼吸 ===
+  {area:"呼吸",disease:"哮喘",priority:2,sub_disease:["控制期","急性发作期"]},
+  {area:"呼吸",disease:"慢性阻塞性肺疾病",priority:2,sub_disease:["稳定期","急性加重期"]},
+  // === 神经 ===
+  {area:"神经",disease:"癫痫",priority:2,sub_disease:["局灶性发作","全面性发作"]},
+  {area:"神经",disease:"帕金森病",priority:3,sub_disease:["早期","中晚期波动"]},
+  {area:"神经",disease:"阿尔茨海默病",priority:3,sub_disease:["轻中度","重度"]},
+  // === 精神 ===
+  {area:"精神",disease:"抑郁症",priority:2,sub_disease:["急性期","维持期"]},
+  {area:"精神",disease:"精神分裂症",priority:3,sub_disease:["急性期","维持期"]},
+  // === 泌尿 ===
+  {area:"泌尿",disease:"良性前列腺增生",priority:3,sub_disease:["伴下尿路症状"]},
+  {area:"泌尿",disease:"膀胱过度活动症",priority:3,sub_disease:["急迫性尿失禁"]},
+  // === 血液 ===
+  {area:"血液",disease:"贫血",priority:2,sub_disease:["缺铁性","肾性贫血"]},
+  {area:"血液",disease:"血栓栓塞性疾病",priority:2,sub_disease:["抗凝","抗血小板"]},
+  // === 皮肤 ===
+  {area:"皮肤",disease:"荨麻疹",priority:3,sub_disease:["慢性自发性"]},
+  {area:"皮肤",disease:"痤疮",priority:3,sub_disease:["中重度"]},
+  // === 眼科 ===
+  {area:"眼科",disease:"黄斑变性",priority:3,sub_disease:["湿性AMD","干性AMD"]},
+  {area:"眼科",disease:"青光眼",priority:3,sub_disease:["开角型","闭角型"]},
+  // === 肌肉骨骼 ===
+  {area:"肌肉骨骼",disease:"骨关节炎",priority:3,sub_disease:["膝骨关节炎","髋骨关节炎"]},
+  // === 其他 ===
+  {area:"其他",disease:"营养支持",priority:4,sub_disease:["肠外营养","肠内营养"]},
+  {area:"其他",disease:"造影/诊断用药",priority:4,sub_disease:["碘造影剂","MRI造影剂"]},
   // === 自免疫 ===
   {area:"自免疫",disease:"类风湿关节炎",priority:3,sub_disease:["中重度活动性"]},
   {area:"自免疫",disease:"银屑病",priority:3,sub_disease:["中重度斑块状银屑病","关节病型银屑病"]},
