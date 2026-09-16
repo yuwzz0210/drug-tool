@@ -37,7 +37,21 @@ if (git diff --cached --quiet) {
   Write-Log "无数据变更，跳过提交"
 } else {
   git commit -m "chore: auto-update drug/policy data [skip ci]" 2>&1 | ForEach-Object { Write-Log $_ }
-  git push 2>&1 | ForEach-Object { Write-Log $_ }
+  # 先与远端对齐（GitHub Actions 机器人也会提交数据，直接 push 常被拒）
+  git pull --rebase --autostash origin main 2>&1 | ForEach-Object { Write-Log $_ }
+  $pushed = $false
+  for ($i = 1; $i -le 3 -and -not $pushed; $i++) {
+    git push 2>&1 | ForEach-Object { Write-Log $_ }
+    if ($LASTEXITCODE -eq 0) {
+      $pushed = $true
+      Write-Log "推送成功（第 $i 次尝试）"
+    } else {
+      Write-Log "推送失败（第 $i 次），rebase 后重试..."
+      git pull --rebase --autostash origin main 2>&1 | ForEach-Object { Write-Log $_ }
+      Start-Sleep -Seconds 5
+    }
+  }
+  if (-not $pushed) { Write-Log "⚠️ 推送三次均失败，请手动执行 git push origin main" }
 }
 
 Write-Log "=== 每日更新完成 ==="
